@@ -4,15 +4,9 @@
 Language: Cpp
 
 
-
 #===========================================================================#
 # Column limit and wrapping rules                                           #
 #===========================================================================#
-# Rules: #
-#   + F3 #
-#   + L3 #
-#   + L4 #
-#--------#
 
 # F3 - Maximum columns count
 ColumnLimit: 80
@@ -51,16 +45,9 @@ BraceWrapping:
 AlwaysBreakAfterReturnType: None
 
 
-
-
 #===========================================================================#
 # Indentation and spaces                                                    #
 #===========================================================================#
-# Rules: #
-#   + L2 #
-#   + L3 #
-#   + G3 #
-#--------#
 
 # L2 - Indent width and indent character
 TabWidth: 4
@@ -122,15 +109,9 @@ IndentCaseLabels: true
 NamespaceIndentation: All
 
 
-
-
 #===========================================================================#
 # Layout inside a function's scope                                          #
 #===========================================================================#
-# Rules: #
-#   + L1 #
-#   + G3 #
-#--------#
 
 # L1 - Disable one-line bracketted code
 AllowShortFunctionsOnASingleLine: None
@@ -146,19 +127,12 @@ AllowShortCaseLabelsOnASingleLine: true
 KeepEmptyLinesAtTheStartOfBlocks: false
 
 
-
-
 #===========================================================================#
 # Global scope                                                              #
 #===========================================================================#
-# Rules: #
-#   + G2 #
-#--------#
 
 # G2 - Max empty lines to keep
 MaxEmptyLinesToKeep: 1
-
-
 
 
 #===========================================================================#

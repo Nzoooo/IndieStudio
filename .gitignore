@@ -1,0 +1,12 @@
+# IDEs
+.vscode
+
+# Build Data
+*.o
+/build
+
+# Executable
+/indiestudio
+
+# Shame on you!
+vgcore.*

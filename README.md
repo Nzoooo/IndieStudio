@@ -10,7 +10,7 @@ Required tools:
 on Linux:
 ```sh
 # Create the build directory
-take build
+mkdir build && cd build
 
 # Configure the project
 cmake .. -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Release

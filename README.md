@@ -10,6 +10,7 @@ Required tools:
 on Linux:
 ```sh
 # Create the build directory
+mkdir build && cd build/
 take build
 
 # Configure the project

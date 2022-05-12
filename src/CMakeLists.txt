@@ -4,6 +4,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src)
 set(SRC)
 
 add_subdirectory(core)
+add_subdirectory(ECS)
 
 set(INCDIRS ${INCROOT})
 

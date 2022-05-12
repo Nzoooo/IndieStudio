@@ -25,6 +25,13 @@ FIND_PACKAGE(raylib REQUIRED)
 target_link_libraries(${TARGET_NAME} PRIVATE raylib)
 ## ------------------------------------------------------------------------- ##
 
+# Checks if OSX and links appropriate frameworks (Only required on MacOS)
+if (APPLE)
+    target_link_libraries(${PROJECT_NAME} "-framework IOKit")
+    target_link_libraries(${PROJECT_NAME} "-framework Cocoa")
+    target_link_libraries(${PROJECT_NAME} "-framework OpenGL")
+endif()
+
 add_custom_command(TARGET ${TARGET_NAME}
 	POST_BUILD
 	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${TARGET_NAME}> ${PROJECT_SOURCE_DIR})

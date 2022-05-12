@@ -11,6 +11,8 @@ add_compile_options(
     "$<$<CONFIG:DEBUG>:-O0;-g3;-ggdb>"
 )
 
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
 if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wextra -Wshadow -Wpointer-arith")
 endif(CMAKE_COMPILER_IS_GNUCXX)

@@ -16,7 +16,8 @@ namespace ecs
         virtual ~ISystem()
         {
         }
-        virtual void update(ecs::World &world) = 0;
+        // virtual void update(ecs::World &world) = 0;
+        virtual void update() = 0;
 
       protected:
         static unsigned int _idCount;

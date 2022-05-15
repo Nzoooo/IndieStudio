@@ -6,6 +6,7 @@
 */
 
 #include "core.hpp"
+#include "../ECS/Systems/SystemRender.hpp"
 
 double clockToMilliseconds(clock_t ticks)
 {
@@ -19,7 +20,10 @@ int coreLoop()
     int running = 1;
     int fps = 0;
     int avg_fps = FPS_CAP;
-
+    //--------------------------------------------
+    InitWindow(800, 600, "test print rectangle");
+    SystemRender test_draw_rect;
+    //--------------------------------------------
     while (running) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
@@ -35,6 +39,7 @@ int coreLoop()
             printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             fps = 0;
         }
+        test_draw_rect.update();
     }
 
     return (0);

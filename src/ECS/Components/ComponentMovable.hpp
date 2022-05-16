@@ -10,10 +10,10 @@
 
 #include "IComponent.hpp"
 
-class ComponentMovable : ecs::IComponent {
+class componentMovable : public ecs::IComponent {
     public:
-        ComponentMovable(bool ableToMove = true):_ableToMove(ableToMove) {};
-        ~ComponentMovable() = default;
+        componentMovable(bool ableToMove = true):_ableToMove(ableToMove) {};
+        ~componentMovable() = default;
 
         bool getAbleToMove() const;
         void setAbleToMove(bool);

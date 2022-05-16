@@ -8,16 +8,16 @@
 #ifndef PLAYERENTITY_HPP_
 #define PLAYERENTITY_HPP_
 
-#include <string>
 #include "IEntity.hpp"
+#include <string>
 
 class PlayerEntity : public ecs::IEntity {
-  public:
-    PlayerEntity();
-    ~PlayerEntity();
+    public:
+        PlayerEntity();
+        ~PlayerEntity();
 
-  private:
-    std::string _name;
+    private:
+        std::string _name;
 };
 
 #endif /* !PLAYERENTITY_HPP_ */

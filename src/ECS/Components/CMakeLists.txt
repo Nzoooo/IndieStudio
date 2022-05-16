@@ -5,6 +5,7 @@ set(SRC
     ${SRC}
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentTransform.cpp
+    ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE
 )
 

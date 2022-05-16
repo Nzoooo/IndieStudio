@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2022
-** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+** Project
 ** File description:
 ** core
 */
@@ -9,7 +9,7 @@
 
 double clockToMilliseconds(clock_t ticks)
 {
-    return ( ticks / ((double) CLOCKS_PER_SEC)) * ML_BASE;
+    return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
 int coreLoop()
@@ -21,8 +21,7 @@ int coreLoop()
     int avg_fps = FPS_CAP;
 
     while (running) {
-
-        if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL ) {
+        if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
 
@@ -31,7 +30,7 @@ int coreLoop()
 
         if (clockToMilliseconds(clock() - sec_clock) >= ML_BASE) {
             sec_clock = clock();
-            avg_fps = (avg_fps + fps)/2;
+            avg_fps = (avg_fps + fps) / 2;
             // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
             printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             fps = 0;

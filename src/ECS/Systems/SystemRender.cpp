@@ -6,7 +6,7 @@
 */
 
 #include "SystemRender.hpp"
-#include "raylib.h"
+#include "../../../build/_deps/raylib-src/src/raylib.h"
 
 extern "C"
 {

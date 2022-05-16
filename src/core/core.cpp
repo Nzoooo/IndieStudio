@@ -7,7 +7,7 @@
 
 #include "core.hpp"
 #include "../ECS/Systems/SystemRender.hpp"
-#include "raylib.h"
+#include "../../build/_deps/raylib-src/src/raylib.h"
 
 double clockToMilliseconds(clock_t ticks)
 {
@@ -16,35 +16,40 @@ double clockToMilliseconds(clock_t ticks)
 
 extern "C"
 {
-    int coreLoop()
+    void initWindowRayLib()
     {
-        clock_t sec_clock = clock();
-        clock_t fps_clock = clock();
-        int running = 1;
-        int fps = 0;
-        int avg_fps = FPS_CAP;
-        //--------------------------------------------
         InitWindow(800, 600, "test print rectangle");
-        SystemRender test_draw_rect;
-        //--------------------------------------------
-        while (running) {
-            if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
-                fps_clock = clock();
-                fps++;
+    }
+}
 
-                // do tick-based actions here, eg: graphical rendering and stuff like that, I/O checking;
-            }
+int coreLoop()
+{
+    clock_t sec_clock = clock();
+    clock_t fps_clock = clock();
+    int running = 1;
+    int fps = 0;
+    int avg_fps = FPS_CAP;
+    //--------------------------------------------
+    initWindowRayLib();
+    SystemRender test_draw_rect;
+    //--------------------------------------------
+    while (running) {
+        if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
+            fps_clock = clock();
+            fps++;
 
-            if (clockToMilliseconds(clock() - sec_clock) >= ML_BASE) {
-                sec_clock = clock();
-                avg_fps = (avg_fps + fps) / 2;
-                // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
-                printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
-                fps = 0;
-            }
-            test_draw_rect.update();
+            // do tick-based actions here, eg: graphical rendering and stuff like that, I/O checking;
         }
 
-        return (0);
+        if (clockToMilliseconds(clock() - sec_clock) >= ML_BASE) {
+            sec_clock = clock();
+            avg_fps = (avg_fps + fps) / 2;
+            // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
+            printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
+            fps = 0;
+        }
+        test_draw_rect.update();
     }
+
+    return (0);
 }

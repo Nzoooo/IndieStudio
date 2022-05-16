@@ -30,8 +30,8 @@ void ecs::World::update()
 {
     std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
 
-    for (auto *it : _systems)
-        it->update(*this);
+    // for (auto *it : _systems)
+    //     it->update(*this);
     _time = std::chrono::steady_clock::now() - start;
     std::this_thread::sleep_for(_sleepDuration - _time);
 }

@@ -7,6 +7,7 @@
 
 #include "core.hpp"
 #include "../ECS/Systems/SystemRender.hpp"
+#include "raylib.h"
 
 double clockToMilliseconds(clock_t ticks)
 {

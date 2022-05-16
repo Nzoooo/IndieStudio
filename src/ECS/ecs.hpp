@@ -9,8 +9,10 @@
 #define ECS_HPP_
 
 #include "Entities/IEntity.hpp"
-#include "Components/IComponent.hpp"
 #include "Systems/ISystem.hpp"
+#include "Components/IComponent.hpp"
+#include "Systems/SystemExemple.hpp"
+#include "Components/ComponentMovable.hpp"
 
 namespace ecs
 {
@@ -40,8 +42,8 @@ namespace ecs
         unsigned int addSystem(ecs::ISystem *e);
         ecs::IEntity *getEntity(unsigned int const id);
         ecs::ISystem *getSystem(unsigned int const id);
-        void removeEntity(std::vector<ecs::IEntity *>::iterator it);
-        void removeSystem(std::vector<ecs::ISystem *>::iterator it);
+        void removeEntityIterrator(std::vector<ecs::IEntity *>::iterator it);
+        void removeSystemIterrator(std::vector<ecs::ISystem *>::iterator it);
         void removeEntity(unsigned int const i);
         void removeSystem(unsigned int const i);
         std::vector<ecs::IEntity *> &getEntities();
@@ -82,6 +84,8 @@ namespace ecs
         delete _systems[ecs::TemplateSystem<T>::getId()];
         _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
-} // namespace ecs
+}
+
+ecs::Core initEntities();
 
 #endif /* !ECS_HPP_ */

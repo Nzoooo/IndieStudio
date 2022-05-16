@@ -7,12 +7,12 @@
 
 #include "ComponentDroppable.hpp"
 
-bool ComponentDroppable::getAbleToBePicked() const
+bool ComponentDroppable::getAbleToBeDropped() const
 {
-    return (_ableToBePicked);
+    return (_ableToBeDropped);
 }
 
-void ComponentDroppable::setAbleToBePicked(bool ableToBePicked)
+void ComponentDroppable::setAbleToBeDropped(bool ableToBeDropped)
 {
-    _ableToBePicked = ableToBePicked;
+    _ableToBeDropped = ableToBeDropped;
 }

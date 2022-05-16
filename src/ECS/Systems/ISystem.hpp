@@ -1,23 +1,24 @@
 #pragma once
 
-namespace ecs {
-  class World;
+#include "../ecs.hpp"
 
-  class ISystem {
-  public:
-    virtual ~ISystem() {}
-    virtual void update(ecs::World &world) = 0;
+namespace ecs
+{
+    class ISystem {
+    public:
+        virtual ~ISystem() {}
+        virtual void update(ecs::Core &world) = 0;
 
-  protected:
-    static unsigned int _idCount;
-  };
+    protected:
+        static unsigned int _idCount;
+    };
 
-  template<typename T>
-  class TemplateSystem : public ISystem {
-  public:
-    static unsigned int getId() {
-      static unsigned int id = ecs::ISystem::_idCount++;
-      return id;
-    }
-  };
-}
+    template <typename T>
+    class TemplateSystem : public ISystem {
+    public:
+        static unsigned int getId() {
+            static unsigned int id = ecs::ISystem::_idCount++;
+            return id;
+        }
+    };
+} // namespace ecs

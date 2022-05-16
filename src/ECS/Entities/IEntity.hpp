@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2022
+** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+** File description:
+** IEntity
+*/
+
 #pragma once
 
 #include <utility>
@@ -22,7 +29,7 @@ namespace ecs
         template <typename T, typename... U>
         void add(U &&... args);
     };
-} // namespace ecs
+}
 
 template <typename T>
 T *ecs::IEntity::get()

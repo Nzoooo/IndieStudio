@@ -34,9 +34,9 @@ int coreLoop(ecs::Core index)
             // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
             printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             for (auto *it: index.getEntities()) {
-                if (it->has<componentMovable>()){
+                if (it->has<ComponentMovable>()){
                     std::cout << "He haves component to move !" << std::endl;
-                    if (it->get<componentMovable>()->getAbleToMove() == true)
+                    if (it->get<ComponentMovable>()->getAbleToMove() == true)
                         std::cout << "He haves autorisation to move !" << std::endl;
                     else
                         std::cout << "But he doesn't have the autorisation to move..." << std::endl;

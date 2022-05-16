@@ -5,7 +5,7 @@
 ** initEntities
 */
 
-#include "../ECS/ecs.hpp"
+#include "ecs.hpp"
 
 ecs::Core initEntities()
 {
@@ -13,8 +13,8 @@ ecs::Core initEntities()
     ecs::IEntity *e = new ecs::IEntity();
     ecs::IEntity *r = new ecs::IEntity();
     
-    e->add<componentMovable>();
-    r->add<componentMovable>(false);
+    e->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 5, true);
+    r->add<ComponentMovable>(ComponentMovable::Direction::UP, 5, false);
     index.addEntity(e);
     index.addEntity(r);
     return (index);

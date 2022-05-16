@@ -8,11 +8,10 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
-#include "Entities/IEntity.hpp"
-#include "Systems/ISystem.hpp"
-#include "Components/IComponent.hpp"
 #include "Systems/SystemExemple.hpp"
 #include "Components/ComponentMovable.hpp"
+#include "Entities/IEntity.hpp"
+#include "Systems/ISystem.hpp"
 
 namespace ecs
 {

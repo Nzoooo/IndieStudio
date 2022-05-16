@@ -8,17 +8,21 @@
 #pragma once
 
 #include "IComponent.hpp"
+#include <string>
 
 class ComponentExplodable : public ecs::IComponent {
     public:
-        ComponentExplodable(bool ableToExplode = false) : _ableToExplode(ableToExplode) {};
+        ComponentExplodable(std::size_t deflagrationRange = 0, bool ableToExplode = false) : _deflagrationRange(deflagrationRange), _ableToExplode(ableToExplode) {};
         ~ComponentExplodable() = default;
 
-        bool ableToExplode() const;
+        std::size_t getDeflagrationRange() const;
+        bool getAbleToExplode() const;
 
+        void setDeflagrationRange(std::size_t deflagrationRange);
         void setAbleToExplode(bool ableToExplode);
 
     protected:
     private:
+        std::size_t _deflagrationRange;
         bool _ableToExplode;
 };

@@ -3,7 +3,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/ECS/Systems)
 
 set(SRC
     ${SRC}
-    ${SRCROOT}
+    ${SRCROOT}/ISystem.cpp
     PARENT_SCOPE
 )
 

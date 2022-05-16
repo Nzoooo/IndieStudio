@@ -4,6 +4,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/ECS/Components)
 set(SRC
     ${SRC}
     ${SRCROOT}/ComponentMovable.cpp
+    ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE
 )
 

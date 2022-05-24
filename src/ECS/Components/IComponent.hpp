@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2022
+** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+** File description:
+** IComponent
+*/
+
 #pragma once
 
 namespace ecs
@@ -15,4 +22,4 @@ namespace ecs
                 return id;
             }
     };
-} // namespace ecs
+}

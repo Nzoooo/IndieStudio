@@ -7,6 +7,7 @@
 
 #pragma once
 
-extern "C" {
+extern "C"
+{
     #include "../build/_deps/raylib-src/src/raylib.h"
 }

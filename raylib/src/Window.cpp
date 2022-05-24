@@ -12,7 +12,7 @@ raylib::Window::Window()
 {
 }
 
-raylib::Window::Window(int width int height, const std::string& title)
+raylib::Window::Window(int width int height, const std::string &title)
 {
     Init(width, height, title);
 }
@@ -27,7 +27,7 @@ void raylib::Window::Close()
     ::CloseWindow();
 }
 
-void raylib::Window::Init(int width, int height, const std::string& title)
+void raylib::Window::Init(int width, int height, const std::string &title)
 {
     ::InitWindow(width, height, title.c_str());
     if (!isReady())

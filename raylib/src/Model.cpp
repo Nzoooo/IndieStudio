@@ -17,7 +17,7 @@ raylib::Model::~Model()
     Unload();
 }
 
-void raylib::Model::Load(const std::string& fileName)
+void raylib::Model::Load(const std::string &fileName)
 {
     ::Model model = ::LoadModel(fileName.c_str());
     transform = model.transform;
@@ -33,7 +33,7 @@ void raylib::Model::Load(const std::string& fileName)
     bindPose = model.bindPose;
 }
 
-void raylib::Model::Load(::Mesh& mesh)
+void raylib::Model::Load(::Mesh &mesh)
 {
     ::Model model = ::LoadModelFromMesh(mesh);
     transform = model.transform;
@@ -78,12 +78,12 @@ void raylib::Model::DrawEx(::Vector3 position, ::Vector3 rotationAxis, float rot
     ::DrawModelEx(*this, position, rotationAxis, rotationAngle, scale, tint);
 }
 
-void raylib::Model::UpdateAnimation(::ModelAnimation& anim, int frame)
+void raylib::Model::UpdateAnimation(::ModelAnimation &anim, int frame)
 {
     ::UpdateModelAnimation(*this, anim, frame);
 }
 
-bool raylib::Model::IsModelAnimationValid(::ModelAnimation& anim) const
+bool raylib::Model::IsModelAnimationValid(::ModelAnimation &anim) const
 {
     return ::IsModelAnimationValid(*this, anim);
 }

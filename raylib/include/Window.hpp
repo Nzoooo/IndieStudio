@@ -13,11 +13,11 @@ namespace raylib {
     class Window {
         public:
             Window();
-            Window(int width = 800, int height = 600, const std::string& title = "raylib");
+            Window(int width = 800, int height = 600, const std::string &title = "raylib");
             ~Window();
 
             void Close();
-            void Init(int width = 800, int height = 600, const std::string& title = "raylib");
+            void Init(int width = 800, int height = 600, const std::string &title = "raylib");
             bool isReady() const;
             bool ShouldClose() const;
             bool IsFullscreen();

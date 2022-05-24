@@ -1,13 +1,22 @@
+/*
+** EPITECH PROJECT, 2022
+** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+** File description:
+** ISystem
+*/
+
 #pragma once
 
-#include "../ecs.hpp"
+#include <iostream>
 
 namespace ecs
 {
+    class Core;
+
     class ISystem {
     public:
         virtual ~ISystem() {}
-        virtual void update(ecs::Core &world) = 0;
+        virtual void update(ecs::Core &index) = 0;
 
     protected:
         static unsigned int _idCount;
@@ -21,4 +30,4 @@ namespace ecs
             return id;
         }
     };
-} // namespace ecs
+}

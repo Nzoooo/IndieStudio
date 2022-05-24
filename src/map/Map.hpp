@@ -12,10 +12,12 @@
 #include <array>
 
 #define MAPSIZE 15
+#define MAXTUNNELS 55
+#define MAXLENGHT 15
 
 class Map {
     public:
-        Map(size_t dimension = MAPSIZE, size_t maxTunnels = 9, size_t maxLength = 9);
+        Map();
         ~Map();
 
         int **initMap();
@@ -23,10 +25,11 @@ class Map {
         int **getMap();
 
         void readMap();
+
+        void generateMap();
+        void putSpawn();
+        std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
     private:
-        size_t _dimensions;
-        size_t _maxTunnels;
-        size_t _maxLength;
         int **_map;
 };
 

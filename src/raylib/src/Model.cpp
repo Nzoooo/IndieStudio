@@ -5,8 +5,8 @@
 ** Model
 */
 
-#include "include/Model.hpp"
-#include "include/RaylibException.hpp"
+#include "../include/Model.hpp"
+#include "../include/RaylibException.hpp"
 
 raylib::Model::Model()
 {
@@ -86,19 +86,4 @@ void raylib::Model::UpdateAnimation(::ModelAnimation &anim, int frame)
 bool raylib::Model::IsModelAnimationValid(::ModelAnimation &anim) const
 {
     return ::IsModelAnimationValid(*this, anim);
-}
-
-void raylib::Model::_setModel(::Model &model)
-{
-    transform = model.transform;
-
-    meshCount = model.meshCount;
-    materialCount = model.materialCount;
-    meshes = model.meshes;
-    materials = model.materials;
-    meshMaterial = model.meshMaterial;
-
-    boneCount = model.boneCount;
-    bones = model.bones;
-    bindPose = model.bindPose;
 }

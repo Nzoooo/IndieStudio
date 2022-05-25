@@ -5,8 +5,8 @@
 ** Texture
 */
 
-#include "include/Texture.hpp"
-#include "include/RaylibException.hpp"
+#include "../include/Texture.hpp"
+#include "../include/RaylibException.hpp"
 
 raylib::Texture::Texture()
 {

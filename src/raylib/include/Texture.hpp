@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <string>
 #include "raylib.hpp"
 
 namespace raylib {

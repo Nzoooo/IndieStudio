@@ -13,6 +13,7 @@ namespace raylib {
     class ModelAnimation : public ::ModelAnimation {
         public:
             ModelAnimation();
+            ModelAnimation(const ModelAnimation &other) = delete;
             ~ModelAnimation();
 
             void Unload();

@@ -5,10 +5,10 @@
 ** Window
 */
 
-#include "include/Window.hpp"
-// #include "../include/RaylibException.hpp"
+#include "../include/Window.hpp"
+#include "../include/RaylibException.hpp"
 
-raylib::Window::Window(int width int height, const std::string &title)
+raylib::Window::Window(int width, int height, const std::string &title)
 {
     Init(width, height, title);
 }
@@ -20,122 +20,117 @@ raylib::Window::~Window()
 
 void raylib::Window::Close()
 {
-    // ::CloseWindow();
+    ::CloseWindow();
 }
 
 void raylib::Window::Init(int width, int height, const std::string &title)
 {
-    // ::InitWindow(width, height, title.c_str());
-    // if (!isReady())
-    //     throw RaylibException("Failed to create window");
+    ::InitWindow(width, height, title.c_str());
+    if (!isReady())
+        throw RaylibException("Failed to create window");
 }
 
-// bool raylib::Window::isReady() const
-// {
-//     return (::IsWindowReady());
-// }
+bool raylib::Window::isReady() const
+{
+    return (::IsWindowReady());
+}
 
-// bool raylib::Window::ShouldClose() const
-// {
-//     return (::WindowShouldClose());
-// }
+bool raylib::Window::ShouldClose() const
+{
+    return (::WindowShouldClose());
+}
 
-// bool raylib::Window::IsFullscreen()
-// {
-//    return (::IsWindowFullscreen());
-// }
+bool raylib::Window::IsFullscreen()
+{
+   return (::IsWindowFullscreen());
+}
 
-// bool raylib::Window::IsMinimized()
-// {
-//     return (::IsWindowMinimized());
-// }
+bool raylib::Window::IsMinimized()
+{
+    return (::IsWindowMinimized());
+}
 
-// bool raylib::Window::IsMaximized()
-// {
-//     return (::IsWindowMaximized());
-// }
+bool raylib::Window::IsMaximized()
+{
+    return (::IsWindowMaximized());
+}
 
-// bool raylib::Window::IsResized()
-// {
-//     return (::IsWindowResized());
-// }
+bool raylib::Window::IsResized()
+{
+    return (::IsWindowResized());
+}
 
-// void raylib::Window::Maximize()
-// {
-//     ::MaximizeWindow();
-// }
+void raylib::Window::Maximize()
+{
+    ::MaximizeWindow();
+}
 
-// void raylib::Window::Minimize()
-// {
-//     ::MaximizeWindow();
-// }
+void raylib::Window::Minimize()
+{
+    ::MaximizeWindow();
+}
 
-// void raylib::Window::Restore()
-// {
-//     ::RestoreWindow();
-// }
+void raylib::Window::Restore()
+{
+    ::RestoreWindow();
+}
 
-// void raylib::Window::SetIcon(::Image &image)
-// {
-//     ::SetWindowIcon(image);
-// }
+void raylib::Window::SetIcon(::Image &image)
+{
+    ::SetWindowIcon(image);
+}
 
-// void raylib::Window::SetTitle(const std::string &title)
-// {
-//     ::SetWindowTitle(title.c_str());
-// }
+void raylib::Window::SetTitle(const std::string &title)
+{
+    ::SetWindowTitle(title.c_str());
+}
 
-// void raylib::Window::SetPosition(int x, int y)
-// {
-//     ::SetWindowPosition(x, y);
-// }
+void raylib::Window::SetPosition(int x, int y)
+{
+    ::SetWindowPosition(x, y);
+}
 
-// void raylib::Window::SetMinSize(int width, int height);
-// {
-//     ::SetWindowMinSize(width, height)
-// }
+void raylib::Window::SetMinSize(int width, int height)
+{
+    ::SetWindowMinSize(width, height);
+}
 
-// void raylib::Window::SetSize(int width, int height)
-// {
-//     ::SetWindowSize(width, height);
-// }
+void raylib::Window::SetSize(int width, int height)
+{
+    ::SetWindowSize(width, height);
+}
 
-// void raylib::Window::SetOpacity(float opacity)
-// {
-//     ::SetWindowOpacity(width, height);
-// }
+int raylib::Window::GetWidth()
+{
+    return (::GetScreenWidth());
+}
 
-// int raylib::Window::GetWidth()
-// {
-//     return (::GetScreenWidth());
-// }
+int raylib::Window::GetHeight()
+{
+    return (::GetScreenHeight());
+}
 
-// int raylib::Window::GetHeight()
-// {
-//     return (::GetScreenHeight());
-// }
+::Vector2 raylib::Window::GetPosition()
+{
+    return (::GetWindowPosition());
+}
 
-// ::Vector2 raylib::Window::GetPosition()
-// {
-//     return (::GetWindowPosition());
-// }
+void raylib::Window::BeginDrawing()
+{
+    ::BeginDrawing();
+}
 
-// void raylib::Window::BeginDrawing()
-// {
-//     ::BeginDrawing();
-// }
+void raylib::Window::EndDrawing()
+{
+    ::EndDrawing();
+}
 
-// void raylib::Window::EndDrawing()
-// {
-//     ::EndDrawing();
-// }
+float raylib::Window::GetFrameTime()
+{
+    return (::GetFrameTime());
+}
 
-// float raylib::Window::GetFrameTime()
-// {
-//     return (::GetFrameTime());
-// }
-
-// double raylib::Window::GetTime()
-// {
-//     return (::GetTime());
-// }
+double raylib::Window::GetTime()
+{
+    return (::GetTime());
+}

@@ -3,16 +3,24 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/raylib/src)
 
 set(SRC
     ${SRC}
-    ${SRCROOT}/BoundingBox.cpp
+    ${SRCROOT}/Window.cpp
     ${SRCROOT}/Model.cpp
     ${SRCROOT}/ModelAnimation.cpp
     ${SRCROOT}/Texture.cpp
-    ${SRCROOT}/Window.cpp
+    ${SRCROOT}/Vector2.cpp
+    ${SRCROOT}/Vector3.cpp
+    ${SRCROOT}/BoundingBox.cpp
     PARENT_SCOPE
 )
 
 SET(INCDIRS
     ${INCDIRS}
-    ${INCROOT}
+    ${INCROOT}/Window.hpp
+    ${INCROOT}/Model.hpp
+    ${INCROOT}/ModelAnimation.hpp
+    ${INCROOT}/Texture.hpp
+    ${INCROOT}/Vector2.hpp
+    ${INCROOT}/Vector3.hpp
+    ${INCROOT}/BoundingBox.hpp
     PARENT_SCOPE
 )

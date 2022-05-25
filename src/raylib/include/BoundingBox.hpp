@@ -9,9 +9,11 @@
 
 #include "raylib.hpp"
 
+namespace
 class BoundingBox : public ::BoundingBox {
     public:
         BoundingBox() = default;
+        BoundingBox(const BoundingBox &other);
         BoundingBox(::Vector3 _min, ::Vector3 _max);
         ~BoundingBox();
 

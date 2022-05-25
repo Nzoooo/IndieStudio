@@ -7,12 +7,14 @@
 
 #pragma once
 
+#include <string>
 #include "raylib.hpp"
 
 namespace raylib {
     class Model : public ::Model {
         public:
             Model();
+            Model(const Model &other) = delete;
             ~Model();
 
             void Load(const std::string &fileName);

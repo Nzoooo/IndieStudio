@@ -5,15 +5,21 @@
 ** BoundingBox
 */
 
-#include "include/BoundingBox.hpp"
+#include "../include/BoundingBox.hpp"
 
-BoundingBox(::Vector3 _min, ::Vector3 _max)
+raylib::BoundingBox::BoundingBox(::Vector3 _min, ::Vector3 _max)
 {
     min = _min;
     max = _max;
 }
 
-BoundingBox::~BoundingBox()
+raylib::BoundingBox::BoundingBox(const BoundingBox &other)
+{
+    min = other.min;
+    max = other.max;
+}
+
+raylib::BoundingBox::~BoundingBox()
 {
 }
 

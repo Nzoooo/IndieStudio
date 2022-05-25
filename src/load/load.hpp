@@ -17,6 +17,7 @@
 class Load {
   public:
     ecs::Core loadFile(void);
+    ecs::IEntity loadEntity(std::ifstream &file);
 };
 
 #endif /* !LOAD_HPP_ */

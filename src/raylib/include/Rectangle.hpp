@@ -14,16 +14,15 @@ namespace raylib {
         public:
             Rectangle();
             Rectangle(float _x, float _y, float _width, float _height);
+            Rectangle(::Vector2 position, ::Vector2 size);
             Rectangle(const Rectangle &other);
             ~Rectangle();
 
-            void Draw(int posX, int posY, int width, int height, ::Color color);
-            void DrawV(::Vector2 position, ::Vector2 size, ::Color color);
-            void DrawRec(::Rectangle rec, ::Color color);
-            void DrawLines(int posX, int posY, int width, int height, ::Color color);
-            void DrawLinesEx(::Rectangle rec, float lineThick, ::Color color);
-            void DrawRounded(::Rectangle rec, float roundness, int segments, ::Color color);
-            void DrawRoundedLines(::Rectangle rec, float roundness, int segments, float lineThick, ::Color color);
+            void Draw(::Color color);
+            void DrawLines(::Color color);
+            void DrawLinesEx(float lineThick, ::Color color);
+            void DrawRounded(float roundness, int segments, ::Color color);
+            void DrawRoundedLines(float roundness, int segments, float lineThick, ::Color color);
 
         protected:
         private:

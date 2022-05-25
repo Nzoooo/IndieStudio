@@ -29,38 +29,28 @@ namespace raylib {
     {
     }
 
-    void Rectangle::Draw(int posX, int posY, int _width, int _height, ::Color color)
+    void Rectangle::Draw(::Color color)
     {
-        ::DrawRectangle(posX, posY, _width, _height, color);
+        ::DrawRectangle(x, y, width, height, color);
     }
 
-    void Rectangle::DrawV(::Vector2 position, ::Vector2 size, ::Color color)
+    void Rectangle::DrawLines(::Color color)
     {
-        ::DrawRectangleV(position, size, color);
+        ::DrawRectangleLines(x, y, width, height, color);
     }
 
-    void Rectangle::DrawRec(::Rectangle rec, ::Color color)
+    void Rectangle::DrawLinesEx(float lineThick, ::Color color)
     {
-        ::DrawRectangleRec(rec, color);
+        ::DrawRectangleLinesEx(*this, lineThick, color);
     }
 
-    void Rectangle::DrawLines(int posX, int posY, int _width, int _height, ::Color color)
+    void Rectangle::DrawRounded(float roundness, int segments, ::Color color)
     {
-        ::DrawRectangleLines(posX, posY, _width, _height, color);
+        ::DrawRectangleRounded(*this, roundness, segments, color);
     }
 
-    void Rectangle::DrawLinesEx(::Rectangle rec, float lineThick, ::Color color)
+    void Rectangle::DrawRoundedLines(float roundness, int segments, float lineThick, ::Color color)
     {
-        ::DrawRectangleLinesEx(rec, lineThick, color);
-    }
-
-    void Rectangle::DrawRounded(::Rectangle rec, float roundness, int segments, ::Color color)
-    {
-        ::DrawRectangleRounded(rec, roundness, segments, color);
-    }
-
-    void Rectangle::DrawRoundedLines(::Rectangle rec, float roundness, int segments, float lineThick, ::Color color)
-    {
-        ::DrawRectangleRoundedLines(rec, roundness, segments, lineThick, color);
+        ::DrawRectangleRoundedLines(*this, roundness, segments, lineThick, color);
     }
 }

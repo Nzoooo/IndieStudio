@@ -7,10 +7,8 @@
 
 #include "../include/BoundingBox.hpp"
 
-raylib::BoundingBox::BoundingBox(::Vector3 _min, ::Vector3 _max)
+raylib::BoundingBox::BoundingBox(::Vector3 _min, ::Vector3 _max) : ::BoundingBox{_min, _max}
 {
-    min = _min;
-    max = _max;
 }
 
 raylib::BoundingBox::BoundingBox(const BoundingBox &other)

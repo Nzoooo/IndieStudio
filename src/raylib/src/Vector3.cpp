@@ -5,8 +5,8 @@
 ** Vector3
 */
 
-#include "../include/Vector3.hpp"
-#include "../include/RaylibException.hpp"
+#include "include/Vector3.hpp"
+#include "include/RaylibException.hpp"
 
 raylib::Vector3::Vector3(::Vector3 &vec)
 {

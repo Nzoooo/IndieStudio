@@ -5,8 +5,8 @@
 ** Model
 */
 
-#include "../include/Model.hpp"
-#include "../include/RaylibException.hpp"
+#include "include/Model.hpp"
+#include "include/RaylibException.hpp"
 
 raylib::Model::Model()
 {

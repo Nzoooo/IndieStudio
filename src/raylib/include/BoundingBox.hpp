@@ -16,6 +16,8 @@ class BoundingBox : public ::BoundingBox {
         ~BoundingBox();
 
         void Draw();
+        bool checkCollision(::BoundingBox &box2);
+        bool checkCollision(::Vector3 center, float radius);
 
     protected:
     private:

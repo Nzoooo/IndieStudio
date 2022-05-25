@@ -5,8 +5,8 @@
 ** Vector2
 */
 
-#include "../include/Vector2.hpp"
-#include "../include/RaylibException.hpp"
+#include "include/Vector2.hpp"
+#include "include/RaylibException.hpp"
 
 raylib::Vector2::Vector2(::Vector2 &vec)
 {

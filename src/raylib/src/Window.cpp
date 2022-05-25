@@ -5,7 +5,7 @@
 ** Window
 */
 
-#include "../include/Window.hpp"
+#include "include/Window.hpp"
 // #include "../include/RaylibException.hpp"
 
 raylib::Window::Window(int width int height, const std::string &title)

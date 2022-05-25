@@ -5,8 +5,8 @@
 ** ModelAnimation
 */
 
-#include "../include/ModelAnimation.hpp"
-#include "../include/RaylibException.hpp"
+#include "include/ModelAnimation.hpp"
+#include "include/RaylibException.hpp"
 
 raylib::ModelAnimation::ModelAnimation()
 {

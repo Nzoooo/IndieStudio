@@ -5,6 +5,7 @@ set(SRC)
 
 add_subdirectory(core)
 add_subdirectory(ECS)
+add_subdirectory(map)
 
 set(INCDIRS ${INCROOT})
 

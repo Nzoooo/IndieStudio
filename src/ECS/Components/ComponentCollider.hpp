@@ -7,7 +7,9 @@
 
 #pragma once
 
-class ComponentCollider {
+#include "IComponent.hpp"
+
+class ComponentCollider : ecs::IComponent {
     public:
         ComponentCollider(bool ableToTakeCollider = true) : _ableToTakeCollider(ableToTakeCollider) {};
         ~ComponentCollider() = default;

@@ -7,7 +7,9 @@
 
 #pragma once
 
-class ComponentPickable {
+#include "IComponent.hpp"
+
+class ComponentPickable : ecs::IComponent {
     public:
         ComponentPickable(bool ableToBePicked = false) : _ableToBePicked(ableToBePicked) {};
         ~ComponentPickable() = default;

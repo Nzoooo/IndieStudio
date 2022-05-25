@@ -17,6 +17,10 @@ namespace raylib {
     {
     }
 
+    Rectangle::Rectangle(::Vector2 position, ::Vector2 size) : ::Rectangle{position.x, position.y, size.x, size.y}
+    {
+    }
+
     Rectangle::Rectangle(const Rectangle &other)
     {
         x = other.x;

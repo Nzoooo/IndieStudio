@@ -6,10 +6,8 @@ set(SRC
     ${SRCROOT}/Window.cpp
     ${SRCROOT}/Model.cpp
     ${SRCROOT}/ModelAnimation.cpp
-    ${SRCROOT}/Texture.cpp
-    ${SRCROOT}/Vector2.cpp
-    ${SRCROOT}/Vector3.cpp
     ${SRCROOT}/BoundingBox.cpp
+    ${SRCROOT}/Rectangle.cpp
     PARENT_SCOPE
 )
 

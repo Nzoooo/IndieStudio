@@ -9,18 +9,19 @@
 
 #include "raylib.hpp"
 
-namespace
-class BoundingBox : public ::BoundingBox {
-    public:
-        BoundingBox() = default;
-        BoundingBox(const BoundingBox &other);
-        BoundingBox(::Vector3 _min, ::Vector3 _max);
-        ~BoundingBox();
+namespace raylib {
+    class BoundingBox : public ::BoundingBox {
+        public:
+            BoundingBox() = default;
+            BoundingBox(const BoundingBox &other);
+            BoundingBox(::Vector3 _min, ::Vector3 _max);
+            ~BoundingBox();
 
-        void Draw();
-        bool checkCollision(::BoundingBox &box2);
-        bool checkCollision(::Vector3 center, float radius);
+            void Draw(::Color color);
+            bool checkCollision(::BoundingBox &box2);
+            bool checkCollision(::Vector3 center, float radius);
 
-    protected:
-    private:
-};
+        protected:
+        private:
+    };
+}

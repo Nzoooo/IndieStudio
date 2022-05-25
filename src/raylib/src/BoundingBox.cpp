@@ -23,7 +23,7 @@ raylib::BoundingBox::~BoundingBox()
 {
 }
 
-raylib::BoundingBox::Draw(::Color color)
+void raylib::BoundingBox::Draw(::Color color)
 {
     DrawBoundingBox(*this, color);
 }

@@ -13,7 +13,7 @@
 
 #define MAPSIZE 15
 #define MAXTUNNELS 55
-#define MAXLENGHT 15
+#define MAXLENGHT 30
 
 class Map {
     public:
@@ -28,6 +28,7 @@ class Map {
 
         void generateMap();
         void putSpawn();
+        void randomBonus(size_t currentRow, size_t currentColumn);
         std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
     private:
         int **_map;

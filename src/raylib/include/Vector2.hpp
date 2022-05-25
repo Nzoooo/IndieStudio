@@ -12,27 +12,15 @@
 namespace raylib {
     class Vector2 : public ::Vector2 {
         public:
-            Vector2(::Vector2 &vec) {
-                _setVector2(vec);
-            }
-            Vector2(float _x, float _y) {
-                x = _x;
-                y = _y;
-            }
-            Vector2() {
-                x = 0;
-                y = 0;
-            }
-            Vector2 &operator=(::Vector2 &vector2) {
-                _setVector2(vector2);
-                return *this;
-            }
+            Vector2(::Vector2 &vec);
+            Vector2(const Vector2 &other);
+            Vector2 &operator=(const Vector2 &other);
+            Vector2 &operator=(::Vector2 &vector2)
+            Vector2(float _x, float _y);
+            Vector2();
             ~Vector2();
 
         private:
-            void _setVector2(::Vector2 &vec) {
-                x = vec.x;
-                y = vec.y;
-            }
+            _setVector2(::Vector2 &vec);              
     };
 }

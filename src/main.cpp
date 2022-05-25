@@ -6,11 +6,13 @@
 */
 
 #include "core/core.hpp"
+#include "core/mainMenu.hpp"
 
 int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    coreLoop();
+    mainMenu();
+    // coreLoop();
     return 0;
 }

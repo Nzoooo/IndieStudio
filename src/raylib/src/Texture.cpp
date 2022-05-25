@@ -59,6 +59,11 @@ void raylib::Texture::Unload()
     ::UnloadTexture(*this);
 }
 
+void raylib::Texture::Update(::Rectangle rec, const void *pixels)
+{
+    ::UpdateTextureRec(*this, rec, pixels);
+}
+
 void raylib::Texture::Update(const void *pixels)
 {
     ::UpdateTexture(*this, pixels);
@@ -84,12 +89,12 @@ void raylib::Texture::Draw(::Vector2 position, float rotation, float scale, ::Co
     ::DrawTextureEx(*this, position, rotation, scale, tint);
 }
 
-raylib::Texture &raylib::Texture::SetShapes(::Rectangle& source)
+void raylib::Texture::SetShapes(::Rectangle& source)
 {
     ::SetShapesTexture(*this, source);
 }
 
-raylib::Texture &raylib::Texture::SetShaderValue(::Shader& shader, int locIndex)
+void raylib::Texture::SetShaderValue(::Shader& shader, int locIndex)
 {
     ::SetShaderValueTexture(shader, locIndex, *this);
 }

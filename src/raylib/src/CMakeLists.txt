@@ -9,6 +9,9 @@ set(SRC
     ${SRCROOT}/BoundingBox.cpp
     ${SRCROOT}/Rectangle.cpp
     ${SRCROOT}/Color.cpp
+    ${SRCROOT}/Texture.cpp
+    ${SRCROOT}/Vector2.cpp
+    ${SRCROOT}/Vector3.cpp
     PARENT_SCOPE
 )
 

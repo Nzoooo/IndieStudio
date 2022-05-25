@@ -19,8 +19,8 @@ namespace raylib {
             Texture(const Texture &other) = delete;
             Texture(const ::Texture &texture);
 
-            Texture &SetShaderValue(::Shader& shader, int locIndex);
-            Texture &SetShapes(::Rectangle& source);
+            void SetShaderValue(::Shader& shader, int locIndex);
+            void SetShapes(::Rectangle& source);
             void Draw(::Vector2 position, float rotation, float scale = 1.0f, ::Color tint = {255, 255, 255, 255});
             void Draw(::Vector2 position, ::Color tint = {255, 255, 255, 255});
             void SetWrap(int wrapMode);

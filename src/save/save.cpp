@@ -23,23 +23,35 @@ Save::~Save()
 
 void Save::saveCore(ecs::Core &core)
 {
+    size_t i = 0;
+
     eraseSave();
-    _file << "[Entities]" << std::endl;
+    _file << "Entities [" << std::endl;
     for (auto &entity : core.getEntities()) {
+        _file << "\tEntity[" << i << "] {" << std::endl;
         saveEntity(*entity);
-        _file << std::endl;
+        _file << "\t}" << std::endl;
+        i++;
     }
+    _file << "}" << std::endl;
 }
 
 void Save::saveEntity(ecs::IEntity &entity)
 {
     if (entity.has<ComponentMovable>()) {
         auto component_data = dynamic_cast<ComponentMovable *>(entity.get<ComponentMovable>());
-        _file << "\tComponentMovable: " << component_data->getDirection() << " "  << component_data->getSpeed() << " "  << component_data->getAbleToMove() << std::endl;
+        _file << "\t\tComponentMovable {" << std::endl, _file << "\t\t\tdir: " << component_data->getDirection() << "," << std::endl;
+        _file << "\t\t\tspeed: " << component_data->getSpeed() << "," << std::endl;
+        _file << "\t\t\tableToMove: " << component_data->getAbleToMove() << std::endl;
+        _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentTransform>()) {
         auto component_data = dynamic_cast<ComponentTransform *>(entity.get<ComponentTransform>());
-        _file << "\tComponentTransform: " << component_data->getHeight() << " " << component_data->getWidth() << " "  << component_data->getPosX() << " "  << component_data->getPosY() << std::endl;
+        _file << "\t\tComponentTransform {" << std::endl, _file << "\t\t\theight: " << component_data->getHeight() << "," << std::endl;
+        _file << "\t\t\twidth: " << component_data->getWidth() << "," << std::endl;
+        _file << "\t\t\tposX: " << component_data->getPosX() << "," << std::endl;
+        _file << "\t\t\tposY: " << component_data->getPosY() << std::endl;
+        _file << "\t\t}" << std::endl;
     }
 }
 

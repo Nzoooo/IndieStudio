@@ -9,14 +9,14 @@
 
 class ComponentCollider {
     public:
-        ComponentCollider(bool takeCollider = false) : _takeCollider(takeCollider) {};
+        ComponentCollider(bool ableToTakeCollider = true) : _ableToTakeCollider(ableToTakeCollider) {};
         ~ComponentCollider() = default;
 
-        bool getTakeCollider() const;
+        bool getAbleToTakeCollider() const;
 
-        void setTakeCollider(bool takeCollider);
+        void setAbleToTakeCollider(bool ableToTakeCollider);
 
     protected:
     private:
-        bool _takeCollider;
+        bool _ableToTakeCollider;
 };

@@ -14,11 +14,11 @@
 #include <sstream>
 extern "C"
 {
-#include <sys/stat.h>
+    #include <sys/stat.h>
 }
 
 template <typename T>
-T getMember(std::ifstream &file, std::string member)
+static T getMember(std::ifstream &file, std::string member)
 {
     T type;
     std::string line;
@@ -29,7 +29,7 @@ T getMember(std::ifstream &file, std::string member)
         // Skip tabulations
         line = line.substr(std::count(line.begin(), line.end(), '\t'));
         if (line.find(member) != std::string::npos) {
-            //type = static_cast<T>(line);
+            // type = static_cast<T>(line);
             break;
         }
     }
@@ -65,7 +65,7 @@ ecs::Core Load::loadFile(void)
         std::string line;
         while (getline(file, line)) {
             if (checked_file == 0 && std::to_string(st.st_mtime) != line)
-                throw /* Le monsieur a triché en modifiant le ficher save */;
+                throw /* File changed manually */;
             checked_file = 1;
             if (line == "Entities [") {
                 while (getline(file, line)) {

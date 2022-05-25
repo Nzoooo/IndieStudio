@@ -26,6 +26,7 @@ void Save::saveCore(ecs::Core &core)
     size_t i = 0;
 
     eraseSave();
+    _file << std::time(nullptr) << std::endl;
     _file << "Entities [" << std::endl;
     for (auto &entity : core.getEntities()) {
         _file << "\tEntity[" << i << "] {" << std::endl;
@@ -33,8 +34,7 @@ void Save::saveCore(ecs::Core &core)
         _file << "\t}" << std::endl;
         i++;
     }
-    _file << "}" << std::endl;
-    _file << std::time(nullptr) << std::endl;
+    _file << "]" << std::endl;
 }
 
 void Save::saveEntity(ecs::IEntity &entity)

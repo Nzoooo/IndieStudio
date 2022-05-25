@@ -12,17 +12,17 @@
 
 class ComponentExplodable : public ecs::IComponent {
     public:
-        ComponentExplodable(std::size_t deflagrationRange = 0, bool ableToExplode = false) : _deflagrationRange(deflagrationRange), _ableToExplode(ableToExplode) {};
+        ComponentExplodable(std::size_t blastRange = 0, bool ableToExplode = false) : _blastRange(blastRange), _ableToExplode(ableToExplode) {};
         ~ComponentExplodable() = default;
 
-        std::size_t getDeflagrationRange() const;
+        std::size_t getBlastRange() const;
         bool getAbleToExplode() const;
 
-        void setDeflagrationRange(std::size_t deflagrationRange);
+        void setBlastRange(std::size_t blastRange);
         void setAbleToExplode(bool ableToExplode);
 
     protected:
     private:
-        std::size_t _deflagrationRange;
+        std::size_t _blastRange;
         bool _ableToExplode;
 };

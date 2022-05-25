@@ -7,9 +7,9 @@
 
 #include "ComponentExplodable.hpp"
 
-std::size_t ComponentExplodable::getDeflagrationRange() const
+std::size_t ComponentExplodable::getBlastRange() const
 {
-    return (_deflagrationRange);
+    return (_blastRange);
 }
 
 bool ComponentExplodable::getAbleToExplode() const
@@ -17,9 +17,9 @@ bool ComponentExplodable::getAbleToExplode() const
     return (_ableToExplode);
 }
 
-void ComponentExplodable::setDeflagrationRange(std::size_t deflagrationRange)
+void ComponentExplodable::setBlastRange(std::size_t blastRange)
 {
-    _deflagrationRange = deflagrationRange;
+    _blastRange = blastRange;
 }
 
 void ComponentExplodable::setAbleToExplode(bool ableToExplode)

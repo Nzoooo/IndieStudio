@@ -13,7 +13,6 @@
 namespace raylib {
     class Window {
         public:
-            Window() = default;
             Window(int width = 800, int height = 600, const std::string &title = "raylib");
             Window(const Window &other) = delete;
             ~Window();

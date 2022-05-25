@@ -21,7 +21,7 @@ ecs::Core initEntities()
     player->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 5, true);
     player->add<ComponentMovable>(ComponentMovable::Direction::RIGHT, 5, true);
     player->add<ComponentCollider>();
-    player->add<ComponentKillable>(false);
+    player->add<ComponentKillable>(true);
     player->add<ComponentTransform>(50, 50, 50, 50);
 
     index.addEntity(player);

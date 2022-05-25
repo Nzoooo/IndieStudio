@@ -7,12 +7,12 @@
 
 #include "ComponentCollider.hpp"
 
-bool ComponentCollider::getTakeCollider() const
+bool ComponentCollider::getAbleToTakeCollider() const
 {
-    return (_takeCollider);
+    return (_ableToTakeCollider);
 }
 
-void ComponentCollider::setTakeCollider(bool takeCollider)
+void ComponentCollider::setAbleToTakeCollider(bool ableToTakeCollider)
 {
-    _takeCollider = takeCollider;
+    _ableToTakeCollider = ableToTakeCollider;
 }

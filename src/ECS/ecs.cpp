@@ -7,6 +7,9 @@
 
 #include "ecs.hpp"
 
+ecs::Core::Core()
+{
+}
 
 ecs::Core::~Core() {
   for (auto *it: this->_systems)
@@ -44,11 +47,11 @@ unsigned int ecs::Core::addEntity(ecs::IEntity *e) {
     return this->_entities.size() - 1;
 }
 
-void ecs::Core::removeSystem(std::vector<ecs::ISystem*>::iterator it) {
+void ecs::Core::removeEntityIterrator(std::vector<ecs::IEntity*>::iterator it) {
   delete *it;
 }
 
-void ecs::Core::removeSystem(unsigned int const i) {
+void ecs::Core::removeEntity(unsigned int const i) {
   delete this->_entities[i];
 }
 
@@ -65,7 +68,7 @@ unsigned int ecs::Core::addSystem(ecs::ISystem *e) {
     return _entities.size() - 1;
 }
 
-void ecs::Core::removeSystem(std::vector<ecs::ISystem*>::iterator it) {
+void ecs::Core::removeSystemIterrator(std::vector<ecs::ISystem*>::iterator it) {
   delete *it;
 }
 

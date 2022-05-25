@@ -9,7 +9,7 @@
 
 class ComponentCollider {
     public:
-        ComponentCollider(bool takeCollider = true) : _takeCollider(takeCollider) {};
+        ComponentCollider(bool ableToTakeCollider = true) : _ableToTakeCollider(ableToTakeCollider) {};
         ~ComponentCollider() = default;
 
         bool getAbleToTakeCollider() const;

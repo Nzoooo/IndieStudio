@@ -34,6 +34,7 @@ void Save::saveCore(ecs::Core &core)
         i++;
     }
     _file << "}" << std::endl;
+    _file << std::time(nullptr) << std::endl;
 }
 
 void Save::saveEntity(ecs::IEntity &entity)

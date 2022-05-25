@@ -13,17 +13,10 @@ raylib::Vector2::Vector2(::Vector2 &vec)
     _setVector2(vec);
 }
 
-raylib::Vector2::Vector2(const Vector2 &other)
+raylib::Vector2::Vector2(const raylib::Vector2 &other)
 {
     x = other.x;
     y = other.y;
-}
-
-raylib::Vector2::Vector2 &operator=(const Vector2 &other)
-{
-    x = other.x;
-    y = other.y;
-    return *this;
 }
 
 raylib::Vector2::Vector2(float _x, float _y)
@@ -38,7 +31,7 @@ raylib::Vector2::Vector2()
     y = 0;
 }
 
-raylib::Vector2::Vector2 &operator=(::Vector2 &vector2)
+raylib::Vector2 &raylib::Vector2::operator=(::Vector2 &vector2)
 {
     _setVector2(vector2);
     return *this;

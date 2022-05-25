@@ -14,28 +14,26 @@ namespace raylib {
     class Texture : public ::Texture {
         public:
             Texture();
-            Texture(::Image &image, int layout);
-            Texture &operator=(const Texture &other);
-            Texture(const Texture &other);
-            Texture(::Texture &texture);
+            Texture(const ::Image &image, int layout);
+            Texture(const ::Image &image);
+            Texture(const Texture &other) = delete;
+            Texture(const ::Texture &texture);
 
             Texture &SetShaderValue(::Shader& shader, int locIndex);
             Texture &SetShapes(::Rectangle& source);
-            Texture &Draw(::Vector2 position, float rotation, float scale = 1.0f,
-                            ::Color tint = {255, 255, 255, 255});
-            Texture &Draw(::Vector2 position, ::Color tint = {255, 255, 255, 255});
-            Texture &SetWrap(int wrapMode);
-            Texture &SetFilter(int filterMode);
-            Texture &Update(::Rectangle rec, void *pixels);
-            Texture &Update(void *pixels);
-            bool Unload();
+            void Draw(::Vector2 position, float rotation, float scale = 1.0f, ::Color tint = {255, 255, 255, 255});
+            void Draw(::Vector2 position, ::Color tint = {255, 255, 255, 255});
+            void SetWrap(int wrapMode);
+            void SetFilter(int filterMode);
+            void Update(::Rectangle rec, const void *pixels);
+            void Update(const void *pixels);
+            void Unload();
             bool IsReady() const;
-            bool Load(std::string &fileName);
-            bool Load(::Image &image, int layout);
-            bool Load(::Image &image);
-
+            bool Load(const std::string &fileName);
+            bool Load(const ::Image &image, int layout);
+            bool Load(const ::Image &image);
 
         private:
-            void _setTexture(::Texture &texture);
+            void _setTexture(const ::Texture &texture);
     };
 }

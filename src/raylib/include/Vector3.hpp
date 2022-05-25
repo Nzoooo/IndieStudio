@@ -20,5 +20,5 @@ namespace raylib {
             Vector3(float _x);
         private:
             void _setVector3(::Vector3 &vec);
-    }
+    };
 }

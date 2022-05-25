@@ -14,13 +14,12 @@ namespace raylib {
         public:
             Vector2(::Vector2 &vec);
             Vector2(const Vector2 &other);
-            Vector2 &operator=(const Vector2 &other);
-            Vector2 &operator=(::Vector2 &vector2)
+            Vector2 &operator=(::Vector2 &vector2);
             Vector2(float _x, float _y);
             Vector2();
             ~Vector2();
 
         private:
-            _setVector2(::Vector2 &vec);              
+            void _setVector2(::Vector2 &vec);
     };
 }

@@ -13,14 +13,14 @@ raylib::Vector3::Vector3(::Vector3 &vec)
     _setVector3(vec);
 }
 
-raylib::Vector3::Vector3(const Vector3 &other)
+raylib::Vector3::Vector3(const raylib::Vector3 &other)
 {
     x = other.x;
     y = other.y;
     z = other.z;
 }
 
-raylib::Vector3::Vector3 &operator=(const Vector3 &other)
+raylib::Vector3 &raylib::Vector3::operator=(const raylib::Vector3 &other)
 {
     x = other.x;
     y = other.y;
@@ -49,7 +49,8 @@ raylib::Vector3::Vector3(float _x)
     z = 0;
 }
 
-void raylib::Vector3::_setVector3(::Vector3 &vec) {
+void raylib::Vector3::_setVector3(::Vector3 &vec)
+{
     x = vec.x;
     y = vec.y;
     z = vec.z;

@@ -8,6 +8,7 @@ set(SRC
     ${SRCROOT}/ModelAnimation.cpp
     ${SRCROOT}/BoundingBox.cpp
     ${SRCROOT}/Rectangle.cpp
+    ${SRCROOT}/Color.cpp
     PARENT_SCOPE
 )
 

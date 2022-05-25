@@ -12,7 +12,7 @@
 namespace raylib {
     class Rectangle : public ::Rectangle {
         public:
-            Rectangle() = default;
+            Rectangle();
             Rectangle(float _x, float _y, float _width, float _height);
             Rectangle(const Rectangle &other);
             ~Rectangle();

@@ -8,12 +8,13 @@
 #include "../include/Rectangle.hpp"
 
 namespace raylib {
-    Rectangle::Rectangle(float _x, float _y, float _width, float _height)
+    Rectangle::Rectangle() : ::Rectangle{0, 0, 0, 0}
     {
-        x = _x;
-        y = _y;
-        width = _width;
-        height = _height;
+    }
+
+    Rectangle::Rectangle(float _x, float _y, float _width, float _height) :
+    ::Rectangle{_x, _y, _width, _height}
+    {
     }
 
     Rectangle::Rectangle(const Rectangle &other)

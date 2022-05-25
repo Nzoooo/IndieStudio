@@ -7,10 +7,13 @@
 
 #pragma once
 
+#include "raylib.hpp"
+
 namespace raylib {
     class Color : public ::Color {
         public:
             Color();
+            Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha = 255);
             ~Color();
 
             static Color LightGray();

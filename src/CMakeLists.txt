@@ -3,6 +3,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src)
 
 set(SRC)
 
+add_subdirectory(raylib)
 add_subdirectory(core)
 add_subdirectory(ECS)
 

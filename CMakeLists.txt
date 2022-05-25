@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 add_compile_options(
     "-Wall" "-pedantic"
-    "$<$<CONFIG:RELEASE>:-O3;-Werror>"
+    "$<$<CONFIG:RELEASE>:-O3;>"
     "$<$<CONFIG:DEBUG>:-O0;-g3;-ggdb>"
 )
 

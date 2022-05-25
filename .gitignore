@@ -8,5 +8,8 @@
 # Executable
 /bomberman
 
+# game data
+save.txt
+
 # Shame on you!
 vgcore.*

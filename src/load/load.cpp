@@ -8,6 +8,7 @@
 #include "load.hpp"
 #include "ECS/Components/ComponentMovable.hpp"
 #include "ECS/Components/ComponentTransform.hpp"
+#include "ECS/Components/ComponentKillable.hpp"
 
 #include <algorithm>
 #include <iostream>
@@ -61,6 +62,15 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
             int posY = getMember<int>(file, "posY");
             try {
                 entity->add<ComponentTransform>(height, width, posX, posY);
+                continue;
+            } catch (std::exception &e) {
+                std::cout << "ComponentMovable not found" << std::endl;
+            }
+        }
+        if (line == "ComponentKillable {") {
+            bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
+            try {
+                entity->add<ComponentKillable>(ableToBeKilled);
                 continue;
             } catch (std::exception &e) {
                 std::cout << "ComponentMovable not found" << std::endl;

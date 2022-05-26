@@ -8,6 +8,7 @@
 #include "save.hpp"
 #include "ECS/Components/ComponentMovable.hpp"
 #include "ECS/Components/ComponentTransform.hpp"
+#include "ECS/Components/ComponentKillable.hpp"
 
 #include <iostream>
 
@@ -52,6 +53,11 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\twidth: " << component_data->getWidth() << "," << std::endl;
         _file << "\t\t\tposX: " << component_data->getPosX() << "," << std::endl;
         _file << "\t\t\tposY: " << component_data->getPosY() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentKillable>()) {
+        auto component_data = dynamic_cast<ComponentKillable *>(entity.get<ComponentKillable>());
+        _file << "\t\tComponentKillable {" << std::endl, _file << "\t\t\tableToBeKilled: " << component_data->getAbleToBeKilled() << std::endl;
         _file << "\t\t}" << std::endl;
     }
 }

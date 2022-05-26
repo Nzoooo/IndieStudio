@@ -7,9 +7,6 @@
 
 #include "ecs.hpp"
 
-#include "Components/ComponentMovable.hpp"
-#include "Components/ComponentTransform.hpp"
-
 ecs::Core initEntities()
 {
     ecs::Core index;

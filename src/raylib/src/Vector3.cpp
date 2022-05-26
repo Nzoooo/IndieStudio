@@ -55,3 +55,28 @@ void raylib::Vector3::_setVector3(::Vector3 &vec)
     y = vec.y;
     z = vec.z;
 }
+
+void raylib::Vector3::DrawCube(float width, float height, float length, ::Color color)
+{
+    ::DrawCube(*this, width, height, length, color);
+}
+
+void raylib::Vector3::DrawCube(const ::Vector3 &size, ::Color color)
+{
+    ::DrawCubeV(*this, size, color);
+}
+
+void raylib::Vector3::DrawCubeWires(float width, float height, float length, ::Color color)
+{
+    ::DrawCubeWires(*this, width, height, length, color);
+}
+
+void raylib::Vector3::DrawCubeWires(const ::Vector3 &size, ::Color color)
+{
+    ::DrawCubeWiresV(*this, size, color);
+}
+
+void raylib::Vector3::DrawCubeTexture(const ::Texture2D &texture, float width, float height, float length, ::Color color)
+{
+    ::DrawCubeTexture(texture, *this, width, height, length, color);
+}

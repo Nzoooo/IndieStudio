@@ -9,7 +9,6 @@
 #define ECS_HPP_
 
 #include "Systems/SystemExemple.hpp"
-#include "Components/ComponentMovable.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 

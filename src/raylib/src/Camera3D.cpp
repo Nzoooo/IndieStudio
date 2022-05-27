@@ -32,7 +32,7 @@ void raylib::Camera3D::Update()
     ::UpdateCamera(this);
 }
 
-void raylib::Camera3D::SetMode(int mode) {
+void raylib::Camera3D::SetMode(CameraMode mode) {
     ::SetCameraMode(*this, mode);
 }
 

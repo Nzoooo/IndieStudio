@@ -14,6 +14,8 @@ set(SRC
     ${SRCROOT}/Vector3.cpp
     ${SRCROOT}/Camera2D.cpp
     ${SRCROOT}/Camera3D.cpp
+    ${SRCROOT}/Font.cpp
+    ${SRCROOT}/Mouse.cpp
     PARENT_SCOPE
 )
 
@@ -23,12 +25,14 @@ SET(INCDIRS
     ${INCROOT}/Model.hpp
     ${INCROOT}/ModelAnimation.hpp
     ${INCROOT}/BoundingBox.hpp
-    ${SRCROOT}/Rectangle.hpp
-    ${SRCROOT}/Color.hpp
+    ${INCROOT}/Rectangle.hpp
+    ${INCROOT}/Color.hpp
     ${INCROOT}/Texture.hpp
     ${INCROOT}/Vector2.hpp
     ${INCROOT}/Vector3.hpp
-    ${SRCROOT}/Camera2D.hpp
-    ${SRCROOT}/Camera3D.hpp
+    ${INCROOT}/Camera2D.hpp
+    ${INCROOT}/Camera3D.hpp
+    ${INCROOT}/Font.hpp
+    ${INCROOT}/Mouse.hpp
     PARENT_SCOPE
 )

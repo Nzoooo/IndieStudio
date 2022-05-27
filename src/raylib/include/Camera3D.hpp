@@ -19,7 +19,7 @@ namespace raylib {
             void BeginMode();
             void EndMode();
             void Update();
-            void SetMode(int mode);
+            void SetMode(CameraMode mode);
 
             static CameraMode CameraCustom();
             static CameraMode CameraFree();

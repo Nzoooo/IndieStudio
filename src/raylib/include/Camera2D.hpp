@@ -15,7 +15,7 @@ namespace raylib {
             Camera2D();
             Camera2D(const ::Camera2D &camera);
             Camera2D(::Vector2 _offset, ::Vector2 _target);
-            ~Camera2D();
+            ~Camera2D() = default;
 
             void BeginMode();
             void EndMode();

@@ -43,3 +43,28 @@ void raylib::Camera3D::_setCamera3D(const ::Camera3D &cam) {
         fovy = cam.fovy;
         projection = cam.projection;
 }
+
+CameraMode raylib::Camera3D::CameraCustom()
+{
+    return (CAMERA_CUSTOM);
+}
+
+CameraMode raylib::Camera3D::CameraFree()
+{
+    return (CAMERA_FREE);
+}
+
+CameraMode raylib::Camera3D::CameraOrbital()
+{
+    return (CAMERA_ORBITAL);
+}
+
+CameraMode raylib::Camera3D::CameraFirstPerson()
+{
+    return (CAMERA_FIRST_PERSON);
+}
+
+CameraMode raylib::Camera3D::CameraThirdPerson()
+{
+    return (CAMERA_THIRD_PERSON);
+}

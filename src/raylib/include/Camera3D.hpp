@@ -14,12 +14,18 @@ namespace raylib {
         public:
             Camera3D(::Vector3 _position = {0.0f, 0.0f, 0.0f}, ::Vector3 _target = {0.0f, 0.0f, 0.0f}, ::Vector3 _up = {0.0f, 1.0f, 0.0f}, float _fovy = 0);
             Camera3D(const ::Camera3D &cam);
-            ~Camera3D();
+            ~Camera3D() = default;
 
             void BeginMode();
             void EndMode();
             void Update();
             void SetMode(int mode);
+
+            static CameraMode CameraCustom();
+            static CameraMode CameraFree();
+            static CameraMode CameraOrbital();
+            static CameraMode CameraFirstPerson();
+            static CameraMode CameraThirdPerson();
 
         protected:
         private:

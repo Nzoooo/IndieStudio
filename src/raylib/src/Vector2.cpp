@@ -23,10 +23,8 @@ raylib::Vector2::Vector2(float _x, float _y) : ::Vector2{_x, _y}
 {
 }
 
-raylib::Vector2::Vector2()
+raylib::Vector2::Vector2() : ::Vector2{0.0f, 0.0f}
 {
-    x = 0;
-    y = 0;
 }
 
 raylib::Vector2 &raylib::Vector2::operator=(::Vector2 &vector2)

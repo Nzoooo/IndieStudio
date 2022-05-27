@@ -13,15 +13,15 @@ namespace raylib {
     class Camera2D : public ::Camera2D {
         public:
             Camera2D();
-            Camera2D(const ::Camera2D& camera);
+            Camera2D(const ::Camera2D &camera);
             Camera2D(::Vector2 _offset, ::Vector2 _target);
             ~Camera2D();
 
-            void beginMode();
-            void endMode();
+            void BeginMode();
+            void EndMode();
 
         protected:
         private:
-            void _setCamera2D(const Camera2D &cam);
+            void _setCamera2D(const ::Camera2D &cam);
     };
 }

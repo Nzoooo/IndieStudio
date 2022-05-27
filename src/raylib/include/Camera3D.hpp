@@ -12,18 +12,17 @@
 namespace raylib {
     class Camera3D : public ::Camera3D {
         public:
-            Camera3D();
+            Camera3D(::Vector3 _position = {0.0f, 0.0f, 0.0f}, ::Vector3 _target = {0.0f, 0.0f, 0.0f}, ::Vector3 _up = {0.0f, 1.0f, 0.0f}, float _fovy = 0);
             Camera3D(const ::Camera3D &cam);
-            Camera3D(::Vector3 _position);
             ~Camera3D();
 
-            void beginMode();
-            void endMode();
-            void update();
-            void setMode(int mode);
+            void BeginMode();
+            void EndMode();
+            void Update();
+            void SetMode(int mode);
 
         protected:
         private:
-            _setCamera3D(const ::Camera3D camera);
+            void _setCamera3D(const ::Camera3D &cam);
     };
 }

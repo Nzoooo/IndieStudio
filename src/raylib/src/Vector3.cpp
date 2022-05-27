@@ -28,25 +28,8 @@ raylib::Vector3 &raylib::Vector3::operator=(const raylib::Vector3 &other)
     return *this;
 }
 
-raylib::Vector3::Vector3(float _x, float _y, float _z)
+raylib::Vector3::Vector3(float _x, float _y, float _z) : ::Vector3{_x, _y, _z}
 {
-    x = _x;
-    y = _y;
-    z = _z;
-}
-
-raylib::Vector3::Vector3(float _x, float _y)
-{
-    x = _x;
-    y = _y;
-    z = 0;
-}
-
-raylib::Vector3::Vector3(float _x)
-{
-    x = _x;
-    y = 0;
-    z = 0;
 }
 
 void raylib::Vector3::_setVector3(::Vector3 &vec)

@@ -16,8 +16,6 @@ namespace raylib {
             Vector3(const Vector3 &other);
             Vector3 &operator=(const Vector3 &other);
             Vector3(float _x, float _y, float _z);
-            Vector3(float _x, float _y);
-            Vector3(float _x);
 
             void DrawCube(float width, float height, float length, ::Color color);
             void DrawCube(const ::Vector3 &size, ::Color color);

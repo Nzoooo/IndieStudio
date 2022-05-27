@@ -19,10 +19,8 @@ raylib::Vector2::Vector2(const raylib::Vector2 &other)
     y = other.y;
 }
 
-raylib::Vector2::Vector2(float _x, float _y)
+raylib::Vector2::Vector2(float _x, float _y) : ::Vector2{_x, _y}
 {
-    x = _x;
-    y = _y;
 }
 
 raylib::Vector2::Vector2()

@@ -5,9 +5,10 @@
 ** Camera3D
 */
 
-#include "Camera3D.hpp"
+#include "../include/Camera3D.hpp"
 
-raylib::Camera3D::Camera3D()
+raylib::Camera3D::Camera3D(::Vector3 _position, ::Vector3 _target, ::Vector3 _up, float _fovy) :
+::Camera3D{_position, _target, _up, _fovy, CAMERA_PERSPECTIVE}
 {
 }
 
@@ -16,35 +17,22 @@ raylib::Camera3D::Camera3D(const ::Camera3D &cam)
     _setCamera3D(cam);
 }
 
-raylib::Camera3D::Camera3D(::Vector3 _position)
-{
-    up.x = 0.0f;
-    up.y = 1.0f;
-    up.z = 0.0f;
-    target.x = 0.0f;
-    target.y = 0.0f;
-    target.z = 0.0f;
-    position = _position;
-    fovy = 0;
-    projection = CAMERA_PERSPECTIVE;
-}
-
-void raylib::Camera3D::beginMode()
+void raylib::Camera3D::BeginMode()
 {
     ::BeginMode3D(*this);
 }
 
-void raylib::Camera3D::endMode()
+void raylib::Camera3D::EndMode()
 {
     ::EndMode3D();
 }
 
-void raylib::Camera3D::update()
+void raylib::Camera3D::Update()
 {
     ::UpdateCamera(this);
 }
 
-void raylib::Camera3D::setMode(int mode) {
+void raylib::Camera3D::SetMode(int mode) {
     ::SetCameraMode(*this, mode);
 }
 

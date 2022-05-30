@@ -16,6 +16,9 @@ set(SRC
     ${SRCROOT}/Camera3D.cpp
     ${SRCROOT}/Font.cpp
     ${SRCROOT}/Mouse.cpp
+    ${SRCROOT}/Gamepad.cpp
+    ${SRCROOT}/Mesh.cpp
+    ${SRCROOT}/Image.cpp
     PARENT_SCOPE
 )
 
@@ -34,5 +37,8 @@ SET(INCDIRS
     ${INCROOT}/Camera3D.hpp
     ${INCROOT}/Font.hpp
     ${INCROOT}/Mouse.hpp
+    ${INCROOT}/Gamepad.hpp
+    ${INCROOT}/Mesh.hpp
+    ${INCROOT}/Image.hpp
     PARENT_SCOPE
 )

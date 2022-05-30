@@ -7,7 +7,8 @@ add_subdirectory(Systems)
 
 set(SRC
     ${SRC}
-    ${SRCROOT}/World.cpp
+    ${SRCROOT}/ecs.cpp
+    ${SRCROOT}/initEntities.cpp
     PARENT_SCOPE
 )
 

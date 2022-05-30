@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2022
-** BS
+** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
 ** File description:
 ** main
 */

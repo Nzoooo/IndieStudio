@@ -6,6 +6,7 @@ set(SRC)
 add_subdirectory(raylib)
 add_subdirectory(core)
 add_subdirectory(ECS)
+add_subdirectory(map)
 
 set(INCDIRS ${INCROOT})
 
@@ -23,8 +24,8 @@ add_executable(${TARGET_NAME} ${SRCROOT}/main.cpp)
 target_link_libraries(${TARGET_NAME} PRIVATE ${LIB_NAME})
 
 ## ---------------------------------RAYLIB---------------------------------- ##
-FIND_PACKAGE(raylib REQUIRED)
-target_link_libraries(${TARGET_NAME} PRIVATE raylib)
+# FIND_PACKAGE(raylib REQUIRED)
+# target_link_libraries(${TARGET_NAME} PRIVATE raylib)
 ## ------------------------------------------------------------------------- ##
 
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)

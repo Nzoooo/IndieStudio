@@ -7,12 +7,11 @@
 
 #include "core/core.hpp"
 #include "ECS/ecs.hpp"
+#include "map/Map.hpp"
 
 int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    ecs::Core index = initEntities();
-    coreLoop(index);
     return 0;
 }

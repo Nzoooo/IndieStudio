@@ -8,16 +8,6 @@
 #include "../include/Window.hpp"
 #include "../include/RaylibException.hpp"
 
-raylib::Window::Window(int width, int height, const std::string &title)
-{
-    Init(width, height, title);
-}
-
-raylib::Window::~Window()
-{
-    Close();
-}
-
 void raylib::Window::Close()
 {
     ::CloseWindow();
@@ -30,12 +20,12 @@ void raylib::Window::Init(int width, int height, const std::string &title)
         throw RaylibException("Failed to create window");
 }
 
-bool raylib::Window::isReady() const
+bool raylib::Window::isReady()
 {
     return (::IsWindowReady());
 }
 
-bool raylib::Window::ShouldClose() const
+bool raylib::Window::ShouldClose()
 {
     return (::WindowShouldClose());
 }

@@ -16,8 +16,6 @@ class SystemRender : ecs::ISystem {
         ~SystemRender() = default;
         SystemRender &operator=(const SystemRender &other) = delete;
 
-        void update() override;
-
     protected:
     private:
 };

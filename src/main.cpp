@@ -9,7 +9,7 @@
 #include "core/mainMenu.hpp"
 #include "core/settingsMenu.hpp"
 
-int mainLoop()
+int mainLoop(ecs::Core index)
 {
     int res = 0;
     
@@ -20,7 +20,7 @@ int mainLoop()
             res = mainMenu();
             break;
         case 1:
-            res = coreLoop();
+            res = coreLoop(index);
             break;
         case 2:
             // res = reload();
@@ -39,6 +39,7 @@ int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    mainLoop();
+    ecs::Core index = initEntities();
+    mainLoop(index);
     return 0;
 }

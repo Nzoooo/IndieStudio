@@ -9,7 +9,7 @@
 
 #include "IComponent.hpp"
 
-class ComponentCollider : ecs::IComponent {
+class ComponentCollider : public ecs::IComponent {
     public:
         ComponentCollider(bool ableToTakeCollider = true) : _ableToTakeCollider(ableToTakeCollider) {};
         ~ComponentCollider() = default;
@@ -18,7 +18,6 @@ class ComponentCollider : ecs::IComponent {
 
         void setAbleToTakeCollider(bool ableToTakeCollider);
 
-    protected:
     private:
         bool _ableToTakeCollider;
 };

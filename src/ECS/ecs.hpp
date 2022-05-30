@@ -10,6 +10,13 @@
 
 #include "Systems/SystemExemple.hpp"
 #include "Components/ComponentMovable.hpp"
+#include "Components/ComponentClickable.hpp"
+#include "Components/ComponentCollider.hpp"
+#include "Components/ComponentDrawable.hpp"
+#include "Components/ComponentExplodable.hpp"
+#include "Components/ComponentKillable.hpp"
+#include "Components/ComponentPickable.hpp"
+#include "Components/ComponentTransform.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 

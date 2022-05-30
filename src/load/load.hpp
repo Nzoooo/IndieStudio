@@ -16,7 +16,12 @@
 
 class Load {
   public:
+    /// @brief Load the core from the file.
+    /// @param ecs::Core The core to load.
     ecs::Core loadFile(void);
+
+    /// @brief Load Components from the entity into the file.
+    /// @param ecs::IEntity The entity to load.
     ecs::IEntity *loadEntity(std::ifstream &file);
 };
 

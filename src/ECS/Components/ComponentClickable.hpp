@@ -7,7 +7,9 @@
 
 #pragma once
 
-class ComponentClickable {
+#include "IComponent.hpp"
+
+class ComponentClickable : ecs::IComponent {
     public:
         ComponentClickable(bool ableToBeClicked = false) : _ableToBeClicked(ableToBeClicked) {};
         ~ComponentClickable() = default;

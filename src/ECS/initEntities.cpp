@@ -10,13 +10,20 @@
 ecs::Core initEntities()
 {
     ecs::Core index;
-    ecs::IEntity *e = new ecs::IEntity();
-    ecs::IEntity *r = new ecs::IEntity();
+    // ecs::IEntity *e = new ecs::IEntity();
+    // ecs::IEntity *r = new ecs::IEntity();
 
-    e->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 5, true);
-    r->add<ComponentMovable>(ComponentMovable::Direction::UP, 5, false);
-    e->add<ComponentTransform>(256, 256, 100, 100);
-    index.addEntity(e);
-    index.addEntity(r);
+    // ecs::Core index;
+    ecs::IEntity *player = new ecs::IEntity();
+
+    player->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 5, true);
+    player->add<ComponentMovable>(ComponentMovable::Direction::UP, 5, true);
+    player->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 5, true);
+    player->add<ComponentMovable>(ComponentMovable::Direction::RIGHT, 5, true);
+    player->add<ComponentCollider>(true);
+    player->add<ComponentKillable>(true);
+    player->add<ComponentTransform>(50, 50, 50, 50);
+
+    index.addEntity(player);
     return (index);
 }

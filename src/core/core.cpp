@@ -1,11 +1,14 @@
 /*
 ** EPITECH PROJECT, 2022
-** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+** Project
 ** File description:
 ** core
 */
 
 #include "core.hpp"
+#include "../ECS/Systems/SystemRender.hpp"
+#include "../../build/_deps/raylib-src/src/raylib.h"
+#include "raylib/include/Window.hpp"
 
 double clockToMilliseconds(clock_t ticks)
 {

@@ -124,3 +124,8 @@ double raylib::Window::GetTime()
 {
     return (::GetTime());
 }
+
+void raylib::Window::Clear(Color color)
+{
+    ::ClearBackground(color);
+}

@@ -19,7 +19,6 @@ namespace raylib {
             ~Font();
 
             ::Vector2 MeasureText(const std::string &text, float fontSize, float spacing);
-            void DrawText(const std::string &text, int posX, int posY, int fontSize, ::Color color);
             void DrawText(const std::string &text, ::Vector2 position, float fontSize, float spacing, ::Color tint);
             void DrawText(const std::string &text, ::Vector2 position, ::Vector2 origin, float rotation, float fontSize, float spacing, ::Color tint);
             void Load(const std::string &fileName);

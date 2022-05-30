@@ -9,6 +9,7 @@
 
 #include <string>
 #include "raylib.hpp"
+#include "Color.hpp"
 
 namespace raylib {
     class Window {
@@ -36,6 +37,7 @@ namespace raylib {
             static void EndDrawing();
             static float GetFrameTime();
             static double GetTime();
+            static void Clear(Color color);
 
         protected:
         private:

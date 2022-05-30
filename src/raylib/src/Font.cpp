@@ -9,7 +9,7 @@
 
 raylib::Font::Font()
 {
-    ::Font font = GetFontDefault();
+    ::Font font = ::GetFontDefault();
 
     baseSize = font.baseSize;
     glyphCount = font.glyphCount;
@@ -49,11 +49,6 @@ void raylib::Font::Load(const std::string &fileName)
 ::Vector2 raylib::Font::MeasureText(const std::string &text, float fontSize, float spacing)
 {
     return (::MeasureTextEx(*this, text.c_str(), fontSize, spacing));
-}
-
-void raylib::Font::DrawText(const std::string &text, int posX, int posY, int fontSize, ::Color color)
-{
-    ::DrawText(text.c_str(), posX, posY, fontSize, color);
 }
 
 void raylib::Font::DrawText(const std::string &text, ::Vector2 position, float fontSize, float spacing, ::Color tint)

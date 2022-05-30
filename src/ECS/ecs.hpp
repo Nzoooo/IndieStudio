@@ -8,7 +8,6 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
-#include "Systems/SystemExemple.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
@@ -19,6 +18,7 @@
 #include "Components/ComponentTransform.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
+#include "Systems/SystemExemple.hpp"
 
 namespace ecs
 {

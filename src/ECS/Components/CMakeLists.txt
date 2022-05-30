@@ -6,6 +6,7 @@ set(SRC
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentDrawable.cpp
     ${SRCROOT}/ComponentTransform.cpp
+    ${SRCROOT}/ComponentKillable.cpp
     ${SRCROOT}/ComponentCollider.cpp
     ${SRCROOT}/ComponentPickable.cpp
     ${SRCROOT}/ComponentDroppable.cpp

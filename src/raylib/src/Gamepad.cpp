@@ -185,5 +185,4 @@ namespace raylib {
     {
         return (GAMEPAD_AXIS_RIGHT_TRIGGER);
     }
-
 }

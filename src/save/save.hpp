@@ -19,8 +19,15 @@ class Save {
   public:
     Save();
     ~Save();
+    /// @brief Save the core into the file.
+    /// @param ecs::Core The core to save.
     void saveCore(ecs::Core &core);
+
+    /// @brief Save Components from the entity into the file.
+    /// @param ecs::IEntity The entity to save.
     void saveEntity(ecs::IEntity &entity);
+
+    /// @brief Empty the file.
     void eraseSave(void);
 
   private:

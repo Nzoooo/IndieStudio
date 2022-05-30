@@ -6,33 +6,12 @@
 */
 
 #include "load.hpp"
-#include "ECS/Components/ComponentMovable.hpp"
-#include "ECS/Components/ComponentTransform.hpp"
-#include "ECS/Components/ComponentKillable.hpp"
+#include "loadComponent.hpp"
 
-#include <algorithm>
 #include <iostream>
 extern "C"
 {
-    #include <sys/stat.h>
-}
-
-template <typename T> T getMember(std::ifstream &file, std::string member)
-{
-    std::string line;
-
-    while (std::getline(file, line)) {
-        if (line == "\t\t}")
-            break;
-        // Skip tabulations
-        line = line.substr(std::count(line.begin(), line.end(), '\t'));
-        if (line.find(member) != std::string::npos) {
-            line = line.substr(member.length() + 2, line.find(',') - member.length() - 2);
-            return static_cast<T>(std::stoi(line));
-        }
-    }
-    std::cout << member << " not found" << std::endl;
-    throw /* Member not found */;
+#include <sys/stat.h>
 }
 
 ecs::IEntity *Load::loadEntity(std::ifstream &file)
@@ -43,39 +22,13 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
     while (getline(file, line)) {
         if (line == "\t}")
             break;
-        line = line.substr(std::count(line.begin(), line.end(), '\t'));
-        if (line == "ComponentMovable {") {
-            ComponentMovable::Direction dir = getMember<ComponentMovable::Direction>(file, "dir");
-            int speed = getMember<int>(file, "speed");
-            bool ableToMove = getMember<bool>(file, "ableToMove");
-            try {
-                entity->add<ComponentMovable>(dir, speed, ableToMove);
-                continue;
-            } catch (std::exception &e) {
-                std::cout << "ComponentMovable not found" << std::endl;
-            }
-        }
-        if (line == "ComponentTransform {") {
-            size_t height = getMember<size_t>(file, "height");
-            size_t width = getMember<size_t>(file, "width");
-            int posX = getMember<int>(file, "posX");
-            int posY = getMember<int>(file, "posY");
-            try {
-                entity->add<ComponentTransform>(height, width, posX, posY);
-                continue;
-            } catch (std::exception &e) {
-                std::cout << "ComponentMovable not found" << std::endl;
-            }
-        }
-        if (line == "ComponentKillable {") {
-            bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
-            try {
-                entity->add<ComponentKillable>(ableToBeKilled);
-                continue;
-            } catch (std::exception &e) {
-                std::cout << "ComponentMovable not found" << std::endl;
-            }
-        }
+        line = removeTabs(line);
+        if (line == "ComponentMovable {")
+            addComponentMovable(file, entity);
+        if (line == "ComponentTransform {")
+            addComponentTransform(file, entity);
+        if (line == "ComponentKillable {")
+            addComponentKillable(file, entity);
     }
     return (entity);
 }

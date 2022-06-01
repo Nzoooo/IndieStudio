@@ -60,8 +60,6 @@ void ecs::IEntity::remove()
 
 template<typename T, typename ... U>
 void ecs::IEntity::add(U && ... args) {
-  if (has<T>() == true)
-    std::cout << "Component already exists" << std::endl;
 
   unsigned int id = ecs::TemplateComponent<T>::getId();
   if (id >= _components.size())

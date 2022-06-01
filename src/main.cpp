@@ -14,8 +14,7 @@ int mainLoop(ecs::Core index)
     int res = 0;
     
     while (res != -1) {
-        switch (res)
-        {
+        switch (res) {
         case 0:
             res = mainMenu();
             break;

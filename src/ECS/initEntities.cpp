@@ -10,10 +10,7 @@
 ecs::Core initEntities()
 {
     ecs::Core index;
-    // ecs::IEntity *e = new ecs::IEntity();
-    // ecs::IEntity *r = new ecs::IEntity();
 
-    // ecs::Core index;
     ecs::IEntity *player = new ecs::IEntity();
 
     player->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 5, true);

@@ -38,9 +38,9 @@ int coreLoop(ecs::Core index)
             printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             for (auto *it: index.getEntities()) {
                 if (it->has<ComponentMovable>()){
-                    std::cout << "He haves component to move !" << std::endl;
+                    std::cout << "He has component to move !" << std::endl;
                     if (it->get<ComponentMovable>()->getAbleToMove() == true)
-                        std::cout << "He haves autorisation to move !" << std::endl;
+                        std::cout << "He has autorisation to move !" << std::endl;
                     else
                         std::cout << "But he doesn't have the autorisation to move..." << std::endl;
                 }

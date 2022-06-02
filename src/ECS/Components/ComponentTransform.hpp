@@ -25,7 +25,6 @@ class ComponentTransform : public ecs::IComponent {
         void setPosX(int posX);
         void setPosY(int posY);
 
-    protected:
     private:
         std::size_t _height;
         std::size_t _width;

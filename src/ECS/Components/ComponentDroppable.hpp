@@ -11,14 +11,9 @@
 
 class ComponentDroppable : public ecs::IComponent {
     public:
-        ComponentDroppable(bool ableToBeDropped = false) : _ableToBeDropped(ableToBeDropped) {};
+        ComponentDroppable() = default;
         ~ComponentDroppable() = default;
 
-        bool getAbleToBeDropped() const;
-
-        void setAbleToBeDropped(bool ableToBeDropped);
-
-    protected:
     private:
         bool _ableToBeDropped;
 };

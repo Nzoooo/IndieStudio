@@ -11,14 +11,8 @@
 
 class ComponentPickable : ecs::IComponent {
     public:
-        ComponentPickable(bool ableToBePicked = false) : _ableToBePicked(ableToBePicked) {};
+        ComponentPickable() = default;
         ~ComponentPickable() = default;
 
-        bool getAbleToBePicked() const;
-
-        void setAbleToBePicked(bool ableToBePicked);
-
-    protected:
     private:
-        bool _ableToBePicked;
 };

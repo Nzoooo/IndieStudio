@@ -11,14 +11,8 @@
 
 class ComponentKillable : public ecs::IComponent {
     public:
-        ComponentKillable(bool ableToBeKilled = false) : _ableToBeKilled(ableToBeKilled) {};
+        ComponentKillable() = default;
         ~ComponentKillable() = default;
 
-        bool getAbleToBeKilled() const;
-
-        void setAbleToBeKilled(bool ableToBeKilled);
-
-    protected:
     private:
-        bool _ableToBeKilled;
 };

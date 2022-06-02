@@ -11,14 +11,8 @@
 
 class ComponentClickable : ecs::IComponent {
     public:
-        ComponentClickable(bool ableToBeClicked = false) : _ableToBeClicked(ableToBeClicked) {};
+        ComponentClickable() = default;
         ~ComponentClickable() = default;
 
-        bool getAbleToBeClicked() const;
-
-        void setAbleToBeClicked(bool ableToBeClicked);
-
-    protected:
     private:
-        bool _ableToBeClicked;
 };

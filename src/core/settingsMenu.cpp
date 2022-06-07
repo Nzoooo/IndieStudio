@@ -29,8 +29,9 @@ int settingMenu()
     raylib::Vector2 textPos = {300.0, 100.0};
     int click = 1;
 
-    bg.Load("../assets/placeholder.png");
-    goBack.Load("../assets/goBack.png");
+    Window.Init();
+    bg.Load("assets/placeholder.png");
+    goBack.Load("assets/goBack.png");
     while (1) {
         if (Window.ShouldClose())
             break;

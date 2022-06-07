@@ -6,6 +6,7 @@
 */
 
 #include "settingsMenu.hpp"
+#include "core/core.hpp"
 
 static int checkClick()
 {
@@ -20,9 +21,12 @@ static int checkClick()
 int settingMenu()
 {
     raylib::Window Window;
-    raylib::Font font("../assets/NewAthletic.ttf");
+    raylib::Font font;
     raylib::Texture bg;
     raylib::Texture goBack;
+    raylib::Vector2 bgPos = {0.0, 0.0};
+    raylib::Vector2 goBackPos = {20.0, 20.0};
+    raylib::Vector2 textPos = {300.0, 100.0};
     int click = 1;
 
     bg.Load("../assets/placeholder.png");
@@ -31,11 +35,11 @@ int settingMenu()
         if (Window.ShouldClose())
             break;
         Window.BeginDrawing();
-            ClearBackground(WHITE);
-            bg.Draw((Vector2){0.0, 0.0}, WHITE);
-            goBack.Draw((Vector2){20.0, 20.0}, 0, 0.1, WHITE);
-            font.DrawText("Params Screen", (Vector2){ 300.0, 100.0 }, 40, 2, BLACK);
-            click = checkClick();
+        ClearBackground(raylib::Color::White());
+        bg.Draw(bgPos, raylib::Color::White());
+        goBack.Draw(goBackPos, 0, 0.1, raylib::Color::White());
+        font.DrawText("Params Screen", textPos, 40, 2, raylib::Color::Black());
+        click = checkClick();
         Window.EndDrawing();
         if (click != 1)
             return (click);

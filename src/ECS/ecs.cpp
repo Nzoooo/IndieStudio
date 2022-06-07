@@ -53,7 +53,7 @@ unsigned int ecs::Core::addEntity(ecs::IEntity *e)
     return this->_entities.size() - 1;
 }
 
-void ecs::Core::removeEntityIterrator(std::vector<ecs::IEntity *>::iterator it)
+void ecs::Core::removeEntityIterator(std::vector<ecs::IEntity *>::iterator it)
 {
     delete *it;
 }
@@ -79,7 +79,7 @@ unsigned int ecs::Core::addSystem(ecs::ISystem *e)
     return _entities.size() - 1;
 }
 
-void ecs::Core::removeSystemIterrator(std::vector<ecs::ISystem *>::iterator it)
+void ecs::Core::removeSystemIterator(std::vector<ecs::ISystem *>::iterator it)
 {
     delete *it;
 }

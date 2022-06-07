@@ -48,8 +48,8 @@ namespace ecs
         unsigned int addSystem(ecs::ISystem *e);
         ecs::IEntity *getEntity(unsigned int const id);
         ecs::ISystem *getSystem(unsigned int const id);
-        void removeEntityIterrator(std::vector<ecs::IEntity *>::iterator it);
-        void removeSystemIterrator(std::vector<ecs::ISystem *>::iterator it);
+        void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
+        void removeSystemIterator(std::vector<ecs::ISystem *>::iterator it);
         void removeEntity(unsigned int const i);
         void removeSystem(unsigned int const i);
         std::vector<ecs::IEntity *> &getEntities();

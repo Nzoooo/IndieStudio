@@ -11,7 +11,7 @@
 #include <iostream>
 #include <array>
 
-#define MAPSIZE 15
+#define MAPSIZE 17
 #define MAXTUNNELS 55
 #define MAXLENGHT 30
 
@@ -30,8 +30,10 @@ class Map {
         void putSpawn();
         void randomBonus(size_t currentRow, size_t currentColumn);
         std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
-    private:
+
         int **_map;
+    private:
+        // int **_map;
 };
 
 #endif /* !MAP_HPP_ */

@@ -5,21 +5,20 @@
 ** initMap
 */
 
+#include "ECS/Components/ComponentCube.hpp"
+#include "ECS/Components/ComponentDrawable.hpp"
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
 #include "core/settingsMenu.hpp"
-#include "raylib/include/Vector3.hpp"
 
-#define GAME_BOARD_SIZE 17
+static ecs::IEntity *createCube(raylib::Vector3 pos, raylib::Vector3 size)
+{
+    ecs::IEntity *entity = new ecs::IEntity();
 
-// static ecs::IEntity *createCube(float x, float y, float width, float height)
-// {
-//     ecs::IEntity *entity = new ecs::IEntity();
-
-//     entity->add<ComponentDrawable>(true, false);
-//     entity->add<ComponentTransform>(height, width, x, y);
-//     return (entity);
-// }
+    entity->add<ComponentDrawable>(true, false);
+    entity->add<ComponentCube>(pos, size);
+    return (entity);
+}
 
 void mapCreation(Map *map)
 {
@@ -39,35 +38,37 @@ void mapCreation(Map *map)
     int i = 0;
 
     raylib::Vector3 initialFloorPos = {0.0f, -0.05f, 0.0f};
-    raylib::Vector3 initialPos = {-8.0f, 0.5f, -8.0f};
-    std::vector<raylib::Vector3> cubes;
-    for (int j = 0; j < GAME_BOARD_SIZE; j++) {
-        for (i = 0; i < GAME_BOARD_SIZE; i++) {
-            cubes.push_back(initialPos);
+    raylib::Vector3 initialPos = {(-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
+    std::vector<ecs::IEntity *> cubes;
+    for (int j = 0; j < MAP_SIZE; j++) {
+        for (i = 0; i < MAP_SIZE; i++) {
+            cubes.push_back(createCube(initialPos, {1.0f, 1.0f, 1.0f}));
             initialPos.x += 1;
         }
-        if (i == GAME_BOARD_SIZE) {
-            initialPos.x = -8.0f;
-            initialPos.z += 1.0f;
-        }
+        initialPos.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
+        initialPos.z += 1.0f;
     }
+    std::cout << "ije" << std::endl;
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
 
         BeginMode3D(camera);
-
-        initialFloorPos.DrawCube(17.0f, 0.1f, 17.0f, RED);
-        initialFloorPos.DrawCubeWires(17.0f, 0.1f, 17.0f, BLACK);
-        for (i = 0; i < MAPSIZE; i++) {
-            for (size_t j = 0; j < MAPSIZE; j++) {
+        initialFloorPos.DrawCube(1.0f * MAP_SIZE, 0.1f, 1.0f * MAP_SIZE, RED);
+        initialFloorPos.DrawCubeWires(1.0f * MAP_SIZE, 0.1f, 1.0f * MAP_SIZE, BLACK);
+        for (i = 0; i < MAP_SIZE; i++) {
+            for (size_t j = 0; j < MAP_SIZE; j++) {
                 if (map->getMap()[i][j] == 1) {
-                    cubes[i * MAPSIZE + j].DrawCube(1.0f, 1.0f, 1.0f, raylib::Color::Green());
-                    cubes[i * MAPSIZE + j].DrawCubeWires(1.0f, 1.0f, 1.0f, raylib::Color::Black());
+                    cubes[i * MAP_SIZE + j]->get<ComponentCube>()->setColor(raylib::Color::Green());
+                    DrawCube(cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getPos(), cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().x,
+                        cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().y, cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().z,
+                        cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getColor());
                 } else if (map->getMap()[i][j] == 2) {
-                    cubes[i * MAPSIZE + j].DrawCube(1.0f, 1.0f, 1.0f, raylib::Color::Blue());
-                    cubes[i * MAPSIZE + j].DrawCubeWires(1.0f, 1.0f, 1.0f, raylib::Color::Black());
+                    cubes[i * MAP_SIZE + j]->get<ComponentCube>()->setColor(raylib::Color::Blue());
+                    DrawCube(cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getPos(), cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().x,
+                        cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().y, cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().z,
+                        cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getColor());
                 }
             }
         }

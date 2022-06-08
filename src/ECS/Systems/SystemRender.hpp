@@ -10,12 +10,12 @@
 #include "ISystem.hpp"
 
 class SystemRender : ecs::ISystem {
-    public:
-        SystemRender() = default;
-        SystemRender(const SystemRender &other) = delete;
-        ~SystemRender() = default;
-        SystemRender &operator=(const SystemRender &other) = delete;
+  public:
+    SystemRender() = default;
+    SystemRender(const SystemRender &other) = delete;
+    ~SystemRender() = default;
+    SystemRender &operator=(const SystemRender &other) = delete;
 
-    protected:
-    private:
+  protected:
+  private:
 };

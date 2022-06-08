@@ -7,13 +7,13 @@
 
 #include "../include/Color.hpp"
 
-namespace raylib {
+namespace raylib
+{
     Color::Color() : ::Color{255, 255, 255, 255}
     {
     }
 
-    Color::Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) :
-    ::Color{red, green, blue, alpha}
+    Color::Color(unsigned char red, unsigned char green, unsigned char blue, unsigned char alpha) : ::Color{red, green, blue, alpha}
     {
     }
 
@@ -150,4 +150,4 @@ namespace raylib {
     {
         return RAYWHITE;
     }
-}
+} // namespace raylib

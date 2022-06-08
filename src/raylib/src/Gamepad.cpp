@@ -9,7 +9,8 @@
 
 int raylib::Gamepad::gamepadNumber = 0;
 
-namespace raylib {
+namespace raylib
+{
     Gamepad::Gamepad()
     {
         number = gamepadNumber;
@@ -185,4 +186,4 @@ namespace raylib {
     {
         return (GAMEPAD_AXIS_RIGHT_TRIGGER);
     }
-}
+} // namespace raylib

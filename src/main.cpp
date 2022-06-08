@@ -12,23 +12,16 @@
 int mainLoop(ecs::Core index)
 {
     int res = 0;
-    
+
     while (res != -1) {
         switch (res) {
-        case 0:
-            res = mainMenu();
-            break;
-        case 1:
-            res = coreLoop(index);
-            break;
-        case 2:
-            // res = reload();
-            break;
-        case 3:
-            res = settingMenu();
-            break;
-        case -1:
-            return (-1);
+            case 0: res = mainMenu(); break;
+            case 1: res = coreLoop(index); break;
+            case 2:
+                // res = reload();
+                break;
+            case 3: res = settingMenu(); break;
+            case -1: return (-1);
         }
     }
     return (0);

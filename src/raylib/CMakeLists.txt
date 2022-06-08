@@ -4,13 +4,9 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/raylib)
 add_subdirectory(src)
 
 set(SRC
-    ${SRC}
-    ${SRCROOT}
-    PARENT_SCOPE
-)
+    ${SRC} ${SRCROOT}
+    PARENT_SCOPE)
 
-SET(INCDIRS
-    ${INCDIRS}
-    ${INCROOT}
-    PARENT_SCOPE
-)
+set(INCDIRS
+    ${INCDIRS} ${INCROOT}
+    PARENT_SCOPE)

@@ -7,7 +7,8 @@
 
 #include "../include/Mesh.hpp"
 
-namespace raylib {
+namespace raylib
+{
     Mesh::~Mesh()
     {
         Unload();
@@ -73,7 +74,6 @@ namespace raylib {
         _setMesh(::GenMeshCubicmap(cubicmap, cubeSize));
     }
 
-
     void Mesh::_setMesh(::Mesh mesh)
     {
         vertexCount = mesh.vertexCount;
@@ -95,4 +95,4 @@ namespace raylib {
         vaoId = mesh.vaoId;
         vboId = mesh.vboId;
     }
-}
+} // namespace raylib

@@ -9,17 +9,18 @@
 
 #include "raylib.hpp"
 
-namespace raylib {
+namespace raylib
+{
     class Vector2 : public ::Vector2 {
-        public:
-            Vector2();
-            Vector2(::Vector2 &vec);
-            Vector2(const Vector2 &other);
-            Vector2 &operator=(::Vector2 &vector2);
-            Vector2(float _x, float _y);
-            ~Vector2() = default;
+      public:
+        Vector2();
+        Vector2(::Vector2 &vec);
+        Vector2(const Vector2 &other);
+        Vector2 &operator=(::Vector2 &vector2);
+        Vector2(float _x, float _y);
+        ~Vector2() = default;
 
-        private:
-            void _setVector2(::Vector2 &vec);
+      private:
+        void _setVector2(::Vector2 &vec);
     };
-}
+} // namespace raylib

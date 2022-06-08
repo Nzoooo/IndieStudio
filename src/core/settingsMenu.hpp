@@ -8,11 +8,11 @@
 #ifndef SETTINGSMENU_HPP_
 #define SETTINGSMENU_HPP_
 
-#include "../raylib/include/Window.hpp"
 #include "../raylib/include/Font.hpp"
-#include "../raylib/include/Vector2.hpp"
 #include "../raylib/include/Mouse.hpp"
 #include "../raylib/include/Texture.hpp"
+#include "../raylib/include/Vector2.hpp"
+#include "../raylib/include/Window.hpp"
 
 int settingMenu();
 

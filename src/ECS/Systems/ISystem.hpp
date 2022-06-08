@@ -14,20 +14,22 @@ namespace ecs
     class Core;
 
     class ISystem {
-    public:
-        virtual ~ISystem() {}
+      public:
+        virtual ~ISystem()
+        {
+        }
         virtual void update(ecs::Core &index) = 0;
 
-    protected:
+      protected:
         static unsigned int _idCount;
     };
 
-    template <typename T>
-    class TemplateSystem : public ISystem {
-    public:
-        static unsigned int getId() {
+    template <typename T> class TemplateSystem : public ISystem {
+      public:
+        static unsigned int getId()
+        {
             static unsigned int id = ecs::ISystem::_idCount++;
             return id;
         }
     };
-}
+} // namespace ecs

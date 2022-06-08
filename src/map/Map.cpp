@@ -12,8 +12,8 @@
 
 Map::Map()
 {
-    this->_map = new int*[MAPSIZE];
-    for (size_t i = 0; i < MAPSIZE; i++) { 
+    this->_map = new int *[MAPSIZE];
+    for (size_t i = 0; i < MAPSIZE; i++) {
         this->_map[i] = new int[MAPSIZE];
         for (size_t j = 0; j < MAPSIZE; j++) {
             if (j == 0 || j == MAPSIZE - 1 || i == 0 || i == MAPSIZE - 1 || (i % 2 == 0 && j % 2 == 0))
@@ -35,8 +35,8 @@ int **Map::getMap()
 
 void Map::readMap()
 {
-    for (size_t i = 0; i < MAPSIZE; i++) { 
-        for (size_t j = 0; j < MAPSIZE; j++) {  
+    for (size_t i = 0; i < MAPSIZE; i++) {
+        for (size_t j = 0; j < MAPSIZE; j++) {
             std::cout << this->_map[i][j];
         }
         std::cout << std::endl;
@@ -45,18 +45,15 @@ void Map::readMap()
 
 std::pair<int, int> Map::randomDirection(std::pair<int, int> lastDirection)
 {
-    std::array<std::pair<int, int>, 4> directions = { { {-1,0}, {1, 0}, {0, 1}, {0, -1} } };
+    std::array<std::pair<int, int>, 4> directions = {{{-1, 0}, {1, 0}, {0, 1}, {0, -1}}};
 
     int nbRand = 0;
     std::pair<int, int> random;
     do {
         nbRand = std::floor(std::rand() % 4);
         random = directions[nbRand];
-    } while ((random.first == -lastDirection.first &&
-          random.second == -lastDirection.second) || 
-         (random.first == lastDirection.first &&  
-          random.second == lastDirection.second));
-    return(random);
+    } while ((random.first == -lastDirection.first && random.second == -lastDirection.second) || (random.first == lastDirection.first && random.second == lastDirection.second));
+    return (random);
 }
 
 void Map::putSpawn()
@@ -91,23 +88,19 @@ void Map::generateMap()
     size_t tunnelLength = 0;
     while (1) {
         printf("tunel lenght = %ld, tunel max = %d\n", tunnelLength, maxTunnels);
-        if (((currentRow == 0) && (lastdirection.first == -1)) ||
-        ((currentColumn == 0) && (lastdirection.second == -1)) ||
-        ((currentRow == MAPSIZE - 1) && (lastdirection.first == 1)) ||
-        ((currentColumn == MAPSIZE - 1) && (lastdirection.second == 1)) ||
-        this->_map[currentRow][currentColumn] == 1){
+        if (((currentRow == 0) && (lastdirection.first == -1)) || ((currentColumn == 0) && (lastdirection.second == -1)) || ((currentRow == MAPSIZE - 1) && (lastdirection.first == 1))
+            || ((currentColumn == MAPSIZE - 1) && (lastdirection.second == 1)) || this->_map[currentRow][currentColumn] == 1) {
             lastdirection = randomDirection(lastdirection);
             currentRow += lastdirection.first;
             currentColumn += lastdirection.second;
-        }
-        else {
+        } else {
             this->_map[currentRow][currentColumn] = 2;
-            lastdirection = randomDirection(lastdirection); 
+            lastdirection = randomDirection(lastdirection);
             currentRow += lastdirection.first;
             currentColumn += lastdirection.second;
             tunnelLength++;
         }
-        if (tunnelLength >= randomLength) { 
+        if (tunnelLength >= randomLength) {
             randomLength = std::ceil(std::rand() % MAXLENGHT);
             tunnelLength = 0;
             lastdirection = randomDirection(lastdirection);
@@ -117,7 +110,7 @@ void Map::generateMap()
             currentRow = std::floor(std::rand() % MAPSIZE);
         if (currentColumn >= MAPSIZE || currentColumn <= 0)
             currentColumn = std::floor(std::rand() % MAPSIZE);
-        if (maxTunnels == 0){
+        if (maxTunnels == 0) {
             break;
         }
     }

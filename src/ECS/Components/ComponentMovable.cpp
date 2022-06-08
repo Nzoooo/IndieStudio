@@ -32,6 +32,7 @@ void ComponentMovable::setSpeed(int speed)
     _speed = speed;
 }
 
-void ComponentMovable::setAbleToMove(bool ableToMove) {
+void ComponentMovable::setAbleToMove(bool ableToMove)
+{
     this->_ableToMove = ableToMove;
 }

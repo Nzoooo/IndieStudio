@@ -2,13 +2,9 @@ set(INCROOT ${PROJECT_SOURCE_DIR}/src/map)
 set(SRCROOT ${PROJECT_SOURCE_DIR}/src/map)
 
 set(SRC
-    ${SRC}
-    ${SRCROOT}/Map.cpp
-    PARENT_SCOPE
-)
+    ${SRC} ${SRCROOT}/Map.cpp
+    PARENT_SCOPE)
 
-SET(INCDIRS
-    ${INCDIRS}
-    ${INCROOT}
-    PARENT_SCOPE
-)
+set(INCDIRS
+    ${INCDIRS} ${INCROOT}
+    PARENT_SCOPE)

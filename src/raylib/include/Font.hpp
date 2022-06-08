@@ -10,21 +10,22 @@
 #include <string>
 #include "raylib.hpp"
 
-namespace raylib {
+namespace raylib
+{
     class Font : public ::Font {
-        public:
-            Font();
-            Font(const std::string &fileName);
-            Font(const Font &other) = delete;
-            ~Font();
+      public:
+        Font();
+        Font(const std::string &fileName);
+        Font(const Font &other) = delete;
+        ~Font();
 
-            ::Vector2 MeasureText(const std::string &text, float fontSize, float spacing);
-            void DrawText(const std::string &text, ::Vector2 position, float fontSize, float spacing, ::Color tint);
-            void DrawText(const std::string &text, ::Vector2 position, ::Vector2 origin, float rotation, float fontSize, float spacing, ::Color tint);
-            void Load(const std::string &fileName);
-            void Unload();
+        ::Vector2 MeasureText(const std::string &text, float fontSize, float spacing);
+        void DrawText(const std::string &text, ::Vector2 position, float fontSize, float spacing, ::Color tint);
+        void DrawText(const std::string &text, ::Vector2 position, ::Vector2 origin, float rotation, float fontSize, float spacing, ::Color tint);
+        void Load(const std::string &fileName);
+        void Unload();
 
-        protected:
-        private:
+      protected:
+      private:
     };
-}
+} // namespace raylib

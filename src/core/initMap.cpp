@@ -8,6 +8,7 @@
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
 #include "core/settingsMenu.hpp"
+#include "raylib/include/Vector3.hpp"
 
 #define GAME_BOARD_SIZE 17
 
@@ -17,23 +18,20 @@ void mapCreation(Map *map)
     const int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    map->readMap();
     Camera3D camera = {};
     Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
-    camera.position = initialCamPos; // Camera position
+    camera.position = initialCamPos; 
     Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
     camera.target = initialCamTarget;
-    Vector3 initialCamUp = {0.0f, 1.0f, 0.0f}; // Camera looking at point
-    camera.up = initialCamUp;                  // Camera up vector (rotation towards target)
-    camera.fovy = 80.0f;                      // Camera field-of-view Y
+    Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
+    camera.up = initialCamUp;  
+    camera.fovy = 80.0f;
     camera.projection = CAMERA_PERSPECTIVE;
     int i = 0;
-    int nbr = 0;
 
-    Vector3 initialFloorPos = {0.0f, -0.05f, 0.0f};
-
-    Vector3 initialPos = {-8.0f, 0.5f, -8.0f};
-    std::vector<Vector3> cubes;
+    raylib::Vector3 initialFloorPos = {0.0f, -0.05f, 0.0f};
+    raylib::Vector3 initialPos = {-8.0f, 0.5f, -8.0f};
+    std::vector<raylib::Vector3> cubes;
     for (int j = 0; j < GAME_BOARD_SIZE; j++) {
         for (i = 0; i < GAME_BOARD_SIZE; i++) {
             cubes.push_back(initialPos);
@@ -44,44 +42,29 @@ void mapCreation(Map *map)
             initialPos.z += 1.0f;
         }
     }
-    SetTargetFPS(60); // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-    // Main game loop
-    while (!WindowShouldClose()) // Detect window close button or ESC key
+    SetTargetFPS(60);
+    while (!WindowShouldClose())
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
         BeginDrawing();
-
         ClearBackground(RAYWHITE);
 
         BeginMode3D(camera);
 
-        DrawCube(initialFloorPos, 17.0f, 0.1f, 17.0f, RED);
-        DrawCubeWires(initialFloorPos, 17.0f, 0.1f, 17.0f, BLACK);
+        initialFloorPos.DrawCube(17.0f, 0.1f, 17.0f, RED);
+        initialFloorPos.DrawCubeWires(17.0f, 0.1f, 17.0f, BLACK);
         for (size_t i = 0; i < MAPSIZE; i++) { 
             for (size_t j = 0; j < MAPSIZE; j++) {
                 if (map->_map[i][j] == 1) {
-                    DrawCube(cubes[i * MAPSIZE + j], 1.0f, 1.0f, 1.0f, GREEN);
-                    DrawCubeWires(cubes[i * MAPSIZE + j], 1.0f, 1.0f, 1.0f, BLACK);
+                    cubes[i * MAPSIZE + j].DrawCube(1.0f, 1.0f, 1.0f, raylib::Color::Green());
+                    cubes[i * MAPSIZE + j].DrawCubeWires(1.0f, 1.0f, 1.0f, raylib::Color::Black());
                 } else if (map->_map[i][j] == 2) {
-                    DrawCube(cubes[i * MAPSIZE + j], 1.0f, 1.0f, 1.0f, BLUE);
-                    DrawCubeWires(cubes[i * MAPSIZE + j], 1.0f, 1.0f, 1.0f, BLACK);
+                    cubes[i * MAPSIZE + j].DrawCube(1.0f, 1.0f, 1.0f, raylib::Color::Blue());
+                    cubes[i * MAPSIZE + j].DrawCubeWires(1.0f, 1.0f, 1.0f, raylib::Color::Black());
                 }
             }
         }
         EndMode3D();
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
-
-    // De-Initialization
-    //--------------------------------------------------------------------------------------
     CloseWindow();
 }

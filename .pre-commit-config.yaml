@@ -15,8 +15,8 @@
 ################################################################################
 
 ci:
-  autoupdate_commit_msg: "chore: update pre-commit hooks"
-  autofix_commit_msg: "style: pre-commit fixes"
+  autoupdate_commit_msg: "[UPT] Pre-Commit hooks file"
+  autofix_commit_msg: "[UPT] Fit Pre-Commit hooks"
 
 repos:
 # Standard hooks

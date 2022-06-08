@@ -11,7 +11,7 @@
 
 class ComponentDrawable : ecs::IComponent {
     public:
-        ComponentDrawable(bool isDrawable2D = true, bool isDrawable3D = true):
+        ComponentDrawable(bool isDrawable2D = false, bool isDrawable3D = false):
         _isDrawable2D(isDrawable2D), _isDrawable3D(isDrawable3D) {};
         ComponentDrawable(const ComponentDrawable &other) = default;
         ~ComponentDrawable() = default;

@@ -14,6 +14,7 @@
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
 #include "Components/ComponentDrawable.hpp"
+#include "Components/ComponentCube.hpp"
 #include "Components/ComponentExplodable.hpp"
 #include "Components/ComponentKillable.hpp"
 #include "Components/ComponentPickable.hpp"

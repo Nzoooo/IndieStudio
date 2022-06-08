@@ -5,8 +5,8 @@
 ** loadComponent
 */
 
-#include "load.hpp"
 #include "loadComponent.hpp"
+#include "load.hpp"
 
 std::string removeTabs(std::string line)
 {
@@ -68,7 +68,8 @@ void addComponentKillable(std::ifstream &file, ecs::IEntity *entity)
     bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
 
     try {
-        entity->add<ComponentKillable>(ableToBeKilled);
+        if (ableToBeKilled)
+            entity->add<ComponentKillable>();
     } catch (std::exception &e) {
         std::cout << "ComponentMovable not found" << std::endl;
     }

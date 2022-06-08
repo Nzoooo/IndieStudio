@@ -17,6 +17,11 @@ raylib::Texture::Texture(const ::Texture &texture)
     _setTexture(texture);
 }
 
+raylib::Texture::Texture(const raylib::Texture &other)
+{
+    _setTexture(other);
+}
+
 raylib::Texture::Texture(const ::Image &image)
 {
     if (!Load(image)) {

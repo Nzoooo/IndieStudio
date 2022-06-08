@@ -13,11 +13,13 @@
 #include <string>
 #include <time.h>
 #include "../ECS/ecs.hpp"
+#include "map/Map.hpp"
 
 #define FPS_CAP      120
 #define ML_BASE      1000.0
 #define FPS_CAP_REAL (ML_BASE / FPS_CAP)
 
 int coreLoop(ecs::Core);
+void mapCreation(Map *map);
 
 #endif

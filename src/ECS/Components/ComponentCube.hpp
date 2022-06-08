@@ -8,25 +8,28 @@
 #ifndef COMPONENTCUBE_HPP_
 #define COMPONENTCUBE_HPP_
 
+#include "IComponent.hpp"
+#include "raylib/include/Color.hpp"
 #include "raylib/include/Vector3.hpp"
 
 class ComponentCube : public ecs::IComponent {
   public:
-    ComponentCube(float x, float y, float z) : _color(raylib::Color::White())
+    ComponentCube(raylib::Vector3 pos, raylib::Vector3 size, raylib::Color color = raylib::Color::White()) : _pos(pos), _size(size), _color(color)
     {
-        _vector = new raylib::Vector3(x, y, z);
-    };
-    ComponentCube(raylib::Vector3 *vector) : _vector(vector){};
+    }
     ~ComponentCube() = default;
 
-    raylib::Vector3 *getVector() const;
+    raylib::Vector3 getPos() const;
+    raylib::Vector3 getSize() const;
     raylib::Color getColor() const;
 
-    void setVector(raylib::Vector3 *);
-    void setColor(raylib::Color);
+    void setPos(raylib::Vector3 pos);
+    void setSize(raylib::Vector3 size);
+    void setColor(raylib::Color color);
 
   private:
-    raylib::Vector3 *_vector;
+    raylib::Vector3 _pos;
+    raylib::Vector3 _size;
     raylib::Color _color;
 };
 

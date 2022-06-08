@@ -21,6 +21,12 @@ int mainLoop(ecs::Core index)
                 // res = reload();
                 break;
             case 3: res = settingMenu(); break;
+            case 4:
+                Map *map = new Map;
+
+                map->generateMap();
+                map->readMap();
+                mapCreation(map);
             case -1: return (-1);
         }
     }

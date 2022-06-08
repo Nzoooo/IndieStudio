@@ -12,6 +12,15 @@
 
 #define GAME_BOARD_SIZE 17
 
+static ecs::IEntity *createCube(float x, float y, float width, float height)
+{
+    ecs::IEntity *entity = new ecs::IEntity();
+
+    entity->add<ComponentDrawable>(true, false);
+    entity->add<ComponentTransform>(height, width, x, y);
+    return (entity);
+}
+
 void mapCreation(Map *map)
 {
     const int screenWidth = 800;

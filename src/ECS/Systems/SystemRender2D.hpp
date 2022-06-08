@@ -8,7 +8,7 @@
 #pragma once
 
 #include "ISystem.hpp"
-#include "core.hpp"
+#include "../../core/core.hpp"
 
 class SystemRender2D : ecs::ISystem {
     public:

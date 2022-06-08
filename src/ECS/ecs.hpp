@@ -16,6 +16,7 @@
 #include "Components/ComponentKillable.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentTransform.hpp"
+#include "Components/ComponentRectangle.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemExemple.hpp"

@@ -9,7 +9,7 @@
 
 #include "IComponent.hpp"
 
-class ComponentDrawable : ecs::IComponent {
+class ComponentDrawable : public ecs::IComponent {
     public:
         ComponentDrawable(bool isDrawable2D = false, bool isDrawable3D = false):
         _isDrawable2D(isDrawable2D), _isDrawable3D(isDrawable3D) {};

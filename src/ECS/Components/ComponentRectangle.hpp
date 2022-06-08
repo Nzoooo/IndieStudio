@@ -23,6 +23,8 @@ class ComponentRectangle : public ecs::IComponent {
         void setRectangle(raylib::Rectangle *);
         void setColor(raylib::Color);
 
+        void Draw();
+
 
     private:
         raylib::Rectangle *_rectangle;

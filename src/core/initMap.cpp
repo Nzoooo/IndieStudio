@@ -48,7 +48,6 @@ void mapCreation(Map *map)
         initialPos.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
         initialPos.z += 1.0f;
     }
-    std::cout << "ije" << std::endl;
     SetTargetFPS(60);
     while (!WindowShouldClose()) {
         BeginDrawing();
@@ -59,12 +58,12 @@ void mapCreation(Map *map)
         initialFloorPos.DrawCubeWires(1.0f * MAP_SIZE, 0.1f, 1.0f * MAP_SIZE, BLACK);
         for (i = 0; i < MAP_SIZE; i++) {
             for (size_t j = 0; j < MAP_SIZE; j++) {
-                if (map->getMap()[i][j] == 1) {
+                if (map->getMap()[i][j] == WALL) {
                     cubes[i * MAP_SIZE + j]->get<ComponentCube>()->setColor(raylib::Color::Green());
                     DrawCube(cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getPos(), cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().x,
                         cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().y, cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().z,
                         cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getColor());
-                } else if (map->getMap()[i][j] == 2) {
+                } else if (map->getMap()[i][j] == BOX) {
                     cubes[i * MAP_SIZE + j]->get<ComponentCube>()->setColor(raylib::Color::Blue());
                     DrawCube(cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getPos(), cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().x,
                         cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().y, cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().z,

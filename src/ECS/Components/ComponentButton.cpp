@@ -19,6 +19,6 @@ ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
 void ComponentButton::Draw()
 {
     this->_texture.Draw(*this->_rectangle, this->_pos);
-    this->_font.DrawText(this->_text, (Vector2){800 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0}, 40.0, 3.0, raylib::Color::White());
+    this->_font.DrawText(this->_text, raylib::Vector2(800 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0), 40.0, 3.0, raylib::Color::White());
 }
 

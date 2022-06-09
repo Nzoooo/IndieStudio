@@ -8,22 +8,16 @@
 #include "../ECS/ecs.hpp"
 #include "mainMenu.hpp"
 
-// static bool isClicking(raylib::Rectangle *rectangle)
-// {
-//     raylib::Mouse mouseIndex;
-//     if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width) && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
-//         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-//             return (true);
-//     }
-//     return (false);
-// }
-
 static ecs::IEntity *createButton(raylib::Vector2 posButton, std::string textButton)
 {
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 
     buttonEntity->add<ComponentDrawable>(true, false);
+    buttonEntity->add<ComponentButton>(posButton, textButton);
     buttonEntity->add<ComponentClickable>();
+    return (buttonEntity);
+}
+
 static ecs::Core initMenu()
 {
     ecs::Core menu;
@@ -33,9 +27,9 @@ static ecs::Core initMenu()
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
     backgroung->add<ComponentDrawable>(true, false);
-    backgroung->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
+    backgroung->add<ComponentTexture>("../assets/background.png", raylib::Vector2(0, 0));
     logo->add<ComponentDrawable>(true, false);
-    logo->add<ComponentTexture>("assets/Logo.png", raylib::Vector2(800 / 2.0f - 200 / 2.0f, 30));
+    logo->add<ComponentTexture>("../assets/Logo.png", raylib::Vector2(800 / 2.0f - 200 / 2.0f, 30));
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();
@@ -56,7 +50,7 @@ int mainMenu()
     while (!raylib::Window::ShouldClose()) {
         raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
-        menu.get<ecs::SystemRender2D>()->update(menu);
+            menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
     raylib::Window::Close();

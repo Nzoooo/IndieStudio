@@ -13,6 +13,7 @@
 #include "../../raylib/include/Vector2.hpp"
 #include "../../raylib/include/Rectangle.hpp"
 #include "../../raylib/include/Image.hpp"
+#include "../../raylib/include/Font.hpp"
 #include "IComponent.hpp"
 
 class ComponentButton : public ecs::IComponent{
@@ -26,6 +27,7 @@ class ComponentButton : public ecs::IComponent{
         raylib::Rectangle *_rectangle;
         raylib::Texture _texture;
         raylib::Vector2 _pos;
+        std::string _text;
 };
 
 #endif /* !COMPONENTBUTTON_HPP_ */

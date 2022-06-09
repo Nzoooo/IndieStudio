@@ -18,12 +18,12 @@
 //     return (false);
 // }
 
-static ecs::IEntity *createButton2(raylib::Vector2 posButton)
+static ecs::IEntity *createButton2(raylib::Vector2 posButton, std::string textButton)
 {
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 
     buttonEntity->add<ComponentDrawable>(true, false);
-    buttonEntity->add<ComponentButton>(posButton, "../assets/menuAsset.png");
+    buttonEntity->add<ComponentButton>(posButton, "../assets/menuAsset.png", textButton);
     buttonEntity->add<ComponentClickable>();
     return (buttonEntity);
 }
@@ -50,17 +50,12 @@ static ecs::IEntity *createFont(raylib::Vector2 pos, std::string text, size_t si
 static ecs::Core initMenu()
 {
     ecs::Core menu;
-    raylib::Vector2 pos = {270.0, 163.0};
-    ecs::IEntity *buttonStart = createButton2((raylib::Vector2){0, 0});
-    ecs::IEntity *buttonReload = createButton(200.0, 250.0, 400.0, 75.0);
-    ecs::IEntity *buttonParam = createButton(200.0, 350.0, 400.0, 75.0);
-    pos = {270, 260};
-    ecs::IEntity *TextReload = createFont(pos, "Reload Game", 55);
-    pos = {270, 360};
-    ecs::IEntity *TextParam = createFont(pos, "Settings", 55);
+    raylib::Vector2 pos = {0, 0};
+    ecs::IEntity *buttonStart = createButton2((raylib::Vector2){800 / 2.0f - 358 / 2.0f, 150.0}, "Start Game");
+    ecs::IEntity *buttonReload = createButton2((raylib::Vector2){800 / 2.0f - 358 / 2.0f, 300.0}, "Reload Game");
+    ecs::IEntity *buttonParam = createButton2((raylib::Vector2){800 / 2.0f - 358 / 2.0f, 450.0}, "Settings");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
-    pos = {0, 0};
     backgroung->add<ComponentTexture>("../assets/placeholder.png", pos);
     pos = {50, 50};
     logo->add<ComponentTexture>("../assets/Logo.png", pos);
@@ -70,9 +65,6 @@ static ecs::Core initMenu()
     menu.addEntity(buttonStart);
     menu.addEntity(buttonParam);
     menu.addEntity(buttonReload);
-    menu.addEntity(TextStart);
-    menu.addEntity(TextReload);
-    menu.addEntity(TextParam);
     return (menu);
 }
 
@@ -87,12 +79,8 @@ int mainMenu()
         window->BeginDrawing();
         menu.getEntity(0)->get<ComponentTexture>()->Draw();
         menu.getEntity(1)->get<ComponentTexture>()->Draw();
-        menu.getEntity(2)->get<ComponentButton>()->Draw();
-        for (size_t i = 3; i < 5; i++)
-            menu.getEntity(i)->get<ComponentRectangle>()->Draw();
-
-        for (size_t i = 5; i < 8; i++)
-            menu.getEntity(i)->get<ComponentText>()->Draw();
+        for (size_t i = 2; i < 5; i++)
+            menu.getEntity(i)->get<ComponentButton>()->Draw();
         window->EndDrawing();
     }
     return (-1);

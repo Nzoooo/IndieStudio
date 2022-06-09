@@ -9,6 +9,7 @@
 
 #include "ISystem.hpp"
 #include "../../core/core.hpp"
+#include "../../raylib/include/Vector2.hpp"
 
 class SystemEvent : ecs::ISystem {
     public:
@@ -18,7 +19,7 @@ class SystemEvent : ecs::ISystem {
         SystemEvent &operator=(const SystemEvent &other) = delete;
 
         void update(ecs::Core &index) override;
-        void handleControllers();
+        void handleControllers(raylib::Vector2 &goBackPos, std::vector<raylib::Rectangle> &rectPos);
 
     protected:
     private:

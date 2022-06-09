@@ -11,3 +11,8 @@ raylib::Texture ComponentTexture::getTexture() const
 {
     return (_texture);
 }
+
+void ComponentTexture::Draw()
+{
+    this->_texture.Draw(this->_pos);
+}

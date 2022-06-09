@@ -8,6 +8,8 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
+#include "Components/ComponentButton.hpp"
+#include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentRectangle.hpp"

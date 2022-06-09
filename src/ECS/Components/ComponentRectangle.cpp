@@ -26,3 +26,8 @@ void ComponentRectangle::setColor(raylib::Color color)
 {
     this->_color = color;
 }
+
+void ComponentRectangle::Draw()
+{
+    this->_rectangle->Draw(this->_color);
+}

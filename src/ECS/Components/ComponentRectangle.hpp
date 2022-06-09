@@ -13,8 +13,9 @@
 
 class ComponentRectangle : public ecs::IComponent {
     public:
-        ComponentRectangle(float x = 0.0, float y = 0.0, float width = 200.0, float height = 75.0) : _color(raylib::Color::White()) {_rectangle = new raylib::Rectangle(x, y, width, height);};
-        ComponentRectangle(raylib::Rectangle *rectangle) : _rectangle(rectangle) {};
+        ComponentRectangle
+        (float x = 0.0, float y = 0.0, float width = 200.0, float height = 75.0, raylib::Color color = raylib::Color::White()) : _color(color) {_rectangle = new raylib::Rectangle(x, y, width, height);};
+        ComponentRectangle(raylib::Rectangle *rectangle, raylib::Color color = raylib::Color::White()) : _rectangle(rectangle), _color(color) {};
         ~ComponentRectangle() = default;
 
         raylib::Rectangle *getRectangle() const;
@@ -24,7 +25,6 @@ class ComponentRectangle : public ecs::IComponent {
         void setColor(raylib::Color);
 
         void Draw();
-
 
     private:
         raylib::Rectangle *_rectangle;

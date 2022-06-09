@@ -6,6 +6,7 @@
 */
 
 #include "settingsMenu.hpp"
+#include "core/core.hpp"
 
 int settingMenu()
 {

@@ -22,7 +22,6 @@ class ComponentDrawable : ecs::IComponent {
         bool getIsDrawable3D() const;
         void setIsDrawable3D(bool);
 
-    protected:
     private:
         bool _isDrawable2D;
         bool _isDrawable3D;

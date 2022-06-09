@@ -11,13 +11,8 @@
 
 class ComponentCollider : public ecs::IComponent {
     public:
-        ComponentCollider(bool ableToTakeCollider = true) : _ableToTakeCollider(ableToTakeCollider) {};
+        ComponentCollider() = default;
         ~ComponentCollider() = default;
 
-        bool getAbleToTakeCollider() const;
-
-        void setAbleToTakeCollider(bool ableToTakeCollider);
-
     private:
-        bool _ableToTakeCollider;
 };

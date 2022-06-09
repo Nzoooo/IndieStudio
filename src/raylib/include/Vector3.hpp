@@ -12,6 +12,7 @@
 namespace raylib {
     class Vector3 : public ::Vector3 {
         public:
+            Vector3();
             Vector3(::Vector3 &vec);
             Vector3(const Vector3 &other);
             Vector3 &operator=(const Vector3 &other);

@@ -16,7 +16,7 @@ namespace ecs
     class ISystem {
     public:
         virtual ~ISystem() {}
-        virtual void update(ecs::Core &index) = 0;
+        void update(ecs::Core &index) {};
 
     protected:
         static unsigned int _idCount;

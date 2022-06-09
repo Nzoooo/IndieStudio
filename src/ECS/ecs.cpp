@@ -63,28 +63,13 @@ void ecs::Core::removeEntity(unsigned int const i)
     delete this->_entities[i];
 }
 
-std::vector<ecs::ISystem *> &ecs::Core::getSystems()
+ecs::Scenes ecs::Core::getScene()
 {
-    return this->_systems;
+    return this->_scene;
 }
 
-ecs::ISystem *ecs::Core::getSystem(unsigned int const i)
+void ecs::Core::setScene(ecs::Scenes scene)
 {
-    return this->_systems.at(i);
+    this->_scene = scene;
 }
 
-unsigned int ecs::Core::addSystem(ecs::ISystem *e)
-{
-    this->_systems.push_back(e);
-    return _entities.size() - 1;
-}
-
-void ecs::Core::removeSystemIterator(std::vector<ecs::ISystem *>::iterator it)
-{
-    delete *it;
-}
-
-void ecs::Core::removeSystem(unsigned int const i)
-{
-    delete this->_systems[i];
-}

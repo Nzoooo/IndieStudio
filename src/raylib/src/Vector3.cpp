@@ -32,6 +32,10 @@ raylib::Vector3::Vector3(float _x, float _y, float _z) : ::Vector3{_x, _y, _z}
 {
 }
 
+raylib::Vector3::Vector3() : ::Vector3{0.0f, 0.0f, 0.0f}
+{
+}
+
 void raylib::Vector3::_setVector3(::Vector3 &vec)
 {
     x = vec.x;

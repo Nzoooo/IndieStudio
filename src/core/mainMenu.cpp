@@ -23,11 +23,7 @@ static ecs::IEntity *createButton(raylib::Vector2 posButton, std::string textBut
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 
     buttonEntity->add<ComponentDrawable>(true, false);
-    buttonEntity->add<ComponentButton>(posButton, textButton);
     buttonEntity->add<ComponentClickable>();
-    return (buttonEntity);
-}
-
 static ecs::Core initMenu()
 {
     ecs::Core menu;
@@ -36,9 +32,13 @@ static ecs::Core initMenu()
     ecs::IEntity *buttonParam = createButton(raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Settings");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
-    backgroung->add<ComponentTexture>("../assets/background.png", raylib::Vector2(0, 0));
-    logo->add<ComponentTexture>("../assets/Logo.png", raylib::Vector2(800 / 2.0f - 200 / 2.0f, 30));
+    backgroung->add<ComponentDrawable>(true, false);
+    backgroung->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
+    logo->add<ComponentDrawable>(true, false);
+    logo->add<ComponentTexture>("assets/Logo.png", raylib::Vector2(800 / 2.0f - 200 / 2.0f, 30));
+    menu.setScene(ecs::Scenes::Menu);
 
+    menu.add<ecs::SystemRender2D>();
     menu.addEntity(backgroung);
     menu.addEntity(logo);
     menu.addEntity(buttonStart);
@@ -51,14 +51,12 @@ int mainMenu()
 {
     raylib::Window::Init();
     ecs::Core menu = initMenu();
-    
-    while (!WindowShouldClose()) {
+
+    // raylib::Window::SetFullScreen();
+    while (!raylib::Window::ShouldClose()) {
         raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
-        menu.getEntity(0)->get<ComponentTexture>()->Draw();
-        menu.getEntity(1)->get<ComponentTexture>()->Draw();
-        for (size_t i = 2; i < 5; i++)
-            menu.getEntity(i)->get<ComponentButton>()->Draw();
+        menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
     raylib::Window::Close();

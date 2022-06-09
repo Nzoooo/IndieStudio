@@ -38,6 +38,8 @@ namespace raylib {
             static float GetFrameTime();
             static double GetTime();
             static void Clear(Color color);
+            static void SetFullScreen();
+            static void ClearFullScreen();
 
         protected:
         private:

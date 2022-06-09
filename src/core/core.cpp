@@ -6,7 +6,6 @@
 */
 
 #include "core.hpp"
-#include "../ECS/Systems/SystemRender.hpp"
 #include "../../build/_deps/raylib-src/src/raylib.h"
 #include "raylib/include/Window.hpp"
 

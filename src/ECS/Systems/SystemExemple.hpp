@@ -10,11 +10,13 @@
 
 #include "ISystem.hpp"
 
-class CustomSystem : public ecs::ISystem {
-    void update(ecs::Core &index) {
-        (void)index;
-        std::cout << "Update a custom system." << std::endl;
-    }
-};
+namespace ecs {
+    class CustomSystem : public ecs::ISystem {
+        void update(ecs::Core &index) {
+            (void)index;
+            std::cout << "Update a custom system." << std::endl;
+        }
+    };
+}
 
 #endif /* !SYSTEMEXEMPLE_HPP_ */

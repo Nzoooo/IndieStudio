@@ -12,3 +12,8 @@ ecs::IEntity::~IEntity() {
   for (auto *it: _components)
     delete it;
 }
+
+std::vector<ecs::IComponent *> &ecs::IEntity::getAllComponents()
+{
+  return (_components);
+}

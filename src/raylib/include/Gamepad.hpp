@@ -13,19 +13,16 @@
 namespace raylib {
     class Gamepad {
         public:
-            Gamepad();
-            ~Gamepad();
-
             static int gamepadNumber;
-            bool IsAvailable();
-            const std::string GetName();
-            bool IsButtonPressed(int button);
-            bool IsButtonDown(int button);
-            bool IsButtonReleased(int button);
-            bool IsButtonUp(int button);
-            int GetButtonPressed();
-            int GetAxisCount();
-            float GetAxisMovement(int axis);
+            static bool IsAvailable(int number);
+            static const std::string GetName(int number);
+            static bool IsButtonPressed(int number, int button);
+            static bool IsButtonDown(int number, int button);
+            static bool IsButtonReleased(int number, int button);
+            static bool IsButtonUp(int number, int button);
+            static int GetButtonPressed();
+            static int GetAxisCount(int number);
+            static float GetAxisMovement(int number, int axis);
 
             static GamepadButton GamepadButtonUnknown();
             static GamepadButton GamepadButtonLeftFaceUp();
@@ -55,6 +52,5 @@ namespace raylib {
 
         protected:
         private:
-            int number;
     };
 }

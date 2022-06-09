@@ -10,15 +10,17 @@
 #include "ISystem.hpp"
 #include "../../core/core.hpp"
 
-class SystemRender2D : ecs::ISystem {
-    public:
-        SystemRender2D() = default;
-        SystemRender2D(const SystemRender2D &other) = delete;
-        ~SystemRender2D() = default;
-        SystemRender2D &operator=(const SystemRender2D &other) = delete;
+namespace ecs {
+    class SystemRender2D : public ecs::ISystem {
+        public:
+            SystemRender2D() = default;
+            SystemRender2D(const SystemRender2D &other) = delete;
+            ~SystemRender2D() = default;
+            SystemRender2D &operator=(const SystemRender2D &other) = delete;
 
-        void update(ecs::Core &index) override;
+            void update(ecs::Core &index);
 
-    protected:
-    private:
-};
+        protected:
+        private:
+    };
+}

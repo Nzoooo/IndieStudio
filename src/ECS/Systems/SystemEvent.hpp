@@ -11,16 +11,18 @@
 #include "../../core/core.hpp"
 #include "../../raylib/include/Vector2.hpp"
 
-class SystemEvent : ecs::ISystem {
-    public:
-        SystemEvent() = default;
-        SystemEvent(const SystemEvent &other) = delete;
-        ~SystemEvent() = default;
-        SystemEvent &operator=(const SystemEvent &other) = delete;
+namespace ecs {
+    class SystemEvent : public ecs::ISystem {
+        public:
+            SystemEvent() = default;
+            SystemEvent(const SystemEvent &other) = delete;
+            ~SystemEvent() = default;
+            SystemEvent &operator=(const SystemEvent &other) = delete;
 
-        void update(ecs::Core &index) override;
-        void handleControllers();
+            void update(ecs::Core &index);
+            void handleControllers();
 
-    protected:
-    private:
-};
+        protected:
+        private:
+    };
+}

@@ -24,41 +24,47 @@
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemExemple.hpp"
+#include "Systems/SystemRender2D.hpp"
+#include "Systems/SystemRender3D.hpp"
+#include "Systems/SystemEvent.hpp"
 
 namespace ecs
 {
+    enum Scenes {
+        Menu,
+        GameSettings,
+        Game
+    };
     class Core {
-    private:
-        std::vector<ecs::IEntity *> _entities;
-        std::vector<ecs::ISystem *> _systems;
-        bool _stopped;
+        private:
+            std::vector<ecs::IEntity *> _entities;
+            std::vector<ecs::ISystem *> _systems;
+            bool _stopped;
+            ecs::Scenes _scene;
 
-    public:
-        Core();
-        ~Core();
-        template <typename T>
-        T *get();
-        template <typename T, typename... U>
-        void add(U &&... args);
-        template <typename T>
-        bool has() const;
-        template <typename T>
-        void remove();
+        public:
+            Core();
+            ~Core();
+            template <typename T>
+            T *get();
+            template <typename T, typename... U>
+            void add(U &&... args);
+            template <typename T>
+            bool has() const;
+            template <typename T>
+            void remove();
 
-        void run();
-        void update();
-        void stop();
+            void run();
+            void update();
+            void stop();
 
-        unsigned int addEntity(ecs::IEntity *e);
-        unsigned int addSystem(ecs::ISystem *e);
-        ecs::IEntity *getEntity(unsigned int const id);
-        ecs::ISystem *getSystem(unsigned int const id);
-        void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
-        void removeSystemIterator(std::vector<ecs::ISystem *>::iterator it);
-        void removeEntity(unsigned int const i);
-        void removeSystem(unsigned int const i);
-        std::vector<ecs::IEntity *> &getEntities();
-        std::vector<ecs::ISystem *> &getSystems();
+            unsigned int addEntity(ecs::IEntity *e);
+            ecs::IEntity *getEntity(unsigned int const id);
+            void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
+            void removeEntity(unsigned int const i);
+            std::vector<ecs::IEntity *> &getEntities();
+            ecs::Scenes getScene();
+            void setScene(ecs::Scenes scene);
     };
 
     template <typename T>

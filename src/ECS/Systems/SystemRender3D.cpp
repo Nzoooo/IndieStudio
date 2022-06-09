@@ -7,13 +7,15 @@
 
 #include "SystemRender3D.hpp"
 
-void SystemRender3D::update(ecs::Core &index)
-{
-    for (auto *it : index.getEntities()) {
-        if (it->has<ComponentDrawable>() &&
-        it->get<ComponentDrawable>()->getIsDrawable3D()) {
-            // if (it->has<ComponentRaylib>())
-            //     it->get<ComponentRaylib>()->Draw();
+namespace ecs {
+    void SystemRender3D::update(ecs::Core &index)
+    {
+        for (auto *it : index.getEntities()) {
+            if (it->has<ComponentDrawable>() &&
+            it->get<ComponentDrawable>()->getIsDrawable3D()) {
+                // if (it->has<ComponentRaylib>())
+                //     it->get<ComponentRaylib>()->Draw();
+            }
         }
     }
 }

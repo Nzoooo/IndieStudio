@@ -10,15 +10,17 @@
 #include "ISystem.hpp"
 #include "../../core/core.hpp"
 
-class SystemRender3D : ecs::ISystem {
-    public:
-        SystemRender3D() = default;
-        SystemRender3D(const SystemRender3D &other) = delete;
-        ~SystemRender3D() = default;
-        SystemRender3D &operator=(const SystemRender3D &other) = delete;
+namespace ecs {
+    class SystemRender3D : public ecs::ISystem {
+        public:
+            SystemRender3D() = default;
+            SystemRender3D(const SystemRender3D &other) = delete;
+            ~SystemRender3D() = default;
+            SystemRender3D &operator=(const SystemRender3D &other) = delete;
 
-        void update(ecs::Core &index) override;
+            void update(ecs::Core &index);
 
-    protected:
-    private:
-};
+        protected:
+        private:
+    };
+}

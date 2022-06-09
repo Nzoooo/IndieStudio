@@ -19,7 +19,7 @@ class SystemEvent : ecs::ISystem {
         SystemEvent &operator=(const SystemEvent &other) = delete;
 
         void update(ecs::Core &index) override;
-        void handleControllers(raylib::Vector2 &goBackPos, std::vector<raylib::Rectangle> &rectPos);
+        void handleControllers();
 
     protected:
     private:

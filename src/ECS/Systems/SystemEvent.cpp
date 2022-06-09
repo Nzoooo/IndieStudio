@@ -8,7 +8,7 @@
 #include "SystemEvent.hpp"
 #include "../../raylib/include/Gamepad.hpp"
 
-void SystemEvent::handleControllers(raylib::Vector2 &goBackPos, std::vector<raylib::Rectangle> &rectPos)
+void SystemEvent::handleControllers()
 {
     for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
         if (raylib::Gamepad::IsAvailable(i)) {
@@ -36,10 +36,6 @@ void SystemEvent::handleControllers(raylib::Vector2 &goBackPos, std::vector<rayl
             // Draw axis: left joystick
             // std::cout << "GAMEPAD_AXIS_LEFT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftX()) << std::endl;
             // std::cout << "GAMEPAD_AXIS_LEFT_Y: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftY()) << std::endl;
-            goBackPos.x += raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftX()) * 0.5;
-            goBackPos.y += raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftY()) * 0.5;
-            if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceDown())) rectPos.push_back(raylib::Rectangle(goBackPos.x, goBackPos.y, 10, 10));
-            if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceUp())) rectPos.clear();
 
             // Draw axis: right joystick
             // std::cout << "GAMEPAD_AXIS_RIGHT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightX()) << std::endl;
@@ -54,5 +50,5 @@ void SystemEvent::handleControllers(raylib::Vector2 &goBackPos, std::vector<rayl
 
 void SystemEvent::update(ecs::Core &index)
 {
-    // handleControllers();
+    handleControllers();
 }

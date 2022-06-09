@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include "core/core.hpp"
 
 Map::Map()
 {
@@ -17,9 +18,9 @@ Map::Map()
         this->_map[i] = new int[MAP_SIZE];
         for (size_t j = 0; j < MAP_SIZE; j++) {
             if (j == 0 || j == MAP_SIZE - 1 || i == 0 || i == MAP_SIZE - 1 || (i % 2 == 0 && j % 2 == 0))
-                this->_map[i][j] = 1;
+                this->_map[i][j] = WALL;
             else
-                this->_map[i][j] = 0;
+                this->_map[i][j] = AIR;
         }
     }
 }
@@ -58,18 +59,18 @@ std::pair<int, int> Map::randomDirection(std::pair<int, int> lastDirection)
 
 void Map::putSpawn()
 {
-    this->_map[1][1] = 0;
-    this->_map[1][2] = 0;
-    this->_map[2][1] = 0;
-    this->_map[1][MAP_SIZE - 2] = 0;
-    this->_map[1][MAP_SIZE - 3] = 0;
-    this->_map[2][MAP_SIZE - 2] = 0;
-    this->_map[MAP_SIZE - 2][1] = 0;
-    this->_map[MAP_SIZE - 2][2] = 0;
-    this->_map[MAP_SIZE - 3][1] = 0;
-    this->_map[MAP_SIZE - 2][MAP_SIZE - 2] = 0;
-    this->_map[MAP_SIZE - 2][MAP_SIZE - 3] = 0;
-    this->_map[MAP_SIZE - 3][MAP_SIZE - 2] = 0;
+    this->_map[1][1] = AIR;
+    this->_map[1][2] = AIR;
+    this->_map[2][1] = AIR;
+    this->_map[1][MAP_SIZE - 2] = AIR;
+    this->_map[1][MAP_SIZE - 3] = AIR;
+    this->_map[2][MAP_SIZE - 2] = AIR;
+    this->_map[MAP_SIZE - 2][1] = AIR;
+    this->_map[MAP_SIZE - 2][2] = AIR;
+    this->_map[MAP_SIZE - 3][1] = AIR;
+    this->_map[MAP_SIZE - 2][MAP_SIZE - 2] = AIR;
+    this->_map[MAP_SIZE - 2][MAP_SIZE - 3] = AIR;
+    this->_map[MAP_SIZE - 3][MAP_SIZE - 2] = AIR;
 }
 
 void Map::generateMap()
@@ -94,7 +95,7 @@ void Map::generateMap()
             currentRow += lastdirection.first;
             currentColumn += lastdirection.second;
         } else {
-            this->_map[currentRow][currentColumn] = 2;
+            this->_map[currentRow][currentColumn] = BOX;
             lastdirection = randomDirection(lastdirection);
             currentRow += lastdirection.first;
             currentColumn += lastdirection.second;

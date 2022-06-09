@@ -56,8 +56,8 @@ static ecs::Core initMenu()
     ecs::IEntity *buttonParam = createButton2((raylib::Vector2){800 / 2.0f - 358 / 2.0f, 450.0}, "Settings");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
-    backgroung->add<ComponentTexture>("../assets/placeholder.png", pos);
-    pos = {50, 50};
+    backgroung->add<ComponentTexture>("../assets/background.png", pos);
+    pos = {800 / 2.0f - 200 / 2.0f, 30};
     logo->add<ComponentTexture>("../assets/Logo.png", pos);
 
     menu.addEntity(backgroung);

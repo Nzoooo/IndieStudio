@@ -7,11 +7,11 @@
 
 #include "ComponentButton.hpp"
 
-ComponentButton::ComponentButton(raylib::Vector2 pos, std::string texturePath, std::string buttonText)
+ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
 {
     this->_pos = pos;
     this->_rectangle = new raylib::Rectangle(1611, 242, 358, 117);
-    this->_texture.Load(texturePath);
+    this->_texture.Load("../assets/menuAsset.png");
     this->_font.Load("../assets/NewAthletic.ttf");
     this->_text = buttonText;
 }

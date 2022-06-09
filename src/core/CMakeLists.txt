@@ -5,7 +5,6 @@ set(SRC
     ${SRC}
     ${SRCROOT}/core.cpp
     ${SRCROOT}/mainMenu.cpp
-    ${SRCROOT}/settingsMenu.cpp
     PARENT_SCOPE
 )
 

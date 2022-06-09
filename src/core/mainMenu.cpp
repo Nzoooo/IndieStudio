@@ -23,7 +23,7 @@ static ecs::IEntity *createButton(raylib::Vector2 posButton, std::string textBut
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 
     buttonEntity->add<ComponentDrawable>(true, false);
-    buttonEntity->add<ComponentButton>(posButton, "../assets/menuAsset.png", textButton);
+    buttonEntity->add<ComponentButton>(posButton, textButton);
     buttonEntity->add<ComponentClickable>();
     return (buttonEntity);
 }

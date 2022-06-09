@@ -18,7 +18,7 @@
 
 class ComponentButton : public ecs::IComponent{
     public:
-        ComponentButton(raylib::Vector2 pos, std::string texturePath, std::string buttonText);
+        ComponentButton(raylib::Vector2 pos, std::string buttonText);
         ~ComponentButton();
 
         void Draw();

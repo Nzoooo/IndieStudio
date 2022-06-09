@@ -9,7 +9,7 @@
 
 #include "IComponent.hpp"
 
-class ComponentPickable : ecs::IComponent {
+class ComponentPickable : public ecs::IComponent {
     public:
         ComponentPickable() = default;
         ~ComponentPickable() = default;

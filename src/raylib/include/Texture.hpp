@@ -16,13 +16,14 @@ namespace raylib {
             Texture();
             Texture(const ::Image &image, int layout);
             Texture(const ::Image &image);
-            Texture(const Texture &other) = delete;
+            Texture(const Texture &other);
             Texture(const ::Texture &texture);
 
             void SetShaderValue(::Shader& shader, int locIndex);
             void SetShapes(::Rectangle& source);
             void Draw(::Vector2 position, float rotation, float scale = 1.0f, ::Color tint = {255, 255, 255, 255});
             void Draw(::Vector2 position, ::Color tint = {255, 255, 255, 255});
+            void Draw(::Rectangle source, ::Vector2 position, ::Color tint = {255, 255, 255, 255});
             void SetWrap(int wrapMode);
             void SetFilter(int filterMode);
             void Update(::Rectangle rec, const void *pixels);

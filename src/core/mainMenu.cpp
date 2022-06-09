@@ -5,25 +5,63 @@
 ** mainMenu
 */
 
+#include "../ECS/ecs.hpp"
 #include "mainMenu.hpp"
 
-static int checkClick()
+static bool isClicking(raylib::Rectangle *rectangle)
 {
     raylib::Mouse mouseIndex;
-    if ((mouseIndex.GetX() >= 300) && (mouseIndex.GetY() >= 100) && (mouseIndex.GetX() < 300 + 200) && (mouseIndex.GetY() < 100 + 75)) {
+    if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width) && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-            return (1);
-    } else if ((mouseIndex.GetX() >= 300) && (mouseIndex.GetY() >= 250) && (mouseIndex.GetX() < 300 + 200) && (mouseIndex.GetY() < 250 + 75)) {
-        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-            return (2);
-    } else if ((mouseIndex.GetX() >= 300) && (mouseIndex.GetY() >= 400) && (mouseIndex.GetX() < 300 + 200) && (mouseIndex.GetY() < 400 + 75)) {
-        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-            return (3);
+            return (true);
     }
-    return (0);
+    return (false);
+}
+
+static ecs::IEntity *createButton(float x, float y, float width, float height)
+{
+    ecs::IEntity *entity = new ecs::IEntity();
+
+    entity->add<ComponentDrawable>(true, false);
+    entity->add<ComponentRectangle>(x, y, width, height);
+    entity->add<ComponentClickable>(true);
+    return (entity);
 }
 
 int mainMenu()
 {
-    return (1);
+    raylib::Window *window;
+    ecs::Core menu;
+    ecs::IEntity *buttonStart = createButton(200.0, 150.0, 200.0, 75.0);
+    ecs::IEntity *buttonRealod = createButton(200.0, 250.0, 200.0, 75.0);
+    ecs::IEntity *buttonParam = createButton(200.0, 350.0, 200.0, 75.0);
+    window->Init();
+
+    menu.addEntity(buttonParam);
+    menu.addEntity(buttonStart);
+    menu.addEntity(buttonRealod);
+
+    while (!WindowShouldClose()) {
+        ClearBackground(raylib::Color::White());
+        window->BeginDrawing();
+        for (size_t i = 0; i < 3; i++){
+            menu.getEntity(i)->get<ComponentRectangle>()->setColor(raylib::Color::Orange());
+            raylib::Rectangle *button = menu.getEntity(i)->get<ComponentRectangle>()->getRectangle();
+            button->Draw(menu.getEntity(i)->get<ComponentRectangle>()->getColor());
+            if (menu.getEntity(i)->has<ComponentClickable>() == true && isClicking(button) && menu.getEntity(i)->get<ComponentRectangle>()->getRectangle()->y == 150.0) {
+                window->EndDrawing();
+                return (1);
+            }
+            else if (menu.getEntity(i)->has<ComponentClickable>() == true && isClicking(button) && menu.getEntity(i)->get<ComponentRectangle>()->getRectangle()->y == 250.0) {
+                window->EndDrawing();
+                return (1);
+            }
+            else if (menu.getEntity(i)->has<ComponentClickable>() == true && isClicking(button) && menu.getEntity(i)->get<ComponentRectangle>()->getRectangle()->y == 350.0) {
+                window->EndDrawing();
+                return (3);
+            }
+        }
+        window->EndDrawing();
+    }
+    return (-1);
 }

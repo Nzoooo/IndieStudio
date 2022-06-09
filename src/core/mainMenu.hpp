@@ -8,7 +8,8 @@
 #ifndef MAINMENU_HPP_
 #define MAINMENU_HPP_
 
-#include "../raylib/include/Window.hpp"
+#include "raylib/include/Vector2.hpp"
+#include "raylib/include/Window.hpp"
 #include "raylib/include/Rectangle.hpp"
 #include "raylib/include/Color.hpp"
 #include "raylib/include/Font.hpp"

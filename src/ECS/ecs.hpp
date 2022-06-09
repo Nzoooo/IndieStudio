@@ -8,7 +8,9 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
+#include "Components/ComponentTexture.hpp"
 #include "Components/ComponentMovable.hpp"
+#include "Components/ComponentRectangle.hpp"
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
 #include "Components/ComponentDrawable.hpp"

@@ -8,7 +8,7 @@
 #include "../ECS/ecs.hpp"
 #include "mainMenu.hpp"
 
-static ecs::IEntity *createButton(raylib::Vector2 posButton, std::string textButton)
+static ecs::IEntity *createButton(ecs::Core menu, raylib::Vector2 posButton, std::string textButton)
 {
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 

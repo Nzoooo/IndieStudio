@@ -33,6 +33,8 @@ namespace ecs {
 
     void SystemEvent::_reassignControllers(ecs::Core &index, int gamepadNumber)
     {
+        (void)index;
+        (void)gamepadNumber;
     }
 
     void SystemEvent::_detectNbControllers()

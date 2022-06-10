@@ -8,6 +8,9 @@ set(SRC
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentExplodable.cpp
     ${SRCROOT}/ComponentBombs.cpp
+    ${SRCROOT}/ComponentTexture.cpp
+    ${SRCROOT}/ComponentRectangle.cpp
+    ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

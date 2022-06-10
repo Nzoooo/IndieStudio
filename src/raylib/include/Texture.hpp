@@ -17,7 +17,7 @@ namespace raylib
         Texture();
         Texture(const ::Image &image, int layout);
         Texture(const ::Image &image);
-        Texture(const Texture &other) = delete;
+        Texture(const Texture &other);
         Texture(const ::Texture &texture);
 
         void SetShaderValue(::Shader &shader, int locIndex);

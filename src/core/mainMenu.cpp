@@ -6,22 +6,28 @@
 */
 
 #include "mainMenu.hpp"
+#include "../ECS/ecs.hpp"
 
-static int checkClick()
-{
-    raylib::Mouse mouseIndex;
-    if ((mouseIndex.GetX() >= 300) && (mouseIndex.GetY() >= 100) && (mouseIndex.GetX() < 300 + 200) && (mouseIndex.GetY() < 100 + 75)) {
-        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-            return (1);
-    } else if ((mouseIndex.GetX() >= 300) && (mouseIndex.GetY() >= 250) && (mouseIndex.GetX() < 300 + 200) && (mouseIndex.GetY() < 250 + 75)) {
-        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-            return (2);
-    } else if ((mouseIndex.GetX() >= 300) && (mouseIndex.GetY() >= 400) && (mouseIndex.GetX() < 300 + 200) && (mouseIndex.GetY() < 400 + 75)) {
-        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-            return (3);
-    }
-    return (0);
-}
+// static bool isClicking(raylib::Rectangle *rectangle)
+// {
+//     raylib::Mouse mouseIndex;
+//     if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width) && (mouseIndex.GetY() < rectangle->height +
+//     rectangle->y)) {
+//         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+//             return (true);
+//     }
+//     return (false);
+// }
+
+// static ecs::IEntity *createButton(float x, float y, float width, float height)
+// {
+//     ecs::IEntity *entity = new ecs::IEntity();
+
+//     entity->add<ComponentDrawable>(true, false);
+//     entity->add<ComponentRectangle>(x, y, width, height);
+//     entity->add<ComponentClickable>();
+//     return (entity);
+// }
 
 int mainMenu()
 {

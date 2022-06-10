@@ -11,7 +11,7 @@
 #include <array>
 #include <iostream>
 
-#define MAPSIZE    15
+#define MAP_SIZE   17
 #define MAXTUNNELS 55
 #define MAXLENGHT  30
 

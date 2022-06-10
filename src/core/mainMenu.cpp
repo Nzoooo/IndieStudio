@@ -42,16 +42,17 @@ static ecs::Core initMenu()
     menu.addEntity(buttonStart);
     menu.addEntity(buttonReload);
     menu.addEntity(buttonParam);
+    menu.increaseNbButtons(3);
     return (menu);
 }
 
-int mainMenu()
+ecs::Scenes mainMenu()
 {
     raylib::Window::Init();
     ecs::Core menu = initMenu();
 
     // raylib::Window::SetFullScreen();
-    while (!raylib::Window::ShouldClose()) {
+    while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
         raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
           menu.get<ecs::SystemEvent>()->update(menu);
@@ -59,5 +60,6 @@ int mainMenu()
         raylib::Window::EndDrawing();
     }
     raylib::Window::Close();
-    return (-1);
+    printf("nb scene = %d\n", menu.getScene());
+    return (menu.getScene());
 }

@@ -27,6 +27,8 @@ class ComponentButton : public ecs::IComponent{
         void setIdButton(int id);
         int getIdButton() const;
         void setTexture(std::string &texturePath);
+        raylib::Rectangle *getRectangle() const;
+        raylib::Vector2 getPos() const;
     private:
         raylib::Font _font;
         raylib::Rectangle *_rectangle;

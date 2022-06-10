@@ -13,14 +13,14 @@ int mainLoop(ecs::Core index)
     int res = 0;
     
     while (res != -1) {
-        switch (res) {
-        case 0:
-            res = mainMenu();
+        switch (index.getScene()) {
+        case ecs::Scenes::Menu:
+            index.setScene(mainMenu());
             break;
-        case 1:
+        case ecs::Scenes::Game:
             res = coreLoop(index);
             break;
-        case 2:
+        case ecs::Scenes::GameSettings:
             // res = reload();
             break;
         case -1:
@@ -35,6 +35,7 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
     ecs::Core index = initEntities();
+    index.setScene(ecs::Scenes::Menu);
     mainLoop(index);
     return 0;
 }

@@ -46,3 +46,13 @@ void ComponentButton::setTexture(std::string &texturePath)
 {
     this->_texture.Load(texturePath);
 }
+
+raylib::Vector2 ComponentButton::getPos() const
+{
+    return (this->_pos);
+}
+
+raylib::Rectangle *ComponentButton::getRectangle() const
+{
+    return (this->_rectangle);
+}

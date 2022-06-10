@@ -9,6 +9,15 @@
 #include "../../raylib/include/Gamepad.hpp"
 
 namespace ecs {
+    static bool isClicking(raylib::Rectangle *rectangle) {
+        raylib::Mouse mouseIndex;
+        if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width) && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
+            if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                return (true);
+        }
+        return (false);
+    }
+
     bool SystemEvent::_isControllerAssign(ecs::Core &index, int gamepadNumber)
     {
         for (auto *it : index.getEntities()) {
@@ -120,6 +129,8 @@ namespace ecs {
 
     void SystemEvent::handleControllersMenu(ecs::Core &index)
     {
+        int i = 0;
+
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
                 _handleClickOnButtons(index);
@@ -131,6 +142,22 @@ namespace ecs {
             if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1 ||
             raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
                 _handleButtonsMoveUpDown(index, -1);
+            }
+        } else {
+            for (size_t j = 0; i < index.getNbButtons(); j++) {
+                if (index.getEntity(j)->has<ComponentButton>()){
+                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, 
+                    index.getEntity(j)->get<ComponentButton>()->getPos().y, 
+                    index.getEntity(j)->get<ComponentButton>()->getRectangle()->width, 
+                    index.getEntity(j)->get<ComponentButton>()->getRectangle()->height);
+                    if (isClicking(buttonTmp) == true && i== 0)
+                        index.setScene(ecs::Scenes::Game);
+                    else if (isClicking(buttonTmp) == true && i== 1)
+                        index.setScene(ecs::Scenes::Game);
+                    else if (isClicking(buttonTmp) == true && i== 2)
+                        index.setScene(ecs::Scenes::Game);
+                    i++;
+                }
             }
         }
     }

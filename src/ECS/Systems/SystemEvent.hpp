@@ -10,6 +10,7 @@
 #include "ISystem.hpp"
 #include "../../core/core.hpp"
 #include "../../raylib/include/Vector2.hpp"
+#include "../../raylib/include/Mouse.hpp"
 
 namespace ecs {
     class SystemEvent : public ecs::ISystem {

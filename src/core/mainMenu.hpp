@@ -16,6 +16,6 @@
 #include "raylib/include/Mouse.hpp"
 #include "raylib/include/Texture.hpp"
 
-int mainMenu();
+ecs::Scenes mainMenu();
 
 #endif /* !MAINMENU_HPP_ */

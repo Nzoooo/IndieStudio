@@ -22,12 +22,19 @@ class ComponentButton : public ecs::IComponent{
         ~ComponentButton();
 
         void Draw();
+        void setState(bool isActive);
+        bool getState() const;
+        void setIdButton(int id);
+        int getIdButton() const;
+        void setTexture(std::string &texturePath);
     private:
         raylib::Font _font;
         raylib::Rectangle *_rectangle;
         raylib::Texture _texture;
         raylib::Vector2 _pos;
         std::string _text;
+        bool _isActive = false;
+        int _idButton;
 };
 
 #endif /* !COMPONENTBUTTON_HPP_ */

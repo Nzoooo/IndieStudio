@@ -73,3 +73,13 @@ void ecs::Core::setScene(ecs::Scenes scene)
     this->_scene = scene;
 }
 
+void ecs::Core::increaseNbButtons(int increment)
+{
+    this->_nbButtons += increment;
+}
+
+int ecs::Core::getNbButtons() const
+{
+    return this->_nbButtons;
+}
+

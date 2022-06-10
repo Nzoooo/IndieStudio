@@ -20,9 +20,20 @@ namespace ecs {
             SystemEvent &operator=(const SystemEvent &other) = delete;
 
             void update(ecs::Core &index);
-            void handleControllers();
+            void handleControllersMenu(ecs::Core &index);
+            void handleControllersConnectPlayers(ecs::Core &index);
+            void handleControllersGame(ecs::Core &index);
+            void handleControllersGameSettings(ecs::Core &index);
+            void handleControllersWin(ecs::Core &index);
 
         protected:
         private:
+            void _detectNbControllers();
+            bool _isControllerAssign(ecs::Core &index, int gamepadNumber);
+            void _assignController(ecs::Core &index, int gamepadNumber);
+            void _reassignControllers(ecs::Core &index, int gamepadNumber);
+            void _resetStateButtons(ecs::Core &index, int idButton);
+            void _handleButtonsMoveUpDown(ecs::Core &index, int upOrDown);
+            void _handleClickOnButtons(ecs::Core &index);
     };
 }

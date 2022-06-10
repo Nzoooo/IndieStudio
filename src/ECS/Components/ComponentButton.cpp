@@ -22,3 +22,27 @@ void ComponentButton::Draw()
     this->_font.DrawText(this->_text, (Vector2){800 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0}, 40.0, 3.0, raylib::Color::White());
 }
 
+void ComponentButton::setState(bool isActive)
+{
+    this->_isActive = isActive;
+}
+
+bool ComponentButton::getState() const
+{
+    return (this->_isActive);
+}
+
+void ComponentButton::setIdButton(int id)
+{
+    this->_idButton = id;
+}
+
+int ComponentButton::getIdButton() const
+{
+    return (this->_idButton);
+}
+
+void ComponentButton::setTexture(std::string &texturePath)
+{
+    this->_texture.Load(texturePath);
+}

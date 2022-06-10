@@ -7,7 +7,6 @@
 
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
-#include "core/settingsMenu.hpp"
 
 int mainLoop(ecs::Core index)
 {
@@ -23,9 +22,6 @@ int mainLoop(ecs::Core index)
             break;
         case 2:
             // res = reload();
-            break;
-        case 3:
-            res = settingMenu();
             break;
         case -1:
             return (-1);

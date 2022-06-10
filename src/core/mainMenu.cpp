@@ -15,15 +15,18 @@ static ecs::IEntity *createButton(raylib::Vector2 posButton, std::string textBut
     buttonEntity->add<ComponentDrawable>(true, false);
     buttonEntity->add<ComponentButton>(posButton, textButton);
     buttonEntity->add<ComponentClickable>();
+    buttonEntity->get<ComponentButton>()->setIdButton(menu.getNbButtons());
+    menu.increaseNbButtons(1);
     return (buttonEntity);
 }
 
 static ecs::Core initMenu()
 {
     ecs::Core menu;
-    ecs::IEntity *buttonStart = createButton(raylib::Vector2(800 / 2.0f - 358 / 2.0f, 150.0), "Start Game");
-    ecs::IEntity *buttonReload = createButton(raylib::Vector2(800 / 2.0f - 358 / 2.0f, 300.0), "Reload Game");
-    ecs::IEntity *buttonParam = createButton(raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Settings");
+    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 150.0), "Start Game");
+    buttonStart->get<ComponentButton>()->setState(true);
+    ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 300.0), "Reload Game");
+    ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Settings");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
     backgroung->add<ComponentDrawable>(true, false);
@@ -33,11 +36,12 @@ static ecs::Core initMenu()
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();
+    menu.add<ecs::SystemEvent>();
     menu.addEntity(backgroung);
     menu.addEntity(logo);
     menu.addEntity(buttonStart);
-    menu.addEntity(buttonParam);
     menu.addEntity(buttonReload);
+    menu.addEntity(buttonParam);
     return (menu);
 }
 
@@ -50,7 +54,8 @@ int mainMenu()
     while (!raylib::Window::ShouldClose()) {
         raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
-            menu.get<ecs::SystemRender2D>()->update(menu);
+          menu.get<ecs::SystemEvent>()->update(menu);
+          menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
     raylib::Window::Close();

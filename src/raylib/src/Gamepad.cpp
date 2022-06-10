@@ -7,7 +7,7 @@
 
 #include "../include/Gamepad.hpp"
 
-int raylib::Gamepad::gamepadNumber = 0;
+int raylib::Gamepad::gamepadNumber = 3;
 
 namespace raylib {
     bool Gamepad::IsAvailable(int number)

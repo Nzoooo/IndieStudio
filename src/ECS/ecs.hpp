@@ -21,6 +21,7 @@
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentTransform.hpp"
 #include "Components/ComponentRectangle.hpp"
+#include "Components/ComponentControllable.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemExemple.hpp"
@@ -32,8 +33,10 @@ namespace ecs
 {
     enum Scenes {
         Menu,
+        ConnectPlayers,
         GameSettings,
-        Game
+        Game,
+        Win
     };
     class Core {
         private:
@@ -41,6 +44,7 @@ namespace ecs
             std::vector<ecs::ISystem *> _systems;
             bool _stopped;
             ecs::Scenes _scene;
+            int _nbButtons = 0;
 
         public:
             Core();
@@ -65,6 +69,8 @@ namespace ecs
             std::vector<ecs::IEntity *> &getEntities();
             ecs::Scenes getScene();
             void setScene(ecs::Scenes scene);
+            void increaseNbButtons(int increment);
+            int getNbButtons() const;
     };
 
     template <typename T>

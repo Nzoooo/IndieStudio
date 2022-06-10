@@ -11,6 +11,7 @@ set(SRC
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentExplodable.cpp
     ${SRCROOT}/ComponentText.cpp
+    ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE
 )

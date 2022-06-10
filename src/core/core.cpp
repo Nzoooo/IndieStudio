@@ -8,7 +8,7 @@
 #include "core.hpp"
 #include "../ECS/Systems/SystemRender.hpp"
 #include "raylib/include/Window.hpp"
-#include "../../build/_deps/raylib-src/src/raylib.h"
+#include "raylib/include/raylib.hpp"
 
 double clockToMilliseconds(clock_t ticks)
 {

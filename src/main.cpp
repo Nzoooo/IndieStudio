@@ -14,17 +14,17 @@ int mainLoop(ecs::Core index)
     
     while (res != -1) {
         switch (index.getScene()) {
-        case ecs::Scenes::Menu:
-            index.setScene(mainMenu());
-            break;
-        case ecs::Scenes::Game:
-            res = coreLoop(index);
-            break;
-        case ecs::Scenes::GameSettings:
-            // res = reload();
-            break;
-        case -1:
-            return (-1);
+            case ecs::Scenes::Menu:
+                index.setScene(mainMenu());
+                break;
+            case ecs::Scenes::Game:
+                res = coreLoop(index);
+                break;
+            case ecs::Scenes::GameSettings:
+                // res = reload();
+                break;
+            case -1:
+                return (-1);
         }
     }
     return (0);

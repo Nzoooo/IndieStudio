@@ -8,9 +8,9 @@
 #pragma once
 
 #include "IComponent.hpp"
-#include "../../raylib/include/Texture.hpp"
-#include "../../raylib/include/Color.hpp"
-#include "../../raylib/include/Vector2.hpp"
+#include "raylib/include/Texture.hpp"
+#include "raylib/include/Color.hpp"
+#include "raylib/include/Vector2.hpp"
 
 class ComponentTexture : public ecs::IComponent {
     public:

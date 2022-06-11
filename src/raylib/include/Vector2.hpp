@@ -10,7 +10,7 @@
 #include "raylib.hpp"
 
 namespace raylib {
-    class   Vector2 : public ::Vector2 {
+    class Vector2 : public ::Vector2 {
         public:
             Vector2();
             Vector2(::Vector2 &vec);

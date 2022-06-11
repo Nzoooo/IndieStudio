@@ -51,7 +51,7 @@ ecs::Scenes mainMenu()
     raylib::Window::Init();
     ecs::Core menu = initMenu();
 
-    // raylib::Window::SetFullScreen();
+    raylib::Window::SetFullScreen();
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
         raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
@@ -60,6 +60,5 @@ ecs::Scenes mainMenu()
         raylib::Window::EndDrawing();
     }
     raylib::Window::Close();
-    printf("nb scene = %d\n", menu.getScene());
     return (menu.getScene());
 }

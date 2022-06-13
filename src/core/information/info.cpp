@@ -43,6 +43,46 @@ static ecs::IEntity *createBackground(bool TopBottom, bool LeftRight, raylib::Co
     return (background);
 }
 
+static ecs::IEntity *displayMainIcon(bool TopBottom, bool LeftRight)
+{
+    ecs::IEntity *mainIcon = new ecs::IEntity();
+    raylib::Vector2 position = {MARGIN_BORDER, MARGIN_BORDER};
+    if (!TopBottom)
+        position.y = MARGIN_BORDER;
+    else
+        position.y = WINDOW_HEIGHT - (HEIGHT_BACKGROUND + MARGIN_BORDER);
+    position.y -= ICON_SIZE / 2;
+    if (!LeftRight)
+        position.x = MARGIN_BORDER;
+    else
+        position.x = WINDOW_WIDTH - (WIDTH_BACKGROUND + MARGIN_BORDER);
+
+    mainIcon->add<ComponentTexture>("assets/bot.png", position); // Change to the icon of the player
+    mainIcon->add<ComponentDrawable>(true, false);
+    return (mainIcon);
+}
+
+static ecs::IEntity *displayBotIcon(bool TopBottom, bool LeftRight)
+{
+    ecs::IEntity *botIcon = new ecs::IEntity();
+    raylib::Vector2 position = {MARGIN_BORDER, MARGIN_BORDER};
+
+    if (!TopBottom)
+        position.y = MARGIN_BORDER;
+    else
+        position.y = WINDOW_HEIGHT - (HEIGHT_BACKGROUND + MARGIN_BORDER);
+    position.y -= ICON_SIZE / 2;
+    if (!LeftRight)
+        position.x = MARGIN_BORDER;
+    else
+        position.x = WINDOW_WIDTH - (WIDTH_BACKGROUND + MARGIN_BORDER);
+    position.x += ICON_SIZE * 1.25;
+
+    botIcon->add<ComponentTexture>("assets/bot.png", position);
+    botIcon->add<ComponentDrawable>(true, false);
+    return (botIcon);
+}
+
 void displayInformations(ecs::Core &core)
 {
     std::size_t count = 0;

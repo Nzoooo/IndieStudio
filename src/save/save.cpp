@@ -47,13 +47,11 @@ void Save::saveCore(ecs::Core &core)
 void Save::saveEntity(ecs::IEntity &entity)
 {
     if (entity.has<ComponentClickable>()) {
-        auto component_data = dynamic_cast<ComponentClickable *>(entity.get<ComponentClickable>());
         _file << "\t\tComponentClickable {" << std::endl;
         _file << "\t\t\tableToBeClicked: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentCollider>()) {
-        auto component_data = dynamic_cast<ComponentCollider *>(entity.get<ComponentCollider>());
         _file << "\t\tComponentCollider {" << std::endl;
         _file << "\t\t\tableToCollide: 1" << std::endl;
         _file << "\t\t}" << std::endl;
@@ -66,7 +64,6 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentDroppable>()) {
-        auto component_data = dynamic_cast<ComponentDroppable *>(entity.get<ComponentDroppable>());
         _file << "\t\tComponentDroppable {" << std::endl;
         _file << "\t\t\tableToBeDropped: 1" << std::endl;
         _file << "\t\t}" << std::endl;
@@ -79,7 +76,6 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentKillable>()) {
-        auto component_data = dynamic_cast<ComponentKillable *>(entity.get<ComponentKillable>());
         _file << "\t\tComponentKillable {" << std::endl;
         _file << "\t\t\tableToBeKilled: 1" << std::endl;
         _file << "\t\t}" << std::endl;
@@ -93,7 +89,6 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentPickable>()) {
-        auto component_data = dynamic_cast<ComponentPickable *>(entity.get<ComponentPickable>());
         _file << "\t\tComponentPickable {" << std::endl;
         _file << "\t\t\tableToBePicked: 1" << std::endl;
         _file << "\t\t}" << std::endl;

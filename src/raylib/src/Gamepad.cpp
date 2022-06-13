@@ -7,47 +7,36 @@
 
 #include "../include/Gamepad.hpp"
 
-int raylib::Gamepad::gamepadNumber = 0;
+int raylib::Gamepad::gamepadNumber = 3;
 
 namespace raylib
 {
-    Gamepad::Gamepad()
-    {
-        number = gamepadNumber;
-        gamepadNumber++;
-    }
-
-    Gamepad::~Gamepad()
-    {
-        gamepadNumber--;
-    }
-
-    bool Gamepad::IsAvailable()
+    bool Gamepad::IsAvailable(int number)
     {
         return (::IsGamepadAvailable(number));
     }
 
-    const std::string Gamepad::GetName()
+    const std::string Gamepad::GetName(int number)
     {
         return (static_cast<std::string>(::GetGamepadName(number)));
     }
 
-    bool Gamepad::IsButtonPressed(int button)
+    bool Gamepad::IsButtonPressed(int number, int button)
     {
         return (::IsGamepadButtonPressed(number, button));
     }
 
-    bool Gamepad::IsButtonDown(int button)
+    bool Gamepad::IsButtonDown(int number, int button)
     {
         return (::IsGamepadButtonDown(number, button));
     }
 
-    bool Gamepad::IsButtonReleased(int button)
+    bool Gamepad::IsButtonReleased(int number, int button)
     {
         return (::IsGamepadButtonReleased(number, button));
     }
 
-    bool Gamepad::IsButtonUp(int button)
+    bool Gamepad::IsButtonUp(int number, int button)
     {
         return (::IsGamepadButtonUp(number, button));
     }
@@ -57,12 +46,12 @@ namespace raylib
         return (::GetGamepadButtonPressed());
     }
 
-    int Gamepad::GetAxisCount()
+    int Gamepad::GetAxisCount(int number)
     {
         return (::GetGamepadAxisCount(number));
     }
 
-    float Gamepad::GetAxisMovement(int axis)
+    float Gamepad::GetAxisMovement(int number, int axis)
     {
         return (::GetGamepadAxisMovement(number, axis));
     }

@@ -8,6 +8,7 @@
 #ifndef MAINMENU_HPP_
 #define MAINMENU_HPP_
 
+#include "ECS/ecs.hpp"
 #include "raylib/include/Color.hpp"
 #include "raylib/include/Font.hpp"
 #include "raylib/include/Model.hpp"
@@ -15,9 +16,8 @@
 #include "raylib/include/Rectangle.hpp"
 #include "raylib/include/Texture.hpp"
 #include "raylib/include/Vector2.hpp"
-#include "raylib/include/Vector3.hpp"
 #include "raylib/include/Window.hpp"
 
-int mainMenu();
+ecs::Scenes mainMenu();
 
 #endif /* !MAINMENU_HPP_ */

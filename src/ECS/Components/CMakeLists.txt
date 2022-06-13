@@ -3,6 +3,7 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/ECS/Components)
 
 set(SRC
     ${SRC}
+    ${SRCROOT}/ComponentButton.cpp
     ${SRCROOT}/ComponentTexture.cpp
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentRectangle.cpp
@@ -10,6 +11,9 @@ set(SRC
     ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentExplodable.cpp
+    ${SRCROOT}/ComponentText.cpp
+    ${SRCROOT}/ComponentControllable.cpp
+    ${SRCROOT}/ComponentMesh.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

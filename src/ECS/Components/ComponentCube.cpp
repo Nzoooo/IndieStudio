@@ -36,3 +36,8 @@ void ComponentCube::setColor(raylib::Color color)
 {
     this->_color = color;
 }
+
+void ComponentCube::Draw()
+{
+    _pos.DrawCube(_size, _color);
+}

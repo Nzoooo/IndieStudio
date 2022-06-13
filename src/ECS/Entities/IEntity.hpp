@@ -20,6 +20,7 @@ namespace ecs
 
       public:
         ~IEntity();
+        std::vector<ecs::IComponent *> &getAllComponents();
         template <typename T> T *get();
         template <typename T> bool has() const;
         template <typename T> void remove();

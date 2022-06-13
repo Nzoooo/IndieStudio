@@ -129,3 +129,13 @@ void raylib::Window::Clear(Color color)
 {
     ::ClearBackground(color);
 }
+
+void raylib::Window::SetFullScreen()
+{
+    ::SetWindowState(FLAG_FULLSCREEN_MODE);
+}
+
+void raylib::Window::ClearFullScreen()
+{
+    ::ClearWindowState(FLAG_FULLSCREEN_MODE);
+}

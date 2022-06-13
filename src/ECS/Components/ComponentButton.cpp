@@ -12,8 +12,8 @@ ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
     this->_pos = pos;
     this->_rectangleUnactive = new raylib::Rectangle(1611, 242, 358, 117);
     this->_rectangleActive = new raylib::Rectangle(1611, 395, 358, 117);
-    this->_texture.Load("../assets/menuAsset.png");
-    this->_font.Load("../assets/NewAthletic.ttf");
+    this->_texture.Load("assets/menuAsset.png");
+    this->_font.Load("assets/NewAthletic.ttf");
     this->_text = buttonText;
 }
 

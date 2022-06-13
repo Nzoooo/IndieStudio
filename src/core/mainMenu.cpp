@@ -22,16 +22,16 @@ static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, st
 static ecs::Core initMenu()
 {
     ecs::Core menu;
-    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 150.0), "Start Game");
+    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 450.0), "Start Game");
     buttonStart->get<ComponentButton>()->setState(true);
-    ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 300.0), "Reload Game");
-    ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Exit");
+    ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 600.0), "Reload Game");
+    ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 750.0), "Exit");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
     backgroung->add<ComponentDrawable>(true, false);
     backgroung->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
     logo->add<ComponentDrawable>(true, false);
-    logo->add<ComponentTexture>("assets/Logo.png", raylib::Vector2(800 / 2.0f - 200 / 2.0f, 30));
+    logo->add<ComponentTexture>("assets/Bomberman_Logo.png", raylib::Vector2(1920 / 2.0f - 500 / 2.0f, 150));
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();
@@ -46,7 +46,6 @@ static ecs::Core initMenu()
 
 ecs::Scenes mainMenu()
 {
-    raylib::Window::Init();
     ecs::Core menu = initMenu();
 
     raylib::Window::SetFullScreen();
@@ -57,6 +56,5 @@ ecs::Scenes mainMenu()
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
-    raylib::Window::Close();
     return (menu.getScene());
 }

@@ -23,7 +23,7 @@ void ComponentButton::Draw()
         this->_texture.Draw(*this->_rectangleActive, this->_pos);
     else
         this->_texture.Draw(*this->_rectangleUnactive, this->_pos);
-    this->_font.DrawText(this->_text, raylib::Vector2(800 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0), 40.0, 3.0, raylib::Color::White());
+    this->_font.DrawText(this->_text, raylib::Vector2(1920 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0), 40.0, 3.0, raylib::Color::White());
 }
 
 void ComponentButton::setState(bool isActive)

@@ -78,6 +78,20 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToExplode: " << component_data->getAbleToExplode() << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentKillable>()) {
+        auto component_data = dynamic_cast<ComponentKillable *>(entity.get<ComponentKillable>());
+        _file << "\t\tComponentKillable {" << std::endl;
+        _file << "\t\t\tableToBeKilled: 1" << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentMovable>()) {
+        auto component_data = dynamic_cast<ComponentMovable *>(entity.get<ComponentMovable>());
+        _file << "\t\tComponentMovable {" << std::endl;
+        _file << "\t\t\tdir: " << component_data->getDirection() << "," << std::endl;
+        _file << "\t\t\tspeed: " << component_data->getSpeed() << "," << std::endl;
+        _file << "\t\t\tableToMove: " << component_data->getAbleToMove() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
 }
 
 void Save::eraseSave(void)

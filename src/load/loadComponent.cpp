@@ -77,7 +77,8 @@ void addComponentDroppable(std::ifstream &file, ecs::IEntity *entity)
     bool ableToBeDropped = getMember<bool>(file, "ableToBeDropped");
 
     try {
-        entity->add<ComponentDroppable>(ableToBeDropped);
+        if (ableToBeDropped)
+            entity->add<ComponentDroppable>();
     } catch (std::exception &e) {
         std::cout << "ComponentDroppable not found" << std::endl;
     }
@@ -92,6 +93,18 @@ void addComponentExplodable(std::ifstream &file, ecs::IEntity *entity)
         entity->add<ComponentExplodable>(blastRange, ableToExplode);
     } catch (std::exception &e) {
         std::cout << "ComponentExplodable not found" << std::endl;
+    }
+}
+
+void addComponentKillable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
+
+    try {
+        if (ableToBeKilled)
+            entity->add<ComponentKillable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentKillable not found" << std::endl;
     }
 }
 
@@ -117,18 +130,6 @@ void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
 
     try {
         entity->add<ComponentTransform>(height, width, posX, posY);
-    } catch (std::exception &e) {
-        std::cout << "ComponentMovable not found" << std::endl;
-    }
-}
-
-void addComponentKillable(std::ifstream &file, ecs::IEntity *entity)
-{
-    bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
-
-    try {
-        if (ableToBeKilled)
-            entity->add<ComponentKillable>();
     } catch (std::exception &e) {
         std::cout << "ComponentMovable not found" << std::endl;
     }

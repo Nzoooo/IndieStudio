@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include "../../raylib/include/Color.hpp"
-#include "../../raylib/include/Rectangle.hpp"
 #include "IComponent.hpp"
+#include "raylib/include/Color.hpp"
+#include "raylib/include/Rectangle.hpp"
 
 class ComponentRectangle : public ecs::IComponent {
   public:

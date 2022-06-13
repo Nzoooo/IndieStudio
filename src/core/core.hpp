@@ -12,7 +12,7 @@
 #include <math.h>
 #include <string>
 #include <time.h>
-#include "../ECS/ecs.hpp"
+#include "ECS/ecs.hpp"
 #include "map/Map.hpp"
 
 #define FPS_CAP      120

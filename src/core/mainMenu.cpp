@@ -6,7 +6,7 @@
 */
 
 #include "mainMenu.hpp"
-#include "../ECS/ecs.hpp"
+#include "ECS/ecs.hpp"
 
 // static bool isClicking(raylib::Rectangle *rectangle)
 // {

@@ -16,6 +16,7 @@ set(SRC
     ${SRCROOT}/ComponentText.cpp
     ${SRCROOT}/ComponentTexture.cpp
     ${SRCROOT}/ComponentTransform.cpp
+    ${SRCROOT}/ComponentTransparency.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

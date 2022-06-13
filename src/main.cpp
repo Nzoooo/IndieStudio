@@ -16,9 +16,7 @@ int mainLoop(ecs::Core index)
         switch (index.getScene()) {
             case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
             case ecs::Scenes::Game: res = coreLoop(index); break;
-            case ecs::Scenes::GameSettings:
-                // res = reload();
-                break;
+            case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);

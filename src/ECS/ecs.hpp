@@ -8,25 +8,36 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
+#include "Components/ComponentButton.hpp"
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
+#include "Components/ComponentControllable.hpp"
 #include "Components/ComponentDrawable.hpp"
 #include "Components/ComponentExplodable.hpp"
 #include "Components/ComponentKillable.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
+#include "Components/ComponentRectangle.hpp"
+#include "Components/ComponentText.hpp"
+#include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
+#include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
+#include "Systems/SystemRender2D.hpp"
+#include "Systems/SystemRender3D.hpp"
 
 namespace ecs
 {
+    enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win, Close };
     class Core {
       private:
         std::vector<ecs::IEntity *> _entities;
         std::vector<ecs::ISystem *> _systems;
         bool _stopped;
+        ecs::Scenes _scene;
+        int _nbButtons = 0;
 
       public:
         Core();
@@ -41,15 +52,14 @@ namespace ecs
         void stop();
 
         unsigned int addEntity(ecs::IEntity *e);
-        unsigned int addSystem(ecs::ISystem *e);
         ecs::IEntity *getEntity(unsigned int const id);
-        ecs::ISystem *getSystem(unsigned int const id);
         void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
-        void removeSystemIterator(std::vector<ecs::ISystem *>::iterator it);
         void removeEntity(unsigned int const i);
-        void removeSystem(unsigned int const i);
         std::vector<ecs::IEntity *> &getEntities();
-        std::vector<ecs::ISystem *> &getSystems();
+        ecs::Scenes getScene();
+        void setScene(ecs::Scenes scene);
+        void increaseNbButtons(int increment);
+        int getNbButtons() const;
     };
 
     template <typename T> T *ecs::Core::get()

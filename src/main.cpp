@@ -7,21 +7,21 @@
 
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
-#include "core/settingsMenu.hpp"
 
 int mainLoop(ecs::Core index)
 {
     int res = 0;
 
     while (res != -1) {
-        switch (res) {
-            case 0: res = mainMenu(); break;
-            case 1: res = coreLoop(index); break;
-            case 2:
+        switch (index.getScene()) {
+            case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
+            case ecs::Scenes::Game: res = coreLoop(index); break;
+            case ecs::Scenes::GameSettings:
                 // res = reload();
                 break;
-            case 3: res = settingMenu(); break;
-            case -1: return (-1);
+            case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::Win: break;
+            case ecs::Close: return (-1);
         }
     }
     return (0);
@@ -32,6 +32,7 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
     ecs::Core index = initEntities();
+    index.setScene(ecs::Scenes::Menu);
     mainLoop(index);
     return 0;
 }

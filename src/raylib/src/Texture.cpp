@@ -17,6 +17,11 @@ raylib::Texture::Texture(const ::Texture &texture)
     _setTexture(texture);
 }
 
+raylib::Texture::Texture(const raylib::Texture &other)
+{
+    _setTexture(other);
+}
+
 raylib::Texture::Texture(const ::Image &image)
 {
     if (!Load(image)) {
@@ -87,6 +92,11 @@ void raylib::Texture::Draw(::Vector2 position, ::Color tint)
 void raylib::Texture::Draw(::Vector2 position, float rotation, float scale, ::Color tint)
 {
     ::DrawTextureEx(*this, position, rotation, scale, tint);
+}
+
+void raylib::Texture::Draw(::Rectangle source, ::Vector2 position, ::Color tint)
+{
+    ::DrawTextureRec(*this, source, position, tint);
 }
 
 void raylib::Texture::SetShapes(::Rectangle &source)

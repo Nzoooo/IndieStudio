@@ -21,15 +21,6 @@ ecs::Core initEntities()
     player->add<ComponentKillable>();
     player->add<ComponentTransform>(50, 50, 50, 50);
 
-    ecs::IEntity *cube = new ecs::IEntity();
-
-    raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
-    raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
-
-    cube->add<ComponentDrawable>(true, false);
-    cube->add<ComponentCube>(pos, size, BLACK);
-
     index.addEntity(player);
-    index.addEntity(cube);
     return (index);
 }

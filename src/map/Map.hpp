@@ -9,6 +9,9 @@
 #define MAP_HPP_
 
 #include <array>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 #define MAP_SIZE   17
@@ -30,6 +33,12 @@ class Map {
     void putSpawn();
     void randomBonus(size_t currentRow, size_t currentColumn);
     std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
+
+    enum map_object {
+        AIR = 0,
+        WALL = 1,
+        BOX = 2,
+    };
 
   private:
     int **_map;

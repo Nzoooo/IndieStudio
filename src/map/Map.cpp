@@ -6,10 +6,6 @@
 */
 
 #include "Map.hpp"
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
-#include "core/core.hpp"
 
 Map::Map()
 {
@@ -88,7 +84,6 @@ void Map::generateMap()
     size_t randomLength = std::ceil(std::rand() % MAXLENGHT);
     size_t tunnelLength = 0;
     while (1) {
-        printf("tunel lenght = %ld, tunel max = %d\n", tunnelLength, maxTunnels);
         if (((currentRow == 0) && (lastdirection.first == -1)) || ((currentColumn == 0) && (lastdirection.second == -1)) || ((currentRow == MAP_SIZE - 1) && (lastdirection.first == 1))
             || ((currentColumn == MAP_SIZE - 1) && (lastdirection.second == 1)) || this->_map[currentRow][currentColumn] == 1) {
             lastdirection = randomDirection(lastdirection);

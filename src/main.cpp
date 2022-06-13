@@ -5,18 +5,21 @@
 ** main
 */
 
-#include "core/core.hpp"
-#include "core/mainMenu.hpp"
 #include "ECS/Systems/SystemRender3D.hpp"
+#include "core/core.hpp"
+#include "core/initMap.hpp"
+#include "core/mainMenu.hpp"
+#include "map/Map.hpp"
 
 int mainLoop(ecs::Core index)
 {
-    int res = 4;
+    index.setScene(ecs::Scenes::Game);
+    Map *map;
 
-    while (res != -1) {
+    while (index.getScene() != ecs::Scenes::Win) {
         switch (index.getScene()) {
+            case ecs::Scenes::Game: mapCreation(map); break;
             case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: res = coreLoop(index); break;
             case ecs::Scenes::GameSettings:
                 // res = reload();
                 break;
@@ -34,6 +37,5 @@ int main(int argc, char **argv)
     ecs::SystemRender3D system;
     index.setScene(ecs::Scenes::Menu);
     mainLoop(index);
-    system.update(index);
     return 0;
 }

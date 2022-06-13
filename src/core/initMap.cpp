@@ -5,39 +5,32 @@
 ** initMap
 */
 
-#include "ECS/Components/ComponentCube.hpp"
-#include "ECS/Components/ComponentDrawable.hpp"
-#include "ECS/Components/ComponentMesh.hpp"
-#include "core/core.hpp"
-#include "core/mainMenu.hpp"
-#include "core/settingsMenu.hpp"
-
-static ecs::IEntity *createCube(raylib::Vector3 pos, raylib::Vector3 size)
-{
-    ecs::IEntity *entity = new ecs::IEntity();
-
-    entity->add<ComponentDrawable>(true, false);
-    entity->add<ComponentCube>(pos, size, raylib::Black);
-    entity->add<ComponentMesh>(pos, size, raylib::Black);
-    return (entity);
-}
+#include "initMap.hpp"
+#include "ECS/ecs.hpp"
 
 void mapCreation(Map *map)
 {
-    // const int screenWidth = 800;
-    // const int screenHeight = 600;
+    ecs::Core mapCreation;
+    ecs::IEntity *cube = new ecs::IEntity();
 
-    // InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    // Camera3D camera = {};
-    // Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
-    // camera.position = initialCamPos;
-    // Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
-    // camera.target = initialCamTarget;
-    // Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
-    // camera.up = initialCamUp;
-    // camera.fovy = 80.0f;
-    // camera.projection = CAMERA_PERSPECTIVE;
-    // int i = 0;
+    raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
+    raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
+
+    cube->add<ComponentDrawable>(false, true);
+    cube->add<ComponentCube>(pos, size, raylib::Color::Black());
+    mapCreation.add<ecs::SystemRender3D>();
+    mapCreation.addEntity(cube);
+
+    raylib::Window::Init();
+    Camera3D camera = {};
+    Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
+    camera.position = initialCamPos;
+    Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
+    camera.target = initialCamTarget;
+    Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
+    camera.up = initialCamUp;
+    camera.fovy = 80.0f;
+    camera.projection = CAMERA_PERSPECTIVE;
 
     // raylib::Vector3 initialFloorPos = {0.0f, -0.05f, 0.0f};
     // Vector3 initial = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
@@ -64,35 +57,13 @@ void mapCreation(Map *map)
     //     initial.z += 1.0f;
     // }
     // SetTargetFPS(60);
-    // while (!WindowShouldClose()) {
-    //     BeginDrawing();
-    //     ClearBackground(RAYWHITE);
-
-    //     BeginMode3D(camera);
-    //     initialFloorPos.DrawCube(1.0f * MAP_SIZE, 0.1f, 1.0f * MAP_SIZE, RED);
-    //     initialFloorPos.DrawCubeWires(1.0f * MAP_SIZE, 0.1f, 1.0f * MAP_SIZE, BLACK);
-    //     for (size_t i = 0; i < 4; i++)
-    //     {
-    //         DrawModel(models[i], initialPos[i], 1.0f, BLACK);
-    //     }
-        
-    //     for (i = 1; i < MAP_SIZE - 1; i++) {
-    //         for (size_t j = 1; j < MAP_SIZE - 1; j++) {
-    //             if (map->getMap()[i][j] == WALL) {
-    //                 cubes[i * MAP_SIZE + j]->get<ComponentCube>()->setColor(raylib::Color::Green());
-    //                 DrawCube(cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getPos(), cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().x,
-    //                     cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().y, cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().z,
-    //                     cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getColor());
-    //             } else if (map->getMap()[i][j] == BOX) {
-    //                 cubes[i * MAP_SIZE + j]->get<ComponentCube>()->setColor(raylib::Color::Blue());
-    //                 DrawCube(cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getPos(), cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().x,
-    //                     cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().y, cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getSize().z,
-    //                     cubes[i * MAP_SIZE + j]->get<ComponentCube>()->getColor());
-    //             }
-    //         }
-    //     }
-    //     EndMode3D();
-    //     EndDrawing();
-    // }
-    // CloseWindow();
+    while (!raylib::Window::ShouldClose()) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        BeginMode3D(camera);
+        mapCreation.get<ecs::SystemRender3D>()->update(mapCreation);
+        EndMode3D();
+        EndDrawing();
+    }
+    CloseWindow();
 }

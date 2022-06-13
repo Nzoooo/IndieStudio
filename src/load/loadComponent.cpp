@@ -72,6 +72,17 @@ void addComponentDrawable(std::ifstream &file, ecs::IEntity *entity)
     }
 }
 
+void addComponentDroppable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBeDropped = getMember<bool>(file, "ableToBeDropped");
+
+    try {
+        entity->add<ComponentDroppable>(ableToBeDropped);
+    } catch (std::exception &e) {
+        std::cout << "ComponentDroppable not found" << std::endl;
+    }
+}
+
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
     ComponentMovable::Direction dir = getMember<ComponentMovable::Direction>(file, "dir");

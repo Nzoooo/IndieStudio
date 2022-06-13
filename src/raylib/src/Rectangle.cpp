@@ -7,13 +7,13 @@
 
 #include "../include/Rectangle.hpp"
 
-namespace raylib {
+namespace raylib
+{
     Rectangle::Rectangle() : ::Rectangle{0, 0, 0, 0}
     {
     }
 
-    Rectangle::Rectangle(float _x, float _y, float _width, float _height) :
-    ::Rectangle{_x, _y, _width, _height}
+    Rectangle::Rectangle(float _x, float _y, float _width, float _height) : ::Rectangle{_x, _y, _width, _height}
     {
     }
 
@@ -57,4 +57,4 @@ namespace raylib {
     {
         ::DrawRectangleRoundedLines(*this, roundness, segments, lineThick, color);
     }
-}
+} // namespace raylib

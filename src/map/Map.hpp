@@ -8,30 +8,31 @@
 #ifndef MAP_HPP_
 #define MAP_HPP_
 
-#include <iostream>
 #include <array>
+#include <iostream>
 
-#define MAPSIZE 15
+#define MAPSIZE    15
 #define MAXTUNNELS 55
-#define MAXLENGHT 30
+#define MAXLENGHT  30
 
 class Map {
-    public:
-        Map();
-        ~Map();
+  public:
+    Map();
+    ~Map();
 
-        int **initMap();
+    int **initMap();
 
-        int **getMap();
+    int **getMap();
 
-        void readMap();
+    void readMap();
 
-        void generateMap();
-        void putSpawn();
-        void randomBonus(size_t currentRow, size_t currentColumn);
-        std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
-    private:
-        int **_map;
+    void generateMap();
+    void putSpawn();
+    void randomBonus(size_t currentRow, size_t currentColumn);
+    std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
+
+  private:
+    int **_map;
 };
 
 #endif /* !MAP_HPP_ */

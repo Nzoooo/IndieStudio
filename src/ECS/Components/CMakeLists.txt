@@ -13,11 +13,8 @@ set(SRC
     ${SRCROOT}/ComponentText.cpp
     ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/IComponent.cpp
-    PARENT_SCOPE
-)
+    PARENT_SCOPE)
 
-SET(INCDIRS
-    ${INCDIRS}
-    ${INCROOT}
-    PARENT_SCOPE
-)
+set(INCDIRS
+    ${INCDIRS} ${INCROOT}
+    PARENT_SCOPE)

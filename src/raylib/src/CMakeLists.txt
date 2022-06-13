@@ -19,10 +19,9 @@ set(SRC
     ${SRCROOT}/Gamepad.cpp
     ${SRCROOT}/Mesh.cpp
     ${SRCROOT}/Image.cpp
-    PARENT_SCOPE
-)
+    PARENT_SCOPE)
 
-SET(INCDIRS
+set(INCDIRS
     ${INCDIRS}
     ${INCROOT}/Window.hpp
     ${INCROOT}/Model.hpp
@@ -40,5 +39,4 @@ SET(INCDIRS
     ${INCROOT}/Gamepad.hpp
     ${INCROOT}/Mesh.hpp
     ${INCROOT}/Image.hpp
-    PARENT_SCOPE
-)
+    PARENT_SCOPE)

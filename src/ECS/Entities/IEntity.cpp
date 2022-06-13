@@ -8,12 +8,13 @@
 
 #include "IEntity.hpp"
 
-ecs::IEntity::~IEntity() {
-  for (auto *it: _components)
-    delete it;
+ecs::IEntity::~IEntity()
+{
+    for (auto *it : _components)
+        delete it;
 }
 
 std::vector<ecs::IComponent *> &ecs::IEntity::getAllComponents()
 {
-  return (_components);
+    return (_components);
 }

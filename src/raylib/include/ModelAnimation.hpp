@@ -9,19 +9,20 @@
 
 #include "raylib.hpp"
 
-namespace raylib {
+namespace raylib
+{
     class ModelAnimation : public ::ModelAnimation {
-        public:
-            ModelAnimation();
-            ModelAnimation(const ModelAnimation &other) = delete;
-            ~ModelAnimation();
+      public:
+        ModelAnimation();
+        ModelAnimation(const ModelAnimation &other) = delete;
+        ~ModelAnimation();
 
-            void Unload();
-            void UpdateAnimation(::Model &model, int frame);
-            bool IsModelAnimationValid(::Model &model) const;
-            //Do the LoadModelAnimations method
+        void Unload();
+        void UpdateAnimation(::Model &model, int frame);
+        bool IsModelAnimationValid(::Model &model) const;
+        // Do the LoadModelAnimations method
 
-        protected:
-        private:
+      protected:
+      private:
     };
-}
+} // namespace raylib

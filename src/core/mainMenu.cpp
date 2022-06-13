@@ -5,7 +5,6 @@
 ** mainMenu
 */
 
-#include "../ECS/ecs.hpp"
 #include "mainMenu.hpp"
 
 static ecs::IEntity *createButton(ecs::Core menu, raylib::Vector2 posButton, std::string textButton)
@@ -55,8 +54,8 @@ ecs::Scenes mainMenu()
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
         raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
-          menu.get<ecs::SystemEvent>()->update(menu);
-          menu.get<ecs::SystemRender2D>()->update(menu);
+        menu.get<ecs::SystemEvent>()->update(menu);
+        menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
     raylib::Window::Close();

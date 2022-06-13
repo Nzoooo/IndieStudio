@@ -10,9 +10,9 @@
 #include "IComponent.hpp"
 
 class ComponentPickable : public ecs::IComponent {
-    public:
-        ComponentPickable() = default;
-        ~ComponentPickable() = default;
+  public:
+    ComponentPickable() = default;
+    ~ComponentPickable() = default;
 
-    private:
+  private:
 };

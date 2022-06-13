@@ -10,9 +10,9 @@
 #include "IComponent.hpp"
 
 class ComponentCollider : public ecs::IComponent {
-    public:
-        ComponentCollider() = default;
-        ~ComponentCollider() = default;
+  public:
+    ComponentCollider() = default;
+    ~ComponentCollider() = default;
 
-    private:
+  private:
 };

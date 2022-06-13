@@ -82,4 +82,3 @@ int ecs::Core::getNbButtons() const
 {
     return this->_nbButtons;
 }
-

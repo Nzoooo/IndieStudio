@@ -8,19 +8,20 @@
 #pragma once
 #include <string>
 
-namespace raylib {
+namespace raylib
+{
     class RaylibException : public std::exception {
-        public:
-            RaylibException(const std::string &message) : _message(message) {};
-            ~RaylibException() = default;
+      public:
+        RaylibException(const std::string &message) : _message(message){};
+        ~RaylibException() = default;
 
-            const char *what() const noexcept override
-            {
-                return (_message.c_str());
-            };
+        const char *what() const noexcept override
+        {
+            return (_message.c_str());
+        };
 
-        protected:
-        private:
-            std::string _message;
+      protected:
+      private:
+        std::string _message;
     };
-}
+} // namespace raylib

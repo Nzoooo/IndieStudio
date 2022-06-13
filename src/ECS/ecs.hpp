@@ -9,79 +9,68 @@
 #define ECS_HPP_
 
 #include "Components/ComponentButton.hpp"
-#include "Components/ComponentText.hpp"
-#include "Components/ComponentTexture.hpp"
-#include "Components/ComponentMovable.hpp"
-#include "Components/ComponentRectangle.hpp"
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
+#include "Components/ComponentControllable.hpp"
 #include "Components/ComponentDrawable.hpp"
 #include "Components/ComponentExplodable.hpp"
 #include "Components/ComponentKillable.hpp"
+#include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
-#include "Components/ComponentTransform.hpp"
 #include "Components/ComponentRectangle.hpp"
-#include "Components/ComponentControllable.hpp"
+#include "Components/ComponentText.hpp"
+#include "Components/ComponentTexture.hpp"
+#include "Components/ComponentTransform.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
+#include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
-#include "Systems/SystemEvent.hpp"
 
 namespace ecs
 {
-    enum Scenes {
-        Menu,
-        ConnectPlayers,
-        GameSettings,
-        Game,
-        Win
-    };
+    enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win };
     class Core {
-        private:
-            std::vector<ecs::IEntity *> _entities;
-            std::vector<ecs::ISystem *> _systems;
-            bool _stopped;
-            ecs::Scenes _scene;
-            int _nbButtons = 0;
+      private:
+        std::vector<ecs::IEntity *> _entities;
+        std::vector<ecs::ISystem *> _systems;
+        bool _stopped;
+        ecs::Scenes _scene;
+        int _nbButtons = 0;
 
-        public:
-            Core();
-            ~Core();
-            template <typename T>
-            T *get();
-            template <typename T, typename... U>
-            void add(U &&... args);
-            template <typename T>
-            bool has() const;
-            template <typename T>
-            void remove();
+      public:
+        Core();
+        ~Core();
+        template <typename T> T *get();
+        template <typename T, typename... U> void add(U &&...args);
+        template <typename T> bool has() const;
+        template <typename T> void remove();
 
-            void run();
-            void update();
-            void stop();
+        void run();
+        void update();
+        void stop();
 
-            unsigned int addEntity(ecs::IEntity *e);
-            ecs::IEntity *getEntity(unsigned int const id);
-            void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
-            void removeEntity(unsigned int const i);
-            std::vector<ecs::IEntity *> &getEntities();
-            ecs::Scenes getScene();
-            void setScene(ecs::Scenes scene);
-            void increaseNbButtons(int increment);
-            int getNbButtons() const;
+        unsigned int addEntity(ecs::IEntity *e);
+        ecs::IEntity *getEntity(unsigned int const id);
+        void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
+        void removeEntity(unsigned int const i);
+        std::vector<ecs::IEntity *> &getEntities();
+        ecs::Scenes getScene();
+        void setScene(ecs::Scenes scene);
+        void increaseNbButtons(int increment);
+        int getNbButtons() const;
     };
 
-    template <typename T>
-    T *ecs::Core::get() {
+    template <typename T> T *ecs::Core::get()
+    {
         if (has<T>() == false)
             std::cout << "System not found" << std::endl;
         return static_cast<T *>(_systems[ecs::TemplateSystem<T>::getId()]);
     }
 
-    template <typename T, typename... U>
-    void ecs::Core::add(U &&... args) {
+    template <typename T, typename... U> void ecs::Core::add(U &&...args)
+    {
         if (has<T>() == true)
             std::cout << "System already exists" << std::endl;
 
@@ -91,8 +80,8 @@ namespace ecs
         _systems[id] = new T(std::forward<U>(args)...);
     }
 
-    template <typename T>
-    bool ecs::Core::has() const {
+    template <typename T> bool ecs::Core::has() const
+    {
         unsigned int id = ecs::TemplateSystem<T>::getId();
         if (id < _systems.size() && _systems[id])
             return (true);
@@ -100,14 +89,14 @@ namespace ecs
             return (false);
     }
 
-    template <typename T>
-    void ecs::Core::remove() {
+    template <typename T> void ecs::Core::remove()
+    {
         if (has<T>() == false)
             std::cout << "System not found" << std::endl;
         delete _systems[ecs::TemplateSystem<T>::getId()];
         _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
-}
+} // namespace ecs
 
 ecs::Core initEntities();
 

@@ -11,6 +11,7 @@
 #include "ECS/Components/ComponentKillable.hpp"
 #include "ECS/Components/ComponentMovable.hpp"
 #include "ECS/Components/ComponentTransform.hpp"
+#include "ECS/Entities/IEntity.hpp"
 
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity);
 void addComponentTransform(std::ifstream &file, ecs::IEntity *entity);

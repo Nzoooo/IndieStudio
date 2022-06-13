@@ -9,7 +9,8 @@
 
 int raylib::Gamepad::gamepadNumber = 3;
 
-namespace raylib {
+namespace raylib
+{
     bool Gamepad::IsAvailable(int number)
     {
         return (::IsGamepadAvailable(number));
@@ -174,4 +175,4 @@ namespace raylib {
     {
         return (GAMEPAD_AXIS_RIGHT_TRIGGER);
     }
-}
+} // namespace raylib

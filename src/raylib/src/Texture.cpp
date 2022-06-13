@@ -86,7 +86,7 @@ void raylib::Texture::SetWrap(int wrapMode)
 
 void raylib::Texture::Draw(::Vector2 position, ::Color tint)
 {
-   ::DrawTextureV(*this, position, tint);
+    ::DrawTextureV(*this, position, tint);
 }
 
 void raylib::Texture::Draw(::Vector2 position, float rotation, float scale, ::Color tint)
@@ -99,12 +99,12 @@ void raylib::Texture::Draw(::Rectangle source, ::Vector2 position, ::Color tint)
     ::DrawTextureRec(*this, source, position, tint);
 }
 
-void raylib::Texture::SetShapes(::Rectangle& source)
+void raylib::Texture::SetShapes(::Rectangle &source)
 {
     ::SetShapesTexture(*this, source);
 }
 
-void raylib::Texture::SetShaderValue(::Shader& shader, int locIndex)
+void raylib::Texture::SetShaderValue(::Shader &shader, int locIndex)
 {
     ::SetShaderValueTexture(shader, locIndex, *this);
 }

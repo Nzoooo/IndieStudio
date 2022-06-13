@@ -7,7 +7,8 @@
 
 #include "../include/Mouse.hpp"
 
-namespace raylib {
+namespace raylib
+{
     ::Vector2 Mouse::GetPos()
     {
         return (::GetMousePosition());
@@ -147,4 +148,4 @@ namespace raylib {
     {
         return (MOUSE_BUTTON_BACK);
     }
-}
+} // namespace raylib

@@ -16,8 +16,7 @@ raylib::Camera2D::Camera2D(const ::Camera2D &camera)
     _setCamera2D(camera);
 }
 
-raylib::Camera2D::Camera2D(::Vector2 _offset, ::Vector2 _target) :
-::Camera2D{_offset, _target, 0.0f, 1.0f}
+raylib::Camera2D::Camera2D(::Vector2 _offset, ::Vector2 _target) : ::Camera2D{_offset, _target, 0.0f, 1.0f}
 {
 }
 

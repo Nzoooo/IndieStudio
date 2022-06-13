@@ -32,7 +32,7 @@ bool raylib::Window::ShouldClose()
 
 bool raylib::Window::IsFullscreen()
 {
-   return (::IsWindowFullscreen());
+    return (::IsWindowFullscreen());
 }
 
 bool raylib::Window::IsMinimized()

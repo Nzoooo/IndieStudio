@@ -10,9 +10,9 @@
 #include "IComponent.hpp"
 
 class ComponentKillable : public ecs::IComponent {
-    public:
-        ComponentKillable() = default;
-        ~ComponentKillable() = default;
+  public:
+    ComponentKillable() = default;
+    ~ComponentKillable() = default;
 
-    private:
+  private:
 };

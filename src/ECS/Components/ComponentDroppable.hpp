@@ -10,10 +10,10 @@
 #include "IComponent.hpp"
 
 class ComponentDroppable : public ecs::IComponent {
-    public:
-        ComponentDroppable() = default;
-        ~ComponentDroppable() = default;
+  public:
+    ComponentDroppable() = default;
+    ~ComponentDroppable() = default;
 
-    private:
-        bool _ableToBeDropped;
+  private:
+    bool _ableToBeDropped;
 };

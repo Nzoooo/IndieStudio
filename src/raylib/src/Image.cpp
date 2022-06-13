@@ -7,7 +7,8 @@
 
 #include "../include/Image.hpp"
 
-namespace raylib {
+namespace raylib
+{
     Image::Image(const std::string &fileName)
     {
         Load(fileName);
@@ -65,4 +66,4 @@ namespace raylib {
     {
         ::UnloadImage(*this);
     }
-}
+} // namespace raylib

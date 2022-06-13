@@ -11,20 +11,15 @@
 int mainLoop(ecs::Core index)
 {
     int res = 0;
-    
+
     while (res != -1) {
         switch (index.getScene()) {
-            case ecs::Scenes::Menu:
-                index.setScene(mainMenu());
-                break;
-            case ecs::Scenes::Game:
-                res = coreLoop(index);
-                break;
+            case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
+            case ecs::Scenes::Game: res = coreLoop(index); break;
             case ecs::Scenes::GameSettings:
                 // res = reload();
                 break;
-            case -1:
-                return (-1);
+            case -1: return (-1);
         }
     }
     return (0);

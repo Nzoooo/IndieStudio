@@ -10,9 +10,9 @@
 #include "IComponent.hpp"
 
 class ComponentClickable : public ecs::IComponent {
-    public:
-        ComponentClickable() = default;
-        ~ComponentClickable() = default;
+  public:
+    ComponentClickable() = default;
+    ~ComponentClickable() = default;
 
-    private:
+  private:
 };

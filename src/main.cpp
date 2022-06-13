@@ -7,6 +7,7 @@
 
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
+#include "ECS/Systems/SystemRender3D.hpp"
 
 int mainLoop(ecs::Core index)
 {
@@ -30,7 +31,9 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
     ecs::Core index = initEntities();
+    ecs::SystemRender3D system;
     index.setScene(ecs::Scenes::Menu);
     mainLoop(index);
+    system.update(index);
     return 0;
 }

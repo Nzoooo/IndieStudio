@@ -21,6 +21,7 @@
 #include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
+#include "Components/ComponentCube.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemEvent.hpp"

@@ -19,6 +19,7 @@ int mainLoop(ecs::Core index)
             case ecs::Scenes::GameSettings:
                 // res = reload();
                 break;
+            case ecs::Scenes::ConnectPlayers: break;
             case ecs::Close: return (-1);
         }
     }

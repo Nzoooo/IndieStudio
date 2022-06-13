@@ -7,7 +7,7 @@
 
 #include "mainMenu.hpp"
 
-static ecs::IEntity *createButton(ecs::Core menu, raylib::Vector2 posButton, std::string textButton)
+static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
 {
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 
@@ -41,7 +41,6 @@ static ecs::Core initMenu()
     menu.addEntity(buttonStart);
     menu.addEntity(buttonReload);
     menu.addEntity(buttonParam);
-    menu.increaseNbButtons(3);
     return (menu);
 }
 

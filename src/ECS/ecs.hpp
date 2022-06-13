@@ -8,6 +8,7 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
+#include "Components/ComponentBombs.hpp"
 #include "Components/ComponentButton.hpp"
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
@@ -22,6 +23,7 @@
 #include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
+#include "Components/ComponentTransparency.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemEvent.hpp"

@@ -23,12 +23,24 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
         if (line == "\t}")
             break;
         line = removeTabs(line);
-        if (line == "ComponentMovable {")
-            addComponentMovable(file, entity);
-        if (line == "ComponentTransform {")
-            addComponentTransform(file, entity);
+        if (line == "ComponentClickable {")
+            addComponentClickable(file, entity);
+        if (line == "ComponentCollider {")
+            addComponentCollider(file, entity);
+        if (line == "ComponentDrawable {")
+            addComponentDrawable(file, entity);
+        if (line == "ComponentDroppable {")
+            addComponentDroppable(file, entity);
+        if (line == "ComponentExplodable {")
+            addComponentExplodable(file, entity);
         if (line == "ComponentKillable {")
             addComponentKillable(file, entity);
+        if (line == "ComponentMovable {")
+            addComponentMovable(file, entity);
+        if (line == "ComponentPickable {")
+            addComponentPickable(file, entity);
+        if (line == "ComponentTransform {")
+            addComponentTransform(file, entity);
     }
     return (entity);
 }

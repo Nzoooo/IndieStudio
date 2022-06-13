@@ -43,12 +43,12 @@ ecs::Core Load::loadFile(void)
     int checked_file = 0;
 
     if (stat(FILEPATH, &st) != 0)
-        throw /* Can't open file */;
+        throw std::exception();
     if (!file.is_open())
-        throw /* Can't open file */;
+        throw std::exception();
     while (getline(file, line)) {
         if (checked_file == 0 && std::to_string(st.st_mtime) != line)
-            throw /* File changed manually */;
+            throw std::exception();
         checked_file = 1;
         if (line == "Entities [") {
             while (getline(file, line)) {

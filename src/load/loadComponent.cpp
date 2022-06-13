@@ -33,7 +33,7 @@ template <typename T> T getMember(std::ifstream &file, std::string member)
         }
     }
     std::cout << member << " not found" << std::endl;
-    throw /* Member not found */;
+    throw std::exception();
 }
 
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)

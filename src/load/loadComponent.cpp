@@ -121,6 +121,18 @@ void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
     }
 }
 
+void addComponentPickable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBePicked = getMember<bool>(file, "ableToBePicked");
+
+    try {
+        if (ableToBePicked)
+            entity->add<ComponentPickable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentPickable not found" << std::endl;
+    }
+}
+
 void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
 {
     size_t height = getMember<size_t>(file, "height");

@@ -60,6 +60,18 @@ void addComponentCollider(std::ifstream &file, ecs::IEntity *entity)
     }
 }
 
+void addComponentDrawable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool isDrawable2D = getMember<bool>(file, "isDrawable2D");
+    bool isDrawable3D = getMember<bool>(file, "isDrawable3D");
+
+    try {
+        entity->add<ComponentDrawable>(isDrawable2D, isDrawable3D);
+    } catch (std::exception &e) {
+        std::cout << "ComponentDrawable not found" << std::endl;
+    }
+}
+
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
     ComponentMovable::Direction dir = getMember<ComponentMovable::Direction>(file, "dir");

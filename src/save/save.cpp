@@ -6,8 +6,14 @@
 */
 
 #include "save.hpp"
+#include "ECS/Components/ComponentClickable.hpp"
+#include "ECS/Components/ComponentCollider.hpp"
+#include "ECS/Components/ComponentDrawable.hpp"
+#include "ECS/Components/ComponentDroppable.hpp"
+#include "ECS/Components/ComponentExplodable.hpp"
 #include "ECS/Components/ComponentKillable.hpp"
 #include "ECS/Components/ComponentMovable.hpp"
+#include "ECS/Components/ComponentPickable.hpp"
 #include "ECS/Components/ComponentTransform.hpp"
 
 #include <iostream>
@@ -40,23 +46,10 @@ void Save::saveCore(ecs::Core &core)
 
 void Save::saveEntity(ecs::IEntity &entity)
 {
-    if (entity.has<ComponentMovable>()) {
-        auto component_data = dynamic_cast<ComponentMovable *>(entity.get<ComponentMovable>());
-        _file << "\t\tComponentMovable {" << std::endl, _file << "\t\t\tdir: " << component_data->getDirection() << "," << std::endl;
-        _file << "\t\t\tspeed: " << component_data->getSpeed() << "," << std::endl;
-        _file << "\t\t\tableToMove: " << component_data->getAbleToMove() << std::endl;
-        _file << "\t\t}" << std::endl;
-    }
-    if (entity.has<ComponentTransform>()) {
-        auto component_data = dynamic_cast<ComponentTransform *>(entity.get<ComponentTransform>());
-        _file << "\t\tComponentTransform {" << std::endl, _file << "\t\t\theight: " << component_data->getHeight() << "," << std::endl;
-        _file << "\t\t\twidth: " << component_data->getWidth() << "," << std::endl;
-        _file << "\t\t\tposX: " << component_data->getPosX() << "," << std::endl;
-        _file << "\t\t\tposY: " << component_data->getPosY() << std::endl;
-        _file << "\t\t}" << std::endl;
-    }
-    if (entity.has<ComponentKillable>()) {
-        _file << "\t\tComponentKillable {" << std::endl, _file << "\t\t\tableToBeKilled: 1" << std::endl;
+    if (entity.has<ComponentClickable>()) {
+        auto component_data = dynamic_cast<ComponentClickable *>(entity.get<ComponentClickable>());
+        _file << "\t\tComponentClickable {" << std::endl;
+        _file << "\t\t\tableToBeClicked: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
 }

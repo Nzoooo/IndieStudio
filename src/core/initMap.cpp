@@ -9,7 +9,6 @@
 #include "ECS/Components/ComponentDrawable.hpp"
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
-#include "core/settingsMenu.hpp"
 
 static ecs::IEntity *createCube(raylib::Vector3 pos, raylib::Vector3 size)
 {

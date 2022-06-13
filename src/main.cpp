@@ -8,27 +8,22 @@
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
-#include "core/settingsMenu.hpp"
 
 int mainLoop(ecs::Core core)
 {
     int res = 4;
 
-    switch (res) {
-        case 0: res = mainMenu(); break;
-        case 1: res = coreLoop(core); break;
-        case 2:
-            // res = reload();
-            break;
-        case 3: res = settingMenu(); break;
-        case 4:
-            Map *map = new Map;
-
-            map->generateMap();
-            map->readMap();
-            mapCreation(map);
-            // displayInformations(core);
-            break;
+    while (res != -1) {
+        switch (core.getScene()) {
+            case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
+            case ecs::Scenes::Game: res = coreLoop(core); break;
+            case ecs::Scenes::GameSettings:
+                // res = reload();
+                break;
+            case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::Win: break;
+            case ecs::Close: return (-1);
+        }
     }
     return (0);
 }
@@ -38,6 +33,7 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
     ecs::Core core = initEntities();
+    core.setScene(ecs::Scenes::Menu);
     mainLoop(core);
     return 0;
 }

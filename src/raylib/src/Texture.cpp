@@ -94,6 +94,11 @@ void raylib::Texture::Draw(::Vector2 position, float rotation, float scale, ::Co
     ::DrawTextureEx(*this, position, rotation, scale, tint);
 }
 
+void raylib::Texture::Draw(::Rectangle source, ::Vector2 position, ::Color tint)
+{
+    ::DrawTextureRec(*this, source, position, tint);
+}
+
 void raylib::Texture::SetShapes(::Rectangle &source)
 {
     ::SetShapesTexture(*this, source);

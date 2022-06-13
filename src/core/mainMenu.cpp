@@ -8,28 +8,56 @@
 #include "mainMenu.hpp"
 #include "ECS/ecs.hpp"
 
-// static bool isClicking(raylib::Rectangle *rectangle)
-// {
-//     raylib::Mouse mouseIndex;
-//     if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width) && (mouseIndex.GetY() < rectangle->height +
-//     rectangle->y)) {
-//         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-//             return (true);
-//     }
-//     return (false);
-// }
-
-// static ecs::IEntity *createButton(float x, float y, float width, float height)
-// {
-//     ecs::IEntity *entity = new ecs::IEntity();
-
-//     entity->add<ComponentDrawable>(true, false);
-//     entity->add<ComponentRectangle>(x, y, width, height);
-//     entity->add<ComponentClickable>();
-//     return (entity);
-// }
-
-int mainMenu()
+static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
 {
-    return (1);
+    ecs::IEntity *buttonEntity = new ecs::IEntity();
+
+    buttonEntity->add<ComponentDrawable>(true, false);
+    buttonEntity->add<ComponentButton>(posButton, textButton);
+    buttonEntity->add<ComponentClickable>();
+    buttonEntity->get<ComponentButton>()->setIdButton(menu.getNbButtons());
+    menu.increaseNbButtons(1);
+    return (buttonEntity);
+}
+
+static ecs::Core initMenu()
+{
+    ecs::Core menu;
+    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 150.0), "Start Game");
+    buttonStart->get<ComponentButton>()->setState(true);
+    ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 300.0), "Reload Game");
+    ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Exit");
+    ecs::IEntity *background = new ecs::IEntity();
+    ecs::IEntity *logo = new ecs::IEntity();
+    background->add<ComponentDrawable>(true, false);
+    background->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
+    logo->add<ComponentDrawable>(true, false);
+    logo->add<ComponentTexture>("assets/Logo.png", raylib::Vector2(800 / 2.0f - 200 / 2.0f, 30));
+    menu.setScene(ecs::Scenes::Menu);
+
+    menu.add<ecs::SystemRender2D>();
+    menu.add<ecs::SystemEvent>();
+    menu.addEntity(background);
+    menu.addEntity(logo);
+    menu.addEntity(buttonStart);
+    menu.addEntity(buttonReload);
+    menu.addEntity(buttonParam);
+    return (menu);
+}
+
+ecs::Scenes mainMenu()
+{
+    raylib::Window::Init();
+    ecs::Core menu = initMenu();
+
+    raylib::Window::SetFullScreen();
+    while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
+        raylib::Window::Clear(raylib::Color::White());
+        raylib::Window::BeginDrawing();
+        menu.get<ecs::SystemEvent>()->update(menu);
+        menu.get<ecs::SystemRender2D>()->update(menu);
+        raylib::Window::EndDrawing();
+    }
+    raylib::Window::Close();
+    return (menu.getScene());
 }

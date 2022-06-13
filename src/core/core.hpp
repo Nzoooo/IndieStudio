@@ -14,6 +14,8 @@
 #include <time.h>
 #include "ECS/ecs.hpp"
 #include "map/Map.hpp"
+#include "raylib/include/Window.hpp"
+#include "raylib/include/raylib.hpp"
 
 #define FPS_CAP      120
 #define ML_BASE      1000.0

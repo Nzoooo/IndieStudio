@@ -65,6 +65,12 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tisDrawable3D: " << component_data->getIsDrawable3D() << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentDroppable>()) {
+        auto component_data = dynamic_cast<ComponentDroppable *>(entity.get<ComponentDroppable>());
+        _file << "\t\tComponentDroppable {" << std::endl;
+        _file << "\t\t\tableToBeDrawn: 1" << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
 }
 
 void Save::eraseSave(void)

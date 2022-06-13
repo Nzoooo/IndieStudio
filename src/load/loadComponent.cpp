@@ -48,6 +48,18 @@ void addComponentClickable(std::ifstream &file, ecs::IEntity *entity)
     }
 }
 
+void addComponentCollider(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToCollide = getMember<bool>(file, "ableToCollide");
+
+    try {
+        if (ableToCollide)
+            entity->add<ComponentCollider>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentCollider not found" << std::endl;
+    }
+}
+
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
     ComponentMovable::Direction dir = getMember<ComponentMovable::Direction>(file, "dir");

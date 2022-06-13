@@ -36,6 +36,18 @@ template <typename T> T getMember(std::ifstream &file, std::string member)
     throw std::exception();
 }
 
+void addComponentClickable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBeClicked = getMember<bool>(file, "ableToBeClicked");
+
+    try {
+        if (ableToBeClicked)
+            entity->add<ComponentClickable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentClickable not found" << std::endl;
+    }
+}
+
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
     ComponentMovable::Direction dir = getMember<ComponentMovable::Direction>(file, "dir");

@@ -71,6 +71,13 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToBeDrawn: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentExplodable>()) {
+        auto component_data = dynamic_cast<ComponentExplodable *>(entity.get<ComponentExplodable>());
+        _file << "\t\tComponentExplodable {" << std::endl;
+        _file << "\t\t\tblastRange: " << component_data->getBlastRange() << "," << std::endl;
+        _file << "\t\t\tableToExplode: " << component_data->getAbleToExplode() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
 }
 
 void Save::eraseSave(void)

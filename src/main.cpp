@@ -20,6 +20,7 @@ int mainLoop(ecs::Core index)
                 // res = reload();
                 break;
             case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }
     }

@@ -52,6 +52,12 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToBeClicked: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentCollider>()) {
+        auto component_data = dynamic_cast<ComponentCollider *>(entity.get<ComponentCollider>());
+        _file << "\t\tComponentCollider {" << std::endl;
+        _file << "\t\t\tableToCollide: 1" << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
 }
 
 void Save::eraseSave(void)

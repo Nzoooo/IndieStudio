@@ -43,7 +43,7 @@ static ecs::IEntity *createBackground(bool TopBottom, bool LeftRight, raylib::Co
     return (background);
 }
 
-static ecs::IEntity *displayMainIcon(bool TopBottom, bool LeftRight)
+static ecs::IEntity *displayPlayerIcon(bool TopBottom, bool LeftRight)
 {
     ecs::IEntity *mainIcon = new ecs::IEntity();
     raylib::Vector2 position = {MARGIN_BORDER, MARGIN_BORDER};
@@ -100,7 +100,7 @@ void displayInformations(ecs::Core &core)
         if (entity->has<ComponentKillable>()) { // Change to ComponentHealth
             // It's a player/bot
             core.addEntity(createBackground(count / 2, count % 2, mainPlayersColor[count]));
-            core.addEntity(displayMainIcon(count / 2, count % 2));
+            core.addEntity(displayPlayerIcon(count / 2, count % 2));
             if (entity->has<ComponentControllable>()) {
                 // It's a player
             } else {

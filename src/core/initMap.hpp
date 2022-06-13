@@ -8,8 +8,9 @@
 #ifndef INITMAP_HPP_
 #define INITMAP_HPP_
 
+#include "ECS/ecs.hpp"
 #include "map/Map.hpp"
 
-int mapCreation(Map *map);
+ecs::Core mapCreation();
 
 #endif /* !INITMAP_HPP_ */

@@ -9,6 +9,5 @@
 
 extern "C"
 {
-    #include "../../../build/_deps/raylib-src/src/raylib.h"
-    #include "../../../build/_deps/raylib-src/src/raymath.h"
+#include "../../../build/_deps/raylib-src/src/raylib.h"
 }

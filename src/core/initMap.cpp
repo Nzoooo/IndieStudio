@@ -8,43 +8,60 @@
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
 
-void meshEntityCreation(ecs::IEntity *mesh, raylib::Vector3 posMesh, raylib::Vector3 sizeMesh)
+static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh)
 {
+    ecs::IEntity *mesh = new ecs::IEntity();
+
     mesh->add<ComponentDrawable>(false, true);
     mesh->add<ComponentMesh>(posMesh, sizeMesh, raylib::Color::Blue());
+    return (mesh);
 }
 
-int mapCreation(Map *map)
+double clockToMilliseconds2(clock_t ticks)
 {
+    return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
+}
+
+ecs::Core mapCreation()
+{
+    Map *map = new Map;
     map->generateMap();
-    map->readMap();
     ecs::Core mapCreation;
-    raylib::Window::Init();
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
 
-    ecs::IEntity *mesh1 = new ecs::IEntity();
+    ecs::IEntity *Floor;
+    raylib::Vector3 posFloor = {0.0f, 0.0f, 0.0f};
+    raylib::Vector3 sizeFloor = {MAP_SIZE, 0.1f, MAP_SIZE};
+    Floor = meshEntityCreation(posFloor, sizeFloor);
+
+    ecs::IEntity *mesh1;
     raylib::Vector3 posMesh = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
     raylib::Vector3 sizeMesh = {MAP_SIZE, 1.0f, 1.0f};
-    meshEntityCreation(mesh1, posMesh, sizeMesh);
+    mesh1 = meshEntityCreation(posMesh, sizeMesh);
 
-    ecs::IEntity *mesh2 = new ecs::IEntity();
+    ecs::IEntity *mesh2;
     raylib::Vector3 posMesh2 = {-8.0f, 0.5f, 0.5f};
     raylib::Vector3 sizeMesh2 = {1.0f, 1.0f, MAP_SIZE - 1};
-    meshEntityCreation(mesh2, posMesh2, sizeMesh2);
+    mesh2 = meshEntityCreation(posMesh2, sizeMesh2);
 
-    ecs::IEntity *mesh3 = new ecs::IEntity();
+    ecs::IEntity *mesh3;
     raylib::Vector3 posMesh3 = {8.0f, 0.5f, 0.5f};
     raylib::Vector3 sizeMesh3 = {1.0f, 1.0f, MAP_SIZE - 1};
-    meshEntityCreation(mesh3, posMesh3, sizeMesh3);
+    mesh3 = meshEntityCreation(posMesh3, sizeMesh3);
 
-    ecs::IEntity *mesh4 = new ecs::IEntity();
+    ecs::IEntity *mesh4;
     raylib::Vector3 posMesh4 = {0.0f, 0.5f, 8.0f};
     raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
-    meshEntityCreation(mesh4, posMesh4, sizeMesh4);
+    mesh4 = meshEntityCreation(posMesh4, sizeMesh4);
 
     mapCreation.add<ecs::SystemRender3D>();
+    mapCreation.addEntity(mesh1);
+    mapCreation.addEntity(mesh2);
+    mapCreation.addEntity(mesh3);
+    mapCreation.addEntity(mesh4);
+    mapCreation.addEntity(Floor);
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
@@ -67,31 +84,43 @@ int mapCreation(Map *map)
         initial.z += 1.0f;
     }
 
-    mapCreation.addEntity(mesh1);
-    mapCreation.addEntity(mesh2);
-    mapCreation.addEntity(mesh3);
-    mapCreation.addEntity(mesh4);
-    Camera3D camera = {};
-    Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
-    camera.position = initialCamPos;
-    Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
-    camera.target = initialCamTarget;
-    Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
-    camera.up = initialCamUp;
-    camera.fovy = 80.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
-    while (!raylib::Window::ShouldClose()) {
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        BeginMode3D(camera);
-        mapCreation.get<ecs::SystemRender3D>()->update(mapCreation);
-        DrawCubeWires(posMesh, MAP_SIZE, 1.0f, 1.0f, MAROON);
-        DrawCubeWires(posMesh2, 1.0f, 1.0f, (MAP_SIZE - 1), MAROON);
-        DrawCubeWires(posMesh3, 1.0f, 1.0f, (MAP_SIZE - 1), MAROON);
-        DrawCubeWires(posMesh4, (MAP_SIZE - 2), 1.0f, 1.0f, MAROON);
-        EndMode3D();
-        EndDrawing();
-    }
-    CloseWindow();
-    return (ecs::Scenes::Win);
+    // clock_t sec_clock = clock();
+    // clock_t fps_clock = clock();
+    // ecs::Core index;
+    // int running = 1;
+    // int fps = 0;
+    // int avg_fps = FPS_CAP;
+    // raylib::Camera3D camera;
+    // raylib::Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
+    // camera.position = initialCamPos;
+    // raylib::Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
+    // camera.target = initialCamTarget;
+    // raylib::Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
+    // camera.up = initialCamUp;
+    // camera.fovy = 80.0f;
+    // camera.projection = CAMERA_PERSPECTIVE;
+    // index = mapCreation;
+    // while (running) {
+    //     if (clockToMilliseconds2(clock() - fps_clock) >= FPS_CAP_REAL) {
+    //         fps_clock = clock();
+    //         fps++;
+
+    //         raylib::Window::BeginDrawing();
+    //         raylib::Window::Clear(raylib::Color::White());
+    //         camera.BeginMode();
+    //             index.get<ecs::SystemRender3D>()->update(index);
+    //         camera.EndMode();
+    //         raylib::Window::EndDrawing();
+    //     }
+
+    //     if (clockToMilliseconds2(clock() - sec_clock) >= ML_BASE) {
+    //         sec_clock = clock();
+    //         avg_fps = (avg_fps + fps) / 2;
+    //         // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
+    //         printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
+    //         fps = 0;
+    //     }
+    // }
+
+    return (mapCreation);
 }

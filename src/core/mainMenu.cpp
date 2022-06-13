@@ -46,7 +46,6 @@ static ecs::Core initMenu()
 
 ecs::Scenes mainMenu()
 {
-    raylib::Window::Init(1920, 1080);
     ecs::Core menu = initMenu();
 
     raylib::Window::SetFullScreen();
@@ -57,6 +56,5 @@ ecs::Scenes mainMenu()
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
-    raylib::Window::Close();
     return (menu.getScene());
 }

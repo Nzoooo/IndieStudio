@@ -13,6 +13,7 @@
 #include <string>
 #include <time.h>
 #include "ECS/ecs.hpp"
+#include "raylib/include/Camera3D.hpp"
 #include "raylib/include/Window.hpp"
 #include "raylib/include/raylib.hpp"
 
@@ -20,6 +21,6 @@
 #define ML_BASE      1000.0
 #define FPS_CAP_REAL (ML_BASE / FPS_CAP)
 
-int coreLoop(ecs::Core);
+int coreLoop();
 
 #endif

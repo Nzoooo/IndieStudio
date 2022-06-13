@@ -154,13 +154,12 @@ namespace ecs
                     } else if (isClicking(buttonTmp) == true && i == 1) {
                         index.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Game);
+                            index.setScene(ecs::Scenes::Close);
                     } else if (isClicking(buttonTmp) == true && i == 2) {
                         index.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                             index.setScene(ecs::Scenes::Close);
                     }
-
                     i++;
                 }
             }

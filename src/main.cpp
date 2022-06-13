@@ -27,7 +27,7 @@ int mainLoop(ecs::Core core)
             map->generateMap();
             map->readMap();
             mapCreation(map);
-            displayInformations(core);
+            // displayInformations(core);
             break;
     }
     return (0);

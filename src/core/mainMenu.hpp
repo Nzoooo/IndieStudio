@@ -11,6 +11,7 @@
 #include "ECS/ecs.hpp"
 #include "raylib/include/Color.hpp"
 #include "raylib/include/Font.hpp"
+#include "raylib/include/Model.hpp"
 #include "raylib/include/Mouse.hpp"
 #include "raylib/include/Rectangle.hpp"
 #include "raylib/include/Texture.hpp"

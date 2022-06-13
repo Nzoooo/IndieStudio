@@ -8,10 +8,12 @@ set(SRC
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentRectangle.cpp
     ${SRCROOT}/ComponentDrawable.cpp
+    ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentExplodable.cpp
     ${SRCROOT}/ComponentText.cpp
     ${SRCROOT}/ComponentControllable.cpp
+    ${SRCROOT}/ComponentMesh.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

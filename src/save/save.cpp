@@ -92,6 +92,21 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToMove: " << component_data->getAbleToMove() << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentPickable>()) {
+        auto component_data = dynamic_cast<ComponentPickable *>(entity.get<ComponentPickable>());
+        _file << "\t\tComponentPickable {" << std::endl;
+        _file << "\t\t\tableToBePicked: 1" << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentTransform>()) {
+        auto component_data = dynamic_cast<ComponentTransform *>(entity.get<ComponentTransform>());
+        _file << "\t\tComponentTransform {" << std::endl;
+        _file << "\t\t\theight: " << component_data->getHeight() << "," << std::endl;
+        _file << "\t\t\twidth: " << component_data->getWidth() << "," << std::endl;
+        _file << "\t\t\tposX: " << component_data->getPosX() << "," << std::endl;
+        _file << "\t\t\tposY: " << component_data->getPosY() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
 }
 
 void Save::eraseSave(void)

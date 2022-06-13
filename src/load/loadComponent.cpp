@@ -83,6 +83,18 @@ void addComponentDroppable(std::ifstream &file, ecs::IEntity *entity)
     }
 }
 
+void addComponentExplodable(std::ifstream &file, ecs::IEntity *entity)
+{
+    std::size_t blastRange = getMember<bool>(file, "blastRange");
+    bool ableToExplode = getMember<bool>(file, "ableToExplode");
+
+    try {
+        entity->add<ComponentExplodable>(blastRange, ableToExplode);
+    } catch (std::exception &e) {
+        std::cout << "ComponentExplodable not found" << std::endl;
+    }
+}
+
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
     ComponentMovable::Direction dir = getMember<ComponentMovable::Direction>(file, "dir");

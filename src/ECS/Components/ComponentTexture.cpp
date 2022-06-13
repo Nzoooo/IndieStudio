@@ -7,7 +7,7 @@
 
 #include "ComponentTexture.hpp"
 
-raylib::Texture ComponentTexture::getTexture() const 
+raylib::Texture ComponentTexture::getTexture() const
 {
     return (_texture);
 }

@@ -6,12 +6,15 @@
 */
 
 #include "SystemEvent.hpp"
-#include "../../raylib/include/Gamepad.hpp"
+#include "raylib/include/Gamepad.hpp"
 
-namespace ecs {
-    static bool isClicking(raylib::Rectangle *rectangle) {
+namespace ecs
+{
+    static bool isClicking(raylib::Rectangle *rectangle)
+    {
         raylib::Mouse mouseIndex;
-        if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width) && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
+        if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width)
+            && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
             if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                 return (true);
         }
@@ -21,8 +24,7 @@ namespace ecs {
     bool SystemEvent::_isControllerAssign(ecs::Core &index, int gamepadNumber)
     {
         for (auto *it : index.getEntities()) {
-            if (it->has<ComponentControllable>() &&
-                it->get<ComponentControllable>()->getGamepadId() == gamepadNumber)
+            if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == gamepadNumber)
                 return (true);
         }
         return (false);
@@ -31,8 +33,7 @@ namespace ecs {
     void SystemEvent::_assignController(ecs::Core &index, int gamepadNumber)
     {
         for (auto *it : index.getEntities()) {
-            if (it->has<ComponentControllable>() &&
-                it->get<ComponentControllable>()->getGamepadId() == -1) {
+            if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == -1) {
                 it->get<ComponentControllable>()->setGamepadId(gamepadNumber);
                 return;
             }
@@ -107,8 +108,7 @@ namespace ecs {
         else if (upOrDown < 0 && !isId)
             tmpIdButton = idMax + 1;
         for (auto *it : index.getEntities()) {
-            if (it->has<ComponentButton>() &&
-            it->get<ComponentButton>()->getIdButton() == tmpIdButton + upOrDown) {
+            if (it->has<ComponentButton>() && it->get<ComponentButton>()->getIdButton() == tmpIdButton + upOrDown) {
                 it->get<ComponentButton>()->setState(true);
                 tmpIdButton = it->get<ComponentButton>()->getIdButton();
                 _resetStateButtons(index, it->get<ComponentButton>()->getIdButton());
@@ -121,7 +121,7 @@ namespace ecs {
     {
         for (auto *it : index.getEntities()) {
             if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
-                //it->get<ComponentButton>()->setTexture("//texturePath");
+                // it->get<ComponentButton>()->setTexture("//texturePath");
                 break;
             }
         }
@@ -135,26 +135,22 @@ namespace ecs {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
                 _handleClickOnButtons(index);
             }
-            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1 ||
-            raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
                 _handleButtonsMoveUpDown(index, 1);
             }
-            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1 ||
-            raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
                 _handleButtonsMoveUpDown(index, -1);
             }
         } else {
             for (size_t j = 0; i < index.getNbButtons(); j++) {
-                if (index.getEntity(j)->has<ComponentButton>()){
-                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, 
-                    index.getEntity(j)->get<ComponentButton>()->getPos().y, 
-                    index.getEntity(j)->get<ComponentButton>()->getRectangle()->width, 
-                    index.getEntity(j)->get<ComponentButton>()->getRectangle()->height);
-                    if (isClicking(buttonTmp) == true && i== 0)
+                if (index.getEntity(j)->has<ComponentButton>()) {
+                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, index.getEntity(j)->get<ComponentButton>()->getPos().y,
+                        index.getEntity(j)->get<ComponentButton>()->getRectangle()->width, index.getEntity(j)->get<ComponentButton>()->getRectangle()->height);
+                    if (isClicking(buttonTmp) == true && i == 0)
                         index.setScene(ecs::Scenes::Game);
-                    else if (isClicking(buttonTmp) == true && i== 1)
+                    else if (isClicking(buttonTmp) == true && i == 1)
                         index.setScene(ecs::Scenes::Game);
-                    else if (isClicking(buttonTmp) == true && i== 2)
+                    else if (isClicking(buttonTmp) == true && i == 2)
                         index.setScene(ecs::Scenes::Game);
                     i++;
                 }
@@ -167,7 +163,7 @@ namespace ecs {
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i)) {
                 if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown())) {
-                    //create a player
+                    // create a player
                     _assignController(index, i);
                 }
             }
@@ -179,25 +175,38 @@ namespace ecs {
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(index, i)) {
                 // Draw buttons: xbox home
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddle())) std::cout << "home" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddle()))
+                    std::cout << "home" << std::endl;
 
                 // Draw buttons: basic
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleRight())) std::cout << "start" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleLeft())) std::cout << "select" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceRight())) std::cout << "O" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceDown())) std::cout << "X" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceLeft())) std::cout << "[]" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceUp())) std::cout << "/\\" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleRight()))
+                    std::cout << "start" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleLeft()))
+                    std::cout << "select" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceRight()))
+                    std::cout << "O" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceDown()))
+                    std::cout << "X" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceLeft()))
+                    std::cout << "[]" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceUp()))
+                    std::cout << "/\\" << std::endl;
 
                 // Draw buttons: d-pad
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceUp())) std::cout << "up" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceDown())) std::cout << "down" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceLeft())) std::cout << "left" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceRight())) std::cout << "right" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceUp()))
+                    std::cout << "up" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceDown()))
+                    std::cout << "down" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceLeft()))
+                    std::cout << "left" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceRight()))
+                    std::cout << "right" << std::endl;
 
                 // Draw buttons: left-right back
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftTrigger1())) std::cout << "a" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightTrigger1())) std::cout << "b" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftTrigger1()))
+                    std::cout << "a" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightTrigger1()))
+                    std::cout << "b" << std::endl;
 
                 // Draw axis: left joystick
                 // std::cout << "GAMEPAD_AXIS_LEFT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftX()) << std::endl;
@@ -228,7 +237,6 @@ namespace ecs {
         }
     }
 
-
     void SystemEvent::update(ecs::Core &index)
     {
         raylib::Gamepad::gamepadNumber = 3;
@@ -244,4 +252,4 @@ namespace ecs {
         if (index.getScene() == ecs::Scenes::Win)
             handleControllersWin(index);
     }
-}
+} // namespace ecs

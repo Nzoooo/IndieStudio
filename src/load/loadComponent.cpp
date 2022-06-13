@@ -143,6 +143,6 @@ void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
     try {
         entity->add<ComponentTransform>(height, width, posX, posY);
     } catch (std::exception &e) {
-        std::cout << "ComponentMovable not found" << std::endl;
+        std::cout << "ComponentTransform not found" << std::endl;
     }
 }

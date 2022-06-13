@@ -58,6 +58,13 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToCollide: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentDrawable>()) {
+        auto component_data = dynamic_cast<ComponentDrawable *>(entity.get<ComponentDrawable>());
+        _file << "\t\tComponentDrawable {" << std::endl;
+        _file << "\t\t\tisDrawable2D: " << component_data->getIsDrawable2D() << "," << std::endl;
+        _file << "\t\t\tisDrawable3D: " << component_data->getIsDrawable3D() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
 }
 
 void Save::eraseSave(void)

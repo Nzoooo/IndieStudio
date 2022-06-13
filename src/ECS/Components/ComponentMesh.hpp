@@ -9,6 +9,7 @@
 #define COMPONENTMESH_HPP_
 
 #include "IComponent.hpp"
+#include "raylib/include/Color.hpp"
 #include "raylib/include/Model.hpp"
 #include "raylib/include/Mesh.hpp"
 #include "raylib/include/Vector3.hpp"
@@ -17,7 +18,11 @@
 
 class ComponentMesh : public ecs::IComponent {
     public:
-        ComponentMesh(raylib::Vector3 initialPos, raylib::Vector3 size) : _initialPos(initialPos), _size(size) {};
+        ComponentMesh(raylib::Vector3 initialPos, raylib::Vector3 size, raylib::Color colorCube) : _initialPos(initialPos), _size(size), _color(colorCube)
+        {
+            _mesh.GenCube(_size.x, _size.y, _size.z);
+            _model.Load(_mesh);
+        };
         ~ComponentMesh();
 
         void setPos(raylib::Vector3 initialPos);
@@ -26,8 +31,6 @@ class ComponentMesh : public ecs::IComponent {
         raylib::Vector3 getPos();
         raylib::Vector3 getSize();
 
-        void loadModel();
-
         void Draw();
 
     private:
@@ -35,6 +38,7 @@ class ComponentMesh : public ecs::IComponent {
         raylib::Vector3 _size;
         raylib::Model _model;
         raylib::Mesh _mesh;
+        raylib::Color _color;
 };
 
 #endif /* !COMPONENTMESH_HPP_ */

@@ -10,6 +10,6 @@
 
 #include "map/Map.hpp"
 
-void mapCreation(Map *map);
+int mapCreation(Map *map);
 
 #endif /* !INITMAP_HPP_ */

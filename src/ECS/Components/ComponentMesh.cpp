@@ -31,13 +31,7 @@ raylib::Vector3 ComponentMesh::getSize()
     return (_size);
 }
 
-void ComponentMesh::loadModel()
-{
-    _mesh.GenCube(_size.x, _size.y, _size.z);
-    _model.Load(_mesh);
-}
-
 void ComponentMesh::Draw()
 {
-    DrawModel(_model, _initialPos, 1.0f, BLACK);
+    DrawModel(_model, _initialPos, 1.0f, _color);
 }

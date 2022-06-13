@@ -8,20 +8,71 @@
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
 
-void mapCreation(Map *map)
+
+void meshEntityCreation(ecs::IEntity *mesh, raylib::Vector3 posMesh, raylib::Vector3 sizeMesh)
 {
+    mesh->add<ComponentDrawable>(false, true);
+    mesh->add<ComponentMesh>(posMesh, sizeMesh, raylib::Color::Blue());
+}
+
+int mapCreation(Map *map)
+{
+    map->generateMap();
+    map->readMap();
     ecs::Core mapCreation;
-    ecs::IEntity *cube = new ecs::IEntity();
+    raylib::Window::Init();
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
 
-    cube->add<ComponentDrawable>(false, true);
-    cube->add<ComponentCube>(pos, size, raylib::Color::Black());
-    mapCreation.add<ecs::SystemRender3D>();
-    mapCreation.addEntity(cube);
+    ecs::IEntity *mesh1 = new ecs::IEntity();
+    raylib::Vector3 posMesh = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
+    raylib::Vector3 sizeMesh = {MAP_SIZE, 1.0f, 1.0f};
+    meshEntityCreation(mesh1, posMesh, sizeMesh);
+    
 
-    raylib::Window::Init();
+    ecs::IEntity *mesh2 = new ecs::IEntity();
+    raylib::Vector3 posMesh2 = {-8.0f, 0.5f, 0.5f};
+    raylib::Vector3 sizeMesh2 = {1.0f, 1.0f, MAP_SIZE - 1};
+    meshEntityCreation(mesh2, posMesh2, sizeMesh2);
+
+    ecs::IEntity *mesh3 = new ecs::IEntity();
+    raylib::Vector3 posMesh3 = {8.0f, 0.5f, 0.5f};
+    raylib::Vector3 sizeMesh3 = {1.0f, 1.0f, MAP_SIZE - 1};
+    meshEntityCreation(mesh3, posMesh3, sizeMesh3);
+
+    ecs::IEntity *mesh4 = new ecs::IEntity();
+    raylib::Vector3 posMesh4 = {0.0f, 0.5f, 8.0f};
+    raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
+    meshEntityCreation(mesh4, posMesh4, sizeMesh4);
+
+    mapCreation.add<ecs::SystemRender3D>();
+
+    raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
+    Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
+    for (int j = 1; j < MAP_SIZE - 1; j++) {
+        for (int i = 1; i < MAP_SIZE - 1; i++) {
+            initial.x += 1;
+            if (map->getMap()[i][j] == 2) {
+                ecs::IEntity *cube = new ecs::IEntity();
+                cube->add<ComponentDrawable>(false, true);
+                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Green());
+                mapCreation.addEntity(cube);
+            } else if (map->getMap()[i][j] == 1) {
+                ecs::IEntity *cube = new ecs::IEntity();
+                cube->add<ComponentDrawable>(false, true);
+                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Blue());
+                mapCreation.addEntity(cube);
+            }
+        }
+        initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
+        initial.z += 1.0f;
+    }
+
+    mapCreation.addEntity(mesh1);
+    mapCreation.addEntity(mesh2);
+    mapCreation.addEntity(mesh3);
+    mapCreation.addEntity(mesh4);
     Camera3D camera = {};
     Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
     camera.position = initialCamPos;
@@ -31,39 +82,18 @@ void mapCreation(Map *map)
     camera.up = initialCamUp;
     camera.fovy = 80.0f;
     camera.projection = CAMERA_PERSPECTIVE;
-
-    // raylib::Vector3 initialFloorPos = {0.0f, -0.05f, 0.0f};
-    // Vector3 initial = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
-    // Model models[4] = { 0 };
-
-    // Vector3 initialPos[4] = {};
-
-    // initialPos[0] = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
-    // initialPos[1] = {-8.0f, 0.5f, 0.5f};
-    // initialPos[2] = {8.0f, 0.5f, 0.5f};
-    // initialPos[3] = {0.0f, 0.5f, 8.0f};
-
-    // models[0] = LoadModelFromMesh(GenMeshCube(MAP_SIZE, 1.0f, 1.0f));
-    // models[1] = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, MAP_SIZE - 1));
-    // models[2] = LoadModelFromMesh(GenMeshCube(1.0f, 1.0f, MAP_SIZE - 1));
-    // models[3] = LoadModelFromMesh(GenMeshCube(MAP_SIZE - 2, 1.0f, 1.0f));
-    // std::vector<ecs::IEntity *> cubes;
-    // for (int j = 0; j < MAP_SIZE; j++) {
-    //     for (i = 0; i < MAP_SIZE; i++) {
-    //         cubes.push_back(createCube(initial, {1.0f, 1.0f, 1.0f}));
-    //         initial.x += 1;
-    //     }
-    //     initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
-    //     initial.z += 1.0f;
-    // }
-    // SetTargetFPS(60);
     while (!raylib::Window::ShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         BeginMode3D(camera);
         mapCreation.get<ecs::SystemRender3D>()->update(mapCreation);
+        DrawCubeWires(posMesh, MAP_SIZE, 1.0f, 1.0f, MAROON);
+        DrawCubeWires(posMesh2, 1.0f, 1.0f, (MAP_SIZE - 1), MAROON);
+        DrawCubeWires(posMesh3, 1.0f, 1.0f, (MAP_SIZE - 1), MAROON);
+        DrawCubeWires(posMesh4, (MAP_SIZE - 2), 1.0f, 1.0f, MAROON);
         EndMode3D();
         EndDrawing();
     }
     CloseWindow();
+    return (ecs::Scenes::Win);
 }

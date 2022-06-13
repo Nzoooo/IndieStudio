@@ -10,7 +10,8 @@
 ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
 {
     this->_pos = pos;
-    this->_rectangle = new raylib::Rectangle(1611, 242, 358, 117);
+    this->_rectangleUnactive = new raylib::Rectangle(1611, 242, 358, 117);
+    this->_rectangleActive = new raylib::Rectangle(1611, 395, 358, 117);
     this->_texture.Load("../assets/menuAsset.png");
     this->_font.Load("../assets/NewAthletic.ttf");
     this->_text = buttonText;
@@ -18,7 +19,10 @@ ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
 
 void ComponentButton::Draw()
 {
-    this->_texture.Draw(*this->_rectangle, this->_pos);
+    if (this->_isActive == true)
+        this->_texture.Draw(*this->_rectangleActive, this->_pos);
+    else
+        this->_texture.Draw(*this->_rectangleUnactive, this->_pos);
     this->_font.DrawText(this->_text, raylib::Vector2(800 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0), 40.0, 3.0, raylib::Color::White());
 }
 
@@ -52,7 +56,12 @@ raylib::Vector2 ComponentButton::getPos() const
     return (this->_pos);
 }
 
-raylib::Rectangle *ComponentButton::getRectangle() const
+raylib::Rectangle *ComponentButton::getRectangleActive() const
 {
-    return (this->_rectangle);
+    return (this->_rectangleActive);
+}
+
+raylib::Rectangle *ComponentButton::getRectangleUnactive() const
+{
+    return (this->_rectangleUnactive);
 }

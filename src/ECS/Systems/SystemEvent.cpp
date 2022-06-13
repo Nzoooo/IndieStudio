@@ -15,8 +15,7 @@ namespace ecs
         raylib::Mouse mouseIndex;
         if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width)
             && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
-            if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                return (true);
+            return (true);
         }
         return (false);
     }
@@ -130,6 +129,7 @@ namespace ecs
     void SystemEvent::handleControllersMenu(ecs::Core &index)
     {
         int i = 0;
+        raylib::Mouse mouseIndex;
 
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
@@ -144,14 +144,23 @@ namespace ecs
         } else {
             for (size_t j = 0; i < index.getNbButtons(); j++) {
                 if (index.getEntity(j)->has<ComponentButton>()) {
+                    index.getEntity(j)->get<ComponentButton>()->setState(false);
                     raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, index.getEntity(j)->get<ComponentButton>()->getPos().y,
-                        index.getEntity(j)->get<ComponentButton>()->getRectangle()->width, index.getEntity(j)->get<ComponentButton>()->getRectangle()->height);
-                    if (isClicking(buttonTmp) == true && i == 0)
-                        index.setScene(ecs::Scenes::Game);
-                    else if (isClicking(buttonTmp) == true && i == 1)
-                        index.setScene(ecs::Scenes::Game);
-                    else if (isClicking(buttonTmp) == true && i == 2)
-                        index.setScene(ecs::Scenes::Game);
+                        index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width, index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                    if (isClicking(buttonTmp) == true && i == 0) {
+                        index.getEntity(j)->get<ComponentButton>()->setState(true);
+                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                            index.setScene(ecs::Scenes::Game);
+                    } else if (isClicking(buttonTmp) == true && i == 1) {
+                        index.getEntity(j)->get<ComponentButton>()->setState(true);
+                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                            index.setScene(ecs::Scenes::Game);
+                    } else if (isClicking(buttonTmp) == true && i == 2) {
+                        index.getEntity(j)->get<ComponentButton>()->setState(true);
+                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                            index.setScene(ecs::Scenes::Close);
+                    }
+
                     i++;
                 }
             }

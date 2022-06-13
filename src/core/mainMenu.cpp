@@ -25,7 +25,7 @@ static ecs::Core initMenu()
     ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 150.0), "Start Game");
     buttonStart->get<ComponentButton>()->setState(true);
     ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 300.0), "Reload Game");
-    ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Settings");
+    ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(800 / 2.0f - 358 / 2.0f, 450.0), "Exit");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
     backgroung->add<ComponentDrawable>(true, false);

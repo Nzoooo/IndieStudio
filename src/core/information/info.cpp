@@ -110,8 +110,9 @@ static ecs::IEntity *displayTexts(ecs::IEntity *entity, bool TopBottom, bool Lef
     position.x += MARGIN_BORDER;
 
     texts->add<ComponentText>("assets/CollegiateBlackFLF.ttf",
-        "nb bombs: " + std::to_string(entity->get<ComponentBombs>()->getNbMaxBombs()) + "\nspeed: " + std::to_string(entity->get<ComponentSpeed>()->getSpeed())
-            + "\nkills: " + std::to_string(entity->get<ComponentKills>()->getNbKills()),
+        "bombs: " + std::to_string(entity->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(entity->get<ComponentBombs>()->getNbMaxBombs())
+            + "\nbomb radius: " + std::to_string(entity->get<ComponentExplodable>()->getBlastRange())
+            + "\nspeed: " + std::to_string(entity->get<ComponentSpeed>()->getSpeed()),
         position, DETAILS_SIZE, raylib::Color::White());
     texts->add<ComponentDrawable>(true, false);
     return (texts);
@@ -129,9 +130,8 @@ void displayInformations(ecs::Core &core)
     bots->add<ComponentBombs>(4);
     players->add<ComponentSpeed>(3);
     bots->add<ComponentSpeed>(2);
-    players->add<ComponentKills>();
-    bots->add<ComponentKills>();
-    players->get<ComponentKills>()->incrNbKills();
+    players->add<ComponentExplodable>(1, true);
+    bots->add<ComponentExplodable>(1, true);
     players->add<ComponentControllable>();
     core.addEntity(players);
     core.addEntity(bots);

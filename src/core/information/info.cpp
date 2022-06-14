@@ -8,15 +8,15 @@
 #include "info.hpp"
 #include <string>
 
-#define WINDOW_WIDTH         800
-#define WINDOW_HEIGHT        600
+#define WINDOW_WIDTH         1920
+#define WINDOW_HEIGHT        1080
 #define DEFAULT_TRANSPARENCY 128
-#define WIDTH_BACKGROUND     224
-#define HEIGHT_BACKGROUND    128
-#define MARGIN_BORDER        16
-#define ICON_SIZE            32
-#define NAME_SIZE            24
-#define DETAILS_SIZE         16
+#define WIDTH_BACKGROUND     384
+#define HEIGHT_BACKGROUND    220
+#define MARGIN_BORDER        32
+#define ICON_SIZE            64
+#define NAME_SIZE            48
+#define DETAILS_SIZE         32
 
 static raylib::Color playersColor[4] = {
     raylib::Color::Black(),
@@ -25,7 +25,8 @@ static raylib::Color playersColor[4] = {
     raylib::Color::Blue(),
 };
 
-static std::string playersIcon[4] = {"assets/32_black_among_us.png", "assets/32_white_among_us.png", "assets/32_red_among_us.png", "assets/32_blue_among_us.png"};
+static std::string playersIcon[4] = {
+    "assets/64/black_among_us.png", "assets/64/white_among_us.png", "assets/64/red_among_us.png", "assets/64/blue_among_us.png"};
 
 static ecs::IEntity *createBackground(bool TopBottom, bool LeftRight, raylib::Color color)
 {
@@ -85,9 +86,9 @@ static ecs::IEntity *displayBotIcon(bool TopBottom, bool LeftRight)
         position.x = MARGIN_BORDER;
     else
         position.x = WINDOW_WIDTH - (WIDTH_BACKGROUND + MARGIN_BORDER);
-    position.x += ICON_SIZE * 1.08;
+    position.x += ICON_SIZE * 0.96;
 
-    botIcon->add<ComponentTexture>("assets/bot.png", position);
+    botIcon->add<ComponentTexture>("assets/64/bot.png", position);
     botIcon->add<ComponentDrawable>(true, false);
     return (botIcon);
 }

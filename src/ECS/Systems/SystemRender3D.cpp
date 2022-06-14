@@ -9,9 +9,9 @@
 
 namespace ecs
 {
-    void SystemRender3D::update(ecs::Core &index)
+    void SystemRender3D::update(ecs::Core &core)
     {
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentDrawable>() && it->get<ComponentDrawable>()->getIsDrawable3D() == true) {
                 if (it->has<ComponentCube>()) {
                     it->get<ComponentCube>()->Draw();

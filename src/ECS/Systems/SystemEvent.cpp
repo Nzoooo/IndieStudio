@@ -20,18 +20,18 @@ namespace ecs
         return (false);
     }
 
-    bool SystemEvent::_isControllerAssign(ecs::Core &index, int gamepadNumber)
+    bool SystemEvent::_isControllerAssign(ecs::Core &core, int gamepadNumber)
     {
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == gamepadNumber)
                 return (true);
         }
         return (false);
     }
 
-    void SystemEvent::_assignController(ecs::Core &index, int gamepadNumber)
+    void SystemEvent::_assignController(ecs::Core &core, int gamepadNumber)
     {
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == -1) {
                 it->get<ComponentControllable>()->setGamepadId(gamepadNumber);
                 return;
@@ -40,9 +40,9 @@ namespace ecs
         return;
     }
 
-    void SystemEvent::_reassignControllers(ecs::Core &index, int gamepadNumber)
+    void SystemEvent::_reassignControllers(ecs::Core &core, int gamepadNumber)
     {
-        (void)index;
+        (void)core;
         (void)gamepadNumber;
     }
 
@@ -78,21 +78,21 @@ namespace ecs
         }
     }
 
-    void SystemEvent::_resetStateButtons(ecs::Core &index, int idButton)
+    void SystemEvent::_resetStateButtons(ecs::Core &core, int idButton)
     {
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentButton>() && it->get<ComponentButton>()->getIdButton() != idButton)
                 it->get<ComponentButton>()->setState(false);
         }
     }
 
-    void SystemEvent::_handleButtonsMoveUpDown(ecs::Core &index, int upOrDown)
+    void SystemEvent::_handleButtonsMoveUpDown(ecs::Core &core, int upOrDown)
     {
         static int tmpIdButton = 0;
         int idMax = 0;
         bool isId = false;
 
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentButton>()) {
                 if (it->get<ComponentButton>()->getIdButton() > idMax)
                     idMax = it->get<ComponentButton>()->getIdButton();
@@ -106,19 +106,19 @@ namespace ecs
             tmpIdButton = -1;
         else if (upOrDown < 0 && !isId)
             tmpIdButton = idMax + 1;
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentButton>() && it->get<ComponentButton>()->getIdButton() == tmpIdButton + upOrDown) {
                 it->get<ComponentButton>()->setState(true);
                 tmpIdButton = it->get<ComponentButton>()->getIdButton();
-                _resetStateButtons(index, it->get<ComponentButton>()->getIdButton());
+                _resetStateButtons(core, it->get<ComponentButton>()->getIdButton());
                 break;
             }
         }
     }
 
-    void SystemEvent::_handleClickOnButtons(ecs::Core &index)
+    void SystemEvent::_handleClickOnButtons(ecs::Core &core)
     {
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                 // it->get<ComponentButton>()->setTexture("//texturePath");
                 break;
@@ -126,39 +126,39 @@ namespace ecs
         }
     }
 
-    void SystemEvent::handleControllersMenu(ecs::Core &index)
+    void SystemEvent::handleControllersMenu(ecs::Core &core)
     {
         int i = 0;
         raylib::Mouse mouseIndex;
 
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
-                _handleClickOnButtons(index);
+                _handleClickOnButtons(core);
             }
             if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
-                _handleButtonsMoveUpDown(index, 1);
+                _handleButtonsMoveUpDown(core, 1);
             }
             if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
-                _handleButtonsMoveUpDown(index, -1);
+                _handleButtonsMoveUpDown(core, -1);
             }
         } else {
-            for (size_t j = 0; i < index.getNbButtons(); j++) {
-                if (index.getEntity(j)->has<ComponentButton>()) {
-                    index.getEntity(j)->get<ComponentButton>()->setState(false);
-                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, index.getEntity(j)->get<ComponentButton>()->getPos().y,
-                        index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width, index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+            for (size_t j = 0; i < core.getNbButtons(); j++) {
+                if (core.getEntity(j)->has<ComponentButton>()) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(false);
+                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x, core.getEntity(j)->get<ComponentButton>()->getPos().y,
+                        core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
                     if (isClicking(buttonTmp) == true && i == 0) {
-                        index.getEntity(j)->get<ComponentButton>()->setState(true);
+                        core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Game);
+                            core.setScene(ecs::Scenes::Game);
                     } else if (isClicking(buttonTmp) == true && i == 1) {
-                        index.getEntity(j)->get<ComponentButton>()->setState(true);
+                        core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Close);
+                            core.setScene(ecs::Scenes::Close);
                     } else if (isClicking(buttonTmp) == true && i == 2) {
-                        index.getEntity(j)->get<ComponentButton>()->setState(true);
+                        core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Close);
+                            core.setScene(ecs::Scenes::Close);
                     }
                     i++;
                 }
@@ -166,22 +166,22 @@ namespace ecs
         }
     }
 
-    void SystemEvent::handleControllersConnectPlayers(ecs::Core &index)
+    void SystemEvent::handleControllersConnectPlayers(ecs::Core &core)
     {
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i)) {
                 if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown())) {
                     // create a player
-                    _assignController(index, i);
+                    _assignController(core, i);
                 }
             }
         }
     }
 
-    void SystemEvent::handleControllersGame(ecs::Core &index)
+    void SystemEvent::handleControllersGame(ecs::Core &core)
     {
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
-            if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(index, i)) {
+            if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(core, i)) {
                 // Draw buttons: xbox home
                 if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddle()))
                     std::cout << "home" << std::endl;
@@ -231,33 +231,35 @@ namespace ecs
         }
     }
 
-    void SystemEvent::handleControllersGameSettings(ecs::Core &index)
+    void SystemEvent::handleControllersGameSettings(ecs::Core &core)
     {
+        (void)core;
         if (raylib::Gamepad::IsAvailable(0)) {
             return;
         }
     }
 
-    void SystemEvent::handleControllersWin(ecs::Core &index)
+    void SystemEvent::handleControllersWin(ecs::Core &core)
     {
+        (void)core;
         if (raylib::Gamepad::IsAvailable(0)) {
             return;
         }
     }
 
-    void SystemEvent::update(ecs::Core &index)
+    void SystemEvent::update(ecs::Core &core)
     {
         raylib::Gamepad::gamepadNumber = 3;
         _detectNbControllers();
-        if (index.getScene() == ecs::Scenes::Menu)
-            handleControllersMenu(index);
-        if (index.getScene() == ecs::Scenes::ConnectPlayers)
-            handleControllersConnectPlayers(index);
-        if (index.getScene() == ecs::Scenes::Game)
-            handleControllersGame(index);
-        if (index.getScene() == ecs::Scenes::GameSettings)
-            handleControllersGameSettings(index);
-        if (index.getScene() == ecs::Scenes::Win)
-            handleControllersWin(index);
+        if (core.getScene() == ecs::Scenes::Menu)
+            handleControllersMenu(core);
+        if (core.getScene() == ecs::Scenes::ConnectPlayers)
+            handleControllersConnectPlayers(core);
+        if (core.getScene() == ecs::Scenes::Game)
+            handleControllersGame(core);
+        if (core.getScene() == ecs::Scenes::GameSettings)
+            handleControllersGameSettings(core);
+        if (core.getScene() == ecs::Scenes::Win)
+            handleControllersWin(core);
     }
 } // namespace ecs

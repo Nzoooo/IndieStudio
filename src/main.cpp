@@ -14,11 +14,11 @@
 int mainLoop(ecs::Core core)
 {
     raylib::Window::Init(1920, 1080);
-    index.setScene(ecs::Scenes::Menu);
+    core.setScene(ecs::Scenes::Menu);
 
-    while (index.getScene() != ecs::Scenes::Win) {
-        switch (index.getScene()) {
-            case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
+    while (core.getScene() != ecs::Scenes::Win) {
+        switch (core.getScene()) {
+            case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
             case ecs::Scenes::Game: coreLoop(); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: break;

@@ -9,7 +9,7 @@
 
 ecs::Core initEntities()
 {
-    ecs::Core index;
+    ecs::Core core;
 
     ecs::IEntity *player = new ecs::IEntity();
 
@@ -21,6 +21,6 @@ ecs::Core initEntities()
     player->add<ComponentKillable>();
     player->add<ComponentTransform>(50, 50, 50, 50);
 
-    index.addEntity(player);
-    return (index);
+    core.addEntity(player);
+    return (core);
 }

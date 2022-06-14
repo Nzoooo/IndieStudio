@@ -28,7 +28,7 @@ enum map_object {
     BOX = 2,
 };
 
-int coreLoop(ecs::Core);
+int coreLoop();
 void mapCreation(Map *map);
 
 #endif

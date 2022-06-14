@@ -18,9 +18,9 @@ namespace ecs
         ~ISystem()
         {
         }
-        void update(ecs::Core &index)
+        void update(ecs::Core &core)
         {
-            (void)index;
+            (void)core;
         };
 
       protected:

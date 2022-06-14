@@ -33,7 +33,79 @@ template <typename T> T getMember(std::ifstream &file, std::string member)
         }
     }
     std::cout << member << " not found" << std::endl;
-    throw /* Member not found */;
+    throw std::exception();
+}
+
+void addComponentClickable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBeClicked = getMember<bool>(file, "ableToBeClicked");
+
+    try {
+        if (ableToBeClicked)
+            entity->add<ComponentClickable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentClickable not found" << std::endl;
+    }
+}
+
+void addComponentCollider(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToCollide = getMember<bool>(file, "ableToCollide");
+
+    try {
+        if (ableToCollide)
+            entity->add<ComponentCollider>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentCollider not found" << std::endl;
+    }
+}
+
+void addComponentDrawable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool isDrawable2D = getMember<bool>(file, "isDrawable2D");
+    bool isDrawable3D = getMember<bool>(file, "isDrawable3D");
+
+    try {
+        entity->add<ComponentDrawable>(isDrawable2D, isDrawable3D);
+    } catch (std::exception &e) {
+        std::cout << "ComponentDrawable not found" << std::endl;
+    }
+}
+
+void addComponentDroppable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBeDropped = getMember<bool>(file, "ableToBeDropped");
+
+    try {
+        if (ableToBeDropped)
+            entity->add<ComponentDroppable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentDroppable not found" << std::endl;
+    }
+}
+
+void addComponentExplodable(std::ifstream &file, ecs::IEntity *entity)
+{
+    std::size_t blastRange = getMember<bool>(file, "blastRange");
+    bool ableToExplode = getMember<bool>(file, "ableToExplode");
+
+    try {
+        entity->add<ComponentExplodable>(blastRange, ableToExplode);
+    } catch (std::exception &e) {
+        std::cout << "ComponentExplodable not found" << std::endl;
+    }
+}
+
+void addComponentKillable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
+
+    try {
+        if (ableToBeKilled)
+            entity->add<ComponentKillable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentKillable not found" << std::endl;
+    }
 }
 
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
@@ -49,6 +121,18 @@ void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
     }
 }
 
+void addComponentPickable(std::ifstream &file, ecs::IEntity *entity)
+{
+    bool ableToBePicked = getMember<bool>(file, "ableToBePicked");
+
+    try {
+        if (ableToBePicked)
+            entity->add<ComponentPickable>();
+    } catch (std::exception &e) {
+        std::cout << "ComponentPickable not found" << std::endl;
+    }
+}
+
 void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
 {
     size_t height = getMember<size_t>(file, "height");
@@ -59,18 +143,6 @@ void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
     try {
         entity->add<ComponentTransform>(height, width, posX, posY);
     } catch (std::exception &e) {
-        std::cout << "ComponentMovable not found" << std::endl;
-    }
-}
-
-void addComponentKillable(std::ifstream &file, ecs::IEntity *entity)
-{
-    bool ableToBeKilled = getMember<bool>(file, "ableToBeKilled");
-
-    try {
-        if (ableToBeKilled)
-            entity->add<ComponentKillable>();
-    } catch (std::exception &e) {
-        std::cout << "ComponentMovable not found" << std::endl;
+        std::cout << "ComponentTransform not found" << std::endl;
     }
 }

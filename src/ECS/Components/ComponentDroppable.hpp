@@ -15,5 +15,4 @@ class ComponentDroppable : public ecs::IComponent {
     ~ComponentDroppable() = default;
 
   private:
-    bool _ableToBeDropped;
 };

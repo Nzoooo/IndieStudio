@@ -14,6 +14,7 @@
 #include <time.h>
 #include "ECS/ecs.hpp"
 #include "map/Map.hpp"
+#include "raylib/include/Camera3D.hpp"
 #include "raylib/include/Window.hpp"
 #include "raylib/include/raylib.hpp"
 

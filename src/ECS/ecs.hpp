@@ -17,6 +17,7 @@
 #include "Components/ComponentDrawable.hpp"
 #include "Components/ComponentExplodable.hpp"
 #include "Components/ComponentKillable.hpp"
+#include "Components/ComponentMesh.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentRectangle.hpp"

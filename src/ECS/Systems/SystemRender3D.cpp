@@ -12,9 +12,13 @@ namespace ecs
     void SystemRender3D::update(ecs::Core &index)
     {
         for (auto *it : index.getEntities()) {
-            if (it->has<ComponentDrawable>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
-                // if (it->has<ComponentRaylib>())
-                //     it->get<ComponentRaylib>()->Draw();
+            if (it->has<ComponentDrawable>() && it->get<ComponentDrawable>()->getIsDrawable3D() == true) {
+                if (it->has<ComponentCube>()) {
+                    it->get<ComponentCube>()->Draw();
+                }
+                if (it->has<ComponentMesh>()) {
+                    it->get<ComponentMesh>()->Draw();
+                }
             }
         }
     }

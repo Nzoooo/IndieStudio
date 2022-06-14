@@ -6,6 +6,7 @@
 */
 
 #include "../include/Mesh.hpp"
+#include <cstdio>
 
 namespace raylib
 {

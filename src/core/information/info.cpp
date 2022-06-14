@@ -10,13 +10,13 @@
 
 #define WINDOW_WIDTH         1920
 #define WINDOW_HEIGHT        1080
-#define DEFAULT_TRANSPARENCY 128
+#define DEFAULT_TRANSPARENCY 96
 #define WIDTH_BACKGROUND     384
 #define HEIGHT_BACKGROUND    220
 #define MARGIN_BORDER        32
 #define ICON_SIZE            64
-#define NAME_SIZE            48
-#define DETAILS_SIZE         32
+#define NAME_SIZE            32
+#define DETAILS_SIZE         26
 
 static raylib::Color playersColor[4] = {
     raylib::Color::Black(),
@@ -49,7 +49,7 @@ static ecs::IEntity *createBackground(bool TopBottom, bool LeftRight, raylib::Co
     return (background);
 }
 
-static ecs::IEntity *displayPlayerInfos(std::size_t count, bool TopBottom, bool LeftRight)
+static ecs::IEntity *displayPlayerHeader(std::size_t count, bool TopBottom, bool LeftRight)
 {
     ecs::IEntity *entity = new ecs::IEntity();
     raylib::Vector2 positionIcon = {MARGIN_BORDER, MARGIN_BORDER};
@@ -59,7 +59,7 @@ static ecs::IEntity *displayPlayerInfos(std::size_t count, bool TopBottom, bool 
         positionIcon.y = MARGIN_BORDER;
     else
         positionIcon.y = WINDOW_HEIGHT - (HEIGHT_BACKGROUND + MARGIN_BORDER);
-    positionText.y = positionIcon.y;
+    positionText.y = positionIcon.y + MARGIN_BORDER * 0.16;
     positionIcon.y -= ICON_SIZE / 2;
     if (!LeftRight)
         positionIcon.x = MARGIN_BORDER;
@@ -67,7 +67,7 @@ static ecs::IEntity *displayPlayerInfos(std::size_t count, bool TopBottom, bool 
         positionIcon.x = WINDOW_WIDTH - (WIDTH_BACKGROUND + MARGIN_BORDER);
     positionText.x = positionIcon.x + WIDTH_BACKGROUND / 3;
     entity->add<ComponentTexture>(playersIcon[count], positionIcon);
-    entity->add<ComponentText>("assets/NewAthletic.ttf", "Player #" + std::to_string(count + 1), positionText, NAME_SIZE, playersColor[1]);
+    entity->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "PLAYER #" + std::to_string(count + 1), positionText, NAME_SIZE, raylib::Color::White());
     entity->add<ComponentDrawable>(true, false);
     return (entity);
 }
@@ -93,6 +93,30 @@ static ecs::IEntity *displayBotIcon(bool TopBottom, bool LeftRight)
     return (botIcon);
 }
 
+static ecs::IEntity *displayTexts(ecs::IEntity *entity, bool TopBottom, bool LeftRight)
+{
+    ecs::IEntity *texts = new ecs::IEntity();
+    raylib::Vector2 position = {MARGIN_BORDER, MARGIN_BORDER};
+
+    if (!TopBottom)
+        position.y = MARGIN_BORDER;
+    else
+        position.y = WINDOW_HEIGHT - (HEIGHT_BACKGROUND + MARGIN_BORDER);
+    position.y += NAME_SIZE * 2;
+    if (!LeftRight)
+        position.x = MARGIN_BORDER;
+    else
+        position.x = WINDOW_WIDTH - (WIDTH_BACKGROUND + MARGIN_BORDER);
+    position.x += MARGIN_BORDER;
+
+    texts->add<ComponentText>("assets/CollegiateBlackFLF.ttf",
+        "nb bombs: " + std::to_string(entity->get<ComponentBombs>()->getNbMaxBombs()) + "\nspeed: " + std::to_string(entity->get<ComponentSpeed>()->getSpeed())
+            + "\nkills: " + std::to_string(entity->get<ComponentKills>()->getNbKills()),
+        position, DETAILS_SIZE, raylib::Color::White());
+    texts->add<ComponentDrawable>(true, false);
+    return (texts);
+}
+
 void displayInformations(ecs::Core &core)
 {
     std::size_t count = 0;
@@ -103,6 +127,11 @@ void displayInformations(ecs::Core &core)
 
     players->add<ComponentBombs>(4);
     bots->add<ComponentBombs>(4);
+    players->add<ComponentSpeed>(3);
+    bots->add<ComponentSpeed>(2);
+    players->add<ComponentKills>();
+    bots->add<ComponentKills>();
+    players->get<ComponentKills>()->incrNbKills();
     players->add<ComponentControllable>();
     core.addEntity(players);
     core.addEntity(bots);
@@ -115,13 +144,14 @@ void displayInformations(ecs::Core &core)
             TopBottom = count / 2;
             LeftRight = count % 2;
             core.addEntity(createBackground(TopBottom, LeftRight, playersColor[count]));
-            core.addEntity(displayPlayerInfos(count, TopBottom, LeftRight));
+            core.addEntity(displayPlayerHeader(count, TopBottom, LeftRight));
             if (entity->has<ComponentControllable>()) {
                 // It's a player
             } else {
                 // It's a bot
                 core.addEntity(displayBotIcon(TopBottom, LeftRight));
             }
+            core.addEntity(displayTexts(entity, TopBottom, LeftRight));
             count++;
         }
     }

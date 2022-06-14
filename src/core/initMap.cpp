@@ -24,9 +24,12 @@ double clockToMilliseconds2(clock_t ticks)
 
 ecs::Core mapCreation()
 {
-    raylib::Texture floorTex = raylib::Texture::Load("assets/Dirt Tex.png");
-    raylib::Texture meshTex = raylib::Texture::Load("assets/CUBE WALL.png");
-    raylib::Texture destructTex = raylib::Texture::Load("assets/MicrosoftTeams-image.png");
+    raylib::Texture floorTex;
+    raylib::Texture meshTex;
+    raylib::Texture destructTex;
+    floorTex.Load("assets/Dirt Tex.png");
+    meshTex.Load("assets/CUBE WALL.png");
+    destructTex.Load("assets/MicrosoftTeams-image.png");
     Map *map = new Map;
     map->generateMap();
     ecs::Core mapCreation;
@@ -86,7 +89,9 @@ ecs::Core mapCreation()
         initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
         initial.z += 1.0f;
     }
-    raylib::Texture::Unload();
+    meshTex.Unload();
+    destructTex.Unload();
+    floorTex.Unload();
 
     // clock_t sec_clock = clock();
     // clock_t fps_clock = clock();

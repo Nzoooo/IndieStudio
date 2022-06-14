@@ -42,9 +42,9 @@ void ComponentCube::setColor(raylib::Color color)
     this->_color = color;
 }
 
-void ComponentCube::setTexture(const std::string &texture)
+void ComponentCube::setTexture(const std::string texture)
 {
-    this->_tex = raylib::Texture::Load(texture);
+    this->_tex.Load(texture);
 }
 
 void ComponentCube::Draw()

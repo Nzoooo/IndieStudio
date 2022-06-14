@@ -5,26 +5,28 @@
 ** main
 */
 
+#include "ECS/Systems/SystemRender3D.hpp"
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
+#include "map/Map.hpp"
 
 int mainLoop(ecs::Core core)
 {
-    int res = 4;
+    raylib::Window::Init(1920, 1080);
+    index.setScene(ecs::Scenes::Menu);
 
-    while (res != -1) {
-        switch (core.getScene()) {
-            case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: res = coreLoop(core); break;
-            case ecs::Scenes::GameSettings:
-                // res = reload();
-                break;
+    while (index.getScene() != ecs::Scenes::Win) {
+        switch (index.getScene()) {
+            case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
+            case ecs::Scenes::Game: coreLoop(); break;
+            case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }
     }
+    CloseWindow();
     return (0);
 }
 

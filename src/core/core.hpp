@@ -13,6 +13,7 @@
 #include <string>
 #include <time.h>
 #include "ECS/ecs.hpp"
+#include "map/Map.hpp"
 #include "raylib/include/Camera3D.hpp"
 #include "raylib/include/Window.hpp"
 #include "raylib/include/raylib.hpp"
@@ -21,6 +22,13 @@
 #define ML_BASE      1000.0
 #define FPS_CAP_REAL (ML_BASE / FPS_CAP)
 
-int coreLoop();
+enum map_object {
+    AIR = 0,
+    WALL = 1,
+    BOX = 2,
+};
+
+int coreLoop(ecs::Core);
+void mapCreation(Map *map);
 
 #endif

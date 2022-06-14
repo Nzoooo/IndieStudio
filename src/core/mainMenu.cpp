@@ -6,6 +6,7 @@
 */
 
 #include "mainMenu.hpp"
+#include "ECS/ecs.hpp"
 
 static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
 {
@@ -28,15 +29,15 @@ static ecs::Core initMenu()
     ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 750.0), "Exit");
     ecs::IEntity *backgroung = new ecs::IEntity();
     ecs::IEntity *logo = new ecs::IEntity();
-    backgroung->add<ComponentDrawable>(true, false);
-    backgroung->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
+    background->add<ComponentDrawable>(true, false);
+    background->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
     logo->add<ComponentDrawable>(true, false);
     logo->add<ComponentTexture>("assets/Bomberman_Logo.png", raylib::Vector2(1920 / 2.0f - 500 / 2.0f, 150));
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();
     menu.add<ecs::SystemEvent>();
-    menu.addEntity(backgroung);
+    menu.addEntity(background);
     menu.addEntity(logo);
     menu.addEntity(buttonStart);
     menu.addEntity(buttonReload);

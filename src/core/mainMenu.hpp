@@ -16,6 +16,7 @@
 #include "raylib/include/Rectangle.hpp"
 #include "raylib/include/Texture.hpp"
 #include "raylib/include/Vector2.hpp"
+#include "raylib/include/Vector3.hpp"
 #include "raylib/include/Window.hpp"
 
 ecs::Scenes mainMenu();

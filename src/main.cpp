@@ -7,11 +7,11 @@
 
 #include "ECS/Systems/SystemRender3D.hpp"
 #include "core/core.hpp"
-#include "core/initMap.hpp"
+#include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
 #include "map/Map.hpp"
 
-int mainLoop(ecs::Core index)
+int mainLoop(ecs::Core core)
 {
     raylib::Window::Init(1920, 1080);
     index.setScene(ecs::Scenes::Menu);
@@ -34,8 +34,8 @@ int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    ecs::Core index = initEntities();
-    index.setScene(ecs::Scenes::Menu);
-    mainLoop(index);
+    ecs::Core core = initEntities();
+    core.setScene(ecs::Scenes::Menu);
+    mainLoop(core);
     return 0;
 }

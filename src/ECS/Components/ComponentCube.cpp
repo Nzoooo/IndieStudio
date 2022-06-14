@@ -22,6 +22,11 @@ raylib::Color ComponentCube::getColor() const
     return this->_color;
 }
 
+raylib::Texture ComponentCube::getTexture() const
+{
+    return this->_tex;
+}
+
 void ComponentCube::setPos(raylib::Vector3 pos)
 {
     this->_pos = pos;
@@ -37,7 +42,17 @@ void ComponentCube::setColor(raylib::Color color)
     this->_color = color;
 }
 
+void ComponentCube::setTexture(const std::string &texture)
+{
+    this->_tex = raylib::Texture::Load(texture);
+}
+
 void ComponentCube::Draw()
 {
     DrawCube(_pos, _size.x, _size.y, _size.z, _color);
+}
+
+void ComponentCube::DrawTex()
+{
+    DrawCubeTexture(_tex, _pos, _size.x, _size.y, _size.z, _color);
 }

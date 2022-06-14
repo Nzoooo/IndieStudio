@@ -8,12 +8,12 @@
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
 
-static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh)
+static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color)
 {
     ecs::IEntity *mesh = new ecs::IEntity();
 
     mesh->add<ComponentDrawable>(false, true);
-    mesh->add<ComponentMesh>(posMesh, sizeMesh, raylib::Color::Blue());
+    mesh->add<ComponentMesh>(posMesh, sizeMesh, color);
     return (mesh);
 }
 
@@ -24,6 +24,9 @@ double clockToMilliseconds2(clock_t ticks)
 
 ecs::Core mapCreation()
 {
+    raylib::Texture floorTex = raylib::Texture::Load("assets/Dirt Tex.png");
+    raylib::Texture meshTex = raylib::Texture::Load("assets/CUBE WALL.png");
+    raylib::Texture destructTex = raylib::Texture::Load("assets/MicrosoftTeams-image.png");
     Map *map = new Map;
     map->generateMap();
     ecs::Core mapCreation;
@@ -34,27 +37,27 @@ ecs::Core mapCreation()
     ecs::IEntity *Floor;
     raylib::Vector3 posFloor = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 sizeFloor = {MAP_SIZE, 0.1f, MAP_SIZE};
-    Floor = meshEntityCreation(posFloor, sizeFloor);
+    Floor = meshEntityCreation(posFloor, sizeFloor, raylib::Color::Red());
 
     ecs::IEntity *mesh1;
     raylib::Vector3 posMesh = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
     raylib::Vector3 sizeMesh = {MAP_SIZE, 1.0f, 1.0f};
-    mesh1 = meshEntityCreation(posMesh, sizeMesh);
+    mesh1 = meshEntityCreation(posMesh, sizeMesh, raylib::Color::Blue());
 
     ecs::IEntity *mesh2;
     raylib::Vector3 posMesh2 = {-8.0f, 0.5f, 0.5f};
     raylib::Vector3 sizeMesh2 = {1.0f, 1.0f, MAP_SIZE - 1};
-    mesh2 = meshEntityCreation(posMesh2, sizeMesh2);
+    mesh2 = meshEntityCreation(posMesh2, sizeMesh2, raylib::Color::Blue());
 
     ecs::IEntity *mesh3;
     raylib::Vector3 posMesh3 = {8.0f, 0.5f, 0.5f};
     raylib::Vector3 sizeMesh3 = {1.0f, 1.0f, MAP_SIZE - 1};
-    mesh3 = meshEntityCreation(posMesh3, sizeMesh3);
+    mesh3 = meshEntityCreation(posMesh3, sizeMesh3, raylib::Color::Blue());
 
     ecs::IEntity *mesh4;
     raylib::Vector3 posMesh4 = {0.0f, 0.5f, 8.0f};
     raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
-    mesh4 = meshEntityCreation(posMesh4, sizeMesh4);
+    mesh4 = meshEntityCreation(posMesh4, sizeMesh4, raylib::Color::Blue());
 
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.addEntity(mesh1);
@@ -71,18 +74,19 @@ ecs::Core mapCreation()
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Green());
+                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), meshTex);
                 mapCreation.addEntity(cube);
             } else if (map->getMap()[i][j] == 1) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Blue());
+                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), destructTex);
                 mapCreation.addEntity(cube);
             }
         }
         initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
         initial.z += 1.0f;
     }
+    raylib::Texture::Unload();
 
     // clock_t sec_clock = clock();
     // clock_t fps_clock = clock();

@@ -233,6 +233,7 @@ namespace ecs
 
     void SystemEvent::handleControllersGameSettings(ecs::Core &index)
     {
+        (void)index;
         if (raylib::Gamepad::IsAvailable(0)) {
             return;
         }
@@ -240,6 +241,7 @@ namespace ecs
 
     void SystemEvent::handleControllersWin(ecs::Core &index)
     {
+        (void)index;
         if (raylib::Gamepad::IsAvailable(0)) {
             return;
         }

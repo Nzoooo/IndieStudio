@@ -13,7 +13,7 @@ double clockToMilliseconds(clock_t ticks)
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-int coreLoop()
+ecs::Scenes coreLoop()
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
@@ -52,5 +52,5 @@ int coreLoop()
             fps = 0;
         }
     }
-    return (0);
+    return (ecs::Scenes::Menu);
 }

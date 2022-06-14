@@ -7,8 +7,8 @@
 
 #pragma once
 
+#include "ECS/ecs.hpp"
 #include "ISystem.hpp"
-#include "core/core.hpp"
 
 namespace ecs
 {

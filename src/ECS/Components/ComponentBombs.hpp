@@ -12,12 +12,15 @@
 
 class ComponentBombs : public ecs::IComponent {
   public:
-    ComponentBombs(std::size_t nb_bombs) : _nb_bombs(nb_bombs){};
+    ComponentBombs(std::size_t max_bombs) : _max_bombs(max_bombs), _curr_bombs(0){};
     ~ComponentBombs() = default;
 
-    std::size_t getNbBombs() const;
-    void setNbBombs(std::size_t nb_bombs);
+    std::size_t getNbMaxBombs() const;
+    void setNbMaxBombs(std::size_t max_bombs);
+    std::size_t getNbCurrBombs() const;
+    void setNbCurrBombs(std::size_t curr_bombs);
 
   private:
-    std::size_t _nb_bombs;
+    std::size_t _max_bombs;
+    std::size_t _curr_bombs;
 };

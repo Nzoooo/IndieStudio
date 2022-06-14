@@ -15,6 +15,8 @@ namespace ecs {
             it->get<ComponentDrawable>()->getIsDrawable3D()) {
                 // if (it->has<ComponentRaylib>())
                 //     it->get<ComponentRaylib>()->Draw();
+                if (it->has<ComponentModel>())
+                    it->get<ComponentModel>()->Draw();
             }
         }
     }

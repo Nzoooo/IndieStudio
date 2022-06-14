@@ -7,6 +7,7 @@
 
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
+#include "core/connectPlayers.hpp"
 
 int mainLoop(ecs::Core index)
 {
@@ -19,7 +20,7 @@ int mainLoop(ecs::Core index)
             case ecs::Scenes::GameSettings:
                 // res = reload();
                 break;
-            case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::ConnectPlayers: index.setScene(connectPlayers());
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }
@@ -32,7 +33,7 @@ int main(int argc, char **argv)
     (void)argc;
     (void)argv;
     ecs::Core index = initEntities();
-    index.setScene(ecs::Scenes::Menu);
+    index.setScene(ecs::Scenes::ConnectPlayers);
     mainLoop(index);
     return 0;
 }

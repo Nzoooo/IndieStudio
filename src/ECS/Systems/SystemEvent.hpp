@@ -36,6 +36,5 @@ namespace ecs
         void _reassignControllers(ecs::Core &index, int gamepadNumber);
         void _resetStateButtons(ecs::Core &index, int idButton);
         void _handleButtonsMoveUpDown(ecs::Core &index, int upOrDown);
-        void _handleClickOnButtons(ecs::Core &index);
     };
 } // namespace ecs

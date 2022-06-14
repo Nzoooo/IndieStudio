@@ -12,6 +12,7 @@ set(SRC
     ${SRCROOT}/ComponentExplodable.cpp
     ${SRCROOT}/ComponentText.cpp
     ${SRCROOT}/ComponentControllable.cpp
+    ${SRCROOT}/ComponentModel.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

@@ -12,24 +12,24 @@ static ecs::Core initConnectPlayers()
     ecs::Core connect;
     ecs::IEntity *player = new ecs::IEntity();
     player->add<ComponentDrawable>(false, true);
-    player->add<ComponentModel>("models3D/AmongUsred.obj", raylib::Vector3(0.0f, 0.0f, 0.0f));
-    ecs::IEntity *player2 = new ecs::IEntity();
-    player2->add<ComponentDrawable>(false, true);
-    player2->add<ComponentModel>("models3D/AmongUsblue.obj", raylib::Vector3(2.0f, 0.0f, 0.0f));
-    ecs::IEntity *player3 = new ecs::IEntity();
-    player3->add<ComponentDrawable>(false, true);
-    player3->add<ComponentModel>("models3D/AmongUswhite.obj", raylib::Vector3(4.0f, 0.0f, 0.0f));
-    ecs::IEntity *player4 = new ecs::IEntity();
-    player4->add<ComponentDrawable>(false, true);
-    player4->add<ComponentModel>("models3D/AmongUsblack.obj", raylib::Vector3(6.0f, 0.0f, 0.0f));
+    player->add<ComponentModel>("models3D/Among_Us_.obj", raylib::Vector3(0.0f, 0.0f, 0.0f), "models3D/Among_Us_dead_.iqm");
+    // ecs::IEntity *player2 = new ecs::IEntity();
+    // player2->add<ComponentDrawable>(false, true);
+    // player2->add<ComponentModel>("models3D/AmongUsblue.obj", raylib::Vector3(2.0f, 0.0f, 0.0f));
+    // ecs::IEntity *player3 = new ecs::IEntity();
+    // player3->add<ComponentDrawable>(false, true);
+    // player3->add<ComponentModel>("models3D/AmongUswhite.obj", raylib::Vector3(4.0f, 0.0f, 0.0f));
+    // ecs::IEntity *player4 = new ecs::IEntity();
+    // player4->add<ComponentDrawable>(false, true);
+    // player4->add<ComponentModel>("models3D/AmongUsblack.obj", raylib::Vector3(6.0f, 0.0f, 0.0f));
     connect.setScene(ecs::Scenes::ConnectPlayers);
 
     connect.add<ecs::SystemRender3D>();
     connect.add<ecs::SystemEvent>();
     connect.addEntity(player);
-    connect.addEntity(player2);
-    connect.addEntity(player3);
-    connect.addEntity(player4);
+    // connect.addEntity(player2);
+    // connect.addEntity(player3);
+    // connect.addEntity(player4);
     return (connect);
 }
 
@@ -37,7 +37,7 @@ ecs::Scenes connectPlayers()
 {
     raylib::Window::Init();
     ecs::Core connect = initConnectPlayers();
-    raylib::Camera3D camera(raylib::Vector3(0.0f, 10.0f, 10.0f),
+    raylib::Camera3D camera(raylib::Vector3(0.0f, 8.0f, -10.0f),
     raylib::Vector3(0.0f, 0.0f, 0.0f),
     raylib::Vector3(0.0f, 1.0f, 0.0f), 45.0f);
 

@@ -169,6 +169,11 @@ namespace ecs
 
     void SystemEvent::handleControllersConnectPlayers(ecs::Core &index)
     {
+        for (auto *it : index.getEntities()) {
+            if (it->has<ComponentModel>()) {
+                it->get<ComponentModel>()->Update(0);
+            }
+        }
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i)) {
                 if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown())) {

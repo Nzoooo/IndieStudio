@@ -8,7 +8,7 @@
 #include "../include/ModelAnimation.hpp"
 #include "../include/RaylibException.hpp"
 
-raylib::ModelAnimation::ModelAnimation()
+raylib::ModelAnimation::ModelAnimation() : _anims(nullptr)
 {
 }
 
@@ -16,14 +16,15 @@ raylib::ModelAnimation::~ModelAnimation()
 {
 }
 
-void raylib::ModelAnimation::Unload(::ModelAnimation anim)
+void raylib::ModelAnimation::Unload(::ModelAnimation &anim)
 {
     ::UnloadModelAnimation(anim);
 }
 
 void raylib::ModelAnimation::Unload(unsigned int animCount)
 {
-    ::UnloadModelAnimations(this, animCount);
+    if (_anims != nullptr)
+        ::UnloadModelAnimations(_anims, animCount);
 }
 
 void raylib::ModelAnimation::UpdateAnimation(::Model &model, ::ModelAnimation &anim, int frame)
@@ -38,10 +39,10 @@ bool raylib::ModelAnimation::IsModelAnimationValid(::Model &model, ::ModelAnimat
 
 void raylib::ModelAnimation::Load(const std::string &fileName, unsigned int *animCount)
 {
-    ::ModelAnimation *anims = ::LoadModelAnimations(fileName.c_str(), animCount);
+    _anims = ::LoadModelAnimations(fileName.c_str(), animCount);
+}
 
-    this->boneCount = anims->boneCount;
-    this->bones = anims->bones;
-    this->frameCount = anims->frameCount;
-    this->framePoses = anims->framePoses;
+::ModelAnimation *raylib::ModelAnimation::getAnims() const
+{
+    return (_anims);
 }

@@ -24,10 +24,10 @@ class SystemIA : public ecs::ISystem {
         ecs::IEntity *_ia;
         int _blastRange;
 
-        ecs::IComponent *getBombInRange(std::vector<ecs::IEntity *> &entities);
-        bool isKillableBlockInRange();
+        ecs::IEntity *getBombInRange();
+        bool isKillableBlockInRange() const;
         void setDirectionWithBomb(ecs::IEntity *bomb);
 
         void move();
-        bool checkCollisionAt(int posX, int posY);
+        bool checkCollisionAt(int posX, int posY) const;
 };

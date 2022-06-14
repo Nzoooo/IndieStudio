@@ -7,11 +7,11 @@
 
 #include "SystemIA.hpp"
 
-SystemIA::SystemIA(ecs::Core &core, int posX, int posY) : _ia(new ecs::IEntity), _core(core)
+SystemIA::SystemIA(ecs::Core &core, int posX, int posY) : _ia(new ecs::IEntity), _core(&core)
 {
-    if (/* entoure de deux murs en x-1, y-1 || x+1, y-1 */)
+    if (checkCollisionAt(posX - 1, posY - 1) || checkCollisionAt(posX + 1, posY - 1))
         _ia->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 0.1);
-    if (/* entoure de deux murs en x-1, y+1 || x+1, y+1 */)
+    if (checkCollisionAt(posX - 1, posY + 1) || checkCollisionAt(posX + 1, posY + 1))
         _ia->add<ComponentMovable>(ComponentMovable::Direction::UP, 0.1);
     _ia->add<ComponentDrawable>(false, true);
     _ia->add<ComponentKillable>();
@@ -26,10 +26,10 @@ SystemIA::~SystemIA()
         delete _ia;
 }
 
-bool SystemIA::checkCollisionAt(int posX, int posY)
+bool SystemIA::checkCollisionAt(int posX, int posY) const
 {
     for (auto *e : _core->getEntities()) {
-        if (e->has<ComponentTransform>() &&
+        if (e->has<ComponentTransform>() && e->has<ComponentCollider>() &&
             e->get<ComponentTransform>()->getPosX() == posX && e->get<ComponentTransform>()->getPosY() == posY) {
             return (true);
         }
@@ -39,7 +39,7 @@ bool SystemIA::checkCollisionAt(int posX, int posY)
 
 void SystemIA::udpdate()
 {
-    ecs::IComponent *bomb = nullptr;
+    ecs::IEntity *bomb = nullptr;
 
     bomb = getBombInRange();
     if (bomb)
@@ -56,25 +56,29 @@ void SystemIA::move()
 
     switch (direction) {
         case ComponentMovable::Direction::DOWN:
-            _ia->get<ComponentTransform>()->setPosY(_ia->get<ComponentTransform>()->getPosY() + speed);
+            if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX(), _ia->get<ComponentTransform>()->getPosY() + speed))
+                _ia->get<ComponentTransform>()->setPosY(_ia->get<ComponentTransform>()->getPosY() + speed);
             break;
         case ComponentMovable::Direction::UP:
-            _ia->get<ComponentTransform>()->setPosY(_ia->get<ComponentTransform>()->getPosY() - speed);
+            if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX(), _ia->get<ComponentTransform>()->getPosY() - speed))
+                _ia->get<ComponentTransform>()->setPosY(_ia->get<ComponentTransform>()->getPosY() - speed);
             break;
         case ComponentMovable::Direction::LEFT:
-            _ia->get<ComponentTransform>()->setPosX(_ia->get<ComponentTransform>()->getPosX() - speed);
+            if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX() - speed, _ia->get<ComponentTransform>()->getPosY()))
+                _ia->get<ComponentTransform>()->setPosX(_ia->get<ComponentTransform>()->getPosX() - speed);
             break;
         case ComponentMovable::Direction::RIGHT:
-            _ia->get<ComponentTransform>()->setPosX(_ia->get<ComponentTransform>()->getPosX() + speed);
+            if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX() + speed, _ia->get<ComponentTransform>()->getPosY()))
+                _ia->get<ComponentTransform>()->setPosX(_ia->get<ComponentTransform>()->getPosX() + speed);
             break;
         default:
             break;
     }
 }
 
-ecs::IComponent *SystemIA::getBombInRange(std::vector<ecs::IEntity *> &entities) const
+ecs::IEntity *SystemIA::getBombInRange()
 {
-    for (auto *e : entities) {
+    for (auto *e : _core->getEntities()) {
         if (e->has<ComponentExplodable>() && e->has<ComponentTransform>() && e->has<ComponentDroppable>()) {
             if ((e->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() &&
                 abs(e->get<ComponentTransform>()->getPosY() - _ia->get<ComponentTransform>()->getPosY()) <= e->get<ComponentExplodable>()->getBlastRange()) ||
@@ -111,8 +115,8 @@ bool SystemIA::isKillableBlockInRange() const
 {
     float speed = _ia->get<ComponentMovable>()->getSpeed();
 
-    for (auto *b : blocks) {
-        if (b->has<ComponentKillable>() && b->has<ComponentTransform>()) {
+    for (auto *b : _core->getEntities()) {
+        if (b->has<ComponentKillable>() && b->has<ComponentTransform>() && b->has<ComponentCollider>()) {
             if (b->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() && b->get<ComponentTransform>()->getPosY() == _ia->get<ComponentTransform>()->getPosY() + speed ||
                 b->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() && b->get<ComponentTransform>()->getPosY() == _ia->get<ComponentTransform>()->getPosY() - speed ||
                 b->get<ComponentTransform>()->getPosY() == _ia->get<ComponentTransform>()->getPosY() && b->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() + speed ||

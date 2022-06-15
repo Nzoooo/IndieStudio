@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "ECS/ecs.hpp"
 #include "ISystem.hpp"
 
 namespace ecs
@@ -17,6 +18,8 @@ namespace ecs
         ~SystemExplosion();
 
         void update(ecs::Core &core);
+
+        void blastGeneration(ecs::Core &core);
 
       private:
     };

@@ -31,7 +31,7 @@ ecs::Scenes coreLoop()
     camera.fovy = 80.0f;
     camera.projection = CAMERA_PERSPECTIVE;
 
-    core.add<ecs::SystemExplosion>();
+    ecs::IEntity *bomb4 = new ecs::IEntity;
 
     while (running) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
@@ -50,7 +50,7 @@ ecs::Scenes coreLoop()
             sec_clock = clock();
             avg_fps = (avg_fps + fps) / 2;
             // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
-            printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
+            // printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             core.get<ecs::SystemExplosion>()->update(core);
             fps = 0;
         }

@@ -23,6 +23,23 @@ ecs::Core mapCreation()
     map->generateMap();
     ecs::Core mapCreation;
 
+    ecs::IEntity *bomb1 = new ecs::IEntity;
+    bomb1->add<ComponentExplodable>();
+    std::cout << "Bombe nb 1 vient d'etre pose" << std::endl;
+    mapCreation.addEntity(bomb1);
+
+    ecs::IEntity *bomb2 = new ecs::IEntity;
+    bomb2->add<ComponentExplodable>();
+    std::cout << "Bombe nb 2 vient d'etre pose" << std::endl;
+    mapCreation.addEntity(bomb2);
+
+    ecs::IEntity *bomb3 = new ecs::IEntity;
+    bomb3->add<ComponentExplodable>();
+    std::cout << "Bombe nb 3 vient d'etre pose" << std::endl;
+    mapCreation.addEntity(bomb3);
+
+    mapCreation.add<ecs::SystemExplosion>();
+
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
 

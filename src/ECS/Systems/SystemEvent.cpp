@@ -145,7 +145,7 @@ namespace ecs
             }
         } else {
             for (size_t j = 0; i < core.getNbButtons(); j++) {
-                if (core.getEntity(j)->has<ComponentButton>()) {
+                if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->has<ComponentClickable>()) {
                     core.getEntity(j)->get<ComponentButton>()->setState(false);
                     raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
                         core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,

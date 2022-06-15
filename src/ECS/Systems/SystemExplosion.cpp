@@ -6,6 +6,7 @@
 */
 
 #include "SystemExplosion.hpp"
+#include <iostream>
 
 ecs::SystemExplosion::SystemExplosion()
 {
@@ -15,8 +16,23 @@ ecs::SystemExplosion::~SystemExplosion()
 {
 }
 
-void ecs::SystemExplosion::update(ecs::Core &core)
+void ecs::SystemExplosion::blastGeneration(ecs::Core &core)
 {
     (void)core;
-    std::cout << "Update a SystemEplosion boum !" << std::endl;
+}
+
+void ecs::SystemExplosion::update(ecs::Core &core)
+{
+    int i = 0;
+    for (auto *e : core.getEntities()) {
+        i++;
+        if (e->has<ComponentExplodable>() && e->get<ComponentExplodable>()->getTimeLeft() > 0) {
+            e->get<ComponentExplodable>()->setTimeLeft(e->get<ComponentExplodable>()->getTimeLeft() - 1.0);
+            std::cout << "Bombe " << i << " explose dans " << e->get<ComponentExplodable>()->getTimeLeft() << "s" << std::endl;
+            if (e->get<ComponentExplodable>()->getTimeLeft() == 0) {
+                std::cout << "Bombe nb " << i << " vient d'exploser" << std::endl;
+                blastGeneration(core);
+            }
+        }
+    }
 }

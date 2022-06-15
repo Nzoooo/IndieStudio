@@ -9,15 +9,13 @@ set(SRC
     ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentDrawable.cpp
     ${SRCROOT}/ComponentExplodable.cpp
-    ${SRCROOT}/ComponentKills.cpp
+    ${SRCROOT}/ComponentMesh.cpp
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentRectangle.cpp
-    ${SRCROOT}/ComponentSpeed.cpp
     ${SRCROOT}/ComponentText.cpp
     ${SRCROOT}/ComponentTexture.cpp
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentTransparency.cpp
-    ${SRCROOT}/ComponentMesh.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

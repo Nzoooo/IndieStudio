@@ -27,8 +27,9 @@ class ComponentMesh : public ecs::IComponent {
     void setPos(raylib::Vector3 initialPos);
     void setSize(raylib::Vector3 size);
 
-    raylib::Vector3 getPos();
-    raylib::Vector3 getSize();
+    raylib::Vector3 getPos() const;
+    raylib::Vector3 getSize() const;
+    raylib::Color getColor() const;
 
     void Draw();
 

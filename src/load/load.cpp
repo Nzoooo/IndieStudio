@@ -23,10 +23,14 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
         if (line == "\t}")
             break;
         line = removeTabs(line);
-        if (line == "ComponentClickable {")
-            addComponentClickable(file, entity);
+        if (line == "ComponentBombs {")
+            addComponentBombs(file, entity);
         if (line == "ComponentCollider {")
             addComponentCollider(file, entity);
+        if (line == "ComponentControllable {")
+            addComponentControllable(file, entity);
+        if (line == "ComponentCube {")
+            addComponentCube(file, entity);
         if (line == "ComponentDrawable {")
             addComponentDrawable(file, entity);
         if (line == "ComponentDroppable {")
@@ -39,8 +43,12 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
             addComponentMovable(file, entity);
         if (line == "ComponentPickable {")
             addComponentPickable(file, entity);
+        if (line == "ComponentTexture {")
+            addComponentTexture(file, entity);
         if (line == "ComponentTransform {")
             addComponentTransform(file, entity);
+        if (line == "ComponentTransparency {")
+            addComponentTransparency(file, entity);
     }
     return (entity);
 }

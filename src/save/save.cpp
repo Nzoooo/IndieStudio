@@ -46,14 +46,30 @@ void Save::saveCore(ecs::Core &core)
 
 void Save::saveEntity(ecs::IEntity &entity)
 {
-    if (entity.has<ComponentClickable>()) {
-        _file << "\t\tComponentClickable {" << std::endl;
-        _file << "\t\t\tableToBeClicked: 1" << std::endl;
+    if (entity.has<ComponentBombs>()) {
+        auto component_data = dynamic_cast<ComponentBombs *>(entity.get<ComponentBombs>());
+        _file << "\t\tComponentBombs {" << std::endl;
+        _file << "\t\t\tnbMaxBombs: " << component_data->getNbMaxBombs() << "," << std::endl;
+        _file << "\t\t\tnbCurrBombs: " << component_data->getNbCurrBombs() << std::endl;
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentCollider>()) {
         _file << "\t\tComponentCollider {" << std::endl;
         _file << "\t\t\tableToCollide: 1" << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentControllable>()) {
+        auto component_data = dynamic_cast<ComponentControllable *>(entity.get<ComponentControllable>());
+        _file << "\t\tComponentControllable {" << std::endl;
+        _file << "\t\t\tgamepadID: " << component_data->getGamepadId() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentCube>()) {
+        auto component_data = dynamic_cast<ComponentCube *>(entity.get<ComponentCube>());
+        _file << "\t\tComponentCube {" << std::endl;
+        _file << "\t\t\tpos: " << component_data->getPos() << "," << std::endl;
+        _file << "\t\t\tsize: " << component_data->getSize() << "," << std::endl;
+        _file << "\t\t\tcolor: " << component_data->getColor() << std::endl;
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentDrawable>()) {
@@ -80,6 +96,14 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToBeKilled: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentMesh>()) {
+        auto component_data = dynamic_cast<ComponentMesh *>(entity.get<ComponentMesh>());
+        _file << "\t\tComponentMesh {" << std::endl;
+        _file << "\t\t\tinitialPos: " << component_data->getPos() << "," << std::endl;
+        _file << "\t\t\tsize: " << component_data->getSize() << "," << std::endl;
+        _file << "\t\t\tcolor: " << component_data->getColor() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
     if (entity.has<ComponentMovable>()) {
         auto component_data = dynamic_cast<ComponentMovable *>(entity.get<ComponentMovable>());
         _file << "\t\tComponentMovable {" << std::endl;
@@ -93,6 +117,21 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\tableToBePicked: 1" << std::endl;
         _file << "\t\t}" << std::endl;
     }
+    if (entity.has<ComponentRectangle>()) {
+        auto component_data = dynamic_cast<ComponentRectangle *>(entity.get<ComponentRectangle>());
+        _file << "\t\tComponentRectangle {" << std::endl;
+        _file << "\t\t\tpos: " << component_data->getPos() << "," << std::endl;
+        _file << "\t\t\tsize: " << component_data->getSize() << "," << std::endl;
+        _file << "\t\t\tcolor: " << component_data->getColor() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentTexture>()) {
+        auto component_data = dynamic_cast<ComponentTexture *>(entity.get<ComponentTexture>());
+        _file << "\t\tComponentTexture {" << std::endl;
+        _file << "\t\t\tpos: " << component_data->getPos() << "," << std::endl;
+        _file << "\t\t\ttexturePath: " << component_data->getTexturePath() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
     if (entity.has<ComponentTransform>()) {
         auto component_data = dynamic_cast<ComponentTransform *>(entity.get<ComponentTransform>());
         _file << "\t\tComponentTransform {" << std::endl;
@@ -100,6 +139,12 @@ void Save::saveEntity(ecs::IEntity &entity)
         _file << "\t\t\twidth: " << component_data->getWidth() << "," << std::endl;
         _file << "\t\t\tposX: " << component_data->getPosX() << "," << std::endl;
         _file << "\t\t\tposY: " << component_data->getPosY() << std::endl;
+        _file << "\t\t}" << std::endl;
+    }
+    if (entity.has<ComponentTransparency>()) {
+        auto component_data = dynamic_cast<ComponentTransparency *>(entity.get<ComponentTransparency>());
+        _file << "\t\tComponentTransparency {" << std::endl;
+        _file << "\t\t\ttransparency: " << component_data->getTransparency() << std::endl;
         _file << "\t\t}" << std::endl;
     }
 }

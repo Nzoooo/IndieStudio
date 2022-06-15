@@ -17,12 +17,10 @@
 #include "Components/ComponentDrawable.hpp"
 #include "Components/ComponentExplodable.hpp"
 #include "Components/ComponentKillable.hpp"
-#include "Components/ComponentKills.hpp"
 #include "Components/ComponentMesh.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentRectangle.hpp"
-#include "Components/ComponentSpeed.hpp"
 #include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
@@ -104,7 +102,5 @@ namespace ecs
         _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
 } // namespace ecs
-
-ecs::Core initEntities();
 
 #endif /* !ECS_HPP_ */

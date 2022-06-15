@@ -1,0 +1,27 @@
+/*
+** EPITECH PROJECT, 2022
+** src
+** File description:
+** AllComponents
+*/
+
+#pragma once
+
+#include "ComponentBombs.hpp"
+#include "ComponentButton.hpp"
+#include "ComponentClickable.hpp"
+#include "ComponentCollider.hpp"
+#include "ComponentControllable.hpp"
+#include "ComponentCube.hpp"
+#include "ComponentDrawable.hpp"
+#include "ComponentDroppable.hpp"
+#include "ComponentExplodable.hpp"
+#include "ComponentKillable.hpp"
+#include "ComponentMesh.hpp"
+#include "ComponentMovable.hpp"
+#include "ComponentPickable.hpp"
+#include "ComponentRectangle.hpp"
+#include "ComponentText.hpp"
+#include "ComponentTexture.hpp"
+#include "ComponentTransform.hpp"
+#include "ComponentTransparency.hpp"

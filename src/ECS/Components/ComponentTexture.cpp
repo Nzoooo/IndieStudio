@@ -16,3 +16,13 @@ void ComponentTexture::Draw()
 {
     this->_texture.Draw(this->_pos);
 }
+
+raylib::Vector2 ComponentTexture::getPos() const
+{
+    return _pos;
+}
+
+std::string ComponentTexture::getTexturePath() const
+{
+    return _texturePath;
+}

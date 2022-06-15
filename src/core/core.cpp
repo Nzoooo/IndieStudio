@@ -17,7 +17,7 @@ ecs::Scenes coreLoop()
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
-    ecs::Core index = mapCreation();
+    ecs::Core core = mapCreation();
     int running = 1;
     int fps = 0;
     int avg_fps = FPS_CAP;
@@ -39,7 +39,7 @@ ecs::Scenes coreLoop()
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             camera.BeginMode();
-            index.get<ecs::SystemRender3D>()->update(index);
+            core.get<ecs::SystemRender3D>()->update(core);
             camera.EndMode();
             raylib::Window::EndDrawing();
         }

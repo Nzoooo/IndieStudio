@@ -7,12 +7,22 @@
 
 #include "ComponentBombs.hpp"
 
-std::size_t ComponentBombs::getNbBombs() const
+std::size_t ComponentBombs::getNbMaxBombs() const
 {
-    return (_nb_bombs);
+    return _max_bombs;
 }
 
-void ComponentBombs::setNbBombs(std::size_t nb_bombs)
+void ComponentBombs::setNbMaxBombs(std::size_t max_bombs)
 {
-    _nb_bombs = nb_bombs;
+    _max_bombs = max_bombs;
+}
+
+std::size_t ComponentBombs::getNbCurrBombs() const
+{
+    return _curr_bombs;
+}
+
+void ComponentBombs::setNbCurrBombs(std::size_t curr_bombs)
+{
+    _curr_bombs = curr_bombs;
 }

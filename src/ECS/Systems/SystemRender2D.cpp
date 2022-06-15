@@ -9,9 +9,9 @@
 
 namespace ecs
 {
-    void SystemRender2D::update(ecs::Core &index)
+    void SystemRender2D::update(ecs::Core &core)
     {
-        for (auto *e : index.getEntities()) {
+        for (auto *e : core.getEntities()) {
             if (e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable2D()) {
                 if (e->has<ComponentButton>())
                     e->get<ComponentButton>()->Draw();

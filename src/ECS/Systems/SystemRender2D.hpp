@@ -19,7 +19,7 @@ namespace ecs
         ~SystemRender2D() = default;
         SystemRender2D &operator=(const SystemRender2D &other) = delete;
 
-        void update(ecs::Core &index);
+        void update(ecs::Core &core);
 
       protected:
       private:

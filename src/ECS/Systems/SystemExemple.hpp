@@ -13,9 +13,9 @@
 namespace ecs
 {
     class CustomSystem : public ecs::ISystem {
-        void update(ecs::Core &index)
+        void update(ecs::Core &core)
         {
-            (void)index;
+            (void)core;
             std::cout << "Update a custom system." << std::endl;
         }
     };

@@ -168,12 +168,11 @@ void addComponentTexture(std::ifstream &file, ecs::IEntity *entity)
 {
     std::string str_pos = getMember(file, "pos");
     std::string texturePath = getMember(file, "texturePath");
-    raylib::Vector3 pos = {std::stof(str_pos.substr(1, str_pos.find(','))),
-        std::stof(str_pos.substr(str_pos.find(',') + 1, str_pos.find(')') - str_pos.find(',') - 1)),
-        std::stof(str_pos.substr(str_pos.find(',', str_pos.find(',') + 1) + 2, str_pos.find(')') - str_pos.find(')') - 2))};
+    raylib::Vector2 pos = {
+        std::stof(str_pos.substr(1, str_pos.find(','))), std::stof(str_pos.substr(str_pos.find(',') + 1, str_pos.find(')') - str_pos.find(',') - 1))};
 
     try {
-        entity->add<ComponentTexture>(pos, texturePath);
+        entity->add<ComponentTexture>(texturePath, pos);
     } catch (std::exception &e) {
         std::cout << "ComponentTexture not found" << std::endl;
     }

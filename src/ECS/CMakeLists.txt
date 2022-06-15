@@ -6,7 +6,7 @@ add_subdirectory(Entities)
 add_subdirectory(Systems)
 
 set(SRC
-    ${SRC} ${SRCROOT}/ecs.cpp ${SRCROOT}/initEntities.cpp
+    ${SRC} ${SRCROOT}/ecs.cpp
     PARENT_SCOPE)
 
 set(INCDIRS

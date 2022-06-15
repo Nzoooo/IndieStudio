@@ -168,7 +168,7 @@ static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool lef
 
     bomb->add<ComponentTexture>("assets/16/boost_speed.png", iconPosition);
     bomb->add<ComponentText>(
-        "assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentSpeed>()->getSpeed()), textPosition, DETAILS_SIZE, raylib::Color::White());
+        "assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentMovable>()->getSpeed()), textPosition, DETAILS_SIZE, raylib::Color::White());
     bomb->add<ComponentDrawable>(true, false);
     return (bomb);
 }
@@ -183,8 +183,8 @@ void displayInformations(ecs::Core &core)
 
     players->add<ComponentBombs>(4);
     bots->add<ComponentBombs>(4);
-    players->add<ComponentSpeed>(3);
-    bots->add<ComponentSpeed>(2);
+    players->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 2);
+    bots->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 2);
     players->add<ComponentExplodable>(1, true);
     bots->add<ComponentExplodable>(1, true);
     players->add<ComponentControllable>();

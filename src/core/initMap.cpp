@@ -66,6 +66,7 @@ ecs::Core mapCreation()
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
+                cube->add<ComponentKillable>();
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Green());
                 mapCreation.addEntity(cube);
             } else if (map->getMap()[i][j] == 1) {

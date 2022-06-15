@@ -10,11 +10,11 @@
 
 namespace ecs
 {
-    static bool isClicking(raylib::Rectangle *rectangle)
+    static bool isClicking(raylib::Rectangle &rectangle)
     {
         raylib::Mouse mouseIndex;
-        if ((mouseIndex.GetX() >= rectangle->x) && (mouseIndex.GetY() >= rectangle->y) && (mouseIndex.GetX() < rectangle->x + rectangle->width)
-            && (mouseIndex.GetY() < rectangle->height + rectangle->y)) {
+        if ((mouseIndex.GetX() >= rectangle.x) && (mouseIndex.GetY() >= rectangle.y) && (mouseIndex.GetX() < rectangle.x + rectangle.width)
+            && (mouseIndex.GetY() < rectangle.height + rectangle.y)) {
             return (true);
         }
         return (false);
@@ -133,7 +133,17 @@ namespace ecs
 
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
-                _handleClickOnButtons(core);
+                for (auto *it : index.getEntities()) {
+                    if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
+                        if (it->get<ComponentButton>()->getIdButton() == 0)
+                            index.setScene(ecs::Scenes::Game);
+                        if (it->get<ComponentButton>()->getIdButton() == 1)
+                            index.setScene(ecs::Scenes::Game);
+                        if (it->get<ComponentButton>()->getIdButton() == 2)
+                            index.setScene(ecs::Scenes::Close);
+                        break;
+                    }
+                }
             }
             if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1
                 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
@@ -171,6 +181,11 @@ namespace ecs
 
     void SystemEvent::handleControllersConnectPlayers(ecs::Core &core)
     {
+        for (auto *it : index.getEntities()) {
+            if (it->has<ComponentModel>()) {
+                it->get<ComponentModel>()->Update(0);
+            }
+        }
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i)) {
                 if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown())) {

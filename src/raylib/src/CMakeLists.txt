@@ -19,6 +19,8 @@ set(SRC
     ${SRCROOT}/Gamepad.cpp
     ${SRCROOT}/Mesh.cpp
     ${SRCROOT}/Image.cpp
+    ${SRCROOT}/Sound.cpp
+    ${SRCROOT}/Music.cpp
     PARENT_SCOPE)
 
 set(INCDIRS
@@ -39,4 +41,6 @@ set(INCDIRS
     ${INCROOT}/Gamepad.hpp
     ${INCROOT}/Mesh.hpp
     ${INCROOT}/Image.hpp
+    ${INCROOT}/Sound.hpp
+    ${INCROOT}/Music.hpp
     PARENT_SCOPE)

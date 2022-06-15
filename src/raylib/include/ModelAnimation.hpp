@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <string>
 #include "raylib.hpp"
 
 namespace raylib
@@ -17,12 +18,15 @@ namespace raylib
         ModelAnimation(const ModelAnimation &other) = delete;
         ~ModelAnimation();
 
-        void Unload();
-        void UpdateAnimation(::Model &model, int frame);
-        bool IsModelAnimationValid(::Model &model) const;
-        // Do the LoadModelAnimations method
+        void Unload(::ModelAnimation &anim);
+        void Unload(unsigned int animCount);
+        void UpdateAnimation(::Model &model, ::ModelAnimation &anim, int frame);
+        bool IsModelAnimationValid(::Model &model, ::ModelAnimation &anim) const;
+        void Load(const std::string &fileName, unsigned int *animCount);
+        ::ModelAnimation *getAnims() const;
 
       protected:
       private:
+        ::ModelAnimation *_anims;
     };
 } // namespace raylib

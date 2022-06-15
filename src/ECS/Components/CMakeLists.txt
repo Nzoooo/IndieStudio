@@ -18,6 +18,8 @@ set(SRC
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentTransparency.cpp
     ${SRCROOT}/ComponentMesh.cpp
+    ${SRCROOT}/ComponentControllable.cpp
+    ${SRCROOT}/ComponentModel.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

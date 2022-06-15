@@ -6,6 +6,7 @@
 */
 
 #include "ECS/Systems/SystemRender3D.hpp"
+#include "core/connectPlayers.hpp"
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"

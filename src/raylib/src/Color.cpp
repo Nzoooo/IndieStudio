@@ -150,8 +150,9 @@ namespace raylib
     {
         return RAYWHITE;
     }
-    std::ostream &operator<<(std::ostream &os, const Color &c)
-    {
-        return os << "{" << static_cast<int>(c.r) << ", " << static_cast<int>(c.g) << ", " << static_cast<int>(c.b) << ", " << static_cast<int>(c.a) << "}";
-    }
 } // namespace raylib
+
+std::ostream &operator<<(std::ostream &os, const raylib::Color &c)
+{
+    return os << "(" << static_cast<int>(c.r) << ", " << static_cast<int>(c.g) << ", " << static_cast<int>(c.b) << ", " << static_cast<int>(c.a) << ")";
+}

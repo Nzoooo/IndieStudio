@@ -26,9 +26,10 @@ namespace raylib
         void DrawCubeWires(float width, float height, float length, ::Color color);
         void DrawCubeWires(const ::Vector3 &size, ::Color color);
         void DrawCubeTexture(const ::Texture2D &texture, float width, float height, float length, ::Color color);
-        friend std::ostream &operator<<(std::ostream &os, const Vector3 &v);
 
       private:
         void _setVector3(::Vector3 &vec);
     };
 } // namespace raylib
+
+std::ostream &operator<<(std::ostream &os, const raylib::Vector3 &v);

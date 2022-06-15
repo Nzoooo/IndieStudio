@@ -44,9 +44,10 @@ namespace raylib
         static Color Blank();
         static Color Magenta();
         static Color RayWhite();
-        friend std::ostream &operator<<(std::ostream &os, const Color &c);
 
       protected:
       private:
     };
 } // namespace raylib
+
+std::ostream &operator<<(std::ostream &os, const raylib::Color &v);

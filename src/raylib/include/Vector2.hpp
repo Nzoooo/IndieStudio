@@ -20,9 +20,10 @@ namespace raylib
         Vector2 &operator=(::Vector2 &vector2);
         Vector2(float _x, float _y);
         ~Vector2() = default;
-        friend std::ostream &operator<<(std::ostream &os, const Vector2 &v);
 
       private:
         void _setVector2(::Vector2 &vec);
     };
 } // namespace raylib
+
+std::ostream &operator<<(std::ostream &os, const raylib::Vector2 &v);

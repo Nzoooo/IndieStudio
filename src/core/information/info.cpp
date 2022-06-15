@@ -113,7 +113,7 @@ static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool lef
     iconPosition.x += MARGIN_BORDER;
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
-    bomb->add<ComponentTexture>("assets/16/bomb_icon.png", iconPosition);
+    bomb->add<ComponentTexture>("assets/16/boost_nb_bombs.png", iconPosition);
     bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf",
         std::to_string(entity->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(entity->get<ComponentBombs>()->getNbMaxBombs()), textPosition,
         DETAILS_SIZE, raylib::Color::White());
@@ -140,7 +140,7 @@ static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool le
     iconPosition.x += MARGIN_BORDER;
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
-    bomb->add<ComponentTexture>("assets/16/radius_icon.png", iconPosition);
+    bomb->add<ComponentTexture>("assets/16/boost_radius_bombs.png", iconPosition);
     bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentExplodable>()->getBlastRange()), textPosition, DETAILS_SIZE,
         raylib::Color::White());
     bomb->add<ComponentDrawable>(true, false);
@@ -166,7 +166,7 @@ static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool lef
     iconPosition.x += MARGIN_BORDER;
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
-    bomb->add<ComponentTexture>("assets/16/speed_icon.png", iconPosition);
+    bomb->add<ComponentTexture>("assets/16/boost_speed.png", iconPosition);
     bomb->add<ComponentText>(
         "assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentSpeed>()->getSpeed()), textPosition, DETAILS_SIZE, raylib::Color::White());
     bomb->add<ComponentDrawable>(true, false);

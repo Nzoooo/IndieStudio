@@ -183,8 +183,8 @@ void displayInformations(ecs::Core &core)
 
     players->add<ComponentBombs>(4);
     bots->add<ComponentBombs>(4);
-    players->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 2);
-    bots->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 2);
+    players->add<ComponentMovable>(2);
+    bots->add<ComponentMovable>(2);
     players->add<ComponentExplodable>(1, true);
     bots->add<ComponentExplodable>(1, true);
     players->add<ComponentControllable>();

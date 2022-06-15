@@ -8,15 +8,16 @@
 #ifndef CORE_HEADER
 #define CORE_HEADER
 
-#include <chrono>
-#include <math.h>
-#include <string>
-#include <time.h>
 #include "ECS/ecs.hpp"
 #include "map/Map.hpp"
 #include "raylib/include/Camera3D.hpp"
 #include "raylib/include/Window.hpp"
 #include "raylib/include/raylib.hpp"
+
+#include <chrono>
+#include <math.h>
+#include <string>
+#include <time.h>
 
 #define FPS_CAP      120
 #define ML_BASE      1000.0
@@ -28,7 +29,7 @@ enum map_object {
     BOX = 2,
 };
 
-int coreLoop();
+ecs::Scenes coreLoop();
 void mapCreation(Map *map);
 
 #endif

@@ -37,6 +37,7 @@
 namespace ecs
 {
     enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win, Close };
+
     class Core {
       private:
         std::vector<ecs::IEntity *> _entities;

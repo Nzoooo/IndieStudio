@@ -17,11 +17,6 @@ static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3
     return (mesh);
 }
 
-double clockToMilliseconds2(clock_t ticks)
-{
-    return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
-}
-
 ecs::Core mapCreation()
 {
     Map *map = new Map;

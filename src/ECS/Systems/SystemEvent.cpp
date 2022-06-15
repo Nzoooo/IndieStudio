@@ -135,18 +135,21 @@ namespace ecs
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
                 _handleClickOnButtons(core);
             }
-            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
                 _handleButtonsMoveUpDown(core, 1);
             }
-            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+            if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
                 _handleButtonsMoveUpDown(core, -1);
             }
         } else {
             for (size_t j = 0; i < core.getNbButtons(); j++) {
                 if (core.getEntity(j)->has<ComponentButton>()) {
                     core.getEntity(j)->get<ComponentButton>()->setState(false);
-                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x, core.getEntity(j)->get<ComponentButton>()->getPos().y,
-                        core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
+                        core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
+                        core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
                     if (isClicking(buttonTmp) == true && i == 0) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))

@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../../core/core.hpp"
+#include "ECS/ecs.hpp"
 #include "ISystem.hpp"
 
 namespace ecs

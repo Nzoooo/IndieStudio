@@ -31,6 +31,7 @@
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
+#include "Systems/SystemExplosion.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
 
@@ -104,7 +105,5 @@ namespace ecs
         _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
 } // namespace ecs
-
-ecs::Core initEntities();
 
 #endif /* !ECS_HPP_ */

@@ -16,7 +16,6 @@ static int mainLoop()
     raylib::Window::Init(1920, 1080);
     ecs::Core core;
     core.setScene(ecs::Scenes::Menu);
-    core.setScene(ecs::Scenes::Menu);
 
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {

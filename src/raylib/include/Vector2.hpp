@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <ostream>
 #include "raylib.hpp"
 
 namespace raylib
@@ -19,6 +20,7 @@ namespace raylib
         Vector2 &operator=(::Vector2 &vector2);
         Vector2(float _x, float _y);
         ~Vector2() = default;
+        friend std::ostream &operator<<(std::ostream &os, const Vector2 &v);
 
       private:
         void _setVector2(::Vector2 &vec);

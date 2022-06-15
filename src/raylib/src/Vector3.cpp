@@ -67,3 +67,8 @@ void raylib::Vector3::DrawCubeTexture(const ::Texture2D &texture, float width, f
 {
     ::DrawCubeTexture(texture, *this, width, height, length, color);
 }
+
+std::ostream &operator<<(std::ostream &os, const raylib::Vector3 &v)
+{
+    return os << "{" << v.x << ", " << v.y << ", " << v.z << "}";
+}

@@ -12,9 +12,14 @@ std::size_t ComponentExplodable::getBlastRange() const
     return (_blastRange);
 }
 
-bool ComponentExplodable::getAbleToExplode() const
+bool ComponentExplodable::getReadyToExplode() const
 {
-    return (_ableToExplode);
+    return (_readyToExplode);
+}
+
+float ComponentExplodable::getTimeLeft() const
+{
+    return (this->_timeLeft);
 }
 
 void ComponentExplodable::setBlastRange(std::size_t blastRange)
@@ -22,7 +27,12 @@ void ComponentExplodable::setBlastRange(std::size_t blastRange)
     _blastRange = blastRange;
 }
 
-void ComponentExplodable::setAbleToExplode(bool ableToExplode)
+void ComponentExplodable::setReadyToExplode(bool readyToExplode)
 {
-    _ableToExplode = ableToExplode;
+    _readyToExplode = readyToExplode;
+}
+
+void ComponentExplodable::setTimeLeft(float timeLeft)
+{
+    this->_timeLeft = timeLeft;
 }

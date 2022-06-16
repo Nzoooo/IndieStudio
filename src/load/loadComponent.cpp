@@ -82,9 +82,12 @@ void addComponentCube(std::ifstream &file, ecs::IEntity *entity)
     raylib::Vector3 size = {std::stof(str_size.substr(1, str_size.find(','))),
         std::stof(str_size.substr(str_size.find(',') + 1, str_size.find(')') - str_size.find(',') - 1)),
         std::stof(str_size.substr(str_size.find(',', str_size.find(',') + 1) + 2, str_size.find(')') - str_size.find(')') - 2))};
-    raylib::Color color = {std::stoi(str_color.substr(1, str_color.find(','))),
-        std::stoi(str_color.substr(str_color.find(',') + 1, str_color.find(')') - str_color.find(',') - 1)),
-        std::stoi(str_color.substr(str_color.find(',', str_color.find(',') + 1) + 2, str_color.find(')') - str_color.find(')') - 2))};
+    raylib::Color color = {};
+    color.r = std::stoi(str_color.substr(str_color.find('(') + 1, str_color.find(',') - 1));
+    color.g = std::stoi(str_color.substr(str_color.find(',') + 1, str_color.find(',', str_color.find(',') + 1) - 1));
+    color.b = std::stoi(str_color.substr(str_color.find(',', str_color.find(',') + 1) + 1, str_color.find(')') - 1));
+    color.a = std::stoi(
+        str_color.substr(str_color.find(',', str_color.find(',', str_color.find(',') + 1) + 1) + 1, str_color.find(')', str_color.find(')') + 1) - 1));
 
     try {
         entity->add<ComponentCube>(pos, size, color);

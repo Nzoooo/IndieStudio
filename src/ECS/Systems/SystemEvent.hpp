@@ -28,13 +28,13 @@ namespace ecs
         void handleControllersGameSettings(ecs::Core &core);
         void handleControllersWin(ecs::Core &core);
 
-      protected:
       private:
         void _detectNbControllers();
-        bool _isControllerAssign(ecs::Core &index, int gamepadNumber);
-        void _assignController(ecs::Core &index, int gamepadNumber);
-        void _reassignControllers(ecs::Core &index, int gamepadNumber);
-        void _resetStateButtons(ecs::Core &index, int idButton);
-        void _handleButtonsMoveUpDown(ecs::Core &index, int upOrDown);
+        bool _isControllerAssign(ecs::Core &core, int gamepadNumber);
+        void _assignController(ecs::Core &core, int gamepadNumber);
+        void _reassignControllers(ecs::Core &core, int gamepadNumber);
+        void _resetStateButtons(ecs::Core &core, int idButton);
+        void _handleButtonsMoveUpDown(ecs::Core &core, int upOrDown);
+        void _handleClickOnButtons(ecs::Core &core);
     };
 } // namespace ecs

@@ -21,15 +21,14 @@ ecs::Scenes coreLoop()
     int running = 1;
     int fps = 0;
     int avg_fps = FPS_CAP;
-    raylib::Camera3D camera;
     raylib::Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
-    camera.position = initialCamPos;
+    core._camera.position = initialCamPos;
     raylib::Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
-    camera.target = initialCamTarget;
+    core._camera.target = initialCamTarget;
     raylib::Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
-    camera.up = initialCamUp;
-    camera.fovy = 80.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    core._camera.up = initialCamUp;
+    core._camera.fovy = 80.0f;
+    core._camera.projection = CAMERA_PERSPECTIVE;
 
     ecs::IEntity *bomb4 = new ecs::IEntity;
 
@@ -40,9 +39,10 @@ ecs::Scenes coreLoop()
 
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
-            camera.BeginMode();
+            core._camera.BeginMode();
+            core.get<ecs::SystemEvent>()->update(core);
             core.get<ecs::SystemRender3D>()->update(core);
-            camera.EndMode();
+            core._camera.EndMode();
             raylib::Window::EndDrawing();
         }
 

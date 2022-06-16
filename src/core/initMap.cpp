@@ -24,19 +24,11 @@ ecs::Core mapCreation()
     ecs::Core mapCreation;
 
     ecs::IEntity *bomb1 = new ecs::IEntity;
+    bomb1->add<ComponentDrawable>(false, true);
     bomb1->add<ComponentExplodable>();
+    bomb1->add<ComponentModel>("models3D/Bomb.obj", raylib::Vector3(0.0f, 5.0f, 0.0f));
     std::cout << "Bombe nb 1 vient d'etre pose" << std::endl;
     mapCreation.addEntity(bomb1);
-
-    ecs::IEntity *bomb2 = new ecs::IEntity;
-    bomb2->add<ComponentExplodable>();
-    std::cout << "Bombe nb 2 vient d'etre pose" << std::endl;
-    mapCreation.addEntity(bomb2);
-
-    ecs::IEntity *bomb3 = new ecs::IEntity;
-    bomb3->add<ComponentExplodable>();
-    std::cout << "Bombe nb 3 vient d'etre pose" << std::endl;
-    mapCreation.addEntity(bomb3);
 
     mapCreation.add<ecs::SystemExplosion>();
 
@@ -68,12 +60,14 @@ ecs::Core mapCreation()
     raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
     mesh4 = meshEntityCreation(posMesh4, sizeMesh4);
 
+    mapCreation.add<ecs::SystemEvent>();
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(mesh2);
     mapCreation.addEntity(mesh3);
     mapCreation.addEntity(mesh4);
     mapCreation.addEntity(Floor);
+    mapCreation.setScene(ecs::Scenes::Game);
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};

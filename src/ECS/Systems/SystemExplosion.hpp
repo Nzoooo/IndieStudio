@@ -19,7 +19,7 @@ namespace ecs
 
         void update(ecs::Core &core);
 
-        void blastGeneration(ecs::Core &core);
+        void blastGeneration(ecs::Core &core, ecs::IEntity *bomb);
 
       private:
     };

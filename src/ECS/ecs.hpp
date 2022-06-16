@@ -35,6 +35,7 @@
 #include "Systems/SystemExplosion.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
+#include "raylib/include/Camera3D.hpp"
 
 namespace ecs
 {
@@ -69,6 +70,8 @@ namespace ecs
         void setScene(ecs::Scenes scene);
         void increaseNbButtons(int increment);
         int getNbButtons() const;
+
+        raylib::Camera3D _camera;
     };
 
     template <typename T> T *ecs::Core::get()

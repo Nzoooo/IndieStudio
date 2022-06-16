@@ -19,6 +19,9 @@ namespace ecs
                 if (it->has<ComponentMesh>()) {
                     it->get<ComponentMesh>()->Draw();
                 }
+                if (it->has<ComponentModel>()) {
+                    it->get<ComponentModel>()->Draw();
+                }
             }
         }
     }

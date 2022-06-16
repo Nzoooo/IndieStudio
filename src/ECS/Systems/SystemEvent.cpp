@@ -133,14 +133,14 @@ namespace ecs
 
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
-                for (auto *it : index.getEntities()) {
+                for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                         if (it->get<ComponentButton>()->getIdButton() == 0)
-                            index.setScene(ecs::Scenes::Game);
+                            core.setScene(ecs::Scenes::Game);
                         if (it->get<ComponentButton>()->getIdButton() == 1)
-                            index.setScene(ecs::Scenes::Game);
+                            core.setScene(ecs::Scenes::Game);
                         if (it->get<ComponentButton>()->getIdButton() == 2)
-                            index.setScene(ecs::Scenes::Close);
+                            core.setScene(ecs::Scenes::Close);
                         break;
                     }
                 }
@@ -160,15 +160,15 @@ namespace ecs
                     raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
                         core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
                         core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
-                    if (isClicking(buttonTmp) == true && i == 0) {
+                    if (isClicking(*buttonTmp) == true && i == 0) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                             core.setScene(ecs::Scenes::Game);
-                    } else if (isClicking(buttonTmp) == true && i == 1) {
+                    } else if (isClicking(*buttonTmp) == true && i == 1) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                             core.setScene(ecs::Scenes::Close);
-                    } else if (isClicking(buttonTmp) == true && i == 2) {
+                    } else if (isClicking(*buttonTmp) == true && i == 2) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                             core.setScene(ecs::Scenes::Close);
@@ -181,7 +181,7 @@ namespace ecs
 
     void SystemEvent::handleControllersConnectPlayers(ecs::Core &core)
     {
-        for (auto *it : index.getEntities()) {
+        for (auto *it : core.getEntities()) {
             if (it->has<ComponentModel>()) {
                 it->get<ComponentModel>()->Update(0);
             }
@@ -198,6 +198,18 @@ namespace ecs
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
     {
+        raylib::Mouse mouseIndex;
+        raylib::Vector3 pos = core._camera.position;
+
+        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+            pos.x += 1.0;
+            core._camera.position = pos;
+        }
+        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonRight())) {
+            pos.z -= 1.0;
+            core._camera.position = pos;
+        }
+
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(core, i)) {
                 // Draw buttons: xbox home

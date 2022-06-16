@@ -24,8 +24,7 @@ void ecs::SystemExplosion::blastGeneration(ecs::Core &core, ecs::IEntity *bomb)
 
     blast1->add<ComponentDrawable>(false, true);
     pos.z -= 0.2;
-    raylib::Rectangle blast1->add<ComponentModel>(
-        "models3D/laserBeam.obj", pos, raylib::Vector3(1.0f, 1.0f, bomb->get<ComponentExplodable>()->getBlastRange() / 20.0f), 0.0);
+    blast1->add<ComponentModel>("models3D/laserBeam.obj", pos, raylib::Vector3(1.0f, 1.0f, bomb->get<ComponentExplodable>()->getBlastRange() / 20.0f), 0.0);
     core.addEntity(blast1);
 
     ecs::IEntity *blast2 = new ecs::IEntity;

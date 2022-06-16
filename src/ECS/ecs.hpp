@@ -35,6 +35,7 @@
 namespace ecs
 {
     enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win, Close };
+    enum GameStartMode { Restart, Load };
 
     class Core {
       private:
@@ -43,6 +44,7 @@ namespace ecs
         bool _stopped;
         ecs::Scenes _scene;
         int _nbButtons = 0;
+        ecs::GameStartMode _start_mode;
 
       public:
         Core();
@@ -65,6 +67,8 @@ namespace ecs
         void setScene(ecs::Scenes scene);
         void increaseNbButtons(int increment);
         int getNbButtons() const;
+        ecs::GameStartMode getStartMode() const;
+        void setStartMode(ecs::GameStartMode start_mode);
     };
 
     template <typename T> T *ecs::Core::get()

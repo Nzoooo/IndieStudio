@@ -82,3 +82,13 @@ int ecs::Core::getNbButtons() const
 {
     return this->_nbButtons;
 }
+
+ecs::GameStartMode ecs::Core::getStartMode() const
+{
+    return this->_start_mode;
+}
+
+void ecs::Core::setStartMode(ecs::GameStartMode start_mode)
+{
+    this->_start_mode = start_mode;
+}

@@ -152,12 +152,16 @@ namespace ecs
                         core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
                     if (isClicking(buttonTmp) == true && i == 0) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
-                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                            core.setStartMode(ecs::GameStartMode::Restart);
                             core.setScene(ecs::Scenes::Game);
+                        }
                     } else if (isClicking(buttonTmp) == true && i == 1) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
-                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                            core.setStartMode(ecs::GameStartMode::Load);
                             core.setScene(ecs::Scenes::Game);
+                        }
                     } else if (isClicking(buttonTmp) == true && i == 2) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))

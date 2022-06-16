@@ -30,6 +30,5 @@ enum map_object {
 };
 
 ecs::Scenes coreLoop();
-void mapCreation(Map *map);
 
 #endif

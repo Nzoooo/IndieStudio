@@ -157,7 +157,7 @@ namespace ecs
                     } else if (isClicking(buttonTmp) == true && i == 1) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            core.setScene(ecs::Scenes::Close);
+                            core.setScene(ecs::Scenes::Game);
                     } else if (isClicking(buttonTmp) == true && i == 2) {
                         core.getEntity(j)->get<ComponentButton>()->setState(true);
                         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))

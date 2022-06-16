@@ -9,18 +9,20 @@
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
+#include "core/pauseMenu.hpp"
 #include "map/Map.hpp"
 
 static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
     ecs::Core core;
-    core.setScene(ecs::Scenes::Menu);
+    core.setScene(ecs::Scenes::Pause);
 
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
             case ecs::Scenes::Game: core.setScene(coreLoop()); break;
+            case ecs::Scenes::Pause: core.setScene(pauseMenu()); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: break;
             case ecs::Scenes::Win: break;

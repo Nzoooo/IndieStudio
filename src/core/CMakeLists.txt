@@ -5,6 +5,7 @@ add_subdirectory(information)
 
 set(SRC
     ${SRC} ${SRCROOT}/core.cpp ${SRCROOT}/mainMenu.cpp ${SRCROOT}/initMap.cpp
+    ${SRCROOT}/pauseMenu.cpp
     PARENT_SCOPE)
 
 set(INCDIRS

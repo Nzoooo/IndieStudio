@@ -7,6 +7,7 @@
 
 #include "load.hpp"
 #include "loadComponent.hpp"
+#include "save/save.hpp"
 
 #include <iostream>
 extern "C"
@@ -14,13 +15,12 @@ extern "C"
 #include <sys/stat.h>
 }
 
-ecs::IEntity *Load::loadEntity(std::ifstream &file)
+void Load::loadEntity(std::ifstream &file, ecs::IEntity *entity)
 {
-    ecs::IEntity *entity = new ecs::IEntity();
     std::string line;
 
     while (getline(file, line)) {
-        if (line == "\t}")
+        if (line == "\t}" || line == "]" || line == "")
             break;
         line = removeTabs(line);
         if (line == "ComponentBombs {")
@@ -50,19 +50,18 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
         if (line == "ComponentTransparency {")
             addComponentTransparency(file, entity);
     }
-    return (entity);
 }
 
 ecs::Core Load::loadFile(void)
 {
-    std::ifstream file(FILEPATH);
+    std::ifstream file(FILEPATH_LOAD);
     ecs::Core core;
     struct stat st;
     std::string line;
     size_t num_entity = 0;
     int checked_file = 0;
 
-    if (stat(FILEPATH, &st) != 0)
+    if (stat(FILEPATH_LOAD, &st) != 0)
         throw std::exception();
     if (!file.is_open())
         throw std::exception();
@@ -72,10 +71,12 @@ ecs::Core Load::loadFile(void)
         checked_file = 1;
         if (line == "Entities [") {
             while (getline(file, line)) {
-                if (line == "]")
-                    break;
+                if (line == "]" || line == "" || line.find('}') != std::string::npos) {
+                    return core;
+                }
                 if (line == std::string("\tEntity[" + std::to_string(num_entity) + "] {")) {
-                    ecs::IEntity *entity = loadEntity(file);
+                    ecs::IEntity *entity = new ecs::IEntity;
+                    loadEntity(file, entity);
                     core.addEntity(entity);
                     num_entity++;
                 }

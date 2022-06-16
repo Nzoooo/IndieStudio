@@ -37,7 +37,7 @@ template <typename T> T *ecs::IEntity::get()
 
 template <typename T> bool ecs::IEntity::has() const
 {
-    if (!_components)
+    if (_components.empty())
         return (false);
     unsigned int id = ecs::TemplateComponent<T>::getId();
     if (id < _components.size() && _components[id])

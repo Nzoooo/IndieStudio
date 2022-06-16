@@ -7,9 +7,9 @@
 
 #include "gameMenu.hpp"
 
-static std::unique_ptr<ecs::IEntity> createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
+static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
 {
-    std::unique_ptr<ecs::IEntity> buttonEntity = new ecs::IEntity();
+    ecs::IEntity *buttonEntity = new ecs::IEntity();
 
     buttonEntity->add<ComponentDrawable>(true, false);
     buttonEntity->add<ComponentButton>(posButton, textButton);
@@ -22,7 +22,7 @@ static std::unique_ptr<ecs::IEntity> createButton(ecs::Core &menu, raylib::Vecto
 static ecs::Core initSettings()
 {
     ecs::Core settings;
-    std::unique_ptr<ecs::IEntity> background = new ecs::IEntity();
+    ecs::IEntity *background = new ecs::IEntity();
     background->add<ComponentDrawable>(true, false);
     background->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
     settings.setScene(ecs::Scenes::GameSettings);

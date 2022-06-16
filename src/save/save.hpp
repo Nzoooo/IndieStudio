@@ -13,7 +13,7 @@
 
 #include <fstream>
 
-#define FILEPATH "save.txt"
+#define FILEPATH_SAVE "save.txt"
 
 class Save {
   public:

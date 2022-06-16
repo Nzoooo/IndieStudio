@@ -16,7 +16,7 @@
 
 Save::Save()
 {
-    _file.open(FILEPATH, std::ios::app);
+    _file.open(FILEPATH_SAVE, std::ios::app);
 }
 
 Save::~Save()
@@ -176,6 +176,6 @@ void Save::eraseSave(void)
 {
     std::ofstream clear_file;
 
-    clear_file.open(FILEPATH, std::ofstream::out | std::ofstream::trunc);
+    clear_file.open(FILEPATH_SAVE, std::ofstream::out | std::ofstream::trunc);
     clear_file.close();
 }

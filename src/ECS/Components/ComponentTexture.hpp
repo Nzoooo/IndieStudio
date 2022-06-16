@@ -14,9 +14,8 @@
 
 class ComponentTexture : public ecs::IComponent {
   public:
-    ComponentTexture(std::string texturePath, raylib::Vector2 pos) : _pos(pos)
+    ComponentTexture(std::string texturePath, raylib::Vector2 pos) : _pos(pos), _texturePath(texturePath)
     {
-        _texturePath = texturePath;
         _texture.Load(texturePath);
     };
     ~ComponentTexture() = default;

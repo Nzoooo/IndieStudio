@@ -11,6 +11,6 @@
 #include "ECS/ecs.hpp"
 #include "map/Map.hpp"
 
-ecs::Core mapCreation();
+ecs::Core mapCreation(ecs::GameStartMode start_mode);
 
 #endif /* !INITMAP_HPP_ */

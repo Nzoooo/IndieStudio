@@ -17,7 +17,7 @@ static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3
     return (mesh);
 }
 
-ecs::Core mapCreation()
+ecs::Core mapCreation(ecs::GameStartMode start_mode)
 {
     Map *map = new Map;
     map->generateMap();
@@ -58,26 +58,28 @@ ecs::Core mapCreation()
     mapCreation.addEntity(mesh4);
     mapCreation.addEntity(Floor);
 
-    raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
-    Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
-    for (int j = 1; j < MAP_SIZE - 1; j++) {
-        for (int i = 1; i < MAP_SIZE - 1; i++) {
-            initial.x += 1;
-            if (map->getMap()[i][j] == 2) {
-                ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentKillable>();
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Green());
-                mapCreation.addEntity(cube);
-            } else if (map->getMap()[i][j] == 1) {
-                ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Blue());
-                mapCreation.addEntity(cube);
+    if (start_mode == ecs::GameStartMode::Restart) {
+        raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
+        Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
+        for (int j = 1; j < MAP_SIZE - 1; j++) {
+            for (int i = 1; i < MAP_SIZE - 1; i++) {
+                initial.x += 1;
+                if (map->getMap()[i][j] == 2) {
+                    ecs::IEntity *cube = new ecs::IEntity();
+                    cube->add<ComponentDrawable>(false, true);
+                    cube->add<ComponentKillable>();
+                    cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Green());
+                    mapCreation.addEntity(cube);
+                } else if (map->getMap()[i][j] == 1) {
+                    ecs::IEntity *cube = new ecs::IEntity();
+                    cube->add<ComponentDrawable>(false, true);
+                    cube->add<ComponentCube>(initial, sizeCube, raylib::Color::Blue());
+                    mapCreation.addEntity(cube);
+                }
             }
+            initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
+            initial.z += 1.0f;
         }
-        initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
-        initial.z += 1.0f;
     }
     return (mapCreation);
 }

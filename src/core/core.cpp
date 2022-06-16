@@ -13,11 +13,10 @@ double clockToMilliseconds(clock_t ticks)
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-ecs::Scenes coreLoop()
+ecs::Scenes coreLoop(ecs::Core &main_core)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
-    ecs::Core core = mapCreation();
     int running = 1;
     int fps = 0;
     int avg_fps = FPS_CAP;
@@ -30,7 +29,7 @@ ecs::Scenes coreLoop()
     camera.up = initialCamUp;
     camera.fovy = 80.0f;
     camera.projection = CAMERA_PERSPECTIVE;
-
+    ecs::Core core = mapCreation(main_core.getStartMode());
     while (running) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();

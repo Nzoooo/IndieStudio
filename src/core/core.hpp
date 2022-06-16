@@ -29,6 +29,6 @@ enum map_object {
     BOX = 2,
 };
 
-ecs::Scenes coreLoop();
+ecs::Scenes coreLoop(ecs::Core &main_core);
 
 #endif

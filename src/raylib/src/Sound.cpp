@@ -7,7 +7,8 @@
 
 #include "../include/Sound.hpp"
 
-namespace raylib {
+namespace raylib
+{
     Sound::Sound(const std::string &fileName)
     {
         Load(fileName);
@@ -65,4 +66,4 @@ namespace raylib {
     {
         ::SetSoundPitch(*this, pitch);
     }
-}
+} // namespace raylib

@@ -32,9 +32,12 @@ namespace ecs
       private:
         void _detectNbControllers();
         bool _isControllerAssign(ecs::Core &index, int gamepadNumber);
-        void _assignController(ecs::Core &index, int gamepadNumber);
-        void _reassignControllers(ecs::Core &index, int gamepadNumber);
+        bool _assignController(ecs::Core &index, int gamepadNumber);
+        void _reassignControllers(ecs::Core &index);
+        int _nbControllersAssign(ecs::Core &index);
         void _resetStateButtons(ecs::Core &index, int idButton);
         void _handleButtonsMoveUpDown(ecs::Core &index, int upOrDown);
+        void _connectingPlayers(ecs::Core &index);
+        void _handleMouseMenu(ecs::Core &index);
     };
 } // namespace ecs

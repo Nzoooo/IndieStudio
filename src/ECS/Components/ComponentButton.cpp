@@ -7,7 +7,7 @@
 
 #include "ComponentButton.hpp"
 
-ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
+ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText, raylib::Vector2 posText, float fontSize)
 {
     this->_pos = pos;
     this->_rectangleUnactive = new raylib::Rectangle(1611, 242, 358, 117);
@@ -15,6 +15,11 @@ ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText)
     this->_texture.Load("assets/menuAsset.png");
     this->_font.Load("assets/NewAthletic.ttf");
     this->_text = buttonText;
+    if (posText.x == -1.0f && posText.y == -1.0f)
+        this->_posText = raylib::Vector2(1920 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0);
+    else
+        this->_posText = posText;
+    this->_fontSize = fontSize;
 }
 
 void ComponentButton::Draw()
@@ -23,7 +28,7 @@ void ComponentButton::Draw()
         this->_texture.Draw(*this->_rectangleActive, this->_pos);
     else
         this->_texture.Draw(*this->_rectangleUnactive, this->_pos);
-    this->_font.DrawText(this->_text, raylib::Vector2(800 / 2.0f - (this->_text.length() * 20) / 2.0f, this->_pos.y + 40.0), 40.0, 3.0, raylib::Color::White());
+    this->_font.DrawText(this->_text, this->_posText, this->_fontSize, 3.0, raylib::Color::White());
 }
 
 void ComponentButton::setState(bool isActive)

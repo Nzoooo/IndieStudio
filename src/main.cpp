@@ -5,9 +5,9 @@
 ** main
 */
 
+#include "core/connectPlayers.hpp"
 #include "core/core.hpp"
 #include "core/mainMenu.hpp"
-#include "core/connectPlayers.hpp"
 
 int mainLoop(ecs::Core index)
 {
@@ -20,7 +20,7 @@ int mainLoop(ecs::Core index)
             case ecs::Scenes::GameSettings:
                 // res = reload();
                 break;
-            case ecs::Scenes::ConnectPlayers: index.setScene(connectPlayers());
+            case ecs::Scenes::ConnectPlayers: index.setScene(connectPlayers()); break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }

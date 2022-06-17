@@ -16,4 +16,3 @@ int ComponentControllable::getGamepadId()
 {
     return (this->_gamepadId);
 }
-

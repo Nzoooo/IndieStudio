@@ -7,7 +7,8 @@
 
 #include "../include/Music.hpp"
 
-namespace raylib {
+namespace raylib
+{
     Music::Music(const std::string &fileName)
     {
         Load(fileName);
@@ -83,4 +84,4 @@ namespace raylib {
         return (::GetMusicTimePlayed(*this));
     }
 
-}
+} // namespace raylib

@@ -6,6 +6,7 @@ set(SRC
     ${SRCROOT}/ComponentBombs.cpp
     ${SRCROOT}/ComponentButton.cpp
     ${SRCROOT}/ComponentControllable.cpp
+    ${SRCROOT}/ComponentCollider.cpp
     ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentDrawable.cpp
     ${SRCROOT}/ComponentExplodable.cpp

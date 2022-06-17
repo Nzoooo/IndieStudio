@@ -14,22 +14,18 @@
 class ComponentMovable : public ecs::IComponent {
   public:
     enum Direction { LEFT, RIGHT, UP, DOWN };
-
-    ComponentMovable(Direction direction = Direction::LEFT, int speed = 0, bool ableToMove = true) : _direction(direction), _speed(speed), _ableToMove(ableToMove){};
+    ComponentMovable(float speed = 0.1f) : _speed(speed){};
     ~ComponentMovable() = default;
 
     Direction getDirection() const;
-    int getSpeed() const;
-    bool getAbleToMove() const;
+    float getSpeed() const;
 
+    void setSpeed(float speed);
     void setDirection(Direction direction);
-    void setSpeed(int speed);
-    void setAbleToMove(bool);
 
   private:
+    float _speed;
     Direction _direction;
-    int _speed;
-    bool _ableToMove;
 };
 
 #endif /* !COMPONENTMOVABLE_HPP_ */

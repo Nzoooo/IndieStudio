@@ -14,7 +14,7 @@
 
 class ComponentCube : public ecs::IComponent {
   public:
-    ComponentCube(raylib::Vector3 pos, raylib::Vector3 size, raylib::Color color = raylib::Color::White()) : _pos(pos), _size(size), _color(color)
+    ComponentCube(raylib::Vector3 pos, raylib::Vector3 size, raylib::Color color = raylib::Color::White()) : _pos(pos), _posTmp(pos), _size(size), _color(color)
     {
     }
     ~ComponentCube() = default;
@@ -29,8 +29,10 @@ class ComponentCube : public ecs::IComponent {
 
     void Draw();
 
-  private:
+    raylib::Vector3 _posTmp;
     raylib::Vector3 _pos;
+
+  private:
     raylib::Vector3 _size;
     raylib::Color _color;
 };

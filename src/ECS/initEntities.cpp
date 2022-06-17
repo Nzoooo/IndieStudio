@@ -13,10 +13,10 @@ ecs::Core initEntities()
 
     ecs::IEntity *player = new ecs::IEntity();
 
-    player->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 5, true);
-    player->add<ComponentMovable>(ComponentMovable::Direction::UP, 5, true);
-    player->add<ComponentMovable>(ComponentMovable::Direction::LEFT, 5, true);
-    player->add<ComponentMovable>(ComponentMovable::Direction::RIGHT, 5, true);
+    player->add<ComponentMovable>(5);
+    player->add<ComponentMovable>(5);
+    player->add<ComponentMovable>(5);
+    player->add<ComponentMovable>(5);
     player->add<ComponentCollider>();
     player->add<ComponentKillable>();
     player->add<ComponentTransform>(50, 50, 50, 50);

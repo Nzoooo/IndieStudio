@@ -141,29 +141,30 @@ namespace ecs
             if (raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1 || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
                 _handleButtonsMoveUpDown(index, -1);
             }
-        } else {
-            for (size_t j = 0; i < index.getNbButtons(); j++) {
-                if (index.getEntity(j)->has<ComponentButton>()) {
-                    index.getEntity(j)->get<ComponentButton>()->setState(false);
-                    raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, index.getEntity(j)->get<ComponentButton>()->getPos().y,
-                        index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width, index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
-                    if (isClicking(buttonTmp) == true && i == 0) {
-                        index.getEntity(j)->get<ComponentButton>()->setState(true);
-                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Game);
-                    } else if (isClicking(buttonTmp) == true && i == 1) {
-                        index.getEntity(j)->get<ComponentButton>()->setState(true);
-                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Close);
-                    } else if (isClicking(buttonTmp) == true && i == 2) {
-                        index.getEntity(j)->get<ComponentButton>()->setState(true);
-                        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                            index.setScene(ecs::Scenes::Close);
-                    }
-                    i++;
+        }
+        // else {
+        for (size_t j = 0; i < index.getNbButtons(); j++) {
+            if (index.getEntity(j)->has<ComponentButton>()) {
+                index.getEntity(j)->get<ComponentButton>()->setState(false);
+                raylib::Rectangle *buttonTmp = new raylib::Rectangle(index.getEntity(j)->get<ComponentButton>()->getPos().x, index.getEntity(j)->get<ComponentButton>()->getPos().y,
+                    index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width, index.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                if (isClicking(buttonTmp) == true && i == 0) {
+                    index.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        index.setScene(ecs::Scenes::Game);
+                } else if (isClicking(buttonTmp) == true && i == 1) {
+                    index.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        index.setScene(ecs::Scenes::Close);
+                } else if (isClicking(buttonTmp) == true && i == 2) {
+                    index.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        index.setScene(ecs::Scenes::Close);
                 }
+                i++;
             }
         }
+        // }
     }
 
     void SystemEvent::handleControllersConnectPlayers(ecs::Core &index)
@@ -180,8 +181,10 @@ namespace ecs
 
     void SystemEvent::handleControllersGame(ecs::Core &index)
     {
+        raylib::Gamepad::gamepadNumber = 0;
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
-            if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(index, i)) {
+            //  && _isControllerAssign(index, i)
+            if (raylib::Gamepad::IsAvailable(i)) {
                 // Draw buttons: xbox home
                 if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddle()))
                     std::cout << "home" << std::endl;
@@ -189,8 +192,8 @@ namespace ecs
                 // Draw buttons: basic
                 if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleRight()))
                     std::cout << "start" << std::endl;
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleLeft()))
-                    std::cout << "select" << std::endl;
+                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleLeft())) {}
+                // std::cout << "select" << std::endl;
                 if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceRight()))
                     std::cout << "O" << std::endl;
                 if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceDown()))
@@ -219,14 +222,36 @@ namespace ecs
                 // Draw axis: left joystick
                 // std::cout << "GAMEPAD_AXIS_LEFT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftX()) << std::endl;
                 // std::cout << "GAMEPAD_AXIS_LEFT_Y: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftY()) << std::endl;
-
-                // Draw axis: right joystick
-                // std::cout << "GAMEPAD_AXIS_RIGHT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightX()) << std::endl;
-                // std::cout << "GAMEPAD_AXIS_RIGHT_Y: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) << std::endl;
-
-                // Draw axis: left-right triggers
-                // std::cout << "GAMEPAD_AXIS_LEFT_TRIGGER: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftTrigger()) << std::endl;
-                // std::cout << "GAMEPAD_AXIS_RIGHT_TRIGGER: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightTrigger()) << std::endl;
+                // if ()
+                for (auto *it : index.getEntities()) {
+                    // && it->get<ComponentControllable>()->getGamepadId() == i
+                    if (it->has<ComponentControllable>()) {
+                        raylib::Vector3 pos(it->get<ComponentCube>()->getPos());
+                        raylib::Vector3 size(it->get<ComponentCube>()->getSize());
+                        std::cout << "manette haut" << std::endl;
+                        if (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) < 0) {
+                            if (!it->get<ComponentCollider>()->getVector(ComponentCollider::NORTH)) {
+                                std::cout << "je move" << std::endl;
+                                it->get<ComponentCube>()->_posTmp = pos;
+                                // it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::LEFT);
+                            }
+                            // it->get<ComponentCollider>()->setCollision(raylib::BoundingBox(
+                            //     raylib::Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2), raylib::Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2)));
+                        } else if (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightX()) > 0) {
+                            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::RIGHT);
+                            // it->get<ComponentCollider>()->setCollision(raylib::BoundingBox(
+                            //     raylib::Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2), raylib::Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2)));
+                        } else if (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) < 0) {
+                            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
+                            // it->get<ComponentCollider>()->setCollision(raylib::BoundingBox(
+                            //     raylib::Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2), raylib::Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2)));
+                        } else if (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) > 0) {
+                            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::DOWN);
+                            // it->get<ComponentCollider>()->setCollision(raylib::BoundingBox(
+                            //     raylib::Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2), raylib::Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2)));
+                        }
+                    }
+                }
             }
         }
     }

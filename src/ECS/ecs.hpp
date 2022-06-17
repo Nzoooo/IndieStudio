@@ -70,8 +70,8 @@ namespace ecs
     template <typename T> T *ecs::Core::get()
     {
         if (has<T>() == false)
-            std::cout << "System not found" << std::endl;
-        return static_cast<T *>(_systems[ecs::TemplateSystem<T>::getId()]);
+            // std::cout << "System not found" << std::endl;
+            return static_cast<T *>(_systems[ecs::TemplateSystem<T>::getId()]);
     }
 
     template <typename T, typename... U> void ecs::Core::add(U &&...args)
@@ -97,8 +97,8 @@ namespace ecs
     template <typename T> void ecs::Core::remove()
     {
         if (has<T>() == false)
-            std::cout << "System not found" << std::endl;
-        delete _systems[ecs::TemplateSystem<T>::getId()];
+            // std::cout << "System not found" << std::endl;
+            delete _systems[ecs::TemplateSystem<T>::getId()];
         _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
 } // namespace ecs

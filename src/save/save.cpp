@@ -83,9 +83,7 @@ void Save::saveEntity(ecs::IEntity &entity)
     if (entity.has<ComponentMovable>()) {
         auto component_data = dynamic_cast<ComponentMovable *>(entity.get<ComponentMovable>());
         _file << "\t\tComponentMovable {" << std::endl;
-        _file << "\t\t\tdir: " << component_data->getDirection() << "," << std::endl;
         _file << "\t\t\tspeed: " << component_data->getSpeed() << "," << std::endl;
-        _file << "\t\t\tableToMove: " << component_data->getAbleToMove() << std::endl;
         _file << "\t\t}" << std::endl;
     }
     if (entity.has<ComponentPickable>()) {

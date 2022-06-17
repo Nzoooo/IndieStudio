@@ -150,7 +150,7 @@ namespace ecs
                 if (isClicking(buttonTmp) == true && i == 0) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
-                        core.setScene(ecs::Scenes::Game);
+                        core.setScene(ecs::Scenes::ConnectPlayers);
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 1) {
@@ -180,7 +180,7 @@ namespace ecs
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                         if (it->get<ComponentButton>()->getIdButton() == 0) {
-                            core.setScene(ecs::Scenes::Game);
+                            core.setScene(ecs::Scenes::ConnectPlayers);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
@@ -207,8 +207,8 @@ namespace ecs
                 elapsedTimeToMoveButtons = std::chrono::system_clock::now();
                 _handleButtonsMoveUpDown(core, -1);
             }
-        }
-        _handleMouseMenu(core);
+        } else
+            _handleMouseMenu(core);
     }
 
     void SystemEvent::_connectingPlayers(ecs::Core &core)
@@ -239,38 +239,6 @@ namespace ecs
                             it->get<ComponentModel>()->getRotateAngle() + (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftX()) * 0.3f));
                     }
                 }
-            }
-        }
-    }
-
-    void SystemEvent::handleControllersPause(ecs::Core &core)
-    {
-        int i = 0;
-        raylib::Mouse mouseIndex;
-        for (size_t j = 0; i < core.getNbButtons(); j++) {
-            if (core.getEntity(j)->has<ComponentButton>()) {
-                core.getEntity(j)->get<ComponentButton>()->setState(false);
-                raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
-                    core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
-                    core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
-                if (isClicking(*buttonTmp) == true && i == 0) {
-                    core.getEntity(j)->get<ComponentButton>()->setState(true);
-                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Game);
-                } else if (isClicking(*buttonTmp) == true && i == 1) {
-                    core.getEntity(j)->get<ComponentButton>()->setState(true);
-                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
-                } else if (isClicking(*buttonTmp) == true && i == 2) {
-                    core.getEntity(j)->get<ComponentButton>()->setState(true);
-                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
-                } else if (isClicking(*buttonTmp) == true && i == 3) {
-                    core.getEntity(j)->get<ComponentButton>()->setState(true);
-                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
-                }
-                i++;
             }
         }
     }
@@ -309,6 +277,44 @@ namespace ecs
             }
         }
         _connectingPlayers(core);
+    }
+
+    void SystemEvent::_handleMousePause(ecs::Core &core)
+    {
+        int i = 0;
+        raylib::Mouse mouseIndex;
+
+        for (size_t j = 0; i < core.getNbButtons(); j++) {
+            if (core.getEntity(j)->has<ComponentButton>()) {
+                core.getEntity(j)->get<ComponentButton>()->setState(false);
+                raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
+                    core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
+                    core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                if (isClicking(*buttonTmp) == true && i == 0) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Game);
+                } else if (isClicking(*buttonTmp) == true && i == 1) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Close);
+                } else if (isClicking(*buttonTmp) == true && i == 2) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Close);
+                } else if (isClicking(*buttonTmp) == true && i == 3) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Close);
+                }
+                i++;
+            }
+        }
+    }
+
+    void SystemEvent::handleControllersPause(ecs::Core &core)
+    {
+        _handleMousePause(core);
     }
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
@@ -384,17 +390,14 @@ namespace ecs
     {
         raylib::Gamepad::gamepadNumber = 3;
         _detectNbControllers();
-        if (core.getScene() == ecs::Scenes::Menu)
-            handleControllersMenu(core);
-        if (core.getScene() == ecs::Scenes::Pause)
-            handleControllersPause(core);
-        if (core.getScene() == ecs::Scenes::ConnectPlayers)
-            handleControllersConnectPlayers(core);
-        if (core.getScene() == ecs::Scenes::Game)
-            handleControllersGame(core);
-        if (core.getScene() == ecs::Scenes::GameSettings)
-            handleControllersGameSettings(core);
-        if (core.getScene() == ecs::Scenes::Win)
-            handleControllersWin(core);
+        switch (core.getScene()) {
+            case ecs::Scenes::Menu: handleControllersMenu(core); break;
+            case ecs::Scenes::ConnectPlayers: handleControllersConnectPlayers(core); break;
+            case ecs::Scenes::Game: handleControllersGame(core); break;
+            case ecs::Scenes::Pause: handleControllersPause(core); break;
+            case ecs::Scenes::GameSettings: handleControllersGameSettings(core); break;
+            case ecs::Scenes::Win: handleControllersWin(core); break;
+            default: break;
+        }
     }
 } // namespace ecs

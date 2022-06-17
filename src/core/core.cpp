@@ -13,7 +13,7 @@ double clockToMilliseconds(clock_t ticks)
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-ecs::Scenes coreLoop()
+ecs::Scenes coreLoop(std::vector<int> &idControllers)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();

@@ -16,15 +16,16 @@ static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
     ecs::Core core;
-    core.setScene(ecs::Scenes::Pause);
+    std::vector<int> idControllers;
+    core.setScene(ecs::Scenes::Menu);
 
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop()); break;
             case ecs::Scenes::Pause: core.setScene(pauseMenu()); break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
             case ecs::Scenes::GameSettings: break;
-            case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }

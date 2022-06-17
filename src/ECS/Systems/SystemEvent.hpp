@@ -40,6 +40,7 @@ namespace ecs
         void _handleButtonsMoveUpDown(ecs::Core &core, int upOrDown);
         void _connectingPlayers(ecs::Core &core);
         void _handleMouseMenu(ecs::Core &core);
+        void _handleMouseConnectPlayer(ecs::Core &core);
         void _handleMousePause(ecs::Core &core);
     };
 } // namespace ecs

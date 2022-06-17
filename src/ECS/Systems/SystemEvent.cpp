@@ -211,10 +211,43 @@ namespace ecs
             _handleMouseMenu(core);
     }
 
+    void SystemEvent::_handleMouseConnectPlayer(ecs::Core &core)
+    {
+        int i = 0;
+        raylib::Mouse mouseIndex;
+
+        for (size_t j = 0; i < core.getNbButtons(); j++) {
+            if (core.getEntity(j)->has<ComponentButton>()) {
+                core.getEntity(j)->get<ComponentButton>()->setState(false);
+                raylib::Rectangle buttonTmp = raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
+                    core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
+                    core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                if (isClicking(buttonTmp) == true && i == 0) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        core.setScene(ecs::Scenes::Menu);
+                        return;
+                    }
+                } else if (isClicking(buttonTmp) == true && i == 2) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        core.setScene(ecs::Scenes::Game);
+                        return;
+                    }
+                }
+                i++;
+            }
+        }
+    }
+
     void SystemEvent::_connectingPlayers(ecs::Core &core)
     {
         bool noButtonAvailable = false;
 
+        if (!raylib::Gamepad::IsAvailable(0)) {
+            _handleMouseConnectPlayer(core);
+            return;
+        }
         for (auto *it : core.getEntities()) {
             if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState() && it->get<ComponentButton>()->getIdButton() == 1)
                 noButtonAvailable = true;

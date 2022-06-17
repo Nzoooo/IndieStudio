@@ -13,15 +13,17 @@
 #include "raylib/include/Model.hpp"
 #include "raylib/include/Mesh.hpp"
 #include "raylib/include/Vector3.hpp"
+#include "raylib/include/Texture.hpp"
 #include "raylib/include/RaylibException.hpp"
 
 
 class ComponentMesh : public ecs::IComponent {
     public:
-        ComponentMesh(raylib::Vector3 initialPos, raylib::Vector3 size, raylib::Color colorCube) : _initialPos(initialPos), _size(size), _color(colorCube)
+        ComponentMesh(raylib::Vector3 initialPos, raylib::Vector3 size, raylib::Color colorCube, raylib::Texture texture) : _initialPos(initialPos), _size(size), _color(colorCube), _texture(texture)
         {
             _mesh.GenCube(_size.x, _size.y, _size.z);
             _model.Load(_mesh);
+            _model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
         };
         ~ComponentMesh();
 
@@ -39,6 +41,7 @@ class ComponentMesh : public ecs::IComponent {
         raylib::Model _model;
         raylib::Mesh _mesh;
         raylib::Color _color;
+        raylib::Texture _texture;
 };
 
 #endif /* !COMPONENTMESH_HPP_ */

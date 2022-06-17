@@ -14,7 +14,7 @@ namespace ecs
         for (auto *it : index.getEntities()) {
             if (it->has<ComponentDrawable>() && it->get<ComponentDrawable>()->getIsDrawable3D() == true) {
                 if (it->has<ComponentCube>()) {
-                    it->get<ComponentCube>()->Draw();
+                    it->get<ComponentCube>()->DrawTex();
                 }
                 if (it->has<ComponentMesh>()) {
                     it->get<ComponentMesh>()->Draw();

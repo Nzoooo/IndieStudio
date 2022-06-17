@@ -30,12 +30,35 @@ int coreLoop()
     camera.up = initialCamUp;
     camera.fovy = 80.0f;
     camera.projection = CAMERA_PERSPECTIVE;
+    bool isOrbital = true;
+    bool step = false;
+    bool first = true;
+    float step1 = MAP_SIZE/2;
 
+    camera.SetMode(CAMERA_ORBITAL);
     while (running) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
 
+            camera.Update();
+
+            if ((fps) == 1 && isOrbital == true) {
+                camera.SetMode(CAMERA_CUSTOM);
+                isOrbital = false;
+            }
+            if (camera.position.x <= step1 && step != true) {
+                camera.position.x += 0.1f/2;
+            } else {
+                first = false;
+            }
+            if (isOrbital == false && camera.position.y < 12.5f
+                && first != true) {
+                camera.position.y += 0.09f/2;
+                camera.position.z += 0.13f/2;
+                camera.position.x = initialCamPos.x;
+                step = true;
+            }
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             camera.BeginMode();

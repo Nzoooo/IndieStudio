@@ -47,10 +47,10 @@ void ComponentCube::setTexture(const std::string texture)
     this->_tex.Load(texture);
 }
 
-void ComponentCube::Draw()
-{
-    DrawCube(_pos, _size.x, _size.y, _size.z, _color);
-}
+// void ComponentCube::Draw()
+// {
+//     DrawCube(_pos, _size.x, _size.y, _size.z, _color);
+// }
 
 void ComponentCube::DrawTex()
 {

@@ -7,13 +7,14 @@
 
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
+#include "raylib/include/Texture.hpp"
 
-static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color)
+static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture)
 {
     ecs::IEntity *mesh = new ecs::IEntity();
 
     mesh->add<ComponentDrawable>(false, true);
-    mesh->add<ComponentMesh>(posMesh, sizeMesh, color);
+    mesh->add<ComponentMesh>(posMesh, sizeMesh, color, texture);
     return (mesh);
 }
 
@@ -27,9 +28,15 @@ ecs::Core mapCreation()
     raylib::Texture floorTex;
     raylib::Texture meshTex;
     raylib::Texture destructTex;
-    floorTex.Load("assets/Dirt Tex.png");
-    meshTex.Load("assets/CUBE WALL.png");
-    destructTex.Load("assets/MicrosoftTeams-image.png");
+    raylib::Texture wallTex;
+    raylib::Texture wallupTex;
+    raylib::Texture blockTex;
+    floorTex.Load("assets/FLOOR.png");
+    wallTex.Load("assets/Among_Us_Space.png");
+    meshTex.Load("assets/WALL.png");
+    destructTex.Load("assets/destructible.png");
+    wallupTex.Load("assets/WALL up.png");
+    blockTex.Load("assets/MicrosoftTeams-image (1).png");
     Map *map = new Map;
     map->generateMap();
     ecs::Core mapCreation;
@@ -37,37 +44,73 @@ ecs::Core mapCreation()
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
 
+    ecs::IEntity *FloorGame;
+    raylib::Vector3 posFloorGame = {0.0f, 0.0f, 0.0f};
+    raylib::Vector3 sizeFloorGame = {MAP_SIZE, 0.1f, MAP_SIZE};
+    FloorGame = meshEntityCreation(posFloorGame, sizeFloorGame, raylib::Color::White(), floorTex);
+
     ecs::IEntity *Floor;
-    raylib::Vector3 posFloor = {0.0f, 0.0f, 0.0f};
-    raylib::Vector3 sizeFloor = {MAP_SIZE, 0.1f, MAP_SIZE};
-    Floor = meshEntityCreation(posFloor, sizeFloor, raylib::Color::Red());
+    raylib::Vector3 posFloor = {0.0f, -0.01f, 0.0f};
+    raylib::Vector3 sizeFloor = {MAP_SIZE*3, 0.1f, MAP_SIZE*3};
+    Floor = meshEntityCreation(posFloor, sizeFloor, raylib::Color::White(), wallTex);
+
+    ecs::IEntity *Floor2;
+    raylib::Vector3 posFloor2 = {0.0f, (MAP_SIZE*3)/2, (MAP_SIZE*3)/2};
+    raylib::Vector3 sizeFloor2 = {MAP_SIZE*3, MAP_SIZE*3, 0.1f};
+    Floor2 = meshEntityCreation(posFloor2, sizeFloor2, raylib::Color::White(), wallTex);
+
+    ecs::IEntity *Floor3;
+    raylib::Vector3 posFloor3 = {(-MAP_SIZE*3)/2, (MAP_SIZE*3)/2, 0.0f};
+    raylib::Vector3 sizeFloor3 = {0.5f, MAP_SIZE*3, MAP_SIZE*3};
+    Floor3 = meshEntityCreation(posFloor3, sizeFloor3, raylib::Color::White(), wallTex);
+
+    ecs::IEntity *Floor4;
+    raylib::Vector3 posFloor4 = {(MAP_SIZE*3)/2, (MAP_SIZE*3)/2, 0.0f};
+    raylib::Vector3 sizeFloor4 = {0.5f, MAP_SIZE*3, MAP_SIZE*3};
+    Floor4 = meshEntityCreation(posFloor4, sizeFloor4, raylib::Color::White(), wallTex);
 
     ecs::IEntity *mesh1;
     raylib::Vector3 posMesh = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
     raylib::Vector3 sizeMesh = {MAP_SIZE, 1.0f, 1.0f};
-    mesh1 = meshEntityCreation(posMesh, sizeMesh, raylib::Color::Blue());
+    mesh1 = meshEntityCreation(posMesh, sizeMesh, raylib::Color::White(), meshTex);
 
     ecs::IEntity *mesh2;
     raylib::Vector3 posMesh2 = {-8.0f, 0.5f, 0.5f};
     raylib::Vector3 sizeMesh2 = {1.0f, 1.0f, MAP_SIZE - 1};
-    mesh2 = meshEntityCreation(posMesh2, sizeMesh2, raylib::Color::Blue());
+    mesh2 = meshEntityCreation(posMesh2, sizeMesh2, raylib::Color::White(), wallupTex);
+
+    ecs::IEntity *bis;
+    raylib::Vector3 posbis = {-8.00f, 0.5f, 0.5f};
+    raylib::Vector3 sizebis = {1.01f, 1.0f, MAP_SIZE - 1};
+    bis = meshEntityCreation(posbis, sizebis, raylib::Color::White(), meshTex);
 
     ecs::IEntity *mesh3;
     raylib::Vector3 posMesh3 = {8.0f, 0.5f, 0.5f};
     raylib::Vector3 sizeMesh3 = {1.0f, 1.0f, MAP_SIZE - 1};
-    mesh3 = meshEntityCreation(posMesh3, sizeMesh3, raylib::Color::Blue());
+    mesh3 = meshEntityCreation(posMesh3, sizeMesh3, raylib::Color::White(), wallupTex);
+
+    ecs::IEntity *bis2;
+    raylib::Vector3 posbis2 = {8.00f, 0.5f, 0.5f};
+    raylib::Vector3 sizebis2 = {1.01f, 1.0f, MAP_SIZE - 1};
+    bis2 = meshEntityCreation(posbis2, sizebis2, raylib::Color::White(), meshTex);
 
     ecs::IEntity *mesh4;
     raylib::Vector3 posMesh4 = {0.0f, 0.5f, 8.0f};
     raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
-    mesh4 = meshEntityCreation(posMesh4, sizeMesh4, raylib::Color::Blue());
+    mesh4 = meshEntityCreation(posMesh4, sizeMesh4, raylib::Color::White(), meshTex);
 
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.addEntity(mesh1);
+    mapCreation.addEntity(bis);
+    mapCreation.addEntity(bis2);
     mapCreation.addEntity(mesh2);
     mapCreation.addEntity(mesh3);
     mapCreation.addEntity(mesh4);
+    mapCreation.addEntity(FloorGame);
     mapCreation.addEntity(Floor);
+    mapCreation.addEntity(Floor2);
+    mapCreation.addEntity(Floor3);
+    mapCreation.addEntity(Floor4);
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
@@ -77,21 +120,21 @@ ecs::Core mapCreation()
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), meshTex);
+                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), destructTex);
                 mapCreation.addEntity(cube);
             } else if (map->getMap()[i][j] == 1) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), destructTex);
+                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), blockTex);
                 mapCreation.addEntity(cube);
             }
         }
         initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
         initial.z += 1.0f;
     }
-    meshTex.Unload();
-    destructTex.Unload();
-    floorTex.Unload();
+    // meshTex.Unload();
+    // destructTex.Unload();
+    // floorTex.Unload();
 
     // clock_t sec_clock = clock();
     // clock_t fps_clock = clock();

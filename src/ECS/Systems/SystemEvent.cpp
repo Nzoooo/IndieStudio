@@ -253,19 +253,19 @@ namespace ecs
                 raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
                     core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
                     core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
-                if (isClicking(buttonTmp) == true && i == 0) {
+                if (isClicking(*buttonTmp) == true && i == 0) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                         core.setScene(ecs::Scenes::Game);
-                } else if (isClicking(buttonTmp) == true && i == 1) {
+                } else if (isClicking(*buttonTmp) == true && i == 1) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                         core.setScene(ecs::Scenes::Close);
-                } else if (isClicking(buttonTmp) == true && i == 2) {
+                } else if (isClicking(*buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                         core.setScene(ecs::Scenes::Close);
-                } else if (isClicking(buttonTmp) == true && i == 3) {
+                } else if (isClicking(*buttonTmp) == true && i == 3) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
                         core.setScene(ecs::Scenes::Close);

@@ -40,7 +40,7 @@ namespace ecs
                 if (it->has<ComponentDrawable>())
                     it->get<ComponentDrawable>()->setIsDrawable3D(true);
                 if (it->has<ComponentTexture>()) {
-                    it->get<ComponentTexture>()->setTexture("assets/IconValidate.png");
+                    it->get<ComponentTexture>()->setTexture("assets/connectPlayers/IconValidate.png");
                     it->get<ComponentTexture>()->setPos(it->get<ComponentTexture>()->getPos2());
                 }
                 return (true);

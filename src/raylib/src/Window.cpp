@@ -139,3 +139,23 @@ void raylib::Window::ClearFullScreen()
 {
     ::ClearWindowState(FLAG_FULLSCREEN_MODE);
 }
+
+void raylib::Window::InitAudioDevice()
+{
+    ::InitAudioDevice();
+}
+
+void raylib::Window::CloseAudioDevice()
+{
+    ::CloseAudioDevice();
+}
+
+bool raylib::Window::IsAudioDeviceReady()
+{
+    return (::IsAudioDeviceReady());
+}
+
+void raylib::Window::SetMasterVolume(float volume)
+{
+    ::SetMasterVolume(volume);
+}

@@ -23,6 +23,7 @@ namespace ecs
 
         void update(ecs::Core &core);
         void handleControllersMenu(ecs::Core &core);
+        void handleControllersPause(ecs::Core &core);
         void handleControllersConnectPlayers(ecs::Core &core);
         void handleControllersGame(ecs::Core &core);
         void handleControllersGameSettings(ecs::Core &core);

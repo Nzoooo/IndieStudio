@@ -37,7 +37,7 @@
 
 namespace ecs
 {
-    enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win, Close };
+    enum Scenes { Menu, ConnectPlayers, Pause, GameSettings, Game, Win, Close };
 
     class Core {
       private:

@@ -243,6 +243,38 @@ namespace ecs
         }
     }
 
+    void SystemEvent::handleControllersPause(ecs::Core &core)
+    {
+        int i = 0;
+        raylib::Mouse mouseIndex;
+        for (size_t j = 0; i < core.getNbButtons(); j++) {
+            if (core.getEntity(j)->has<ComponentButton>()) {
+                core.getEntity(j)->get<ComponentButton>()->setState(false);
+                raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
+                    core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
+                    core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                if (isClicking(buttonTmp) == true && i == 0) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Game);
+                } else if (isClicking(buttonTmp) == true && i == 1) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Close);
+                } else if (isClicking(buttonTmp) == true && i == 2) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Close);
+                } else if (isClicking(buttonTmp) == true && i == 3) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Close);
+                }
+                i++;
+            }
+        }
+    }
+
     void SystemEvent::handleControllersConnectPlayers(ecs::Core &core)
     {
         static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
@@ -354,6 +386,8 @@ namespace ecs
         _detectNbControllers();
         if (core.getScene() == ecs::Scenes::Menu)
             handleControllersMenu(core);
+        if (core.getScene() == ecs::Scenes::Pause)
+            handleControllersPause(core);
         if (core.getScene() == ecs::Scenes::ConnectPlayers)
             handleControllersConnectPlayers(core);
         if (core.getScene() == ecs::Scenes::Game)

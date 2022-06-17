@@ -98,6 +98,7 @@ ecs::Scenes connectPlayers()
     ecs::Core connect = initConnectPlayers();
     raylib::Camera3D camera(raylib::Vector3(0.0f, 3.0f, 10.0f), raylib::Vector3(0.0f, 0.0f, 0.0f), raylib::Vector3(0.0f, 1.0f, 0.0f), 45.0f);
 
+    raylib::Window::SetFullScreen();
     while (!raylib::Window::ShouldClose() && connect.getScene() == ecs::Scenes::ConnectPlayers) {
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
@@ -108,6 +109,5 @@ ecs::Scenes connectPlayers()
         camera.EndMode();
         raylib::Window::EndDrawing();
     }
-    raylib::Window::Close();
     return (connect.getScene()); // récupérer aussi les assignements des manettes et les joueurs qui correspondent
 }

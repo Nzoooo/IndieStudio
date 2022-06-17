@@ -16,6 +16,7 @@
 #include "Components/ComponentCube.hpp"
 #include "Components/ComponentDrawable.hpp"
 #include "Components/ComponentExplodable.hpp"
+#include "Components/ComponentFireBlast.hpp"
 #include "Components/ComponentKillable.hpp"
 #include "Components/ComponentKills.hpp"
 #include "Components/ComponentMesh.hpp"

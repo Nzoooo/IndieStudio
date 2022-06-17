@@ -20,6 +20,7 @@ set(SRC
     ${SRCROOT}/ComponentMesh.cpp
     ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/ComponentModel.cpp
+    ${SRCROOT}/ComponentFireBlast.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

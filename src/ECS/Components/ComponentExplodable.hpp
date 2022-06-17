@@ -12,7 +12,7 @@
 
 class ComponentExplodable : public ecs::IComponent {
   public:
-    ComponentExplodable(std::size_t blastRange = 7, bool readyToExplode = false, float timeLeft = 3.0)
+    ComponentExplodable(std::size_t blastRange = 12, bool readyToExplode = false, float timeLeft = 3.0)
         : _blastRange(blastRange), _readyToExplode(readyToExplode), _timeLeft(timeLeft){};
     ~ComponentExplodable() = default;
 

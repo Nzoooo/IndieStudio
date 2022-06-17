@@ -13,6 +13,7 @@
 namespace raylib
 {
     class Texture : public ::Texture {
+      public:
         typedef enum {
             TEXTURE_WRAP_REPEAT = 0,    // Repeats texture in tiled mode
             TEXTURE_WRAP_CLAMP,         // Clamps texture to edge pixel in tiled mode
@@ -20,7 +21,6 @@ namespace raylib
             TEXTURE_WRAP_MIRROR_CLAMP   // Mirrors and clamps to border the texture in tiled mode
         } WrapMode;
 
-      public:
         Texture();
         Texture(const ::Image &image, int layout);
         Texture(const ::Image &image);

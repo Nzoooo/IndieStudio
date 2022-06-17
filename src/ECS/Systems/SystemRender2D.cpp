@@ -21,8 +21,6 @@ namespace ecs
                     e->get<ComponentTexture>()->Draw();
                 if (e->has<ComponentButton>())
                     e->get<ComponentButton>()->Draw();
-                if (e->has<ComponentText>())
-                    e->get<ComponentText>()->Draw();
             }
         }
     }

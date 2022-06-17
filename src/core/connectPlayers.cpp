@@ -24,22 +24,22 @@ ecs::Core initConnectPlayers()
     ecs::Core connect;
     ecs::IEntity *player = new ecs::IEntity();
     player->add<ComponentDrawable>(true, false);
-    player->add<ComponentModel>("assets/models3D/Among_Us_.obj", raylib::Vector3(-5.0f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
+    player->add<ComponentModel>("assets/models3D/Among_Us_red.obj", raylib::Vector3(-5.0f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
     player->add<ComponentTexture>("assets/models3D/AmongUsTrsp.png", raylib::Vector2(160.0f, 330.0f), raylib::Vector2(255.0f, 820.0f));
     player->add<ComponentControllable>();
     ecs::IEntity *player2 = new ecs::IEntity();
     player2->add<ComponentDrawable>(true, false);
-    player2->add<ComponentModel>("assets/models3D/Among_Us_.obj", raylib::Vector3(-1.7f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
+    player2->add<ComponentModel>("assets/models3D/Among_Us_blue.obj", raylib::Vector3(-1.7f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
     player2->add<ComponentTexture>("assets/models3D/AmongUsTrsp.png", raylib::Vector2(580.0f, 330.0f), raylib::Vector2(675.0f, 820.0f));
     player2->add<ComponentControllable>();
     ecs::IEntity *player3 = new ecs::IEntity();
     player3->add<ComponentDrawable>(true, false);
-    player3->add<ComponentModel>("assets/models3D/Among_Us_.obj", raylib::Vector3(1.55f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
+    player3->add<ComponentModel>("assets/models3D/Among_Us_black.obj", raylib::Vector3(1.55f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
     player3->add<ComponentTexture>("assets/models3D/AmongUsTrsp.png", raylib::Vector2(1000.0f, 330.0f), raylib::Vector2(1095.0f, 820.0f));
     player3->add<ComponentControllable>();
     ecs::IEntity *player4 = new ecs::IEntity();
     player4->add<ComponentDrawable>(true, false);
-    player4->add<ComponentModel>("assets/models3D/Among_Us_.obj", raylib::Vector3(4.8f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
+    player4->add<ComponentModel>("assets/models3D/Among_Us_white.obj", raylib::Vector3(4.8f, -1.0f, 0.5f), raylib::Vector3(0.7f, 0.7f, 0.7f));
     player4->add<ComponentTexture>("assets/models3D/AmongUsTrsp.png", raylib::Vector2(1420.0f, 330.0f), raylib::Vector2(1515.0f, 820.0f));
     player4->add<ComponentControllable>();
     ecs::IEntity *scanner = new ecs::IEntity();
@@ -92,8 +92,9 @@ ecs::Core initConnectPlayers()
     return (connect);
 }
 
-ecs::Scenes connectPlayers()
+ecs::Scenes connectPlayers(std::vector<int> &idControllers)
 {
+    idControllers.clear();
     ecs::Core connect = initConnectPlayers();
     raylib::Camera3D camera(raylib::Vector3(0.0f, 3.0f, 10.0f), raylib::Vector3(0.0f, 0.0f, 0.0f), raylib::Vector3(0.0f, 1.0f, 0.0f), 45.0f);
 
@@ -108,5 +109,9 @@ ecs::Scenes connectPlayers()
         camera.EndMode();
         raylib::Window::EndDrawing();
     }
-    return (connect.getScene()); // récupérer aussi les assignements des manettes et les joueurs qui correspondent
+    for (auto *it : connect.getEntities()) {
+        if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() != -1)
+            idControllers.push_back(it->get<ComponentControllable>()->getGamepadId());
+    }
+    return (connect.getScene());
 }

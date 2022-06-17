@@ -150,7 +150,7 @@ namespace ecs
                 if (isClicking(buttonTmp) == true && i == 0) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
-                        core.setScene(ecs::Scenes::Game);
+                        core.setScene(ecs::Scenes::ConnectPlayers);
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 1) {
@@ -180,7 +180,7 @@ namespace ecs
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                         if (it->get<ComponentButton>()->getIdButton() == 0) {
-                            core.setScene(ecs::Scenes::Game);
+                            core.setScene(ecs::Scenes::ConnectPlayers);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
@@ -208,7 +208,8 @@ namespace ecs
                 _handleButtonsMoveUpDown(core, -1);
             }
         }
-        _handleMouseMenu(core);
+        // } else
+        // _handleMouseMenu(core);
     }
 
     void SystemEvent::_connectingPlayers(ecs::Core &core)
@@ -352,15 +353,13 @@ namespace ecs
     {
         raylib::Gamepad::gamepadNumber = 3;
         _detectNbControllers();
-        if (core.getScene() == ecs::Scenes::Menu)
-            handleControllersMenu(core);
-        if (core.getScene() == ecs::Scenes::ConnectPlayers)
-            handleControllersConnectPlayers(core);
-        if (core.getScene() == ecs::Scenes::Game)
-            handleControllersGame(core);
-        if (core.getScene() == ecs::Scenes::GameSettings)
-            handleControllersGameSettings(core);
-        if (core.getScene() == ecs::Scenes::Win)
-            handleControllersWin(core);
+        switch (core.getScene()) {
+            case ecs::Scenes::Menu: handleControllersMenu(core); break;
+            case ecs::Scenes::ConnectPlayers: handleControllersConnectPlayers(core); break;
+            case ecs::Scenes::Game: handleControllersGame(core); break;
+            case ecs::Scenes::GameSettings: handleControllersGameSettings(core); break;
+            case ecs::Scenes::Win: handleControllersWin(core); break;
+            default: break;
+        }
     }
 } // namespace ecs

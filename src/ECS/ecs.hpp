@@ -19,6 +19,7 @@
 #include "Components/ComponentKillable.hpp"
 #include "Components/ComponentKills.hpp"
 #include "Components/ComponentMesh.hpp"
+#include "Components/ComponentModel.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentRectangle.hpp"

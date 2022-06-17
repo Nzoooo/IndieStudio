@@ -13,14 +13,16 @@ namespace ecs
     {
         for (auto *e : core.getEntities()) {
             if (e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable2D()) {
-                if (e->has<ComponentButton>())
-                    e->get<ComponentButton>()->Draw();
                 if (e->has<ComponentRectangle>())
                     e->get<ComponentRectangle>()->Draw();
                 if (e->has<ComponentText>())
                     e->get<ComponentText>()->Draw();
                 if (e->has<ComponentTexture>())
                     e->get<ComponentTexture>()->Draw();
+                if (e->has<ComponentButton>())
+                    e->get<ComponentButton>()->Draw();
+                if (e->has<ComponentText>())
+                    e->get<ComponentText>()->Draw();
             }
         }
     }

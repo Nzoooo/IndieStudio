@@ -41,6 +41,10 @@ namespace raylib
         static void Clear(Color color);
         static void SetFullScreen();
         static void ClearFullScreen();
+        static void InitAudioDevice();
+        static void CloseAudioDevice();
+        static bool IsAudioDeviceReady();
+        static void SetMasterVolume(float volume);
 
       protected:
       private:

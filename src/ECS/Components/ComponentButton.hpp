@@ -18,7 +18,7 @@
 
 class ComponentButton : public ecs::IComponent {
   public:
-    ComponentButton(raylib::Vector2 pos, std::string buttonText);
+    ComponentButton(raylib::Vector2 pos, std::string buttonText, raylib::Vector2 posText = {-1.0f, -1.0f}, float fontSize = 40.0f);
     ~ComponentButton();
 
     void Draw();
@@ -33,11 +33,13 @@ class ComponentButton : public ecs::IComponent {
 
   private:
     raylib::Font _font;
+    float _fontSize;
     raylib::Rectangle *_rectangleActive;
     raylib::Rectangle *_rectangleUnactive;
     raylib::Texture _texture;
     raylib::Vector2 _pos;
     std::string _text;
+    raylib::Vector2 _posText;
     bool _isActive = false;
     int _idButton;
 };

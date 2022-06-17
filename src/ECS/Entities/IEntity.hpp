@@ -19,6 +19,10 @@ namespace ecs
         std::vector<ecs::IComponent *> _components;
 
       public:
+        IEntity()
+        {
+            _components = {0};
+        }
         ~IEntity();
         std::vector<ecs::IComponent *> &getAllComponents();
         template <typename T> T *get();

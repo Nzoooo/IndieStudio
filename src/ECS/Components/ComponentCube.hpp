@@ -29,8 +29,8 @@ class ComponentCube : public ecs::IComponent {
 
     void Draw();
 
-    raylib::Vector3 _posTmp;
     raylib::Vector3 _pos;
+    raylib::Vector3 _posTmp;
 
   private:
     raylib::Vector3 _size;

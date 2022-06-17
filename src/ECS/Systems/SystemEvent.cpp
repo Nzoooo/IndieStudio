@@ -226,13 +226,16 @@ namespace ecs
                 for (auto *it : index.getEntities()) {
                     // && it->get<ComponentControllable>()->getGamepadId() == i
                     if (it->has<ComponentControllable>()) {
-                        raylib::Vector3 pos(it->get<ComponentCube>()->getPos());
-                        raylib::Vector3 size(it->get<ComponentCube>()->getSize());
-                        std::cout << "manette haut" << std::endl;
                         if (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) < 0) {
+                            std::cout << "manette haut" << std::endl;
                             if (!it->get<ComponentCollider>()->getVector(ComponentCollider::NORTH)) {
                                 std::cout << "je move" << std::endl;
-                                it->get<ComponentCube>()->_posTmp = pos;
+                                std::cout << "le bool north = " << it->get<ComponentCollider>()->getVector(ComponentCollider::NORTH) << std::endl;
+                                std::cout << "le bool east = " << it->get<ComponentCollider>()->getVector(ComponentCollider::EAST) << std::endl;
+                                std::cout << "le bool south = " << it->get<ComponentCollider>()->getVector(ComponentCollider::SOUTH) << std::endl;
+                                std::cout << "le bool west = " << it->get<ComponentCollider>()->getVector(ComponentCollider::WEST) << std::endl;
+                                std::cout << "je suis en " << it->get<ComponentCube>()->_posTmp.x << "x et " << it->get<ComponentCube>()->_posTmp.z << "z" << std::endl;
+                                it->get<ComponentCube>()->_pos.z -= 0.02f;
                                 // it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::LEFT);
                             }
                             // it->get<ComponentCollider>()->setCollision(raylib::BoundingBox(

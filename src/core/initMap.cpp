@@ -7,6 +7,7 @@
 
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
+#include "load/load.hpp"
 
 static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh)
 {
@@ -79,6 +80,14 @@ ecs::Core mapCreation(ecs::GameStartMode start_mode)
             }
             initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
             initial.z += 1.0f;
+        }
+    } else if (start_mode == ecs::GameStartMode::Load) {
+        Load loader;
+        ecs::Core loaded_core = loader.loadFile();
+        int i = 0;
+        for (auto entity : loaded_core.getEntities()) {
+            mapCreation.addEntity(entity);
+            std::cout << i++ << std::endl;
         }
     }
     return (mapCreation);

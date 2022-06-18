@@ -16,8 +16,8 @@
 
 class ComponentModel : public ecs::IComponent {
   public:
-    ComponentModel(std::string modelPath, raylib::Vector3 pos, raylib::Vector3 scale = {1.0f, 1.0f, 1.0f}, std::string animPath = "", unsigned int animCount = 0, float rotateAngle = 180.0f,
-        raylib::Vector3 rotateAxis = {0.0f, 1.0f, 0.0f});
+    ComponentModel(std::string modelPath, raylib::Vector3 pos, raylib::Vector3 scale = {1.0f, 1.0f, 1.0f}, std::string animPath = "",
+        unsigned int animCount = 0, float rotateAngle = 180.0f, raylib::Vector3 rotateAxis = {0.0f, 1.0f, 0.0f});
     ~ComponentModel();
 
     void Draw();

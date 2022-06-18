@@ -8,7 +8,8 @@
 #include "ComponentModel.hpp"
 #include <iostream>
 
-ComponentModel::ComponentModel(std::string modelPath, raylib::Vector3 pos, raylib::Vector3 scale, std::string animPath, unsigned int animCount, float rotateAngle, raylib::Vector3 rotateAxis)
+ComponentModel::ComponentModel(std::string modelPath, raylib::Vector3 pos, raylib::Vector3 scale, std::string animPath, unsigned int animCount,
+    float rotateAngle, raylib::Vector3 rotateAxis)
     : _animFrameCounter(0)
 {
     _model.Load(modelPath);

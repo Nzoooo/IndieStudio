@@ -46,27 +46,27 @@ ecs::Core mapCreation()
 
     ecs::IEntity *Floor;
     raylib::Vector3 posFloor = {0.0f, -0.01f, 0.0f};
-    raylib::Vector3 sizeFloor = {MAP_SIZE*3, 0.1f, MAP_SIZE*3};
+    raylib::Vector3 sizeFloor = {MAP_SIZE * 3, 0.1f, MAP_SIZE * 3};
     Floor = meshEntityCreation(posFloor, sizeFloor, raylib::Color::White(), backgroundTex);
 
     ecs::IEntity *Floor2;
-    raylib::Vector3 posFloor2 = {0.0f, (MAP_SIZE*3)/2, (MAP_SIZE*3)/2};
-    raylib::Vector3 sizeFloor2 = {MAP_SIZE*3, MAP_SIZE*3, 0.1f};
+    raylib::Vector3 posFloor2 = {0.0f, (MAP_SIZE * 3) / 2, (MAP_SIZE * 3) / 2};
+    raylib::Vector3 sizeFloor2 = {MAP_SIZE * 3, MAP_SIZE * 3, 0.1f};
     Floor2 = meshEntityCreation(posFloor2, sizeFloor2, raylib::Color::White(), backgroundTex);
 
     ecs::IEntity *Floor3;
-    raylib::Vector3 posFloor3 = {(-MAP_SIZE*3)/2, (MAP_SIZE*3)/2, 0.0f};
-    raylib::Vector3 sizeFloor3 = {0.5f, MAP_SIZE*3, MAP_SIZE*3};
+    raylib::Vector3 posFloor3 = {(-MAP_SIZE * 3) / 2, (MAP_SIZE * 3) / 2, 0.0f};
+    raylib::Vector3 sizeFloor3 = {0.5f, MAP_SIZE * 3, MAP_SIZE * 3};
     Floor3 = meshEntityCreation(posFloor3, sizeFloor3, raylib::Color::White(), backgroundTex);
 
     ecs::IEntity *Floor4;
-    raylib::Vector3 posFloor4 = {(MAP_SIZE*3)/2, (MAP_SIZE*3)/2, 0.0f};
-    raylib::Vector3 sizeFloor4 = {0.5f, MAP_SIZE*3, MAP_SIZE*3};
+    raylib::Vector3 posFloor4 = {(MAP_SIZE * 3) / 2, (MAP_SIZE * 3) / 2, 0.0f};
+    raylib::Vector3 sizeFloor4 = {0.5f, MAP_SIZE * 3, MAP_SIZE * 3};
     Floor4 = meshEntityCreation(posFloor4, sizeFloor4, raylib::Color::White(), backgroundTex);
 
     ecs::IEntity *Floor5;
-    raylib::Vector3 posFloor5 = {0.0f, (MAP_SIZE*3)/2, -((MAP_SIZE*3)/2)};
-    raylib::Vector3 sizeFloor5 = {MAP_SIZE*3, MAP_SIZE*3, 0.1f};
+    raylib::Vector3 posFloor5 = {0.0f, (MAP_SIZE * 3) / 2, -((MAP_SIZE * 3) / 2)};
+    raylib::Vector3 sizeFloor5 = {MAP_SIZE * 3, MAP_SIZE * 3, 0.1f};
     Floor5 = meshEntityCreation(posFloor5, sizeFloor5, raylib::Color::White(), backgroundTex);
 
     ecs::IEntity *mesh1;

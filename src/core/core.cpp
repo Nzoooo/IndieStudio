@@ -68,7 +68,9 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             camera.BeginMode();
+            displayInformations(core);
             core.get<ecs::SystemRender3D>()->update(core);
+            core.get<ecs::SystemRender2D>()->update(core);
             camera.EndMode();
             raylib::Window::EndDrawing();
         }

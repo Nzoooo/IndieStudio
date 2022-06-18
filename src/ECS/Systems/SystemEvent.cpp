@@ -228,8 +228,8 @@ namespace ecs
                     if (it->has<ComponentControllable>()) {
                         raylib::Vector3 pos(it->get<ComponentCube>()->getPos());
                         raylib::Vector3 size(it->get<ComponentCube>()->getSize());
-                        std::cout << "manette haut" << std::endl;
                         if (raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) < 0) {
+                            std::cout << "manette haut" << std::endl;
                             if (!it->get<ComponentCollider>()->getVector(ComponentCollider::NORTH)) {
                                 std::cout << "je move" << std::endl;
                                 it->get<ComponentCube>()->_posTmp = pos;

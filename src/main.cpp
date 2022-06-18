@@ -9,7 +9,6 @@
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
-#include "core/pauseMenu.hpp"
 #include "map/Map.hpp"
 
 static int mainLoop()
@@ -22,7 +21,6 @@ static int mainLoop()
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Pause: core.setScene(pauseMenu()); break;
             case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;

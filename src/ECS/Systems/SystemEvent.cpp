@@ -339,7 +339,7 @@ namespace ecs
                 } else if (isClicking(*buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
+                        core.setScene(ecs::Scenes::Menu);
                 } else if (isClicking(*buttonTmp) == true && i == 3) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
@@ -378,9 +378,15 @@ namespace ecs
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
     {
+        raylib::Mouse mouseIndex;
+
+        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+            core.setScene(ecs::Scenes::Pause);
+            return;
+        }
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(core, i)) {
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleRight())) {
+                if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonMiddleRight())) {
                     core.setScene(ecs::Scenes::Pause);
                     return;
                 }

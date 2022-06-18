@@ -6,6 +6,7 @@
 */
 
 #include "core.hpp"
+#include "core/pauseMenu.hpp"
 #include "information/info.hpp"
 #include "initMap.hpp"
 
@@ -38,7 +39,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
 
     initInformations(core);
     camera.SetMode(CAMERA_ORBITAL);
-    while (!WindowShouldClose() && core.getScene() == ecs::Scenes::Game) {
+    while (1) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
@@ -65,6 +66,10 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
                 camera.position.x += 0.13f / 2;
                 step = true;
             }
+            if (core.getScene() == ecs::Scenes::Pause)
+                core.setScene(pauseMenu());
+            if (core.getScene() != ecs::Scenes::Game && core.getScene() != ecs::Scenes::Pause)
+                break;
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             if (step == true && camera.position.y >= 12.5f)

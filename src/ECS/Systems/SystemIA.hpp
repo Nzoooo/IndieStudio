@@ -8,10 +8,11 @@
 #pragma once
 
 #include "ecs.hpp"
+#include <chrono>
 
 class SystemIA : public ecs::ISystem {
     public:
-        SystemIA(ecs::Core &core, int posX, int posY);
+        SystemIA(ecs::Core &core, std::string modelPath, raylib::Vector3 pos);
         SystemIA(const SystemIA &other) = delete;
         ~SystemIA();
         SystemIA &operator=(const SystemIA &other) = delete;

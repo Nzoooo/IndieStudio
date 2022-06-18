@@ -9,16 +9,16 @@
 #include <algorithm>
 #include <experimental/random>
 
-SystemIA::SystemIA(ecs::Core &core, int posX, int posY) : _ia(new ecs::IEntity), _core(core)
+SystemIA::SystemIA(ecs::Core &core, std::string modelPath, raylib::Vector3 pos) : _ia(new ecs::IEntity), _core(core)
 {
-    if (checkCollisionAt(posX - 1, posY - 1) || checkCollisionAt(posX + 1, posY - 1))
-        _ia->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 0.1);
-    if (checkCollisionAt(posX - 1, posY + 1) || checkCollisionAt(posX + 1, posY + 1))
-        _ia->add<ComponentMovable>(ComponentMovable::Direction::UP, 0.1);
+    _ia->add<ComponentMovable>(ComponentMovable::Direction::UP, 0.1);
     _ia->add<ComponentDrawable>(false, true);
     _ia->add<ComponentKillable>();
-    _ia->add<ComponentTransform>(50, 50, posX, posY);
+    _ia->add<ComponentModel>(modelPath, pos, raylib::Vector3(0.7f, 0.7f, 0.7f));
     _ia->add<ComponentCollider>();
+    _ia->add<ComponentKills>();
+    _ia->add<ComponentExplodable>();
+    _ia->add<ComponentBombs>(2);
     _blastRange = 1;
     _timeInBombRange = std::chrono::system_clock::now();
 }

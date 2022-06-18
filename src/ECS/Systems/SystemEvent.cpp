@@ -7,6 +7,7 @@
 
 #include "SystemEvent.hpp"
 #include <chrono>
+#include <cmath>
 #include "core/information/info.hpp"
 #include "raylib/include/Gamepad.hpp"
 
@@ -394,25 +395,36 @@ namespace ecs
             _handleMousePause(core);
     }
 
-    void SystemEvent::_handleMovementPlayers(ecs::IEntity *it, int idController)
+    void SystemEvent::_handleMovementPlayers(ecs::Core &core, ecs::IEntity *it, int idController)
     {
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) > 0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) > 0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::RIGHT);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::RIGHT);
         }
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) < -0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) < -0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::LEFT);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::LEFT);
         }
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) > 0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) > 0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::DOWN);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::DOWN);
         }
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) < -0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) < -0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::UP);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
         }
-        it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x
-                - raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) * it->get<ComponentMovable>()->getSpeed(),
-            it->get<ComponentModel>()->getPos().y,
-            it->get<ComponentModel>()->getPos().z
-                + raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) * it->get<ComponentMovable>()->getSpeed()));
+        float axis_x = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY());
+        float axis_z = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX());
+        it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x - axis_x * it->get<ComponentMovable>()->getSpeed(),
+            it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z + axis_z * it->get<ComponentMovable>()->getSpeed()));
+        raylib::BoundingBox box(
+            raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.3, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.3),
+            raylib::Vector3(
+                it->get<ComponentModel>()->getPos().x + 0.3, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.3));
+        if (SystemCollision::checkCollisions(box, core.getEntities())) {
+            it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x + axis_x * it->get<ComponentMovable>()->getSpeed(),
+                it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - axis_z * it->get<ComponentMovable>()->getSpeed()));
+        }
     }
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
@@ -431,7 +443,7 @@ namespace ecs
                 }
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i) {
-                        _handleMovementPlayers(it, i);
+                        _handleMovementPlayers(core, it, i);
                     }
                 }
 

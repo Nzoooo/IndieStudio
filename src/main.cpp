@@ -14,6 +14,7 @@
 static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
+    raylib::Window::SetFullScreen();
     ecs::Core core;
     std::vector<int> idControllers;
     core.setScene(ecs::Scenes::Menu);

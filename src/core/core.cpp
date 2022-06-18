@@ -72,10 +72,10 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
                 break;
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
+            camera.BeginMode();
             if (step == true && camera.position.y >= 12.5f)
                 core.get<ecs::SystemEvent>()->update(core);
             updateInformations(core);
-            camera.BeginMode();
             core.get<ecs::SystemRender3D>()->update(core);
             camera.EndMode();
             core.get<ecs::SystemRender2D>()->update(core);
@@ -86,7 +86,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             sec_clock = clock();
             avg_fps = (avg_fps + fps) / 2;
             // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
-            printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
+            // printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             fps = 0;
         }
     }

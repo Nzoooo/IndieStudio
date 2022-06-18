@@ -42,6 +42,6 @@ namespace ecs
         void _handleMouseMenu(ecs::Core &core);
         void _handleMouseConnectPlayer(ecs::Core &core);
         void _handleMousePause(ecs::Core &core);
-        void _handleMovementPlayers(ecs::IEntity *it, int idController);
+        void _handleMovementPlayers(ecs::Core &core, ecs::IEntity *it, int idController);
     };
 } // namespace ecs

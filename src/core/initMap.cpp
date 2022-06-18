@@ -9,12 +9,15 @@
 #include "ECS/ecs.hpp"
 #include "raylib/include/Texture.hpp"
 
-static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture)
+static ecs::IEntity *meshEntityCreation(
+    raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
 {
     ecs::IEntity *mesh = new ecs::IEntity();
 
     mesh->add<ComponentDrawable>(false, true);
     mesh->add<ComponentMesh>(posMesh, sizeMesh, color, texture);
+    if (hasCollider)
+        mesh->add<ComponentCollider>();
     return (mesh);
 }
 
@@ -85,32 +88,32 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     ecs::IEntity *FloorGame;
     raylib::Vector3 posFloorGame = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 sizeFloorGame = {MAP_SIZE, 0.1f, MAP_SIZE};
-    FloorGame = meshEntityCreation(posFloorGame, sizeFloorGame, raylib::Color::White(), floorTex);
+    FloorGame = meshEntityCreation(posFloorGame, sizeFloorGame, raylib::Color::White(), floorTex, false);
 
     ecs::IEntity *Floor;
     raylib::Vector3 posFloor = {0.0f, -0.01f, 0.0f};
     raylib::Vector3 sizeFloor = {MAP_SIZE * 3, 0.1f, MAP_SIZE * 3};
-    Floor = meshEntityCreation(posFloor, sizeFloor, raylib::Color::White(), backgroundTex);
+    Floor = meshEntityCreation(posFloor, sizeFloor, raylib::Color::White(), backgroundTex, false);
 
     ecs::IEntity *Floor2;
     raylib::Vector3 posFloor2 = {0.0f, (MAP_SIZE * 3) / 2, (MAP_SIZE * 3) / 2};
     raylib::Vector3 sizeFloor2 = {MAP_SIZE * 3, MAP_SIZE * 3, 0.1f};
-    Floor2 = meshEntityCreation(posFloor2, sizeFloor2, raylib::Color::White(), backgroundTex);
+    Floor2 = meshEntityCreation(posFloor2, sizeFloor2, raylib::Color::White(), backgroundTex, false);
 
     ecs::IEntity *Floor3;
     raylib::Vector3 posFloor3 = {(-MAP_SIZE * 3) / 2, (MAP_SIZE * 3) / 2, 0.0f};
     raylib::Vector3 sizeFloor3 = {0.5f, MAP_SIZE * 3, MAP_SIZE * 3};
-    Floor3 = meshEntityCreation(posFloor3, sizeFloor3, raylib::Color::White(), backgroundTex);
+    Floor3 = meshEntityCreation(posFloor3, sizeFloor3, raylib::Color::White(), backgroundTex, false);
 
     ecs::IEntity *Floor4;
     raylib::Vector3 posFloor4 = {(MAP_SIZE * 3) / 2, (MAP_SIZE * 3) / 2, 0.0f};
     raylib::Vector3 sizeFloor4 = {0.5f, MAP_SIZE * 3, MAP_SIZE * 3};
-    Floor4 = meshEntityCreation(posFloor4, sizeFloor4, raylib::Color::White(), backgroundTex);
+    Floor4 = meshEntityCreation(posFloor4, sizeFloor4, raylib::Color::White(), backgroundTex, false);
 
     ecs::IEntity *Floor5;
     raylib::Vector3 posFloor5 = {0.0f, (MAP_SIZE * 3) / 2, -((MAP_SIZE * 3) / 2)};
     raylib::Vector3 sizeFloor5 = {MAP_SIZE * 3, MAP_SIZE * 3, 0.1f};
-    Floor5 = meshEntityCreation(posFloor5, sizeFloor5, raylib::Color::White(), backgroundTex);
+    Floor5 = meshEntityCreation(posFloor5, sizeFloor5, raylib::Color::White(), backgroundTex, false);
 
     ecs::IEntity *mesh1;
     raylib::Vector3 posMesh = {0.0f, 0.5f, (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2};
@@ -167,11 +170,13 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
+                // cube->add<ComponentCollider>();
                 mapCreation.addEntity(cube);
             } else if (map->getMap()[i][j] == 1) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), blockTex);
+                cube->add<ComponentCollider>();
                 mapCreation.addEntity(cube);
             }
         }

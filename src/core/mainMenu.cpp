@@ -44,7 +44,6 @@ ecs::Scenes mainMenu()
 {
     ecs::Core menu = initMenu();
 
-    raylib::Window::SetFullScreen();
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());

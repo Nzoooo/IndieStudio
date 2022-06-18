@@ -29,6 +29,11 @@ static raylib::Color playersColor[4] = {
 static std::string playersIcon[4] = {
     "assets/64/black_among_us.png", "assets/64/white_among_us.png", "assets/64/red_among_us.png", "assets/64/blue_among_us.png"};
 
+/// Add the background of the informations
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @param raylib::Color Color of the background.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *createBackground(bool topBottom, bool leftRight, raylib::Color color)
 {
     ecs::IEntity *background = new ecs::IEntity();
@@ -50,6 +55,10 @@ static ecs::IEntity *createBackground(bool topBottom, bool leftRight, raylib::Co
     return (background);
 }
 
+/// Add the player icon to the informations.
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displayPlayerHeader(std::size_t count, bool topBottom, bool leftRight)
 {
     ecs::IEntity *entity = new ecs::IEntity();
@@ -73,6 +82,10 @@ static ecs::IEntity *displayPlayerHeader(std::size_t count, bool topBottom, bool
     return (entity);
 }
 
+/// Add the bot icon to the informations.
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displayBotIcon(bool topBottom, bool leftRight)
 {
     ecs::IEntity *botIcon = new ecs::IEntity();
@@ -94,6 +107,11 @@ static ecs::IEntity *displayBotIcon(bool topBottom, bool leftRight)
     return (botIcon);
 }
 
+/// Add the bomb text and icon to the informations.
+/// @param ecs::IEntity* Pointer to a new entity
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool leftRight)
 {
     ecs::IEntity *bomb = new ecs::IEntity();
@@ -121,6 +139,11 @@ static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool lef
     return (bomb);
 }
 
+/// Add the radius text and icon to the informations.
+/// @param ecs::IEntity* Pointer to a new entity
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool leftRight)
 {
     ecs::IEntity *radius = new ecs::IEntity();
@@ -147,6 +170,11 @@ static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool le
     return (radius);
 }
 
+/// Add the speed text and icon to the informations.
+/// @param ecs::IEntity* Pointer to a new entity
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool leftRight)
 {
     ecs::IEntity *speed = new ecs::IEntity();
@@ -173,6 +201,8 @@ static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool lef
     return (speed);
 }
 
+/// Display informations on the player (Nb bombs, radius of bombs, speed ...).
+/// @param &core Reference to the core to add the informations.
 void displayInformations(ecs::Core &core)
 {
     std::size_t count = 0;

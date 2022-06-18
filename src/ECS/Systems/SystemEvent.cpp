@@ -352,7 +352,46 @@ namespace ecs
 
     void SystemEvent::handleControllersPause(ecs::Core &core)
     {
-        _handleMousePause(core);
+        static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+
+        if (raylib::Gamepad::IsAvailable(0)) {
+            if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
+                for (auto *it : core.getEntities()) {
+                    if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
+                        if (it->get<ComponentButton>()->getIdButton() == 0) {
+                            core.setScene(ecs::Scenes::Game);
+                            return;
+                        }
+                        if (it->get<ComponentButton>()->getIdButton() == 1) {
+                            core.setScene(ecs::Scenes::Close);
+                            return;
+                        }
+                        if (it->get<ComponentButton>()->getIdButton() == 2) {
+                            core.setScene(ecs::Scenes::Menu);
+                            return;
+                        }
+                        if (it->get<ComponentButton>()->getIdButton() == 3) {
+                            core.setScene(ecs::Scenes::Close);
+                            return;
+                        }
+                        break;
+                    }
+                }
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, 1);
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, -1);
+            }
+        } else
+            _handleMousePause(core);
     }
 
     void SystemEvent::_handleMovementPlayers(ecs::IEntity *it, int idController)

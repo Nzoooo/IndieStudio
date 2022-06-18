@@ -20,6 +20,7 @@ class ComponentText : public ecs::IComponent {
         _font.Load(font);
     };
     ~ComponentText() = default;
+    void setText(std::string text);
 
     void Draw();
 

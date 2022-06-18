@@ -37,6 +37,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
     bool second = true;
     float step2 = (MAP_SIZE / 2) - 8;
 
+    initInformations(core);
     camera.SetMode(CAMERA_ORBITAL);
     while (running) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
@@ -69,9 +70,9 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             raylib::Window::Clear(raylib::Color::White());
             camera.BeginMode();
             core.get<ecs::SystemRender3D>()->update(core);
+            core.get<ecs::SystemEvent>()->update(core);
             camera.EndMode();
             core.get<ecs::SystemRender2D>()->update(core);
-            // displayInformations(core);
             raylib::Window::EndDrawing();
         }
 

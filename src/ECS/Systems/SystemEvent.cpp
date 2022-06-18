@@ -7,6 +7,7 @@
 
 #include "SystemEvent.hpp"
 #include <chrono>
+#include "core/information/info.hpp"
 #include "raylib/include/Gamepad.hpp"
 
 namespace ecs
@@ -401,6 +402,7 @@ namespace ecs
                 // std::cout << "GAMEPAD_AXIS_RIGHT_TRIGGER: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightTrigger()) << std::endl;
             }
         }
+        updateInformations(core);
     }
 
     void SystemEvent::handleControllersGameSettings(ecs::Core &core)

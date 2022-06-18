@@ -29,6 +29,8 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->get<ComponentControllable>()->setGamepadId(id);
     playerEntity->add<ComponentCollider>();
     playerEntity->add<ComponentKills>();
+    playerEntity->add<ComponentBombs>(2);
+    playerEntity->add<ComponentExplodable>(1, false);
     playerEntity->add<ComponentKillable>();
     playerEntity->add<ComponentMovable>(dir);
     mapCreation.addEntity(playerEntity);
@@ -141,6 +143,7 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
 
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.add<ecs::SystemRender2D>();
+    mapCreation.add<ecs::SystemEvent>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);

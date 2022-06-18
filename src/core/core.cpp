@@ -6,6 +6,7 @@
 */
 
 #include "core.hpp"
+#include "information/info.hpp"
 #include "initMap.hpp"
 
 double clockToMilliseconds(clock_t ticks)

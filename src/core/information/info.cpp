@@ -131,7 +131,7 @@ static ecs::IEntity *displayBombs(bool topBottom, bool leftRight)
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     bomb->add<ComponentTexture>("assets/16/boost_nb_bombs.png", iconPosition);
-    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
+    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0/0", textPosition, DETAILS_SIZE, raylib::Color::White());
     bomb->add<ComponentDrawable>(true, false);
     return (bomb);
 }

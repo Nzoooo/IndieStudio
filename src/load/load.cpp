@@ -23,12 +23,24 @@ ecs::IEntity *Load::loadEntity(std::ifstream &file)
         if (line == "\t}")
             break;
         line = removeTabs(line);
-        if (line == "ComponentMovable {")
-            addComponentMovable(file, entity);
-        if (line == "ComponentTransform {")
-            addComponentTransform(file, entity);
+        if (line == "ComponentClickable {")
+            addComponentClickable(file, entity);
+        if (line == "ComponentCollider {")
+            addComponentCollider(file, entity);
+        if (line == "ComponentDrawable {")
+            addComponentDrawable(file, entity);
+        if (line == "ComponentDroppable {")
+            addComponentDroppable(file, entity);
+        if (line == "ComponentExplodable {")
+            addComponentExplodable(file, entity);
         if (line == "ComponentKillable {")
             addComponentKillable(file, entity);
+        if (line == "ComponentMovable {")
+            addComponentMovable(file, entity);
+        if (line == "ComponentPickable {")
+            addComponentPickable(file, entity);
+        if (line == "ComponentTransform {")
+            addComponentTransform(file, entity);
     }
     return (entity);
 }
@@ -43,12 +55,12 @@ ecs::Core Load::loadFile(void)
     int checked_file = 0;
 
     if (stat(FILEPATH, &st) != 0)
-        throw /* Can't open file */;
+        throw std::exception();
     if (!file.is_open())
-        throw /* Can't open file */;
+        throw std::exception();
     while (getline(file, line)) {
         if (checked_file == 0 && std::to_string(st.st_mtime) != line)
-            throw /* File changed manually */;
+            throw std::exception();
         checked_file = 1;
         if (line == "Entities [") {
             while (getline(file, line)) {

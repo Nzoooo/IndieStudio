@@ -8,19 +8,28 @@
 #ifndef ECS_HPP_
 #define ECS_HPP_
 
+#include "Components/ComponentBombs.hpp"
 #include "Components/ComponentButton.hpp"
 #include "Components/ComponentClickable.hpp"
 #include "Components/ComponentCollider.hpp"
 #include "Components/ComponentControllable.hpp"
+#include "Components/ComponentCube.hpp"
 #include "Components/ComponentDrawable.hpp"
+#include "Components/ComponentDroppable.hpp"
 #include "Components/ComponentExplodable.hpp"
+#include "Components/ComponentHealth.hpp"
 #include "Components/ComponentKillable.hpp"
+#include "Components/ComponentKills.hpp"
+#include "Components/ComponentMesh.hpp"
+#include "Components/ComponentModel.hpp"
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentRectangle.hpp"
+#include "Components/ComponentSpeed.hpp"
 #include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
+#include "Components/ComponentTransparency.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemEvent.hpp"
@@ -30,7 +39,8 @@
 
 namespace ecs
 {
-    enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win, Close };
+    enum Scenes { Menu, ConnectPlayers, Pause, GameSettings, Game, Win, Close };
+
     class Core {
       private:
         std::vector<ecs::IEntity *> _entities;

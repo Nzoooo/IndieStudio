@@ -5,23 +5,41 @@
 ** main
 */
 
+#include "core/connectPlayers.hpp"
 #include "core/core.hpp"
+#include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
+#include "core/pauseMenu.hpp"
+#include "map/Map.hpp"
 
-int mainLoop(ecs::Core index)
+static int mainLoop()
 {
-    int res = 0;
+    raylib::Window::Init(1920, 1080);
+    ecs::Core core;
+    std::vector<int> idControllers;
+    core.setScene(ecs::Scenes::Menu);
 
+<<<<<<< HEAD
     while (res != -1) {
         switch (index.getScene()) {
             case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
             case ecs::Scenes::Game: res = coreLoop(index); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: break;
+=======
+    while (core.getScene() != ecs::Scenes::Win) {
+        switch (core.getScene()) {
+            case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
+            case ecs::Scenes::Pause: core.setScene(pauseMenu()); break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
+            case ecs::Scenes::GameSettings: break;
+            case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
+>>>>>>> origin
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }
     }
+    CloseWindow();
     return (0);
 }
 
@@ -29,8 +47,6 @@ int main(int argc, char **argv)
 {
     (void)argc;
     (void)argv;
-    ecs::Core index = initEntities();
-    index.setScene(ecs::Scenes::Menu);
-    mainLoop(index);
+    mainLoop();
     return 0;
 }

@@ -7,14 +7,16 @@
 
 #include "SystemRender2D.hpp"
 
-namespace ecs {
-    void SystemRender2D::update(ecs::Core &index)
+namespace ecs
+{
+    void SystemRender2D::update(ecs::Core &core)
     {
-        for (auto *e : index.getEntities()) {
-            if (e->has<ComponentDrawable>() &&
-                e->get<ComponentDrawable>()->getIsDrawable2D()) {
+        for (auto *e : core.getEntities()) {
+            if (e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable2D()) {
                 if (e->has<ComponentRectangle>())
                     e->get<ComponentRectangle>()->Draw();
+                if (e->has<ComponentText>())
+                    e->get<ComponentText>()->Draw();
                 if (e->has<ComponentTexture>())
                     e->get<ComponentTexture>()->Draw();
                 if (e->has<ComponentButton>())
@@ -22,4 +24,4 @@ namespace ecs {
             }
         }
     }
-}
+} // namespace ecs

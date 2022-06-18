@@ -7,20 +7,21 @@
 
 #pragma once
 
+#include "ECS/ecs.hpp"
 #include "ISystem.hpp"
-#include "../../core/core.hpp"
 
-namespace ecs {
+namespace ecs
+{
     class SystemRender2D : public ecs::ISystem {
-        public:
-            SystemRender2D() = default;
-            SystemRender2D(const SystemRender2D &other) = delete;
-            ~SystemRender2D() = default;
-            SystemRender2D &operator=(const SystemRender2D &other) = delete;
+      public:
+        SystemRender2D() = default;
+        SystemRender2D(const SystemRender2D &other) = delete;
+        ~SystemRender2D() = default;
+        SystemRender2D &operator=(const SystemRender2D &other) = delete;
 
-            void update(ecs::Core &index);
+        void update(ecs::Core &core);
 
-        protected:
-        private:
+      protected:
+      private:
     };
-}
+} // namespace ecs

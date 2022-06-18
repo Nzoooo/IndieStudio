@@ -10,13 +10,14 @@
 #include "IComponent.hpp"
 
 class ComponentControllable : public ecs::IComponent {
-    public:
-        ComponentControllable() = default;
-        ~ComponentControllable() = default;
+  public:
+    ComponentControllable() = default;
+    ~ComponentControllable() = default;
 
-        void setGamepadId(int gamepadNumber);
-        int getGamepadId();
-    protected:
-    private:
-        int _gamepadId = -1;
+    void setGamepadId(int gamepadNumber);
+    int getGamepadId();
+
+  protected:
+  private:
+    int _gamepadId = -1;
 };

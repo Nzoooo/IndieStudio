@@ -7,8 +7,8 @@
 
 #pragma once
 
+#include "ECS/ecs.hpp"
 #include "ISystem.hpp"
-#include "core/core.hpp"
 #include "raylib/include/Mouse.hpp"
 #include "raylib/include/Vector2.hpp"
 
@@ -21,21 +21,26 @@ namespace ecs
         ~SystemEvent() = default;
         SystemEvent &operator=(const SystemEvent &other) = delete;
 
-        void update(ecs::Core &index);
-        void handleControllersMenu(ecs::Core &index);
-        void handleControllersConnectPlayers(ecs::Core &index);
-        void handleControllersGame(ecs::Core &index);
-        void handleControllersGameSettings(ecs::Core &index);
-        void handleControllersWin(ecs::Core &index);
+        void update(ecs::Core &core);
+        void handleControllersMenu(ecs::Core &core);
+        void handleControllersPause(ecs::Core &core);
+        void handleControllersConnectPlayers(ecs::Core &core);
+        void handleControllersGame(ecs::Core &core);
+        void handleControllersGameSettings(ecs::Core &core);
+        void handleControllersWin(ecs::Core &core);
 
       protected:
       private:
         void _detectNbControllers();
-        bool _isControllerAssign(ecs::Core &index, int gamepadNumber);
-        void _assignController(ecs::Core &index, int gamepadNumber);
-        void _reassignControllers(ecs::Core &index, int gamepadNumber);
-        void _resetStateButtons(ecs::Core &index, int idButton);
-        void _handleButtonsMoveUpDown(ecs::Core &index, int upOrDown);
-        void _handleClickOnButtons(ecs::Core &index);
+        bool _isControllerAssign(ecs::Core &core, int gamepadNumber);
+        bool _assignController(ecs::Core &core, int gamepadNumber);
+        void _reassignControllers(ecs::Core &core);
+        int _nbControllersAssign(ecs::Core &core);
+        void _resetStateButtons(ecs::Core &core, int idButton);
+        void _handleButtonsMoveUpDown(ecs::Core &core, int upOrDown);
+        void _connectingPlayers(ecs::Core &core);
+        void _handleMouseMenu(ecs::Core &core);
+        void _handleMouseConnectPlayer(ecs::Core &core);
+        void _handleMousePause(ecs::Core &core);
     };
 } // namespace ecs

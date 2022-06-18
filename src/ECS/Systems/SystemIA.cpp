@@ -6,8 +6,10 @@
 */
 
 #include "SystemIA.hpp"
+#include <algorithm>
+#include <experimental/random>
 
-SystemIA::SystemIA(ecs::Core &core, int posX, int posY) : _ia(new ecs::IEntity), _core(&core)
+SystemIA::SystemIA(ecs::Core &core, int posX, int posY) : _ia(new ecs::IEntity), _core(core)
 {
     if (checkCollisionAt(posX - 1, posY - 1) || checkCollisionAt(posX + 1, posY - 1))
         _ia->add<ComponentMovable>(ComponentMovable::Direction::DOWN, 0.1);
@@ -18,6 +20,7 @@ SystemIA::SystemIA(ecs::Core &core, int posX, int posY) : _ia(new ecs::IEntity),
     _ia->add<ComponentTransform>(50, 50, posX, posY);
     _ia->add<ComponentCollider>();
     _blastRange = 1;
+    _timeInBombRange = std::chrono::system_clock::now();
 }
 
 SystemIA::~SystemIA()
@@ -28,7 +31,7 @@ SystemIA::~SystemIA()
 
 bool SystemIA::checkCollisionAt(int posX, int posY) const
 {
-    for (auto *e : _core->getEntities()) {
+    for (auto *e : _core.getEntities()) {
         if (e->has<ComponentTransform>() && e->has<ComponentCollider>() &&
             e->get<ComponentTransform>()->getPosX() == posX && e->get<ComponentTransform>()->getPosY() == posY) {
             return (true);
@@ -42,34 +45,112 @@ void SystemIA::udpdate()
     ecs::IEntity *bomb = nullptr;
 
     bomb = getBombInRange();
-    if (bomb)
-        setDirectionWithBomb(bomb);
-    if (isKillableBlockInRange())
-        // put bomb
-    move();
+    if (bomb) {
+        if ((std::chrono::system_clock::now() - _timeInBombRange) >= std::chrono::seconds(3))
+            _timeInBombRange = std::chrono::system_clock::now();
+    } else {
+        if (isKillableBlockInRange())
+            // put bomb
+            ;
+    }
+    move(bomb);
+}
+
+void SystemIA::move(ecs::IEntity *bomb)
+{
+    std::vector<ComponentMovable::Direction> possibleDirection;
+    ComponentMovable::Direction direction = _ia->get<ComponentMovable>()->getDirection();
+    float speed = _ia->get<ComponentMovable>()->getSpeed();
+
+    if (!bomb) {
+        if ((std::chrono::system_clock::now() - _timeInBombRange) >= std::chrono::seconds(3))
+            move();
+        return;
+    }
+    possibleDirection = getPossibleDirection(bomb);
+    _ia->get<ComponentMovable>()->setDirection(possibleDirection.at(std::experimental::randint(std::size_t(1), possibleDirection.size()) - 1));
 }
 
 void SystemIA::move()
 {
+    std::vector<ComponentMovable::Direction> possibleDirection;
     ComponentMovable::Direction direction = _ia->get<ComponentMovable>()->getDirection();
     float speed = _ia->get<ComponentMovable>()->getSpeed();
 
+    possibleDirection = getPossibleDirection();
     switch (direction) {
         case ComponentMovable::Direction::DOWN:
             if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX(), _ia->get<ComponentTransform>()->getPosY() + speed))
                 _ia->get<ComponentTransform>()->setPosY(_ia->get<ComponentTransform>()->getPosY() + speed);
+            else
+                _ia->get<ComponentMovable>()->setDirection(possibleDirection.at(std::experimental::randint(std::size_t(1), possibleDirection.size()) - 1));
             break;
         case ComponentMovable::Direction::UP:
             if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX(), _ia->get<ComponentTransform>()->getPosY() - speed))
                 _ia->get<ComponentTransform>()->setPosY(_ia->get<ComponentTransform>()->getPosY() - speed);
+            else
+                _ia->get<ComponentMovable>()->setDirection(possibleDirection.at(std::experimental::randint(std::size_t(1), possibleDirection.size()) - 1));
             break;
         case ComponentMovable::Direction::LEFT:
             if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX() - speed, _ia->get<ComponentTransform>()->getPosY()))
                 _ia->get<ComponentTransform>()->setPosX(_ia->get<ComponentTransform>()->getPosX() - speed);
+            else
+                _ia->get<ComponentMovable>()->setDirection(possibleDirection.at(std::experimental::randint(std::size_t(1), possibleDirection.size()) - 1));
             break;
         case ComponentMovable::Direction::RIGHT:
             if (!checkCollisionAt(_ia->get<ComponentTransform>()->getPosX() + speed, _ia->get<ComponentTransform>()->getPosY()))
                 _ia->get<ComponentTransform>()->setPosX(_ia->get<ComponentTransform>()->getPosX() + speed);
+            else
+                _ia->get<ComponentMovable>()->setDirection(possibleDirection.at(std::experimental::randint(std::size_t(1), possibleDirection.size()) - 1));
+            break;
+        default:
+            break;
+    }
+}
+
+std::vector<ComponentMovable::Direction> SystemIA::getPossibleDirection(ecs::IEntity *bomb)
+{
+    std::vector<ComponentMovable::Direction> possibleDirection = { ComponentMovable::Direction::DOWN, ComponentMovable::Direction::UP,
+                                                                    ComponentMovable::Direction::LEFT, ComponentMovable::Direction::RIGHT };
+    ComponentMovable::Direction direction = _ia->get<ComponentMovable>()->getDirection();
+    float speed = _ia->get<ComponentMovable>()->getSpeed();
+
+    if (bomb && std::find(possibleDirection.begin(), possibleDirection.end(), getDirectionOfTheBomb(bomb)) != possibleDirection.end()) {
+        auto it = std::find(possibleDirection.begin(), possibleDirection.end(), getDirectionOfTheBomb(bomb));
+        possibleDirection.erase(it);
+    }
+    switch (direction) {
+        case ComponentMovable::Direction::DOWN:
+            if (checkCollisionAt(_ia->get<ComponentTransform>()->getPosX(), _ia->get<ComponentTransform>()->getPosY() + speed)) {
+                if (std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::DOWN) != possibleDirection.end()) {
+                    auto it = std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::DOWN);
+                    possibleDirection.erase(it);
+                }
+            }
+            break;
+        case ComponentMovable::Direction::UP:
+            if (checkCollisionAt(_ia->get<ComponentTransform>()->getPosX(), _ia->get<ComponentTransform>()->getPosY() - speed)) {
+                if (std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::UP) != possibleDirection.end()) {
+                    auto it = std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::UP);
+                    possibleDirection.erase(it);
+                }
+            }
+            break;
+        case ComponentMovable::Direction::LEFT:
+            if (checkCollisionAt(_ia->get<ComponentTransform>()->getPosX() - speed, _ia->get<ComponentTransform>()->getPosY())) {
+                if (std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::LEFT) != possibleDirection.end()) {
+                    auto it = std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::LEFT);
+                    possibleDirection.erase(it);
+                }
+            }
+            break;
+        case ComponentMovable::Direction::RIGHT:
+            if (checkCollisionAt(_ia->get<ComponentTransform>()->getPosX() + speed, _ia->get<ComponentTransform>()->getPosY())) {
+                if (std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::LEFT) != possibleDirection.end()) {
+                    auto it = std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::LEFT);
+                    possibleDirection.erase(it);
+                }
+            }
             break;
         default:
             break;
@@ -78,7 +159,7 @@ void SystemIA::move()
 
 ecs::IEntity *SystemIA::getBombInRange()
 {
-    for (auto *e : _core->getEntities()) {
+    for (auto *e : _core.getEntities()) {
         if (e->has<ComponentExplodable>() && e->has<ComponentTransform>() && e->has<ComponentDroppable>()) {
             if ((e->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() &&
                 abs(e->get<ComponentTransform>()->getPosY() - _ia->get<ComponentTransform>()->getPosY()) <= e->get<ComponentExplodable>()->getBlastRange()) ||
@@ -90,32 +171,33 @@ ecs::IEntity *SystemIA::getBombInRange()
     return (nullptr);
 }
 
-void SystemIA::setDirectionWithBomb(ecs::IEntity *bomb)
+ComponentMovable::Direction SystemIA::getDirectionOfTheBomb(ecs::IEntity *bomb)
 {
     if (!bomb->has<ComponentTransform>())
-        return;
+        return (_ia->get<ComponentMovable>()->getDirection());
     if (bomb->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX()) {
         if (bomb->get<ComponentTransform>()->getPosY() - _ia->get<ComponentTransform>()->getPosY() >= 0) {
-            _ia->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
+            return (ComponentMovable::Direction::UP);
         }
         if (bomb->get<ComponentTransform>()->getPosY() - _ia->get<ComponentTransform>()->getPosY() < 0) {
-            _ia->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::DOWN);
+            return (ComponentMovable::Direction::DOWN);
         }
     } else {
         if (bomb->get<ComponentTransform>()->getPosX() - _ia->get<ComponentTransform>()->getPosX() >= 0) {
-            _ia->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::LEFT);
+            return (ComponentMovable::Direction::LEFT);
         }
         if (bomb->get<ComponentTransform>()->getPosX() - _ia->get<ComponentTransform>()->getPosX() < 0) {
-            _ia->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::RIGHT);
+            return (ComponentMovable::Direction::RIGHT);
         }
     }
+    return (_ia->get<ComponentMovable>()->getDirection());
 }
 
 bool SystemIA::isKillableBlockInRange() const
 {
     float speed = _ia->get<ComponentMovable>()->getSpeed();
 
-    for (auto *b : _core->getEntities()) {
+    for (auto *b : _core.getEntities()) {
         if (b->has<ComponentKillable>() && b->has<ComponentTransform>() && b->has<ComponentCollider>()) {
             if (b->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() && b->get<ComponentTransform>()->getPosY() == _ia->get<ComponentTransform>()->getPosY() + speed ||
                 b->get<ComponentTransform>()->getPosX() == _ia->get<ComponentTransform>()->getPosX() && b->get<ComponentTransform>()->getPosY() == _ia->get<ComponentTransform>()->getPosY() - speed ||

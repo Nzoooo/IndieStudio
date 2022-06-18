@@ -20,14 +20,17 @@ class SystemIA : public ecs::ISystem {
 
     protected:
     private:
-        ecs::Core *_core;
+        ecs::Core &_core;
         ecs::IEntity *_ia;
         int _blastRange;
+        std::chrono::time_point<std::chrono::system_clock> _timeInBombRange;
 
         ecs::IEntity *getBombInRange();
         bool isKillableBlockInRange() const;
-        void setDirectionWithBomb(ecs::IEntity *bomb);
+        ComponentMovable::Direction getDirectionOfTheBomb(ecs::IEntity *bomb);
+        std::vector<ComponentMovable::Direction> getPossibleDirection(ecs::IEntity *bomb = nullptr);
 
         void move();
+        void move(ecs::IEntity *bomb);
         bool checkCollisionAt(int posX, int posY) const;
 };

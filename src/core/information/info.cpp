@@ -20,10 +20,10 @@
 #define DETAILS_SIZE         26
 
 static raylib::Color playersColor[4] = {
-    raylib::Color::Black(),
-    raylib::Color::White(),
     raylib::Color::Red(),
     raylib::Color::Blue(),
+    raylib::Color::Black(),
+    raylib::Color::White(),
 };
 
 static std::string playersIcon[4] = {
@@ -108,11 +108,10 @@ static ecs::IEntity *displayBotIcon(bool topBottom, bool leftRight)
 }
 
 /// Add the bomb text and icon to the informations.
-/// @param ecs::IEntity* Pointer to a new entity
 /// @param bool Boolean if it has to be at the bottom or not.
 /// @param bool Boolean if it has to be at the right or not.
 /// @return ecs::IEntity* Pointer to the filled entity.
-static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool leftRight)
+static ecs::IEntity *displayBombs(bool topBottom, bool leftRight)
 {
     ecs::IEntity *bomb = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -132,19 +131,16 @@ static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool lef
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     bomb->add<ComponentTexture>("assets/16/boost_nb_bombs.png", iconPosition);
-    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf",
-        std::to_string(entity->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(entity->get<ComponentBombs>()->getNbMaxBombs()), textPosition,
-        DETAILS_SIZE, raylib::Color::White());
+    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
     bomb->add<ComponentDrawable>(true, false);
     return (bomb);
 }
 
 /// Add the radius text and icon to the informations.
-/// @param ecs::IEntity* Pointer to a new entity
 /// @param bool Boolean if it has to be at the bottom or not.
 /// @param bool Boolean if it has to be at the right or not.
 /// @return ecs::IEntity* Pointer to the filled entity.
-static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool leftRight)
+static ecs::IEntity *displayRadius(bool topBottom, bool leftRight)
 {
     ecs::IEntity *radius = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -164,18 +160,17 @@ static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool le
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     radius->add<ComponentTexture>("assets/16/boost_radius_bombs.png", iconPosition);
-    radius->add<ComponentText>("assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentExplodable>()->getBlastRange()), textPosition, DETAILS_SIZE,
-        raylib::Color::White());
+    radius->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
     radius->add<ComponentDrawable>(true, false);
     return (radius);
 }
 
 /// Add the speed text and icon to the informations.
-/// @param ecs::IEntity* Pointer to a new entity
+/// @param ecs::IEntity* Pointer to the player entity
 /// @param bool Boolean if it has to be at the bottom or not.
 /// @param bool Boolean if it has to be at the right or not.
 /// @return ecs::IEntity* Pointer to the filled entity.
-static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool leftRight)
+static ecs::IEntity *displaySpeed(bool topBottom, bool leftRight)
 {
     ecs::IEntity *speed = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -195,15 +190,38 @@ static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool lef
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     speed->add<ComponentTexture>("assets/16/boost_speed.png", iconPosition);
-    speed->add<ComponentText>(
-        "assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentSpeed>()->getSpeed()), textPosition, DETAILS_SIZE, raylib::Color::White());
+    speed->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
     speed->add<ComponentDrawable>(true, false);
     return (speed);
 }
 
+void updateInformations(ecs::Core &core)
+{
+    for (auto *player : core.getEntities()) {
+        if (player->has<ComponentKills>()) {
+            // It's a player/bot
+            for (auto *info : core.getEntities()) {
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_speed.png") {
+                    // It's entity of speed info
+                    info->get<ComponentText>()->setText(std::to_string(player->get<ComponentSpeed>()->getSpeed()));
+                }
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
+                    // It's entity of radius info
+                    info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
+                }
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
+                    // It's entity of radius info
+                    info->get<ComponentText>()->setText(
+                        std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));
+                }
+            }
+        }
+    }
+}
+
 /// Display informations on the player (Nb bombs, radius of bombs, speed ...).
 /// @param &core Reference to the core to add the informations.
-void displayInformations(ecs::Core &core)
+void initInformations(ecs::Core &core)
 {
     std::size_t count = 0;
     bool topBottom = false;
@@ -222,9 +240,9 @@ void displayInformations(ecs::Core &core)
                 // It's a bot
                 core.addEntity(displayBotIcon(topBottom, leftRight));
             }
-            core.addEntity(displayBombs(entity, topBottom, leftRight));
-            core.addEntity(displayRadius(entity, topBottom, leftRight));
-            core.addEntity(displaySpeed(entity, topBottom, leftRight));
+            core.addEntity(displayBombs(topBottom, leftRight));
+            core.addEntity(displayRadius(topBottom, leftRight));
+            core.addEntity(displaySpeed(topBottom, leftRight));
             count++;
         }
     }

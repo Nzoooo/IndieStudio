@@ -81,3 +81,14 @@ void ComponentModel::setRotateAngle(float rotateAngle)
 {
     _rotateAngle = rotateAngle;
 }
+
+void ComponentModel::setRotateAngle(ComponentMovable::Direction dir)
+{
+    switch (dir) {
+        case ComponentMovable::UP: setRotateAngle(270.0f); break;
+        case ComponentMovable::DOWN: setRotateAngle(90.0f); break;
+        case ComponentMovable::LEFT: setRotateAngle(0.0f); break;
+        case ComponentMovable::RIGHT: setRotateAngle(180.0f); break;
+        default: break;
+    }
+}

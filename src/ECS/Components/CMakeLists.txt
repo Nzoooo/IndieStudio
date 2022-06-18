@@ -5,7 +5,6 @@ set(SRC
     ${SRC}
     ${SRCROOT}/ComponentBombs.cpp
     ${SRCROOT}/ComponentButton.cpp
-    ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentDrawable.cpp
     ${SRCROOT}/ComponentExplodable.cpp
@@ -20,7 +19,6 @@ set(SRC
     ${SRCROOT}/ComponentMesh.cpp
     ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/ComponentModel.cpp
-    ${SRCROOT}/ComponentHealth.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

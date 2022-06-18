@@ -18,7 +18,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
-    ecs::Core core = mapCreation();
+    ecs::Core core = mapCreation(idControllers);
     int running = 1;
     int fps = 0;
     int avg_fps = FPS_CAP;
@@ -68,10 +68,10 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             camera.BeginMode();
-            displayInformations(core);
             core.get<ecs::SystemRender3D>()->update(core);
-            core.get<ecs::SystemRender2D>()->update(core);
             camera.EndMode();
+            core.get<ecs::SystemRender2D>()->update(core);
+            // displayInformations(core);
             raylib::Window::EndDrawing();
         }
 

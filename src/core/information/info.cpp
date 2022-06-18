@@ -209,9 +209,8 @@ void displayInformations(ecs::Core &core)
     bool topBottom = false;
     bool leftRight = false;
 
-    std::vector<ecs::IEntity *> entities = core.getEntities();
-    for (auto &entity : entities) {
-        if (entity->has<ComponentHealth>()) {
+    for (auto *entity : core.getEntities()) {
+        if (entity->has<ComponentKills>()) {
             // It's a player/bot
             topBottom = count / 2;
             leftRight = count % 2;

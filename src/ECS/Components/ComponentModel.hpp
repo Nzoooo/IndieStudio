@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include "ComponentMovable.hpp"
 #include "IComponent.hpp"
 #include "raylib/include/BoundingBox.hpp"
 #include "raylib/include/Color.hpp"
@@ -30,6 +31,7 @@ class ComponentModel : public ecs::IComponent {
     void setScale(raylib::Vector3 scale);
     void setRotateAxis(raylib::Vector3 rotateAxis);
     void setRotateAngle(float rotateAngle);
+    void setRotateAngle(ComponentMovable::Direction dir);
 
   protected:
   private:

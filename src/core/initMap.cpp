@@ -100,6 +100,7 @@ ecs::Core mapCreation()
     mesh4 = meshEntityCreation(posMesh4, sizeMesh4, raylib::Color::White(), wallTex);
 
     mapCreation.add<ecs::SystemRender3D>();
+    mapCreation.add<ecs::SystemRender2D>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);

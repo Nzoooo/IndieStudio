@@ -19,7 +19,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
     ecs::Core core = mapCreation(idControllers);
-    int running = 1;
     int fps = 0;
     int avg_fps = FPS_CAP;
     raylib::Camera3D camera;
@@ -38,7 +37,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
     float step2 = (MAP_SIZE / 2) - 8;
 
     camera.SetMode(CAMERA_ORBITAL);
-    while (running) {
+    while (!WindowShouldClose() && core.getScene() == ecs::Scenes::Game) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
@@ -85,5 +84,5 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             fps = 0;
         }
     }
-    return (ecs::Scenes::Menu);
+    return (core.getScene());
 }

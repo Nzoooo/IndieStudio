@@ -31,12 +31,41 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
     camera.up = initialCamUp;
     camera.fovy = 80.0f;
     camera.projection = CAMERA_PERSPECTIVE;
+    bool isOrbital = true;
+    bool step = false;
+    bool first = true;
+    bool second = true;
+    float step2 = (MAP_SIZE/2) - 8;
 
+    camera.SetMode(CAMERA_ORBITAL);
     while (running) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
 
+            camera.Update();
+
+            if ((fps) == 1 && isOrbital == true) {
+                camera.SetMode(CAMERA_CUSTOM);
+                isOrbital = false;
+            }
+            if (first == true && step == false && camera.position.x >= -11) {
+                camera.position.x -= 0.1f/2;
+            } else if (first == true && step == false && camera.position.x < -11) {
+                first = false;
+            }
+            if (second == true && step == false && first == false && camera.position.z <= step2) {
+                camera.position.z += 0.1f/2;
+                camera.position.x = -11;
+            } else if (second == true && step == false && first == false && camera.position.z > step2) {
+                second = false;
+            }
+            if (isOrbital == false && camera.position.y < 12.5f 
+            && first == false && second == false) {
+                camera.position.y += 0.09f/2;
+                camera.position.x += 0.13f/2;
+                step = true;
+            }
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             camera.BeginMode();

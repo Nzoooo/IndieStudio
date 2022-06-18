@@ -74,6 +74,7 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     Map *map = new Map;
     map->generateMap();
     ecs::Core mapCreation;
+    mapCreation.setScene(ecs::Scenes::Game);
     initGame(mapCreation, idControllers);
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
@@ -141,6 +142,7 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
 
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.add<ecs::SystemRender2D>();
+    mapCreation.add<ecs::SystemEvent>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);

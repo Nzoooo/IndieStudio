@@ -23,7 +23,6 @@
 #include "Components/ComponentMovable.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentRectangle.hpp"
-#include "Components/ComponentSpeed.hpp"
 #include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"

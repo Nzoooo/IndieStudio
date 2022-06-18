@@ -11,7 +11,6 @@ set(SRC
     ${SRCROOT}/ComponentKills.cpp
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentRectangle.cpp
-    ${SRCROOT}/ComponentSpeed.cpp
     ${SRCROOT}/ComponentText.cpp
     ${SRCROOT}/ComponentTexture.cpp
     ${SRCROOT}/ComponentTransform.cpp

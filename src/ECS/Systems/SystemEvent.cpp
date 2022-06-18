@@ -369,10 +369,11 @@ namespace ecs
         if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) < -0.4) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::UP);
         }
-        it->get<ComponentModel>()->setPos(
-            raylib::Vector3(it->get<ComponentModel>()->getPos().x - raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) * 0.03f,
-                it->get<ComponentModel>()->getPos().y,
-                it->get<ComponentModel>()->getPos().z + raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) * 0.03f));
+        it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x
+                - raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) * it->get<ComponentMovable>()->getSpeed(),
+            it->get<ComponentModel>()->getPos().y,
+            it->get<ComponentModel>()->getPos().z
+                + raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) * it->get<ComponentMovable>()->getSpeed()));
     }
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
@@ -434,7 +435,6 @@ namespace ecs
                 // std::cout << "GAMEPAD_AXIS_RIGHT_TRIGGER: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightTrigger()) << std::endl;
             }
         }
-        updateInformations(core);
     }
 
     void SystemEvent::handleControllersGameSettings(ecs::Core &core)

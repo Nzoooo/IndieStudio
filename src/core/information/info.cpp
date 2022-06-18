@@ -27,7 +27,7 @@ static raylib::Color playersColor[4] = {
 };
 
 static std::string playersIcon[4] = {
-    "assets/64/black_among_us.png", "assets/64/white_among_us.png", "assets/64/red_among_us.png", "assets/64/blue_among_us.png"};
+    "assets/64/red_among_us.png", "assets/64/blue_among_us.png", "assets/64/black_among_us.png", "assets/64/white_among_us.png"};
 
 /// Add the background of the informations
 /// @param bool Boolean if it has to be at the bottom or not.
@@ -203,13 +203,13 @@ void updateInformations(ecs::Core &core)
             for (auto *info : core.getEntities()) {
                 if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_speed.png") {
                     // It's entity of speed info
-                    info->get<ComponentText>()->setText(std::to_string(player->get<ComponentSpeed>()->getSpeed()));
+                    info->get<ComponentText>()->setText(std::to_string(static_cast<int>(player->get<ComponentMovable>()->getSpeed() / 0.03f)));
                 }
                 if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
                     // It's entity of radius info
                     info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
                 }
-                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_nb_bombs.png") {
                     // It's entity of radius info
                     info->get<ComponentText>()->setText(
                         std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));

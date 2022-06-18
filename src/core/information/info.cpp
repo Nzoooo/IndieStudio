@@ -181,7 +181,7 @@ void displayInformations(ecs::Core &core)
 
     std::vector<ecs::IEntity *> entities = core.getEntities();
     for (auto &entity : entities) {
-        if (entity->has<ComponentBombs>()) { //// Change to ComponentHealth
+        if (entity->has<ComponentHealth>()) {
             // It's a player/bot
             topBottom = count / 2;
             leftRight = count % 2;

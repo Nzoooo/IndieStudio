@@ -33,6 +33,7 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->add<ComponentExplodable>(1, false);
     playerEntity->add<ComponentKillable>();
     playerEntity->add<ComponentMovable>(dir);
+    playerEntity->add<ComponentExplodable>();
     mapCreation.addEntity(playerEntity);
 }
 

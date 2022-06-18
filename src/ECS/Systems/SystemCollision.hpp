@@ -8,15 +8,14 @@
 #ifndef SYSTEMCOLLISION_HPP_
 #define SYSTEMCOLLISION_HPP_
 
+#include "ECS/ecs.hpp"
 #include "ISystem.hpp"
-#include "core/core.hpp"
 
 namespace ecs
 {
-    typedef enum movement { DEFAULT, LEFT, RIGHT, UP, DOWN } movement;
-
     class SystemCollision : public ecs::ISystem {
       public:
+        enum movement { DEFAULT, LEFT, RIGHT, UP, DOWN };
         SystemCollision() = default;
         SystemCollision(const SystemCollision &other) = delete;
         ~SystemCollision() = default;

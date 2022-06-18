@@ -27,6 +27,7 @@
 #include "Components/ComponentTransparency.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
+#include "Systems/SystemCollision.hpp"
 #include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
 #include "Systems/SystemRender2D.hpp"

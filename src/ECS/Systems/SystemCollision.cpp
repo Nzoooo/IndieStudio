@@ -4,7 +4,6 @@
 ** File description:
 ** SystemCollision
 */
-
 #include "SystemCollision.hpp"
 #include "raylib/include/BoundingBox.hpp"
 #include "raylib/include/Gamepad.hpp"
@@ -151,16 +150,13 @@ namespace ecs
                 for (auto *at : index.getEntities()) {
                     if (at->get<ComponentCollider>() != it->get<ComponentCollider>()) {
                         it->get<ComponentCollider>()->setCollision(raylib::BoundingBox(
-                            raylib::Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2 - 0.1f), raylib::Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2)));
+                            raylib::Vector3(pos.x - size.x / 2, pos.y - size.y / 2, pos.z - size.z / 2 - 0.02f), raylib::Vector3(pos.x + size.x / 2, pos.y + size.y / 2, pos.z + size.z / 2)));
                         if (it->get<ComponentCollider>()->getCollision().checkCollision(at->get<ComponentCollider>()->getCollision())) {
+                            std::cout << "i touch" << std::endl;
                             it->get<ComponentCollider>()->add_vector(true);
-                            // std::cout << "i don't touch" << std::endl;
                             break;
                         } else {
-                            // std::cout << "i touch" << std::endl;
-                            it->get<ComponentMovable>()->setSpeed(0.001f);
-                            pos.x += 0.1f;
-                            it->get<ComponentCube>()->_posTmp = pos;
+                            std::cout << "i don't touch" << std::endl;
                             it->get<ComponentCollider>()->add_vector(false);
                         }
                     }

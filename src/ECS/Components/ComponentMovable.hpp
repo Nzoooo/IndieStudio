@@ -14,7 +14,7 @@
 class ComponentMovable : public ecs::IComponent {
   public:
     enum Direction { LEFT, RIGHT, UP, DOWN };
-    ComponentMovable(float speed = 0.1f) : _speed(speed){};
+    ComponentMovable(float speed = 0.02f) : _speed(speed){};
     ~ComponentMovable() = default;
 
     Direction getDirection() const;

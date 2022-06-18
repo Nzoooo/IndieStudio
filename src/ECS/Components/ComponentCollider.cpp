@@ -17,12 +17,19 @@ void ComponentCollider::setCollision(raylib::BoundingBox collision)
     _collision = collision;
 }
 
-void ComponentCollider::add_vector(bool direction)
+void ComponentCollider::add_vector(bool direct)
 {
-    _direction.push_back(direction);
+    _direction.at(0) = direct;
 }
 
-bool ComponentCollider::getVector(ComponentCollider::direction direct)
+bool ComponentCollider::getVector(ComponentCollider::side direct)
 {
     return (_direction.at(direct));
+}
+
+void ComponentCollider::clearVector()
+{
+    this->_direction.clear();
+
+    fill(_direction.begin(), _direction.end(), 0);
 }

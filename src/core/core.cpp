@@ -6,7 +6,6 @@
 */
 
 #include "core.hpp"
-#include "ECS/Systems/SystemCollision.hpp"
 #include "initMap.hpp"
 
 double clockToMilliseconds(clock_t ticks)
@@ -39,8 +38,6 @@ ecs::Scenes coreLoop()
 
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
-            index.get<ecs::SystemCollision>()->update(index);
-            index.get<ecs::SystemEvent>()->update(index);
             camera.BeginMode();
             index.get<ecs::SystemRender3D>()->update(index);
             camera.EndMode();
@@ -52,6 +49,10 @@ ecs::Scenes coreLoop()
             avg_fps = (avg_fps + fps) / 2;
             // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
             printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
+            raylib::Window::BeginDrawing();
+            index.get<ecs::SystemCollision>()->update(index);
+            index.get<ecs::SystemEvent>()->update(index);
+            raylib::Window::EndDrawing();
             fps = 0;
         }
     }

@@ -113,7 +113,6 @@ namespace ecs
         if (has<T>() == false)
             std::cout << "System not found" << std::endl;
         delete _systems[ecs::TemplateSystem<T>::getId()];
-        _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
 } // namespace ecs
 

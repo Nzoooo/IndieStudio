@@ -10,11 +10,10 @@
 #include "raylib/include/Texture.hpp"
 #include "raylib/include/Window.hpp"
 
-static std::vector<std::string> boostIcon = {
+std::vector<std::string> boostIcon = {
     "assets/16/boost_block_pass.png", "assets/16/boost_nb_bombs.png", "assets/16/boost_radius_bombs.png", "assets/16/boost_speed.png"};
 
-static ecs::IEntity *meshEntityCreation(
-    raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
+ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
 {
     ecs::IEntity *mesh = new ecs::IEntity();
 
@@ -25,7 +24,7 @@ static ecs::IEntity *meshEntityCreation(
     return (mesh);
 }
 
-static void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb)
+void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb)
 {
     ecs::IEntity *playerEntity = new ecs::IEntity();
 
@@ -43,9 +42,9 @@ static void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::
     mapCreation.addEntity(playerEntity);
 }
 
-static void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
+void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
 {
-    int &nbBomb = Settings[0];
+    int &nbBomb = Settings[1];
 
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {

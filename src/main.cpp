@@ -20,7 +20,7 @@ static int mainLoop()
     ecs::Core core;
     std::vector<int> idControllers;
     std::vector<int> settings;
-    settings.reserve(2);
+    settings.reserve(3);
     core.setScene(ecs::Scenes::Menu);
 
     while (core.getScene() != ecs::Scenes::Win) {

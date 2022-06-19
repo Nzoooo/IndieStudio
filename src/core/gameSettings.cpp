@@ -90,13 +90,23 @@ ecs::Scenes gameSettings(std::vector<int> &Settings)
         raylib::Window::EndDrawing();
     }
     menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Stop();
-    for (auto *it : menu.getEntities()) {
-        if (i == 3) {
+    for (auto *it : menu.getEntities())
+        if (i == 1 && it->has<ComponentText>()) {
             Settings[0] = std::stoi(it->get<ComponentText>()->getText());
-            break;
+            if (i == 2 && it->has<ComponentText>())
+                Settings[1] = std::stoi(it->get<ComponentText>()->getText());
+            if (i == 3 && it->has<ComponentText>()) {
+                if (it->get<ComponentText>()->getText().compare("yes") == 0)
+                    Settings[2] = 1;
+                else
+                    Settings[2] = 0;
+            }
+            if (it->has<ComponentButton>() && it->get<ComponentButton>()->getIdButton() == 0)
+                i = 1;
+            if (it->has<ComponentButton>() && it->get<ComponentButton>()->getIdButton() == 2)
+                i = 2;
+            if (it->has<ComponentButton>() && it->get<ComponentButton>()->getIdButton() == 4)
+                i = 3;
         }
-        if (it->has<ComponentButton>())
-            i++;
-    }
     return (menu.getScene());
 }

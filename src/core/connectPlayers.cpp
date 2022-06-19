@@ -70,10 +70,18 @@ ecs::Core initConnectPlayers()
     nothingToSelectButton->get<ComponentButton>()->setState(true);
     ecs::IEntity *startGameButton = createButton(connect, raylib::Vector2(1480.0f, 940.0f), "Start Game", raylib::Vector2(1540.0f, 975.0f));
     startGameButton->get<ComponentButton>()->setIdButton(-connect.getNbButtons() + 1);
+    ecs::IEntity *musicMenu = new ecs::IEntity();
+    musicMenu->add<ComponentMusic>("assets/audios/MusicMenu.mp3");
+    musicMenu->setLabel("MusicConnect");
+    musicMenu->get<ComponentMusic>()->getMusic().SetVolume(0.2f);
     ecs::IEntity *soundClick = new ecs::IEntity();
     soundClick->add<ComponentSound>("assets/audios/SoundClick.mp3");
     soundClick->setLabel("SoundClick");
-    soundClick->get<ComponentSound>()->getSound().SetVolume(0.5f);
+    soundClick->get<ComponentSound>()->getSound().SetVolume(1.0f);
+    ecs::IEntity *soundCharacterSelect = new ecs::IEntity();
+    soundCharacterSelect->add<ComponentSound>("assets/audios/SoundCharacterSelect.wav");
+    soundCharacterSelect->setLabel("SoundCharacterSelect");
+    soundCharacterSelect->get<ComponentSound>()->getSound().SetVolume(0.4f);
     connect.setScene(ecs::Scenes::ConnectPlayers);
 
     connect.add<ecs::SystemRender2D>();
@@ -93,7 +101,9 @@ ecs::Core initConnectPlayers()
     connect.addEntity(player2);
     connect.addEntity(player3);
     connect.addEntity(player4);
+    connect.addEntity(musicMenu);
     connect.addEntity(soundClick);
+    connect.addEntity(soundCharacterSelect);
     return (connect);
 }
 
@@ -103,7 +113,9 @@ ecs::Scenes connectPlayers(std::vector<int> &idControllers)
     ecs::Core connect = initConnectPlayers();
     raylib::Camera3D camera(raylib::Vector3(0.0f, 3.0f, 10.0f), raylib::Vector3(0.0f, 0.0f, 0.0f), raylib::Vector3(0.0f, 1.0f, 0.0f), 45.0f);
 
+    connect.getEntity("MusicConnect")->get<ComponentMusic>()->getMusic().Play();
     while (connect.getScene() == ecs::Scenes::ConnectPlayers) {
+        connect.getEntity("MusicConnect")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
         connect.get<ecs::SystemEvent>()->update(connect);
@@ -113,6 +125,7 @@ ecs::Scenes connectPlayers(std::vector<int> &idControllers)
         camera.EndMode();
         raylib::Window::EndDrawing();
     }
+    connect.getEntity("MusicConnect")->get<ComponentMusic>()->getMusic().Stop();
     for (auto *it : connect.getEntities()) {
         if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() != -1)
             idControllers.push_back(it->get<ComponentControllable>()->getGamepadId());

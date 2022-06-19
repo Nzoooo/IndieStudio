@@ -56,8 +56,12 @@ static ecs::Core initSettings()
     background->add<ComponentTexture>("assets/connectPlayers/bgConnectPlayers.png", raylib::Vector2(0, 0));
     ecs::IEntity *musicMenu = new ecs::IEntity();
     musicMenu->add<ComponentMusic>("assets/audios/MusicMenu.mp3");
-    musicMenu->setLabel("MusicMenu");
+    musicMenu->setLabel("MusicSettings");
     musicMenu->get<ComponentMusic>()->getMusic().SetVolume(0.2f);
+    ecs::IEntity *soundClick = new ecs::IEntity();
+    soundClick->add<ComponentSound>("assets/audios/SoundClick.mp3");
+    soundClick->setLabel("SoundClick");
+    soundClick->get<ComponentSound>()->getSound().SetVolume(1.0f);
     menu.setScene(ecs::Scenes::GameSettings);
 
     menu.add<ecs::SystemRender2D>();
@@ -74,6 +78,7 @@ static ecs::Core initSettings()
     menu.addEntity(startGameButton);
     menu.addEntity(goHomeButton);
     menu.addEntity(musicMenu);
+    menu.addEntity(soundClick);
     return (menu);
 }
 
@@ -81,18 +86,17 @@ ecs::Scenes gameSettings(std::vector<int> &Settings, std::vector<int> &idControl
 {
     ecs::Core menu = initSettings();
 
-    menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Play();
+    menu.getEntity("MusicSettings")->get<ComponentMusic>()->getMusic().Play();
     menu.get<ecs::SystemEvent>()->nbController = idControllers.size();
-    printf("nb controler = %d\n", menu.get<ecs::SystemEvent>()->nbController);
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::GameSettings) {
-        menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Update();
+        menu.getEntity("MusicSettings")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
         menu.get<ecs::SystemEvent>()->update(menu);
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
-    menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Stop();
+    menu.getEntity("MusicSettings")->get<ComponentMusic>()->getMusic().Stop();
     for (auto *it : menu.getEntities()) {
         if (it->has<ComponentText>() && it->get<ComponentText>()->getLabel().compare("nbBot") == 0)
             Settings[0] = std::stoi(it->get<ComponentText>()->getText());

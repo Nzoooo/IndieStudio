@@ -48,6 +48,8 @@ namespace ecs
                     it->get<ComponentTexture>()->setTexture("assets/connectPlayers/IconValidate.png");
                     it->get<ComponentTexture>()->setPos(it->get<ComponentTexture>()->getPos2());
                 }
+                if (core.getEntity("SoundCharacterSelect") != nullptr)
+                    core.getEntity("SoundCharacterSelect")->get<ComponentSound>()->getSound().PlayMulti();
                 return (true);
             }
         }
@@ -581,6 +583,8 @@ namespace ecs
                         if (nbBot < 4 - nbController)
                             nbBot++;
                         core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 1) {
@@ -590,6 +594,8 @@ namespace ecs
                         if (nbBot > 0)
                             nbBot--;
                         core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 2) {
@@ -597,6 +603,8 @@ namespace ecs
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
                         int nbBomb = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText()) + 1;
                         core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 3) {
@@ -606,6 +614,8 @@ namespace ecs
                         if (nbBomb > 1)
                             nbBomb--;
                         core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 4) {
@@ -615,6 +625,8 @@ namespace ecs
                             core.getEntity(j + 1)->get<ComponentText>()->setText("no");
                         else
                             core.getEntity(j + 1)->get<ComponentText>()->setText("yes");
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 5) {
@@ -633,46 +645,60 @@ namespace ecs
 
     void SystemEvent::handleControllersGameSettings(ecs::Core &core)
     {
-        size_t i = 0;
+        int i = 0;
         static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
 
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
-                for (size_t j = 0; i < core.getNbButtons(); j++) {
+                for (int j = 0; i < core.getNbButtons(); j++) {
                     if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->get<ComponentButton>()->getState()) {
                         if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 0) {
                             int nbBot = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText());
                             if (nbBot < 4 - nbController)
                                 nbBot++;
                             core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 1) {
                             int nbBot = std::stoi(core.getEntity(j - 1)->get<ComponentText>()->getText());
                             if (nbBot > 0)
                                 nbBot--;
                             core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 2) {
                             int nbBomb = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText()) + 1;
                             core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 3) {
                             int nbBomb = std::stoi(core.getEntity(j - 1)->get<ComponentText>()->getText());
                             if (nbBomb > 1)
                                 nbBomb--;
                             core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 4) {
                             if (core.getEntity(j + 1)->get<ComponentText>()->getText().compare("yes") == 0)
                                 core.getEntity(j + 1)->get<ComponentText>()->setText("no");
                             else
                                 core.getEntity(j + 1)->get<ComponentText>()->setText("yes");
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 5) {
                             core.setScene(ecs::Scenes::Game);
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 6) {
                             core.setScene(ecs::Scenes::ConnectPlayers);
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             return;
                         }
                         i++;

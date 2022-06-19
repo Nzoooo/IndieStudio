@@ -36,7 +36,7 @@ static ecs::Core initMenu()
     ecs::IEntity *soundClick = new ecs::IEntity();
     soundClick->add<ComponentSound>("assets/audios/SoundClick.mp3");
     soundClick->setLabel("SoundClick");
-    soundClick->get<ComponentSound>()->getSound().SetVolume(0.5f);
+    soundClick->get<ComponentSound>()->getSound().SetVolume(1.0f);
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();

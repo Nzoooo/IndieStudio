@@ -9,6 +9,7 @@
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
+#include "core/winMenu.hpp"
 #include "map/Map.hpp"
 
 static int mainLoop()
@@ -19,15 +20,16 @@ static int mainLoop()
     ecs::Core core;
     std::vector<int> idControllers;
     core.setScene(ecs::Scenes::Menu);
+    std::string winner;
 
-    while (core.getScene() != ecs::Scenes::Win) {
+    while (1) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, winner)); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
-            case ecs::Scenes::Win: break;
-            case ecs::Close: return (-1);
+            case ecs::Scenes::Win: core.setScene(winMenu(winner)); break;
+            case ecs::Close: break;
         }
     }
     raylib::Window::StopSounds();

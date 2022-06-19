@@ -31,6 +31,14 @@ static ecs::Core initMenu()
     ecs::IEntity *background = new ecs::IEntity();
     background->add<ComponentDrawable>(true, false);
     background->add<ComponentTexture>("assets/bgPause.png", raylib::Vector2(0, 0));
+    ecs::IEntity *musicPause = new ecs::IEntity();
+    musicPause->add<ComponentMusic>("assets/audios/MusicMenu.mp3");
+    musicPause->setLabel("MusicPause");
+    musicPause->get<ComponentMusic>()->getMusic().SetVolume(0.2f);
+    ecs::IEntity *soundClick = new ecs::IEntity();
+    soundClick->add<ComponentSound>("assets/audios/SoundClick.mp3");
+    soundClick->setLabel("SoundClick");
+    soundClick->get<ComponentSound>()->getSound().SetVolume(0.5f);
     menu.setScene(ecs::Scenes::Pause);
 
     menu.add<ecs::SystemRender2D>();
@@ -40,6 +48,8 @@ static ecs::Core initMenu()
     menu.addEntity(buttonSave);
     menu.addEntity(buttonBack);
     menu.addEntity(buttonExit);
+    menu.addEntity(musicPause);
+    menu.addEntity(soundClick);
     return (menu);
 }
 
@@ -47,12 +57,15 @@ ecs::Scenes pauseMenu()
 {
     ecs::Core menu = initMenu();
 
-    while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Pause) {
+    menu.getEntity("MusicPause")->get<ComponentMusic>()->getMusic().Play();
+    while (menu.getScene() == ecs::Scenes::Pause) {
+        menu.getEntity("MusicPause")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
         menu.get<ecs::SystemEvent>()->update(menu);
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
+    menu.getEntity("MusicPause")->get<ComponentMusic>()->getMusic().Stop();
     return (menu.getScene());
 }

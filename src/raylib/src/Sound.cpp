@@ -37,6 +37,11 @@ namespace raylib
         ::PlaySound(*this);
     }
 
+    void Sound::PlayMulti()
+    {
+        ::PlaySoundMulti(*this);
+    }
+
     void Sound::Resume()
     {
         ::ResumeSound(*this);

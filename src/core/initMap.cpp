@@ -10,11 +10,10 @@
 #include "raylib/include/Texture.hpp"
 #include "raylib/include/Window.hpp"
 
-static std::vector<std::string> boostIcon = {
+std::vector<std::string> boostIcon = {
     "assets/16/boost_block_pass.png", "assets/16/boost_nb_bombs.png", "assets/16/boost_radius_bombs.png", "assets/16/boost_speed.png"};
 
-static ecs::IEntity *meshEntityCreation(
-    raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
+ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
 {
     ecs::IEntity *mesh = new ecs::IEntity();
 
@@ -25,7 +24,7 @@ static ecs::IEntity *meshEntityCreation(
     return (mesh);
 }
 
-void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir)
+void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb)
 {
     ecs::IEntity *playerEntity = new ecs::IEntity();
 
@@ -36,10 +35,11 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->get<ComponentControllable>()->setGamepadId(id);
     playerEntity->add<ComponentCollider>();
     playerEntity->add<ComponentKills>();
-    playerEntity->add<ComponentBombs>(2);
+    playerEntity->add<ComponentBombs>(nbBomb);
     playerEntity->add<ComponentKillable>();
     playerEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     playerEntity->add<ComponentExplodable>();
+    playerEntity->setLabel("Player " + std::to_string(id));
     mapCreation.addEntity(playerEntity);
 }
 
@@ -78,23 +78,26 @@ void createVent(ecs::Core &mapCreation, raylib::Vector3 pos1, raylib::Vector3 po
     mapCreation.addEntity(ventEntity2);
 }
 
-void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
+void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
 {
+    int &nbBomb = Settings[1];
+
+    std::cout << nbBomb << std::endl;
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
                 createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
-                    ComponentMovable::DOWN);
+                    ComponentMovable::DOWN, nbBomb);
                 break;
             case 1:
                 createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
-                    ComponentMovable::DOWN);
+                    ComponentMovable::DOWN, nbBomb);
                 break;
             case 2:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
                 break;
             case 3:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
                 break;
             default: break;
         }
@@ -122,10 +125,20 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
     musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
     musicGame->setLabel("MusicGame");
     musicGame->get<ComponentMusic>()->getMusic().SetVolume(0.05f);
+    ecs::IEntity *soundBomb = new ecs::IEntity();
+    soundBomb->add<ComponentSound>("assets/audios/SoundBomb.mp3");
+    soundBomb->setLabel("SoundBomb");
+    soundBomb->get<ComponentSound>()->getSound().SetVolume(0.5f);
+    ecs::IEntity *soundDeath = new ecs::IEntity();
+    soundDeath->add<ComponentSound>("assets/audios/SoundDeath.mp3");
+    soundDeath->setLabel("SoundDeath");
+    soundDeath->get<ComponentSound>()->getSound().SetVolume(0.3f);
     mapCreation.addEntity(musicGame);
+    mapCreation.addEntity(soundBomb);
+    mapCreation.addEntity(soundDeath);
 }
 
-ecs::Core mapCreation(std::vector<int> &idControllers)
+ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings)
 {
     raylib::Texture floorTex;
     raylib::Texture wallTex;
@@ -143,7 +156,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     map->generateMap();
     ecs::Core mapCreation;
     mapCreation.setScene(ecs::Scenes::Game);
-    initGame(mapCreation, idControllers);
+    initGame(mapCreation, idControllers, Settings);
+
+    mapCreation.add<ecs::SystemExplosion>();
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
@@ -208,9 +223,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
     mesh4 = meshEntityCreation(posMesh4, sizeMesh4, raylib::Color::White(), wallTex);
 
+    mapCreation.add<ecs::SystemEvent>();
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.add<ecs::SystemRender2D>();
-    mapCreation.add<ecs::SystemEvent>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);
@@ -233,9 +248,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
             rand = std::rand() % (boostIcon.size() * 6);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
-                // cube->add<ComponentDrawable>(false, true);
+                cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
-                // cube->add<ComponentCollider>();
+                cube->add<ComponentCollider>();
                 cube->add<ComponentKillable>();
                 if (rand < boostIcon.size()) {
                     ecs::IEntity *boost = new ecs::IEntity();

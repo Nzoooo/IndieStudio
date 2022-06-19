@@ -637,7 +637,7 @@ namespace ecs
 
     void SystemEvent::handleControllersGameSettings(ecs::Core &core)
     {
-        std::size_t i = 0;
+        int i = 0;
         static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
 
         if (raylib::Gamepad::IsAvailable(0)) {

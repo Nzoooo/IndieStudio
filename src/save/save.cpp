@@ -53,10 +53,15 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
         ret = true;
     }
     if (entity.has<ComponentCollider>()) {
+        auto component_data = dynamic_cast<ComponentCollider *>(entity.get<ComponentCollider>());
         if (ret == false)
             _file << "\tEntity[" << i << "] {" << std::endl;
         _file << "\t\tComponentCollider {" << std::endl;
-        _file << "\t\t\tableToCollide: 1" << std::endl;
+        _file << "\t\t\tableToCollide: 1," << std::endl;
+        std::time_t t = std::chrono::system_clock::to_time_t(component_data->getTimeNonCollide());
+        std::string ts = std::ctime(&t);
+        ts.resize(ts.size() - 1);
+        _file << "\t\t\ttimeNonCollide: " << ts << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;
     }
@@ -79,7 +84,8 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
         _file << "\t\tComponentCube {" << std::endl;
         _file << "\t\t\tpos: " << component_data->getPos() << "," << std::endl;
         _file << "\t\t\tsize: " << component_data->getSize() << "," << std::endl;
-        _file << "\t\t\tcolor: " << component_data->getColor() << std::endl;
+        _file << "\t\t\tcolor: " << component_data->getColor() << "," << std::endl;
+        _file << "\t\t\ttexture: " << component_data->getTexturePath() << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;
     }
@@ -106,7 +112,7 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
         if (ret == false)
             _file << "\tEntity[" << i << "] {" << std::endl;
         _file << "\t\tComponentExplodable {" << std::endl;
-        _file << "\t\t\tblastRange: " << component_data->getBlastRange() << "," << std::endl;
+        _file << "\t\t\tblastRange: " << component_data->getBlastRange() << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;
     }
@@ -123,6 +129,7 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
         if (ret == false)
             _file << "\tEntity[" << i << "] {" << std::endl;
         _file << "\t\tComponentMovable {" << std::endl;
+        _file << "\t\t\tdir: " << component_data->getDirection() << "," << std::endl;
         _file << "\t\t\tspeed: " << component_data->getSpeed() << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;
@@ -141,6 +148,8 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
             _file << "\tEntity[" << i << "] {" << std::endl;
         _file << "\t\tComponentTexture {" << std::endl;
         _file << "\t\t\tpos: " << component_data->getPos() << "," << std::endl;
+        _file << "\t\t\tpos2: " << component_data->getPos2() << "," << std::endl;
+        _file << "\t\t\toldPos: " << component_data->getOldPos() << "," << std::endl;
         _file << "\t\t\ttexturePath: " << component_data->getPathOldTexture() << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;

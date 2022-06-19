@@ -51,6 +51,7 @@ void addComponentBombs(std::ifstream &file, ecs::IEntity *entity)
 void addComponentCollider(std::ifstream &file, ecs::IEntity *entity)
 {
     bool ableToCollide = std::stoi(getMember(file, "ableToCollide"));
+    std::string timeNonCollide = getMember(file, "timeNonCollide");
 
     try {
         if (ableToCollide)
@@ -151,10 +152,9 @@ void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
     ComponentMovable::Direction dir = static_cast<ComponentMovable::Direction>(stoi(getMember(file, "dir")));
     int speed = std::stoi(getMember(file, "speed"));
-    bool ableToMove = std::stoi(getMember(file, "ableToMove"));
 
     try {
-        entity->add<ComponentMovable>(dir, speed, ableToMove);
+        entity->add<ComponentMovable>(dir, speed);
     } catch (std::exception &e) {
         std::cout << "ComponentMovable not found" << std::endl;
     }
@@ -175,12 +175,16 @@ void addComponentPickable(std::ifstream &file, ecs::IEntity *entity)
 void addComponentTexture(std::ifstream &file, ecs::IEntity *entity)
 {
     std::string str_pos = getMember(file, "pos");
+    std::string str_pos2 = getMember(file, "pos2");
+    std::string str_oldPos = getMember(file, "oldPos");
     std::string texturePath = getMember(file, "texturePath");
     raylib::Vector2 pos = {
         std::stof(str_pos.substr(1, str_pos.find(';'))), std::stof(str_pos.substr(str_pos.find(';') + 1, str_pos.find(')') - str_pos.find(';') - 1))};
+    raylib::Vector2 pos2 = {
+        std::stof(str_pos2.substr(1, str_pos2.find(';'))), std::stof(str_pos2.substr(str_pos2.find(';') + 1, str_pos2.find(')') - str_pos2.find(';') - 1))};
 
     try {
-        entity->add<ComponentTexture>(texturePath, pos);
+        entity->add<ComponentTexture>(texturePath, pos, pos2);
     } catch (std::exception &e) {
         std::cout << "ComponentTexture not found" << std::endl;
     }

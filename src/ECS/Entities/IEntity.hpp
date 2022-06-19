@@ -52,7 +52,6 @@ template <typename T> void ecs::IEntity::remove()
     if (has<T>() == false)
         std::cout << "Component not found" << std::endl;
     delete _components[ecs::TemplateComponent<T>::getId()];
-    _components[ecs::TemplateComponent<T>::getId()] = 0;
 }
 
 template <typename T, typename... U> void ecs::IEntity::add(U &&...args)

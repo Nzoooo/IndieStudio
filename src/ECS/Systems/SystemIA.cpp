@@ -6,10 +6,10 @@
 */
 
 #include "SystemIA.hpp"
-#include "SystemCollision.hpp"
-#include "raylib/include/BoundingBox.hpp"
 #include <algorithm>
 #include <cmath>
+#include "SystemCollision.hpp"
+#include "raylib/include/BoundingBox.hpp"
 
 void SystemIA::update(ecs::Core &_core)
 {
@@ -27,9 +27,8 @@ void SystemIA::update(ecs::Core &_core)
 
 void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core, ecs::IEntity *bomb)
 {
-    std::vector<ComponentMovable::Direction> possibleDirection = { ComponentMovable::Direction::DOWN, ComponentMovable::Direction::UP,
-                                                                    ComponentMovable::Direction::LEFT, ComponentMovable::Direction::RIGHT };
-    ComponentMovable::Direction direction = _ia->get<ComponentMovable>()->getDirection();
+    std::vector<ComponentMovable::Direction> possibleDirection = {
+        ComponentMovable::Direction::DOWN, ComponentMovable::Direction::UP, ComponentMovable::Direction::LEFT, ComponentMovable::Direction::RIGHT};
     float speed = _ia->get<ComponentMovable>()->getSpeed();
 
     if (!bomb) {
@@ -41,17 +40,25 @@ void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core, ecs::IEntity *bomb)
         auto it = std::find(possibleDirection.begin(), possibleDirection.end(), getDirectionOfTheBomb(_ia, bomb));
         possibleDirection.erase(it);
     }
-    raylib::Vector3 minBoxUp(_ia->get<ComponentModel>()->getPos().x - 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-    raylib::Vector3 maxBoxUp(_ia->get<ComponentModel>()->getPos().x + 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+    raylib::Vector3 minBoxUp(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
+    raylib::Vector3 maxBoxUp(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox boxUp(minBoxUp, maxBoxUp);
-    raylib::Vector3 minBoxDown(_ia->get<ComponentModel>()->getPos().x - 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-    raylib::Vector3 maxBoxDown(_ia->get<ComponentModel>()->getPos().x + 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+    raylib::Vector3 minBoxDown(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
+    raylib::Vector3 maxBoxDown(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox boxDown(minBoxDown, maxBoxDown);
-    raylib::Vector3 minBoxLeft(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f - speed);
-    raylib::Vector3 maxBoxLeft(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f - speed);
+    raylib::Vector3 minBoxLeft(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f - speed);
+    raylib::Vector3 maxBoxLeft(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f - speed);
     raylib::BoundingBox boxLeft(minBoxLeft, maxBoxLeft);
-    raylib::Vector3 minBoxRight(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f + speed);
-    raylib::Vector3 maxBoxRight(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f + speed);
+    raylib::Vector3 minBoxRight(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f + speed);
+    raylib::Vector3 maxBoxRight(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f + speed);
     raylib::BoundingBox boxRight(minBoxRight, maxBoxRight);
     if (ecs::SystemCollision::checkCollisions(boxUp, _ia, _core.getEntities())) {
         if (std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::UP) != possibleDirection.end()) {
@@ -80,35 +87,42 @@ void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core, ecs::IEntity *bomb)
     _ia->get<ComponentMovable>()->setDirection(possibleDirection.at((std::rand() % possibleDirection.size() + 1) - 1));
     _ia->get<ComponentModel>()->setRotateAngle(_ia->get<ComponentMovable>()->getDirection());
     _ia->get<ComponentModel>()->setPos(raylib::Vector3(_ia->get<ComponentModel>()->getPos().x + getMovement(_ia).at("x"),
-                                        _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + getMovement(_ia).at("z")));
+        _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + getMovement(_ia).at("z")));
     raylib::Vector3 min(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
     raylib::Vector3 max(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox box(min, max);
     if (ecs::SystemCollision::checkCollisions(box, _ia, _core.getEntities())) {
         _ia->get<ComponentModel>()->setPos(raylib::Vector3(_ia->get<ComponentModel>()->getPos().x - getMovement(_ia).at("x"),
-                                            _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - getMovement(_ia).at("z")));
+            _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - getMovement(_ia).at("z")));
     }
 }
 
 void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core)
 {
-    std::vector<ComponentMovable::Direction> possibleDirection = { ComponentMovable::Direction::DOWN, ComponentMovable::Direction::UP,
-                                                                    ComponentMovable::Direction::LEFT, ComponentMovable::Direction::RIGHT };
-    ComponentMovable::Direction direction = _ia->get<ComponentMovable>()->getDirection();
+    std::vector<ComponentMovable::Direction> possibleDirection = {
+        ComponentMovable::Direction::DOWN, ComponentMovable::Direction::UP, ComponentMovable::Direction::LEFT, ComponentMovable::Direction::RIGHT};
     float speed = _ia->get<ComponentMovable>()->getSpeed();
 
     /* possible direction */
-    raylib::Vector3 minBoxUp(_ia->get<ComponentModel>()->getPos().x - 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-    raylib::Vector3 maxBoxUp(_ia->get<ComponentModel>()->getPos().x + 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+    raylib::Vector3 minBoxUp(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
+    raylib::Vector3 maxBoxUp(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f + speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox boxUp(minBoxUp, maxBoxUp);
-    raylib::Vector3 minBoxDown(_ia->get<ComponentModel>()->getPos().x - 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-    raylib::Vector3 maxBoxDown(_ia->get<ComponentModel>()->getPos().x + 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+    raylib::Vector3 minBoxDown(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
+    raylib::Vector3 maxBoxDown(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f - speed, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox boxDown(minBoxDown, maxBoxDown);
-    raylib::Vector3 minBoxLeft(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f - speed);
-    raylib::Vector3 maxBoxLeft(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f - speed);
+    raylib::Vector3 minBoxLeft(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f - speed);
+    raylib::Vector3 maxBoxLeft(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f - speed);
     raylib::BoundingBox boxLeft(minBoxLeft, maxBoxLeft);
-    raylib::Vector3 minBoxRight(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f + speed);
-    raylib::Vector3 maxBoxRight(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f + speed);
+    raylib::Vector3 minBoxRight(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f + speed);
+    raylib::Vector3 maxBoxRight(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f + speed);
     raylib::BoundingBox boxRight(minBoxRight, maxBoxRight);
     if (ecs::SystemCollision::checkCollisions(boxUp, _ia, _core.getEntities())) {
         if (std::find(possibleDirection.begin(), possibleDirection.end(), ComponentMovable::Direction::UP) != possibleDirection.end()) {
@@ -135,13 +149,13 @@ void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core)
         }
     }
     _ia->get<ComponentModel>()->setPos(raylib::Vector3(_ia->get<ComponentModel>()->getPos().x + getMovement(_ia).at("x"),
-                                        _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + getMovement(_ia).at("z")));
+        _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + getMovement(_ia).at("z")));
     raylib::Vector3 min(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
     raylib::Vector3 max(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox box(min, max);
     if (ecs::SystemCollision::checkCollisions(box, _ia, _core.getEntities())) {
         _ia->get<ComponentModel>()->setPos(raylib::Vector3(_ia->get<ComponentModel>()->getPos().x - getMovement(_ia).at("x"),
-                                            _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - getMovement(_ia).at("z")));
+            _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - getMovement(_ia).at("z")));
         _ia->get<ComponentMovable>()->setDirection(possibleDirection.at((std::rand() % possibleDirection.size() + 1) - 1));
         _ia->get<ComponentModel>()->setRotateAngle(_ia->get<ComponentMovable>()->getDirection());
     }
@@ -151,14 +165,20 @@ ecs::IEntity *SystemIA::getBombInRange(ecs::IEntity *_ia, ecs::Core &_core)
 {
     for (auto *e : _core.getEntities()) {
         if (e->has<ComponentExplodable>() && e->has<ComponentModel>() && e->has<ComponentDroppable>()) {
-            raylib::Vector3 bbIaHorizontalmin(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - e->get<ComponentExplodable>()->getBlastRange() - 0.3f);
-            raylib::Vector3 bbIaHorizontalmax(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + e->get<ComponentExplodable>()->getBlastRange() + 0.3f);
+            raylib::Vector3 bbIaHorizontalmin(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y,
+                _ia->get<ComponentModel>()->getPos().z - e->get<ComponentExplodable>()->getBlastRange() - 0.3f);
+            raylib::Vector3 bbIaHorizontalmax(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y,
+                _ia->get<ComponentModel>()->getPos().z + e->get<ComponentExplodable>()->getBlastRange() + 0.3f);
             raylib::BoundingBox bbIaHorizontal(bbIaHorizontalmin, bbIaHorizontalmax);
-            raylib::Vector3 bbIaVerticalmin(_ia->get<ComponentModel>()->getPos().x - e->get<ComponentExplodable>()->getBlastRange() - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-            raylib::Vector3 bbIaVerticalmax(_ia->get<ComponentModel>()->getPos().x + e->get<ComponentExplodable>()->getBlastRange() + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+            raylib::Vector3 bbIaVerticalmin(_ia->get<ComponentModel>()->getPos().x - e->get<ComponentExplodable>()->getBlastRange() - 0.3f,
+                _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
+            raylib::Vector3 bbIaVerticalmax(_ia->get<ComponentModel>()->getPos().x + e->get<ComponentExplodable>()->getBlastRange() + 0.3f,
+                _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
             raylib::BoundingBox bbIaVertical(bbIaVerticalmin, bbIaVerticalmax);
-            raylib::Vector3 bbBombmin(e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
-            raylib::Vector3 bbBombmax(e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
+            raylib::Vector3 bbBombmin(
+                e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
+            raylib::Vector3 bbBombmax(
+                e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
             raylib::BoundingBox bbBomb(bbBombmin, bbBombmax);
             if (ecs::SystemCollision::checkCollisions(bbIaHorizontal, bbBomb) || ecs::SystemCollision::checkCollisions(bbIaVertical, bbBomb))
                 return (e);
@@ -191,17 +211,23 @@ ComponentMovable::Direction SystemIA::getDirectionOfTheBomb(ecs::IEntity *_ia, e
 
 bool SystemIA::isKillableBlockInRange(ecs::IEntity *_ia, ecs::Core &_core)
 {
-    raylib::Vector3 bbIaHorizontalmin(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 1 - 0.3f);
-    raylib::Vector3 bbIaHorizontalmax(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 1 + 0.3f);
+    raylib::Vector3 bbIaHorizontalmin(
+        _ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 1 - 0.3f);
+    raylib::Vector3 bbIaHorizontalmax(
+        _ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 1 + 0.3f);
     raylib::BoundingBox bbIaHorizontal(bbIaHorizontalmin, bbIaHorizontalmax);
-    raylib::Vector3 bbIaVerticalmin(_ia->get<ComponentModel>()->getPos().x - 1 - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-    raylib::Vector3 bbIaVerticalmax(_ia->get<ComponentModel>()->getPos().x + 1 + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+    raylib::Vector3 bbIaVerticalmin(
+        _ia->get<ComponentModel>()->getPos().x - 1 - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
+    raylib::Vector3 bbIaVerticalmax(
+        _ia->get<ComponentModel>()->getPos().x + 1 + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
     raylib::BoundingBox bbIaVertical(bbIaVerticalmin, bbIaVerticalmax);
     for (auto *e : _core.getEntities()) {
-        if (e->has<ComponentKillable>() && e->has<ComponentCollider>() && e->has<ComponentCube>() &&
-            e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable3D() && e->has<ComponentModel>()) {
-            raylib::Vector3 bbBlockmin(e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
-            raylib::Vector3 bbBlockmax(e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
+        if (e->has<ComponentKillable>() && e->has<ComponentCollider>() && e->has<ComponentCube>() && e->has<ComponentDrawable>()
+            && e->get<ComponentDrawable>()->getIsDrawable3D() && e->has<ComponentModel>()) {
+            raylib::Vector3 bbBlockmin(
+                e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
+            raylib::Vector3 bbBlockmax(
+                e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
             raylib::BoundingBox bbBlock(bbBlockmin, bbBlockmax);
             if (ecs::SystemCollision::checkCollisions(bbIaHorizontal, bbBlock) || ecs::SystemCollision::checkCollisions(bbIaVertical, bbBlock))
                 return (true);
@@ -228,5 +254,5 @@ std::map<std::string, float> SystemIA::getMovement(ecs::IEntity *_ia)
     if (direction == ComponentMovable::Direction::RIGHT) {
         movement.at("z") += speed;
     }
-    return(movement);
+    return (movement);
 }

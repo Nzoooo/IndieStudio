@@ -19,6 +19,7 @@ set(SRC
     ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/ComponentModel.cpp
     ${SRCROOT}/ComponentCollider.cpp
+    ${SRCROOT}/ComponentVent.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

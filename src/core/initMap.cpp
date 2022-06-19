@@ -59,6 +59,25 @@ void createIA(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos
     mapCreation.addEntity(iaEntity);
 }
 
+void createVent(ecs::Core &mapCreation, raylib::Vector3 pos1, raylib::Vector3 pos2)
+{
+    ecs::IEntity *ventEntity1 = new ecs::IEntity();
+    ecs::IEntity *ventEntity2 = new ecs::IEntity();
+    raylib::Texture tex;
+
+    ventEntity1->add<ComponentDrawable>(false, true);
+    tex.Load("assets/mapTextures/VENTILATION.png");
+    ventEntity1->add<ComponentCube>(pos1, raylib::Vector3(1.0f, 0.2f, 1.0f), raylib::Color::White(), tex);
+    ventEntity1->add<ComponentVent>();
+    ventEntity2->add<ComponentDrawable>(false, true);
+    ventEntity2->add<ComponentCube>(pos2, raylib::Vector3(1.0f, 0.2f, 1.0f), raylib::Color::White(), tex);
+    ventEntity2->add<ComponentVent>();
+    ventEntity1->get<ComponentVent>()->pairVent(ventEntity2);
+    ventEntity2->get<ComponentVent>()->pairVent(ventEntity1);
+    mapCreation.addEntity(ventEntity1);
+    mapCreation.addEntity(ventEntity2);
+}
+
 void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
 {
     for (std::size_t i = 0; i < idControllers.size(); i++) {
@@ -97,6 +116,8 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
             default: break;
         }
     }
+    createVent(mapCreation, raylib::Vector3(-3.0f, 0.0f, -(MAP_SIZE / 2) + 4), raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 6));
+    createVent(mapCreation, raylib::Vector3(-4.0f, 0.0f, (MAP_SIZE / 2) - 7), raylib::Vector3((MAP_SIZE / 2) - 7, 0.0f, -(MAP_SIZE / 2) + 7));
     ecs::IEntity *musicGame = new ecs::IEntity();
     musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
     musicGame->setLabel("MusicGame");

@@ -30,6 +30,7 @@
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
 #include "Components/ComponentTransparency.hpp"
+#include "Components/ComponentVent.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
 #include "Systems/SystemCollision.hpp"

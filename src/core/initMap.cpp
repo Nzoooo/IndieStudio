@@ -174,7 +174,7 @@ ecs::Core mapCreation(std::vector<int> &idControllers, ecs::GameStartMode start_
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
-    int rand;
+    std::size_t rand;
     if (start_mode == ecs::GameStartMode::Restart) {
         std::cout << "Restart mode" << std::endl;
         for (int j = 1; j < MAP_SIZE - 1; j++) {

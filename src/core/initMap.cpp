@@ -188,7 +188,7 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
-    int rand;
+    std::size_t rand;
     for (int j = 1; j < MAP_SIZE - 1; j++) {
         for (int i = 1; i < MAP_SIZE - 1; i++) {
             initial.x += 1;

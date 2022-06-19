@@ -160,6 +160,11 @@ void raylib::Window::SetMasterVolume(float volume)
     ::SetMasterVolume(volume);
 }
 
+void raylib::Window::StopSounds()
+{
+    ::StopSoundMulti();
+}
+
 raylib::Vector2 raylib::Window::GetWorldToScreen(::Vector3 pos, raylib::Camera3D cam)
 {
     raylib::Vector2 vec(::GetWorldToScreen(pos, cam));

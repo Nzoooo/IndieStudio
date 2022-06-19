@@ -70,6 +70,7 @@ void ecs::Core::removeEntityIterator(std::vector<ecs::IEntity *>::iterator it)
 void ecs::Core::removeEntity(unsigned int const i)
 {
     delete this->_entities[i];
+    this->_entities[i] = 0;
 }
 
 ecs::Scenes ecs::Core::getScene()

@@ -81,7 +81,7 @@ void raylib::Texture::SetFilter(int filterMode)
     ::SetTextureFilter(*this, filterMode);
 }
 
-void raylib::Texture::SetWrap(int wrapMode)
+void raylib::Texture::SetWrap(WrapMode wrapMode)
 {
     ::SetTextureWrap(*this, wrapMode);
 }

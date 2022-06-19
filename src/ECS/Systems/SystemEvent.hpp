@@ -29,7 +29,6 @@ namespace ecs
         void handleControllersGameSettings(ecs::Core &core);
         void handleControllersWin(ecs::Core &core);
 
-      protected:
       private:
         void _detectNbControllers();
         bool _isControllerAssign(ecs::Core &core, int gamepadNumber);
@@ -45,5 +44,7 @@ namespace ecs
         void _handleMovementPlayers(ecs::IEntity *it, int idController);
         void _handleCollisions(ecs::Core &core, ecs::IEntity *it, int idController);
         void _handlePickBoosts(ecs::Core &core, ecs::IEntity *it);
+        void _handleBombPlayer(ecs::Core &core, ecs::IEntity *it);
+        void _handleBombBox(ecs::Core &core, ecs::IEntity *it);
     };
 } // namespace ecs

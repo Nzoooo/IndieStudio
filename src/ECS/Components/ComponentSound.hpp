@@ -8,12 +8,22 @@
 #pragma once
 
 #include "IComponent.hpp"
+#include "raylib/include/Sound.hpp"
 
 class ComponentSound : public ecs::IComponent {
   public:
-    ComponentSound();
+    ComponentSound(std::string fileName)
+    {
+        _sound.Load(fileName);
+    };
     ~ComponentSound();
+
+    raylib::Sound &getSound()
+    {
+        return (_sound);
+    };
 
   protected:
   private:
+    raylib::Sound _sound;
 };

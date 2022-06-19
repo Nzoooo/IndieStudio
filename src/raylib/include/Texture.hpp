@@ -34,8 +34,10 @@ namespace raylib
         bool Load(const std::string &fileName);
         bool Load(const ::Image &image, int layout);
         bool Load(const ::Image &image);
+        std::string getTexturePath() const;
 
       private:
         void _setTexture(const ::Texture &texture);
+        std::string _texturePath;
     };
 } // namespace raylib

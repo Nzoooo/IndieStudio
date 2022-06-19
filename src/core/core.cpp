@@ -6,6 +6,7 @@
 */
 
 #include "core.hpp"
+#include "core/pauseMenu.hpp"
 #include "information/info.hpp"
 #include "initMap.hpp"
 
@@ -39,7 +40,8 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
 
     initInformations(core);
     camera.SetMode(CAMERA_ORBITAL);
-    while (!WindowShouldClose() && core.getScene() == ecs::Scenes::Game) {
+    core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Play();
+    while (1) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
@@ -66,12 +68,17 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
                 camera.position.x += 0.13f / 2;
                 step = true;
             }
+            if (core.getScene() == ecs::Scenes::Pause)
+                core.setScene(pauseMenu());
+            if (core.getScene() != ecs::Scenes::Game && core.getScene() != ecs::Scenes::Pause)
+                break;
+            core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
-            if (step == true && camera.position.y >= 12.5f)
-                core.get<ecs::SystemEvent>()->update(core);
             updateInformations(core);
             camera.BeginMode();
+            if (step == true && camera.position.y >= 12.5f)
+                core.get<ecs::SystemEvent>()->update(core);
             core.get<ecs::SystemRender3D>()->update(core);
             camera.EndMode();
             core.get<ecs::SystemRender2D>()->update(core);
@@ -83,5 +90,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
             fps = 0;
         }
     }
+    core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Stop();
     return (core.getScene());
 }

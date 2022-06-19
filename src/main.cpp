@@ -9,12 +9,13 @@
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
-#include "core/pauseMenu.hpp"
 #include "map/Map.hpp"
 
 static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
+    raylib::Window::InitAudioDevice();
+    raylib::Window::SetFullScreen();
     ecs::Core core;
     std::vector<int> idControllers;
     core.setScene(ecs::Scenes::Menu);
@@ -23,7 +24,6 @@ static int mainLoop()
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu(core)); break;
-            case ecs::Scenes::Pause: core.setScene(pauseMenu()); break;
             case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, core.getStartMode())); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(core, idControllers)); break;
@@ -31,7 +31,8 @@ static int mainLoop()
             case ecs::Close: return (-1);
         }
     }
-    CloseWindow();
+    raylib::Window::CloseAudioDevice();
+    raylib::Window::Close();
     return (0);
 }
 

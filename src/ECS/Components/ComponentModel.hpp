@@ -24,6 +24,7 @@ class ComponentModel : public ecs::IComponent {
     void Draw();
     void Update(int whichAnim);
     raylib::Vector3 getPos() const;
+    raylib::Vector3 getInitialPos() const;
     raylib::Vector3 getScale() const;
     raylib::Vector3 getRotateAxis() const;
     float getRotateAngle() const;
@@ -37,6 +38,7 @@ class ComponentModel : public ecs::IComponent {
   private:
     raylib::Model _model;
     raylib::Vector3 _pos;
+    raylib::Vector3 _initialPos;
     raylib::Vector3 _scale;
     raylib::Vector3 _rotateAxis;
     float _rotateAngle;

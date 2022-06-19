@@ -11,10 +11,13 @@
 #include "Components/AllComponents.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
+#include "Systems/SystemCollision.hpp"
 #include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
+
+#define BASE_SPEED_PLAYERS (0.03f)
 
 namespace ecs
 {
@@ -44,6 +47,7 @@ namespace ecs
 
         unsigned int addEntity(ecs::IEntity *e);
         ecs::IEntity *getEntity(unsigned int const id);
+        ecs::IEntity *getEntity(std::string label);
         void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
         void removeEntity(unsigned int const i);
         std::vector<ecs::IEntity *> &getEntities();

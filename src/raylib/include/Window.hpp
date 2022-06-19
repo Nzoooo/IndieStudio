@@ -8,7 +8,9 @@
 #pragma once
 
 #include <string>
+#include "Camera3D.hpp"
 #include "Color.hpp"
+#include "Vector2.hpp"
 #include "raylib.hpp"
 
 namespace raylib
@@ -45,6 +47,7 @@ namespace raylib
         static void CloseAudioDevice();
         static bool IsAudioDeviceReady();
         static void SetMasterVolume(float volume);
+        static raylib::Vector2 GetWorldToScreen(::Vector3 pos, raylib::Camera3D cam);
 
       protected:
       private:

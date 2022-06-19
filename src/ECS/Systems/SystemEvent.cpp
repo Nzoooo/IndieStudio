@@ -7,6 +7,7 @@
 
 #include "SystemEvent.hpp"
 #include <chrono>
+#include <cmath>
 #include "core/information/info.hpp"
 #include "raylib/include/Gamepad.hpp"
 
@@ -343,7 +344,7 @@ namespace ecs
                 } else if (isClicking(*buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
+                        core.setScene(ecs::Scenes::Menu);
                 } else if (isClicking(*buttonTmp) == true && i == 3) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
@@ -356,41 +357,120 @@ namespace ecs
 
     void SystemEvent::handleControllersPause(ecs::Core &core)
     {
-        _handleMousePause(core);
+        static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+
+        if (raylib::Gamepad::IsAvailable(0)) {
+            if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
+                for (auto *it : core.getEntities()) {
+                    if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
+                        if (it->get<ComponentButton>()->getIdButton() == 0) {
+                            core.setScene(ecs::Scenes::Game);
+                            return;
+                        }
+                        if (it->get<ComponentButton>()->getIdButton() == 1) {
+                            core.setScene(ecs::Scenes::Close);
+                            return;
+                        }
+                        if (it->get<ComponentButton>()->getIdButton() == 2) {
+                            core.setScene(ecs::Scenes::Menu);
+                            return;
+                        }
+                        if (it->get<ComponentButton>()->getIdButton() == 3) {
+                            core.setScene(ecs::Scenes::Close);
+                            return;
+                        }
+                        break;
+                    }
+                }
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, 1);
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, -1);
+            }
+        } else
+            _handleMousePause(core);
     }
 
     void SystemEvent::_handleMovementPlayers(ecs::IEntity *it, int idController)
     {
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) > 0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) > 0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::RIGHT);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::RIGHT);
         }
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) < -0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) < -0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::LEFT);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::LEFT);
         }
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) > 0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) > 0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::DOWN);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::DOWN);
         }
-        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) < -0.4) {
+        if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) < -0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::UP);
+            it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
         }
-        it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x
-                - raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY()) * it->get<ComponentMovable>()->getSpeed(),
-            it->get<ComponentModel>()->getPos().y,
-            it->get<ComponentModel>()->getPos().z
-                + raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) * it->get<ComponentMovable>()->getSpeed()));
+        if (it->has<ComponentCollider>() && !it->get<ComponentCollider>()->getIsAbleToCollide()) {
+            if (std::chrono::system_clock::now() - it->get<ComponentCollider>()->getTimeNonCollide() >= std::chrono::seconds(7))
+                it->get<ComponentModel>()->setPos(it->get<ComponentModel>()->getInitialPos());
+        }
+    }
+
+    void SystemEvent::_handleCollisions(ecs::Core &core, ecs::IEntity *it, int idController)
+    {
+        if (it->has<ComponentCollider>()) {
+            float axis_x = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY());
+            float axis_z = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX());
+            it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x - axis_x * it->get<ComponentMovable>()->getSpeed(),
+                it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z + axis_z * it->get<ComponentMovable>()->getSpeed()));
+            raylib::BoundingBox box(raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y,
+                                        it->get<ComponentModel>()->getPos().z - 0.27),
+                raylib::Vector3(
+                    it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+            if (SystemCollision::checkCollisions(box, it, core.getEntities())) {
+                it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x + axis_x * it->get<ComponentMovable>()->getSpeed(),
+                    it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - axis_z * it->get<ComponentMovable>()->getSpeed()));
+            }
+        }
+    }
+
+    void SystemEvent::_handlePickBoosts(ecs::Core &core, ecs::IEntity *it)
+    {
+        raylib::BoundingBox box(
+            raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.27),
+            raylib::Vector3(
+                it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+        SystemCollision::checkCollisionsBoosts(box, it, core.getEntities());
     }
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
     {
+        raylib::Mouse mouseIndex;
+
+        if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+            core.setScene(ecs::Scenes::Pause);
+            return;
+        }
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(core, i)) {
-                if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleRight())) {
+                if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonMiddleRight())) {
                     core.setScene(ecs::Scenes::Pause);
                     return;
                 }
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i) {
                         _handleMovementPlayers(it, i);
+                        _handlePickBoosts(core, it);
+                    }
+                    if (it->has<ComponentKills>()) {
+                        _handleCollisions(core, it, i);
                     }
                 }
 

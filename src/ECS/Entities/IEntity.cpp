@@ -18,3 +18,13 @@ std::vector<ecs::IComponent *> &ecs::IEntity::getAllComponents()
 {
     return (_components);
 }
+
+void ecs::IEntity::setLabel(std::string label)
+{
+    _label = label;
+}
+
+std::string ecs::IEntity::getLabel() const
+{
+    return (_label);
+}

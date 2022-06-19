@@ -37,7 +37,6 @@ ecs::Scenes gameMenu()
 {
     ecs::Core settings = initSettings();
 
-    raylib::Window::SetFullScreen();
     while (!raylib::Window::ShouldClose() && settings.getScene() == ecs::Scenes::GameSettings) {
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());

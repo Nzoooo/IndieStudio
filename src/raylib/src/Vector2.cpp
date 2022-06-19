@@ -8,7 +8,7 @@
 #include "../include/Vector2.hpp"
 #include "../include/RaylibException.hpp"
 
-raylib::Vector2::Vector2(::Vector2 &vec)
+raylib::Vector2::Vector2(::Vector2 vec)
 {
     _setVector2(vec);
 }

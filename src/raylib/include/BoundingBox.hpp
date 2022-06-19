@@ -15,7 +15,7 @@ namespace raylib
       public:
         BoundingBox() = default;
         BoundingBox(const BoundingBox &other);
-        BoundingBox &operator=(const ::BoundingBox &other);
+        BoundingBox &operator=(const BoundingBox &other);
         BoundingBox(::Vector3 _min, ::Vector3 _max);
         ~BoundingBox();
 

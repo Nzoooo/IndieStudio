@@ -21,6 +21,7 @@
 #include "ComponentMesh.hpp"
 #include "ComponentModel.hpp"
 #include "ComponentMovable.hpp"
+#include "ComponentMusic.hpp"
 #include "ComponentPickable.hpp"
 #include "ComponentRectangle.hpp"
 #include "ComponentText.hpp"

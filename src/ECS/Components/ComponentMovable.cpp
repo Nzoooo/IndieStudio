@@ -17,11 +17,6 @@ float ComponentMovable::getSpeed() const
     return (_speed);
 }
 
-bool ComponentMovable::getAbleToMove() const
-{
-    return this->_ableToMove;
-}
-
 void ComponentMovable::setDirection(ComponentMovable::Direction direction)
 {
     _direction = direction;

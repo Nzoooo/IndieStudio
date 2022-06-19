@@ -98,10 +98,12 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
                     ComponentMovable::DOWN, nbBomb);
                 break;
             case 2:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
+                createPlayer(
+                    mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
                 break;
             case 3:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
+                createPlayer(
+                    mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
                 break;
             default: break;
         }
@@ -248,7 +250,6 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
     std::size_t rand;
     if (start_mode == ecs::GameStartMode::Restart) {
-        std::cout << "Restart mode" << std::endl;
         for (int j = 1; j < MAP_SIZE - 1; j++) {
             for (int i = 1; i < MAP_SIZE - 1; i++) {
                 initial.x += 1;
@@ -291,7 +292,6 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
         int i = 0;
         for (auto entity : loaded_core.getEntities()) {
             mapCreation.addEntity(entity);
-            std::cout << i++ << std::endl;
         }
     }
     return (mapCreation);

@@ -31,3 +31,4 @@
 #include "ComponentTexture.hpp"
 #include "ComponentTransform.hpp"
 #include "ComponentTransparency.hpp"
+#include "ComponentVent.hpp"

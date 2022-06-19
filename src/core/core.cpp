@@ -37,7 +37,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings
     bool second = true;
     float step2 = (MAP_SIZE / 2) - 8;
 
-    initInformations(core);
+    // initInformations(core);
     core._camera.SetMode(CAMERA_ORBITAL);
     core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Play();
     while (1) {

@@ -10,16 +10,27 @@
 #include "raylib/include/BoundingBox.hpp"
 #include <algorithm>
 #include <cmath>
+#include <iostream>
 
 void SystemIA::update(ecs::Core &_core)
 {
     ecs::IEntity *bomb = nullptr;
 
     for (auto *e : _core.getEntities()) {
-        if (e->has<ComponentKills>() && !e->has<ComponentControllable>()) {
+        if (e->has<ComponentKills>() && !e->has<ComponentControllable>() && e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable3D()) {
             bomb = getBombInRange(e, _core);
-            // if (isKillableBlockInRange(e, _core) && !bomb)
-            //     /* place bomb */;
+            if (isKillableBlockInRange(e, _core) && !bomb) {
+                // if (e->has<ComponentBombs>() && e->get<ComponentBombs>()->getNbMaxBombs() > e->get<ComponentBombs>()->getNbCurrBombs()) {
+                //     ecs::IEntity *bomb1 = new ecs::IEntity;
+                //     bomb1->add<ComponentDrawable>(false, true);
+                //     bomb1->add<ComponentExplosion>(e->getLabel());
+                //     bomb1->add<ComponentModel>("assets/models3D/Bomb.obj",
+                //         raylib::Vector3(std::roundf(e->get<ComponentModel>()->getPos().x), std::roundf(e->get<ComponentModel>()->getPos().y),
+                //             std::roundf(e->get<ComponentModel>()->getPos().z)));
+                //     _core.addEntity(bomb1);
+                //     e->get<ComponentBombs>()->setNbCurrBombs(e->get<ComponentBombs>()->getNbCurrBombs() + 1);
+                // }
+            }
             move(e, _core, bomb);
         }
     }
@@ -77,7 +88,8 @@ void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core, ecs::IEntity *bomb)
             possibleDirection.erase(it);
         }
     }
-    _ia->get<ComponentMovable>()->setDirection(possibleDirection.at((std::rand() % possibleDirection.size() + 1) - 1));
+    if (possibleDirection.size() > 0)
+        _ia->get<ComponentMovable>()->setDirection(possibleDirection.at((std::rand() % possibleDirection.size() + 1) - 1));
     _ia->get<ComponentModel>()->setRotateAngle(_ia->get<ComponentMovable>()->getDirection());
     _ia->get<ComponentModel>()->setPos(raylib::Vector3(_ia->get<ComponentModel>()->getPos().x + getMovement(_ia).at("x"),
                                         _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + getMovement(_ia).at("z")));
@@ -142,7 +154,8 @@ void SystemIA::move(ecs::IEntity *_ia, ecs::Core &_core)
     if (ecs::SystemCollision::checkCollisions(box, _ia, _core.getEntities())) {
         _ia->get<ComponentModel>()->setPos(raylib::Vector3(_ia->get<ComponentModel>()->getPos().x - getMovement(_ia).at("x"),
                                             _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - getMovement(_ia).at("z")));
-        _ia->get<ComponentMovable>()->setDirection(possibleDirection.at((std::rand() % possibleDirection.size() + 1) - 1));
+        if (possibleDirection.size() > 0)
+            _ia->get<ComponentMovable>()->setDirection(possibleDirection.at((std::rand() % possibleDirection.size() + 1) - 1));
         _ia->get<ComponentModel>()->setRotateAngle(_ia->get<ComponentMovable>()->getDirection());
     }
 }
@@ -191,17 +204,17 @@ ComponentMovable::Direction SystemIA::getDirectionOfTheBomb(ecs::IEntity *_ia, e
 
 bool SystemIA::isKillableBlockInRange(ecs::IEntity *_ia, ecs::Core &_core)
 {
-    raylib::Vector3 bbIaHorizontalmin(_ia->get<ComponentModel>()->getPos().x - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 1 - 0.3f);
-    raylib::Vector3 bbIaHorizontalmax(_ia->get<ComponentModel>()->getPos().x + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 1 + 0.3f);
+    raylib::Vector3 bbIaHorizontalmin(_ia->get<ComponentModel>()->getPos().x, _ia->get<ComponentModel>()->getPos().y + 0.5, _ia->get<ComponentModel>()->getPos().z - 0.5f);
+    raylib::Vector3 bbIaHorizontalmax(_ia->get<ComponentModel>()->getPos().x, _ia->get<ComponentModel>()->getPos().y + 0.5, _ia->get<ComponentModel>()->getPos().z + 0.5f);
     raylib::BoundingBox bbIaHorizontal(bbIaHorizontalmin, bbIaHorizontalmax);
-    raylib::Vector3 bbIaVerticalmin(_ia->get<ComponentModel>()->getPos().x - 1 - 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z - 0.3f);
-    raylib::Vector3 bbIaVerticalmax(_ia->get<ComponentModel>()->getPos().x + 1 + 0.3f, _ia->get<ComponentModel>()->getPos().y, _ia->get<ComponentModel>()->getPos().z + 0.3f);
+    raylib::Vector3 bbIaVerticalmin(_ia->get<ComponentModel>()->getPos().x - 0.5f, _ia->get<ComponentModel>()->getPos().y + 0.5, _ia->get<ComponentModel>()->getPos().z);
+    raylib::Vector3 bbIaVerticalmax(_ia->get<ComponentModel>()->getPos().x + 0.5f, _ia->get<ComponentModel>()->getPos().y + 0.5, _ia->get<ComponentModel>()->getPos().z);
     raylib::BoundingBox bbIaVertical(bbIaVerticalmin, bbIaVerticalmax);
     for (auto *e : _core.getEntities()) {
         if (e->has<ComponentKillable>() && e->has<ComponentCollider>() && e->has<ComponentCube>() &&
-            e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable3D() && e->has<ComponentModel>()) {
-            raylib::Vector3 bbBlockmin(e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
-            raylib::Vector3 bbBlockmax(e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
+            e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable3D()) {
+            raylib::Vector3 bbBlockmin(e->get<ComponentCube>()->getPos().x - 0.5f, e->get<ComponentCube>()->getPos().y, e->get<ComponentCube>()->getPos().z - 0.5f);
+            raylib::Vector3 bbBlockmax(e->get<ComponentCube>()->getPos().x + 0.5f, e->get<ComponentCube>()->getPos().y, e->get<ComponentCube>()->getPos().z + 0.5f);
             raylib::BoundingBox bbBlock(bbBlockmin, bbBlockmax);
             if (ecs::SystemCollision::checkCollisions(bbIaHorizontal, bbBlock) || ecs::SystemCollision::checkCollisions(bbIaVertical, bbBlock))
                 return (true);

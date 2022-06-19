@@ -131,6 +131,7 @@ namespace ecs
         if (box.checkCollision(box2)) {
             return (true);
         }
+        return (false);
     }
 
     bool SystemCollision::checkCollisionsFireBlastBlocks(raylib::BoundingBox &box, std::vector<ecs::IEntity *> entities)

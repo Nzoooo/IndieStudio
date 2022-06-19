@@ -43,7 +43,7 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     mapCreation.addEntity(playerEntity);
 }
 
-void createIA(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, ComponentMovable::Direction dir)
+void createIA(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb)
 {
     ecs::IEntity *iaEntity = new ecs::IEntity();
 
@@ -52,10 +52,11 @@ void createIA(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos
     iaEntity->get<ComponentModel>()->setRotateAngle(dir);
     iaEntity->add<ComponentCollider>();
     iaEntity->add<ComponentKills>();
-    iaEntity->add<ComponentBombs>(2);
+    iaEntity->add<ComponentBombs>(nbBomb);
     iaEntity->add<ComponentKillable>();
     iaEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     iaEntity->add<ComponentExplodable>();
+    iaEntity->setLabel("IA " + std::to_string(id));
     mapCreation.addEntity(iaEntity);
 }
 
@@ -105,17 +106,17 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
     for (std::size_t i = idControllers.size(); i < 4; i++) {
         switch (i) {
             case 0:
-                createIA(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::DOWN);
+                createIA(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::DOWN, nbBomb);
                 break;
-            case 1:
-                createIA(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::DOWN);
-                break;
-            case 2:
-                createIA(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::UP);
-                break;
-            case 3:
-                createIA(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::UP);
-                break;
+            // case 1:
+            //     createIA(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::DOWN, nbBomb);
+            //     break;
+            // case 2:
+            //     createIA(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
+            //     break;
+            // case 3:
+            //     createIA(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
+            //     break;
             default: break;
         }
     }

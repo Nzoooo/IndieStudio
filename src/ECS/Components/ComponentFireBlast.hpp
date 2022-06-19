@@ -22,8 +22,9 @@ class ComponentFireBlast : public ecs::IComponent {
     void timer(float);
     float getTimer();
 
-    raylib::Vector3 getPos();
-    raylib::Vector3 getSize();
+    raylib::Vector3 getPos() const;
+    raylib::Vector3 getSize() const;
+    void setSize(raylib::Vector3 size);
 
     void Draw();
 

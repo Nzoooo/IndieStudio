@@ -152,18 +152,24 @@ namespace ecs
                 if (isClicking(buttonTmp) == true && i == 0) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         core.setScene(ecs::Scenes::ConnectPlayers);
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 1) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         core.setScene(ecs::Scenes::Game);
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         core.setScene(ecs::Scenes::Close);
                         return;
                     }
@@ -182,14 +188,20 @@ namespace ecs
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                         if (it->get<ComponentButton>()->getIdButton() == 0) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::ConnectPlayers);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Game);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Close);
                             return;
                         }
@@ -227,12 +239,16 @@ namespace ecs
                 if (isClicking(buttonTmp) == true && i == 0) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         core.setScene(ecs::Scenes::Menu);
                         return;
                     }
                 } else if (isClicking(buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        if (core.getEntity("SoundClick") != nullptr)
+                            core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         core.setScene(ecs::Scenes::Game);
                         return;
                     }
@@ -287,10 +303,14 @@ namespace ecs
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                         if (it->get<ComponentButton>()->getIdButton() == 0) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Menu);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Game);
                             return;
                         }
@@ -360,18 +380,26 @@ namespace ecs
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
                         if (it->get<ComponentButton>()->getIdButton() == 0) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Game);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Close);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Menu);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 3) {
+                            if (core.getEntity("SoundClick") != nullptr)
+                                core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Close);
                             return;
                         }
@@ -414,8 +442,11 @@ namespace ecs
             it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
         }
         if (it->has<ComponentCollider>() && !it->get<ComponentCollider>()->getIsAbleToCollide()) {
-            if (std::chrono::system_clock::now() - it->get<ComponentCollider>()->getTimeNonCollide() >= std::chrono::seconds(7))
-                it->get<ComponentModel>()->setPos(it->get<ComponentModel>()->getInitialPos());
+            if (std::chrono::system_clock::now() - it->get<ComponentCollider>()->getTimeNonCollide() >= std::chrono::seconds(7)) {
+                it->get<ComponentModel>()->setPos(raylib::Vector3(
+                    it->get<ComponentModel>()->getInitialPos().x, it->get<ComponentModel>()->getInitialPos().y, it->get<ComponentModel>()->getInitialPos().z));
+                it->get<ComponentCollider>()->setIsAbleToCollide(true);
+            }
         }
     }
 
@@ -462,7 +493,6 @@ namespace ecs
             raylib::Vector3(
                 it->get<ComponentCube>()->getPos().x + 0.5, it->get<ComponentCube>()->getPos().y + 0.5, it->get<ComponentCube>()->getPos().z + 0.5));
         SystemCollision::checkCollisionsBomb(box, it, core.getEntities());
-        box.Draw(raylib::Color::Orange());
     }
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
@@ -486,21 +516,22 @@ namespace ecs
                     if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i
                         && it->get<ComponentDrawable>()->getIsDrawable3D()) {
                         _handleMovementPlayers(it, i);
-                        _handlePickBoosts(core, it);
-                        _handleBombPlayer(core, it);
-                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown())) {
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown()) && it->has<ComponentBombs>()
+                            && it->get<ComponentBombs>()->getNbMaxBombs() > it->get<ComponentBombs>()->getNbCurrBombs()) {
                             ecs::IEntity *bomb1 = new ecs::IEntity;
                             bomb1->add<ComponentDrawable>(false, true);
-                            bomb1->add<ComponentExplodable>();
-                            bomb1->add<ComponentExplosion>();
+                            bomb1->add<ComponentExplosion>(it->getLabel());
                             bomb1->add<ComponentModel>("assets/models3D/Bomb.obj",
                                 raylib::Vector3(std::roundf(it->get<ComponentModel>()->getPos().x), std::roundf(it->get<ComponentModel>()->getPos().y),
                                     std::roundf(it->get<ComponentModel>()->getPos().z)));
                             core.addEntity(bomb1);
+                            it->get<ComponentBombs>()->setNbCurrBombs(it->get<ComponentBombs>()->getNbCurrBombs() + 1);
                         }
                     }
-                    if (it->has<ComponentKills>()) {
+                    if (it->has<ComponentKills>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
                         _handleCollisions(core, it, i);
+                        _handlePickBoosts(core, it);
+                        _handleBombPlayer(core, it);
                     }
                 }
 

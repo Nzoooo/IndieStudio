@@ -47,6 +47,7 @@ namespace raylib
         static void CloseAudioDevice();
         static bool IsAudioDeviceReady();
         static void SetMasterVolume(float volume);
+        static void StopSounds();
         static raylib::Vector2 GetWorldToScreen(::Vector3 pos, raylib::Camera3D cam);
 
       protected:

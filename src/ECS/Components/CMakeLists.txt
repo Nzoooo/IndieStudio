@@ -8,6 +8,7 @@ set(SRC
     ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentDrawable.cpp
     ${SRCROOT}/ComponentExplodable.cpp
+    ${SRCROOT}/ComponentExplosion.cpp
     ${SRCROOT}/ComponentKills.cpp
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentRectangle.cpp

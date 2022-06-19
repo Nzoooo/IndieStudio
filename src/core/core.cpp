@@ -6,6 +6,7 @@
 */
 
 #include "core.hpp"
+#include <unistd.h>
 #include "core/pauseMenu.hpp"
 #include "information/info.hpp"
 #include "initMap.hpp"

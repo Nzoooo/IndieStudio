@@ -22,5 +22,6 @@ namespace ecs
         void blastGeneration(ecs::Core &core, ecs::IEntity *bomb);
 
       private:
+        raylib::BoundingBox _createBoundingBoxExplosion(ecs::IEntity *blast);
     };
 } // namespace ecs

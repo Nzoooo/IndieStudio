@@ -14,6 +14,7 @@ ComponentModel::ComponentModel(std::string modelPath, raylib::Vector3 pos, rayli
 {
     _model.Load(modelPath);
     _pos = pos;
+    _initialPos = pos;
     _scale = scale;
     _rotateAxis = rotateAxis;
     _rotateAngle = rotateAngle;
@@ -45,6 +46,11 @@ void ComponentModel::Update(int whichAnim)
 raylib::Vector3 ComponentModel::getPos() const
 {
     return (_pos);
+}
+
+raylib::Vector3 ComponentModel::getInitialPos() const
+{
+    return (_initialPos);
 }
 
 raylib::Vector3 ComponentModel::getScale() const

@@ -395,7 +395,7 @@ namespace ecs
             _handleMousePause(core);
     }
 
-    void SystemEvent::_handleMovementPlayers(ecs::Core &core, ecs::IEntity *it, int idController)
+    void SystemEvent::_handleMovementPlayers(ecs::IEntity *it, int idController)
     {
         if (raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX()) > 0.3) {
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::RIGHT);
@@ -413,18 +413,37 @@ namespace ecs
             it->get<ComponentModel>()->setRotateAngle(ComponentMovable::UP);
             it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
         }
-        float axis_x = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY());
-        float axis_z = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX());
-        it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x - axis_x * it->get<ComponentMovable>()->getSpeed(),
-            it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z + axis_z * it->get<ComponentMovable>()->getSpeed()));
-        raylib::BoundingBox box(
-            raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.3, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.3),
-            raylib::Vector3(
-                it->get<ComponentModel>()->getPos().x + 0.3, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.3));
-        if (SystemCollision::checkCollisions(box, core.getEntities())) {
-            it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x + axis_x * it->get<ComponentMovable>()->getSpeed(),
-                it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - axis_z * it->get<ComponentMovable>()->getSpeed()));
+        if (it->has<ComponentCollider>() && !it->get<ComponentCollider>()->getIsAbleToCollide()) {
+            if (std::chrono::system_clock::now() - it->get<ComponentCollider>()->getTimeNonCollide() >= std::chrono::seconds(7))
+                it->get<ComponentModel>()->setPos(it->get<ComponentModel>()->getInitialPos());
         }
+    }
+
+    void SystemEvent::_handleCollisions(ecs::Core &core, ecs::IEntity *it, int idController)
+    {
+        if (it->has<ComponentCollider>()) {
+            float axis_x = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftY());
+            float axis_z = raylib::Gamepad::GetAxisMovement(idController, raylib::Gamepad::GamepadAxisLeftX());
+            it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x - axis_x * it->get<ComponentMovable>()->getSpeed(),
+                it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z + axis_z * it->get<ComponentMovable>()->getSpeed()));
+            raylib::BoundingBox box(raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y,
+                                        it->get<ComponentModel>()->getPos().z - 0.27),
+                raylib::Vector3(
+                    it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+            if (SystemCollision::checkCollisions(box, it, core.getEntities())) {
+                it->get<ComponentModel>()->setPos(raylib::Vector3(it->get<ComponentModel>()->getPos().x + axis_x * it->get<ComponentMovable>()->getSpeed(),
+                    it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - axis_z * it->get<ComponentMovable>()->getSpeed()));
+            }
+        }
+    }
+
+    void SystemEvent::_handlePickBoosts(ecs::Core &core, ecs::IEntity *it)
+    {
+        raylib::BoundingBox box(
+            raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.27),
+            raylib::Vector3(
+                it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+        SystemCollision::checkCollisionsBoosts(box, it, core.getEntities());
     }
 
     void SystemEvent::handleControllersGame(ecs::Core &core)
@@ -443,7 +462,11 @@ namespace ecs
                 }
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i) {
-                        _handleMovementPlayers(core, it, i);
+                        _handleMovementPlayers(it, i);
+                        _handlePickBoosts(core, it);
+                    }
+                    if (it->has<ComponentKills>()) {
+                        _handleCollisions(core, it, i);
                     }
                 }
 

@@ -54,3 +54,8 @@ void ComponentCube::Draw()
     else
         DrawCube(_pos, _size.x, _size.y, _size.z, _color);
 }
+
+std::string ComponentCube::getTexturePath() const
+{
+    return (this->_tex.getTexturePath());
+}

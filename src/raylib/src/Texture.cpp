@@ -20,6 +20,7 @@ raylib::Texture::Texture(const ::Texture &texture)
 raylib::Texture::Texture(const raylib::Texture &other)
 {
     _setTexture(other);
+    _texturePath = other.getTexturePath();
 }
 
 raylib::Texture::Texture(const ::Image &image)
@@ -51,6 +52,7 @@ bool raylib::Texture::Load(const ::Image &image, int layout)
 bool raylib::Texture::Load(const std::string &fileName)
 {
     _setTexture(::LoadTexture(fileName.c_str()));
+    _texturePath = fileName;
     return IsReady();
 }
 
@@ -107,6 +109,11 @@ void raylib::Texture::SetShapes(::Rectangle &source)
 void raylib::Texture::SetShaderValue(::Shader &shader, int locIndex)
 {
     ::SetShaderValueTexture(shader, locIndex, *this);
+}
+
+std::string raylib::Texture::getTexturePath() const
+{
+    return (this->_texturePath);
 }
 
 void raylib::Texture::_setTexture(const ::Texture &texture)

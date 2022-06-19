@@ -27,9 +27,9 @@ class ComponentCube : public ecs::IComponent {
     void setSize(raylib::Vector3 size);
     void setColor(raylib::Color color);
     void setTexture(const std::string texture);
+    std::string getTexturePath() const;
 
     void Draw();
-    void DrawTex();
 
   private:
     raylib::Vector3 _pos;

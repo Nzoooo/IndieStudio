@@ -15,6 +15,7 @@ namespace ecs
 {
     class SystemCollision : public ecs::ISystem {
       public:
-        static bool checkCollisions(raylib::BoundingBox &box, std::vector<ecs::IEntity *> entities);
+        static bool checkCollisions(raylib::BoundingBox &box, ecs::IEntity *it, std::vector<ecs::IEntity *> entities);
+        static void checkCollisionsBoosts(raylib::BoundingBox &box, ecs::IEntity *it, std::vector<ecs::IEntity *> entities);
     };
 } // namespace ecs

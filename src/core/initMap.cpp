@@ -8,6 +8,10 @@
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
 #include "raylib/include/Texture.hpp"
+#include "raylib/include/Window.hpp"
+
+static std::vector<std::string> boostIcon = {
+    "assets/16/boost_block_pass.png", "assets/16/boost_nb_bombs.png", "assets/16/boost_radius_bombs.png", "assets/16/boost_speed.png"};
 
 static ecs::IEntity *meshEntityCreation(
     raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
@@ -34,7 +38,7 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->add<ComponentKills>();
     playerEntity->add<ComponentBombs>(2);
     playerEntity->add<ComponentKillable>();
-    playerEntity->add<ComponentMovable>(dir, 0.03f);
+    playerEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     playerEntity->add<ComponentExplodable>();
     mapCreation.addEntity(playerEntity);
 }
@@ -163,14 +167,26 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
+    int rand;
     for (int j = 1; j < MAP_SIZE - 1; j++) {
         for (int i = 1; i < MAP_SIZE - 1; i++) {
             initial.x += 1;
+            rand = std::rand() % (boostIcon.size() * 3);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, true);
+                cube->add<ComponentDrawable>(false, false);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
                 // cube->add<ComponentCollider>();
+                cube->add<ComponentKillable>();
+                if (rand < boostIcon.size()) {
+                    ecs::IEntity *boost = new ecs::IEntity();
+                    raylib::Texture boostTex;
+                    boostTex.Load(boostIcon.at(rand));
+                    boost->add<ComponentDrawable>(false, true);
+                    boost->add<ComponentCube>(initial, raylib::Vector3(sizeCube.x / 3, sizeCube.y / 3, sizeCube.z / 3), raylib::Color::White(), boostTex);
+                    boost->add<ComponentPickable>();
+                    mapCreation.addEntity(boost);
+                }
                 mapCreation.addEntity(cube);
             } else if (map->getMap()[i][j] == 1) {
                 ecs::IEntity *cube = new ecs::IEntity();

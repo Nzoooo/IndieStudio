@@ -35,6 +35,8 @@
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
 
+#define BASE_SPEED_PLAYERS (0.03f)
+
 namespace ecs
 {
     enum Scenes { Menu, ConnectPlayers, Pause, GameSettings, Game, Win, Close };

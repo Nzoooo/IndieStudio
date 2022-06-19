@@ -16,6 +16,7 @@ namespace raylib
 
     Music::~Music()
     {
+        Unload();
     }
 
     void Music::Load(const std::string &fileName)
@@ -82,6 +83,11 @@ namespace raylib
     float Music::GetTimePlayed()
     {
         return (::GetMusicTimePlayed(*this));
+    }
+
+    void Music::Update()
+    {
+        ::UpdateMusicStream(*this);
     }
 
 } // namespace raylib

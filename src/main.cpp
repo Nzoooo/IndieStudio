@@ -14,6 +14,7 @@
 static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
+    raylib::Window::InitAudioDevice();
     raylib::Window::SetFullScreen();
     ecs::Core core;
     std::vector<int> idControllers;
@@ -29,7 +30,8 @@ static int mainLoop()
             case ecs::Close: return (-1);
         }
     }
-    CloseWindow();
+    raylib::Window::CloseAudioDevice();
+    raylib::Window::Close();
     return (0);
 }
 

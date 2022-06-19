@@ -17,10 +17,13 @@ namespace ecs
     class IEntity {
       private:
         std::vector<ecs::IComponent *> _components;
+        std::string _label = "";
 
       public:
         ~IEntity();
         std::vector<ecs::IComponent *> &getAllComponents();
+        void setLabel(std::string label);
+        std::string getLabel() const;
         template <typename T> T *get();
         template <typename T> bool has() const;
         template <typename T> void remove();

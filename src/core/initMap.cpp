@@ -64,6 +64,11 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
             default: break;
         }
     }
+    ecs::IEntity *musicGame = new ecs::IEntity();
+    musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
+    musicGame->setLabel("MusicGame");
+    musicGame->get<ComponentMusic>()->getMusic().SetVolume(0.05f);
+    mapCreation.addEntity(musicGame);
 }
 
 ecs::Core mapCreation(std::vector<int> &idControllers)

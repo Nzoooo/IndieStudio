@@ -31,6 +31,7 @@ namespace raylib
         void SeekMusic(float position);
         float GetTimeLength();
         float GetTimePlayed();
+        void Update();
 
       protected:
       private:

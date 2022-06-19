@@ -39,6 +39,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
 
     initInformations(core);
     camera.SetMode(CAMERA_ORBITAL);
+    core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Play();
     while (1) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
@@ -70,6 +71,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
                 core.setScene(pauseMenu());
             if (core.getScene() != ecs::Scenes::Game && core.getScene() != ecs::Scenes::Pause)
                 break;
+            core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             updateInformations(core);
@@ -90,5 +92,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             fps = 0;
         }
     }
+    core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Stop();
     return (core.getScene());
 }

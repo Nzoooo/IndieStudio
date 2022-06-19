@@ -47,6 +47,15 @@ ecs::IEntity *ecs::Core::getEntity(unsigned int const i)
     return this->_entities.at(i);
 }
 
+ecs::IEntity *ecs::Core::getEntity(std::string label)
+{
+    for (auto *it : this->_entities) {
+        if (it->getLabel() == label)
+            return it;
+    }
+    return nullptr;
+}
+
 unsigned int ecs::Core::addEntity(ecs::IEntity *e)
 {
     this->_entities.push_back(e);

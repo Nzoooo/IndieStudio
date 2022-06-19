@@ -24,7 +24,12 @@ static int mainLoop()
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu(core)); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, core.getStartMode())); break;
+            case ecs::Scenes::Game: try { core.setScene(coreLoop(idControllers, core.getStartMode()));
+                } catch (...) {
+                    std::cout << "Can't find the saved file." << std::endl;
+                    core.setScene(ecs::Scenes::Menu);
+                }
+                break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(core, idControllers)); break;
             case ecs::Scenes::Win: break;

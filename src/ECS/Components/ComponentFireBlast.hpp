@@ -16,8 +16,14 @@
 class ComponentFireBlast : public ecs::IComponent {
   public:
     enum Direction { North, South, East, West };
-    ComponentFireBlast(Direction direction, raylib::Vector3 pos, raylib::Vector3 size);
+    ComponentFireBlast(Direction direction, raylib::Vector3 pos, raylib::Vector3 size, float time = 2.0);
     ~ComponentFireBlast() = default;
+
+    void timer(float);
+    float getTimer();
+
+    raylib::Vector3 getPos();
+    raylib::Vector3 getSize();
 
     void Draw();
 
@@ -25,4 +31,5 @@ class ComponentFireBlast : public ecs::IComponent {
     raylib::Vector3 _pos;
     raylib::Texture _texture;
     raylib::Vector3 _size;
+    float _time;
 };

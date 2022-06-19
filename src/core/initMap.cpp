@@ -91,13 +91,6 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     mapCreation.setScene(ecs::Scenes::Game);
     initGame(mapCreation, idControllers);
 
-    ecs::IEntity *bomb1 = new ecs::IEntity;
-    bomb1->add<ComponentDrawable>(false, true);
-    bomb1->add<ComponentExplodable>();
-    bomb1->add<ComponentModel>("models3D/Bomb.obj", raylib::Vector3(0.0f, 5.0f, 0.0f));
-    std::cout << "Bombe nb 1 vient d'etre pose" << std::endl;
-    mapCreation.addEntity(bomb1);
-
     mapCreation.add<ecs::SystemExplosion>();
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
@@ -166,7 +159,6 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     mapCreation.add<ecs::SystemEvent>();
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.add<ecs::SystemRender2D>();
-    mapCreation.add<ecs::SystemEvent>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);
@@ -189,9 +181,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
             rand = std::rand() % (boostIcon.size() * 3);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, false);
+                cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
-                // cube->add<ComponentCollider>();
+                cube->add<ComponentCollider>();
                 cube->add<ComponentKillable>();
                 if (rand < boostIcon.size()) {
                     ecs::IEntity *boost = new ecs::IEntity();

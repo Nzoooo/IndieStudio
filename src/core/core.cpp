@@ -27,9 +27,9 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
     raylib::Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
     core._camera.target = initialCamTarget;
     raylib::Vector3 initialCamUp = {0.0f, 1.0f, 0.0f};
-    camera.up = initialCamUp;
-    camera.fovy = 80.0f;
-    camera.projection = CAMERA_PERSPECTIVE;
+    core._camera.up = initialCamUp;
+    core._camera.fovy = 80.0f;
+    core._camera.projection = CAMERA_PERSPECTIVE;
     bool isOrbital = true;
     bool step = false;
     bool first = true;
@@ -37,33 +37,33 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
     float step2 = (MAP_SIZE / 2) - 8;
 
     initInformations(core);
-    camera.SetMode(CAMERA_ORBITAL);
+    core._camera.SetMode(CAMERA_ORBITAL);
     core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Play();
     while (1) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
             fps++;
 
-            camera.Update();
+            core._camera.Update();
 
             if ((fps) == 1 && isOrbital == true) {
-                camera.SetMode(CAMERA_CUSTOM);
+                core._camera.SetMode(CAMERA_CUSTOM);
                 isOrbital = false;
             }
-            if (first == true && step == false && camera.position.x >= -11) {
-                camera.position.x -= 0.1f / 2;
-            } else if (first == true && step == false && camera.position.x < -11) {
+            if (first == true && step == false && core._camera.position.x >= -11) {
+                core._camera.position.x -= 0.1f / 2;
+            } else if (first == true && step == false && core._camera.position.x < -11) {
                 first = false;
             }
-            if (second == true && step == false && first == false && camera.position.z <= step2) {
-                camera.position.z += 0.1f / 2;
-                camera.position.x = -11;
-            } else if (second == true && step == false && first == false && camera.position.z > step2) {
+            if (second == true && step == false && first == false && core._camera.position.z <= step2) {
+                core._camera.position.z += 0.1f / 2;
+                core._camera.position.x = -11;
+            } else if (second == true && step == false && first == false && core._camera.position.z > step2) {
                 second = false;
             }
-            if (isOrbital == false && camera.position.y < 12.5f && first == false && second == false) {
-                camera.position.y += 0.09f / 2;
-                camera.position.x += 0.13f / 2;
+            if (isOrbital == false && core._camera.position.y < 12.5f && first == false && second == false) {
+                core._camera.position.y += 0.09f / 2;
+                core._camera.position.x += 0.13f / 2;
                 step = true;
             }
             if (core.getScene() == ecs::Scenes::Pause)
@@ -74,11 +74,11 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             updateInformations(core);
-            camera.BeginMode();
-            if (step == true && camera.position.y >= 12.5f)
+            core._camera.BeginMode();
+            if (step == true && core._camera.position.y >= 12.5f)
                 core.get<ecs::SystemEvent>()->update(core);
             core.get<ecs::SystemRender3D>()->update(core);
-            camera.EndMode();
+            core._camera.EndMode();
             core.get<ecs::SystemRender2D>()->update(core);
             raylib::Window::EndDrawing();
         }

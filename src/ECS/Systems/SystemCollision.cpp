@@ -29,7 +29,7 @@ namespace ecs
                     box2 = tmpBox;
                 }
             }
-            if (e->has<ComponentCube>() && e->has<ComponentCollider>()) {
+            if (e->has<ComponentCube>() && e->has<ComponentCollider>() && e->get<ComponentCollider>()->getIsAbleToCollide()) {
                 raylib::BoundingBox tmpBox(raylib::Vector3(e->get<ComponentCube>()->getPos().x - 0.5, e->get<ComponentCube>()->getPos().y - 0.5,
                                                e->get<ComponentCube>()->getPos().z - 0.5),
                     raylib::Vector3(
@@ -72,6 +72,30 @@ namespace ecs
                     if (e->get<ComponentCube>()->getTexturePath() == "assets/16/boost_speed.png") {
                         it->get<ComponentMovable>()->setSpeed(it->get<ComponentMovable>()->getSpeed() + BASE_SPEED_PLAYERS);
                     }
+                }
+                return;
+            }
+        }
+    }
+
+    void SystemCollision::checkCollisionsBomb(raylib::BoundingBox &box, ecs::IEntity *it, std::vector<ecs::IEntity *> entities)
+    {
+        raylib::BoundingBox box2;
+
+        for (auto *e : entities) {
+            if (e->has<ComponentFireBlast>()) {
+                raylib::BoundingBox tmpBox(
+                    raylib::Vector3(e->get<ComponentFireBlast>()->getPos().x - e->get<ComponentFireBlast>()->getSize().x,
+                        e->get<ComponentFireBlast>()->getPos().y - 0.4, e->get<ComponentFireBlast>()->getPos().z - e->get<ComponentFireBlast>()->getSize().z),
+                    raylib::Vector3(e->get<ComponentFireBlast>()->getPos().x + e->get<ComponentFireBlast>()->getSize().x,
+                        e->get<ComponentFireBlast>()->getPos().y + 0.4, e->get<ComponentFireBlast>()->getPos().z + e->get<ComponentFireBlast>()->getPos().z));
+                box2 = tmpBox;
+                box2.Draw(raylib::Color::Green());
+            }
+            if (box.checkCollision(box2) && e->has<ComponentDrawable>()) {
+                if (it->has<ComponentKillable>()) {
+                    it->get<ComponentDrawable>()->setIsDrawable3D(false);
+                    it->get<ComponentCollider>()->setIsAbleToCollide(false);
                 }
                 return;
             }

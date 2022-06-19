@@ -7,7 +7,8 @@
 
 #include "ComponentFireBlast.hpp"
 
-ComponentFireBlast::ComponentFireBlast(ComponentFireBlast::Direction side, raylib::Vector3 pos, raylib::Vector3 size) : _pos(pos), _size(size)
+ComponentFireBlast::ComponentFireBlast(ComponentFireBlast::Direction side, raylib::Vector3 pos, raylib::Vector3 size, float time)
+    : _pos(pos), _size(size), _time(time)
 {
     raylib::Image image;
     image.Load("assets/flamme.png");
@@ -24,7 +25,27 @@ ComponentFireBlast::ComponentFireBlast(ComponentFireBlast::Direction side, rayli
     _texture.Load(image);
 };
 
+void ComponentFireBlast::timer(float time)
+{
+    this->_time -= time;
+}
+
+float ComponentFireBlast::getTimer()
+{
+    return (this->_time);
+}
+
 void ComponentFireBlast::Draw()
 {
     this->_pos.DrawCubeTexture(this->_texture, this->_size.x, this->_size.y, this->_size.z, raylib::Color::White());
+}
+
+raylib::Vector3 ComponentFireBlast::getPos()
+{
+    return (_pos);
+}
+
+raylib::Vector3 ComponentFireBlast::getSize()
+{
+    return (_size);
 }

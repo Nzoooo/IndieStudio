@@ -446,6 +446,25 @@ namespace ecs
         SystemCollision::checkCollisionsBoosts(box, it, core.getEntities());
     }
 
+    void SystemEvent::_handleBombPlayer(ecs::Core &core, ecs::IEntity *it)
+    {
+        raylib::BoundingBox box(
+            raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.27),
+            raylib::Vector3(
+                it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+        SystemCollision::checkCollisionsBomb(box, it, core.getEntities());
+    }
+
+    void SystemEvent::_handleBombBox(ecs::Core &core, ecs::IEntity *it)
+    {
+        raylib::BoundingBox box(
+            raylib::Vector3(it->get<ComponentCube>()->getPos().x - 0.5, it->get<ComponentCube>()->getPos().y - 0.5, it->get<ComponentCube>()->getPos().z - 0.5),
+            raylib::Vector3(
+                it->get<ComponentCube>()->getPos().x + 0.5, it->get<ComponentCube>()->getPos().y + 0.5, it->get<ComponentCube>()->getPos().z + 0.5));
+        SystemCollision::checkCollisionsBomb(box, it, core.getEntities());
+        box.Draw(raylib::Color::Orange());
+    }
+
     void SystemEvent::handleControllersGame(ecs::Core &core)
     {
         raylib::Mouse mouseIndex;
@@ -461,9 +480,24 @@ namespace ecs
                     return;
                 }
                 for (auto *it : core.getEntities()) {
-                    if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i) {
+                    if (it->has<ComponentKillable>() && it->has<ComponentCube>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
+                        _handleBombBox(core, it);
+                    }
+                    if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i
+                        && it->get<ComponentDrawable>()->getIsDrawable3D()) {
                         _handleMovementPlayers(it, i);
                         _handlePickBoosts(core, it);
+                        _handleBombPlayer(core, it);
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown())) {
+                            ecs::IEntity *bomb1 = new ecs::IEntity;
+                            bomb1->add<ComponentDrawable>(false, true);
+                            bomb1->add<ComponentExplodable>();
+                            bomb1->add<ComponentExplosion>();
+                            bomb1->add<ComponentModel>("assets/models3D/Bomb.obj",
+                                raylib::Vector3(std::roundf(it->get<ComponentModel>()->getPos().x), std::roundf(it->get<ComponentModel>()->getPos().y),
+                                    std::roundf(it->get<ComponentModel>()->getPos().z)));
+                            core.addEntity(bomb1);
+                        }
                     }
                     if (it->has<ComponentKills>()) {
                         _handleCollisions(core, it, i);

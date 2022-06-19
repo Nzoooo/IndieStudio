@@ -1,34 +1,42 @@
-/*
-** EPITECH PROJECT, 2022
-** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
-** File description:
-** main
-*/
+    /*
+    ** EPITECH PROJECT, 2022
+    ** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+    ** File description:
+    ** main
+    */
 
-#include "ECS/Systems/SystemRender3D.hpp"
+<<<<<<< HEAD
+    #include "ECS/Systems/SystemRender3D.hpp"
+=======
+>>>>>>> master
 #include "core/connectPlayers.hpp"
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
 #include "map/Map.hpp"
 
-static int mainLoop()
+    static int
+    mainLoop()
 {
     raylib::Window::Init(1920, 1080);
+    raylib::Window::InitAudioDevice();
+    raylib::Window::SetFullScreen();
     ecs::Core core;
+    std::vector<int> idControllers;
     core.setScene(ecs::Scenes::Menu);
 
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop()); break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
             case ecs::Scenes::GameSettings: break;
-            case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }
     }
-    CloseWindow();
+    raylib::Window::CloseAudioDevice();
+    raylib::Window::Close();
     return (0);
 }
 

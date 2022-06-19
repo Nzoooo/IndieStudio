@@ -10,4 +10,5 @@
 #include "ECS/Entities/IEntity.hpp"
 #include "ECS/ecs.hpp"
 
-void displayInformations(ecs::Core &core);
+void initInformations(ecs::Core &core);
+void updateInformations(ecs::Core &core);

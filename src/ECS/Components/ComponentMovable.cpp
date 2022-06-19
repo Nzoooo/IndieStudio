@@ -12,7 +12,7 @@ ComponentMovable::Direction ComponentMovable::getDirection() const
     return (_direction);
 }
 
-int ComponentMovable::getSpeed() const
+float ComponentMovable::getSpeed() const
 {
     return (_speed);
 }
@@ -27,7 +27,7 @@ void ComponentMovable::setDirection(ComponentMovable::Direction direction)
     _direction = direction;
 }
 
-void ComponentMovable::setSpeed(int speed)
+void ComponentMovable::setSpeed(float speed)
 {
     _speed = speed;
 }

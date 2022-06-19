@@ -14,11 +14,13 @@
 
 class ComponentText : public ecs::IComponent {
   public:
-    ComponentText(std::string font, std::string text, raylib::Vector2 pos, size_t size, raylib::Color color) : _text(text), _pos(pos), _size(size), _color(color)
+    ComponentText(std::string font, std::string text, raylib::Vector2 pos, size_t size, raylib::Color color)
+        : _text(text), _pos(pos), _size(size), _color(color)
     {
         _font.Load(font);
     };
     ~ComponentText() = default;
+    void setText(std::string text);
 
     void Draw();
 

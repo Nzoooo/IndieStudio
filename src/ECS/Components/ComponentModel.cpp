@@ -8,12 +8,13 @@
 #include "ComponentModel.hpp"
 #include <iostream>
 
-ComponentModel::ComponentModel(std::string modelPath, raylib::Vector3 pos, raylib::Vector3 scale, float rotateAngle, std::string animPath,
-    unsigned int animCount, raylib::Vector3 rotateAxis)
+ComponentModel::ComponentModel(std::string modelPath, raylib::Vector3 pos, raylib::Vector3 scale, std::string animPath, unsigned int animCount,
+    float rotateAngle, raylib::Vector3 rotateAxis)
     : _animFrameCounter(0)
 {
     _model.Load(modelPath);
     _pos = pos;
+    _initialPos = pos;
     _scale = scale;
     _rotateAxis = rotateAxis;
     _rotateAngle = rotateAngle;
@@ -45,6 +46,11 @@ void ComponentModel::Update(int whichAnim)
 raylib::Vector3 ComponentModel::getPos() const
 {
     return (_pos);
+}
+
+raylib::Vector3 ComponentModel::getInitialPos() const
+{
+    return (_initialPos);
 }
 
 raylib::Vector3 ComponentModel::getScale() const
@@ -80,4 +86,15 @@ void ComponentModel::setRotateAxis(raylib::Vector3 rotateAxis)
 void ComponentModel::setRotateAngle(float rotateAngle)
 {
     _rotateAngle = rotateAngle;
+}
+
+void ComponentModel::setRotateAngle(ComponentMovable::Direction dir)
+{
+    switch (dir) {
+        case ComponentMovable::UP: setRotateAngle(270.0f); break;
+        case ComponentMovable::DOWN: setRotateAngle(90.0f); break;
+        case ComponentMovable::LEFT: setRotateAngle(0.0f); break;
+        case ComponentMovable::RIGHT: setRotateAngle(180.0f); break;
+        default: break;
+    }
 }

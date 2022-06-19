@@ -17,13 +17,20 @@ raylib::BoundingBox::BoundingBox(const BoundingBox &other)
     max = other.max;
 }
 
+raylib::BoundingBox &raylib::BoundingBox::operator=(const BoundingBox &other)
+{
+    min = other.min;
+    max = other.max;
+    return *this;
+}
+
 raylib::BoundingBox::~BoundingBox()
 {
 }
 
 void raylib::BoundingBox::Draw(::Color color)
 {
-    DrawBoundingBox(*this, color);
+    ::DrawBoundingBox(*this, color);
 }
 
 bool raylib::BoundingBox::checkCollision(::BoundingBox &box2)

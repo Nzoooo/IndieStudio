@@ -8,7 +8,7 @@
 #include "../include/Vector2.hpp"
 #include "../include/RaylibException.hpp"
 
-raylib::Vector2::Vector2(::Vector2 &vec)
+raylib::Vector2::Vector2(::Vector2 vec)
 {
     _setVector2(vec);
 }
@@ -27,9 +27,10 @@ raylib::Vector2::Vector2() : ::Vector2{0.0f, 0.0f}
 {
 }
 
-raylib::Vector2 &raylib::Vector2::operator=(::Vector2 &vector2)
+raylib::Vector2 &raylib::Vector2::operator=(const Vector2 &other)
 {
-    _setVector2(vector2);
+    x = other.x;
+    y = other.y;
     return *this;
 }
 

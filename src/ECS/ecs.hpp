@@ -22,15 +22,17 @@
 #include "Components/ComponentMesh.hpp"
 #include "Components/ComponentModel.hpp"
 #include "Components/ComponentMovable.hpp"
+#include "Components/ComponentMusic.hpp"
 #include "Components/ComponentPickable.hpp"
 #include "Components/ComponentRectangle.hpp"
-#include "Components/ComponentSpeed.hpp"
+#include "Components/ComponentSound.hpp"
 #include "Components/ComponentText.hpp"
 #include "Components/ComponentTexture.hpp"
 #include "Components/ComponentTransform.hpp"
 #include "Components/ComponentTransparency.hpp"
 #include "Entities/IEntity.hpp"
 #include "Systems/ISystem.hpp"
+#include "Systems/SystemCollision.hpp"
 #include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
 #include "Systems/SystemExplosion.hpp"
@@ -38,9 +40,11 @@
 #include "Systems/SystemRender3D.hpp"
 #include "raylib/include/Camera3D.hpp"
 
+#define BASE_SPEED_PLAYERS (0.03f)
+
 namespace ecs
 {
-    enum Scenes { Menu, ConnectPlayers, GameSettings, Game, Win, Close };
+    enum Scenes { Menu, ConnectPlayers, Pause, GameSettings, Game, Win, Close };
 
     class Core {
       private:
@@ -64,6 +68,7 @@ namespace ecs
 
         unsigned int addEntity(ecs::IEntity *e);
         ecs::IEntity *getEntity(unsigned int const id);
+        ecs::IEntity *getEntity(std::string label);
         void removeEntityIterator(std::vector<ecs::IEntity *>::iterator it);
         void removeEntity(unsigned int const i);
         std::vector<ecs::IEntity *> &getEntities();

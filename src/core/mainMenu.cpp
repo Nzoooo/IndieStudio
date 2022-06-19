@@ -6,7 +6,6 @@
 */
 
 #include "mainMenu.hpp"
-#include "ECS/ecs.hpp"
 
 static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
 {
@@ -23,25 +22,26 @@ static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, st
 static ecs::Core initMenu()
 {
     ecs::Core menu;
-    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 450.0), "Start Game");
+    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 450.0), "Select Players");
     buttonStart->get<ComponentButton>()->setState(true);
     ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 600.0), "Reload Game");
     ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 750.0), "Exit");
     ecs::IEntity *background = new ecs::IEntity();
-    ecs::IEntity *logo = new ecs::IEntity();
     background->add<ComponentDrawable>(true, false);
     background->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
-    logo->add<ComponentDrawable>(true, false);
-    logo->add<ComponentTexture>("assets/Bomberman_Logo.png", raylib::Vector2(1920 / 2.0f - 500 / 2.0f, 150));
+    ecs::IEntity *musicMenu = new ecs::IEntity();
+    musicMenu->add<ComponentMusic>("assets/audios/MusicMenu.mp3");
+    musicMenu->setLabel("MusicMenu");
+    musicMenu->get<ComponentMusic>()->getMusic().SetVolume(0.2f);
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();
     menu.add<ecs::SystemEvent>();
     menu.addEntity(background);
-    menu.addEntity(logo);
     menu.addEntity(buttonStart);
     menu.addEntity(buttonReload);
     menu.addEntity(buttonParam);
+    menu.addEntity(musicMenu);
     return (menu);
 }
 
@@ -49,13 +49,15 @@ ecs::Scenes mainMenu()
 {
     ecs::Core menu = initMenu();
 
-    // raylib::Window::SetFullScreen();
+    menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Play();
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
-        raylib::Window::Clear(raylib::Color::White());
+        menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();
+        raylib::Window::Clear(raylib::Color::White());
         menu.get<ecs::SystemEvent>()->update(menu);
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
+    menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Stop();
     return (menu.getScene());
 }

@@ -42,17 +42,14 @@ static ecs::Core initSettings()
 
 ecs::Scenes gameMenu()
 {
-    raylib::Window::Init(1920, 1080);
     ecs::Core settings = initSettings();
 
-    raylib::Window::SetFullScreen();
     while (!raylib::Window::ShouldClose() && settings.getScene() == ecs::Scenes::GameSettings) {
-        raylib::Window::Clear(raylib::Color::White());
         raylib::Window::BeginDrawing();
+        raylib::Window::Clear(raylib::Color::White());
         settings.get<ecs::SystemEvent>()->update(settings);
         settings.get<ecs::SystemRender2D>()->update(settings);
         raylib::Window::EndDrawing();
     }
-    raylib::Window::Close();
     return (settings.getScene());
 }

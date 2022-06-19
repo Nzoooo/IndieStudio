@@ -29,7 +29,7 @@ enum map_object {
     BOX = 2,
 };
 
-ecs::Scenes coreLoop();
-void mapCreation(Map *map);
+ecs::Scenes coreLoop(std::vector<int> &idControllers);
+ecs::Core mapCreation(std::vector<int> &idControllers);
 
 #endif

@@ -159,3 +159,9 @@ void raylib::Window::SetMasterVolume(float volume)
 {
     ::SetMasterVolume(volume);
 }
+
+raylib::Vector2 raylib::Window::GetWorldToScreen(::Vector3 pos, raylib::Camera3D cam)
+{
+    raylib::Vector2 vec(::GetWorldToScreen(pos, cam));
+    return (vec);
+}

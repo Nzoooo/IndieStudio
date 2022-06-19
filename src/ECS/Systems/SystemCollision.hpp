@@ -17,5 +17,7 @@ namespace ecs
       public:
         static bool checkCollisions(raylib::BoundingBox &box, ecs::IEntity *it, std::vector<ecs::IEntity *> entities);
         static void checkCollisionsBoosts(raylib::BoundingBox &box, ecs::IEntity *it, std::vector<ecs::IEntity *> entities);
+        static void checkCollisionsBomb(raylib::BoundingBox &box, ecs::IEntity *it, std::vector<ecs::IEntity *> entities);
+        static bool checkCollisionsFireBlastBlocks(raylib::BoundingBox &box, std::vector<ecs::IEntity *> entities);
     };
 } // namespace ecs

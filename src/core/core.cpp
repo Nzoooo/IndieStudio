@@ -79,8 +79,10 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
             core._camera.BeginMode();
-            if (step == true && core._camera.position.y >= 12.5f)
+            if (step == true && core._camera.position.y >= 12.5f) {
                 core.get<ecs::SystemEvent>()->update(core);
+                SystemIA::update(core);
+            }
             core.get<ecs::SystemRender3D>()->update(core);
             core._camera.EndMode();
             core.get<ecs::SystemRender2D>()->update(core);

@@ -17,6 +17,7 @@
 #include "Systems/SystemExplosion.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
+#include "Systems/SystemIA.hpp"
 #include "raylib/include/Camera3D.hpp"
 
 #define BASE_SPEED_PLAYERS (0.03f)

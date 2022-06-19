@@ -9,6 +9,7 @@ set(SRC
     ${SRCROOT}/SystemEvent.cpp
     ${SRCROOT}/SystemExplosion.cpp
     ${SRCROOT}/SystemCollision.cpp
+    ${SRCROOT}/SystemIA.cpp
     PARENT_SCOPE)
 
 set(INCDIRS

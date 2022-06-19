@@ -44,6 +44,41 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     mapCreation.addEntity(playerEntity);
 }
 
+void createIA(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, ComponentMovable::Direction dir)
+{
+    ecs::IEntity *iaEntity = new ecs::IEntity();
+
+    iaEntity->add<ComponentDrawable>(false, true);
+    iaEntity->add<ComponentModel>(modelPath, pos, raylib::Vector3(0.3f, 0.3f, 0.3f));
+    iaEntity->get<ComponentModel>()->setRotateAngle(dir);
+    iaEntity->add<ComponentCollider>();
+    iaEntity->add<ComponentKills>();
+    iaEntity->add<ComponentBombs>(2);
+    iaEntity->add<ComponentKillable>();
+    iaEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
+    iaEntity->add<ComponentExplodable>();
+    mapCreation.addEntity(iaEntity);
+}
+
+void createVent(ecs::Core &mapCreation, raylib::Vector3 pos1, raylib::Vector3 pos2)
+{
+    ecs::IEntity *ventEntity1 = new ecs::IEntity();
+    ecs::IEntity *ventEntity2 = new ecs::IEntity();
+    raylib::Texture tex;
+
+    ventEntity1->add<ComponentDrawable>(false, true);
+    tex.Load("assets/mapTextures/VENTILATION.png");
+    ventEntity1->add<ComponentCube>(pos1, raylib::Vector3(1.0f, 0.2f, 1.0f), raylib::Color::White(), tex);
+    ventEntity1->add<ComponentVent>();
+    ventEntity2->add<ComponentDrawable>(false, true);
+    ventEntity2->add<ComponentCube>(pos2, raylib::Vector3(1.0f, 0.2f, 1.0f), raylib::Color::White(), tex);
+    ventEntity2->add<ComponentVent>();
+    ventEntity1->get<ComponentVent>()->pairVent(ventEntity2);
+    ventEntity2->get<ComponentVent>()->pairVent(ventEntity1);
+    mapCreation.addEntity(ventEntity1);
+    mapCreation.addEntity(ventEntity2);
+}
+
 void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
 {
     int &nbBomb = Settings[1];
@@ -51,24 +86,41 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
-                createPlayer(
-                    mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                    ComponentMovable::DOWN, nbBomb);
                 break;
             case 1:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
                     ComponentMovable::DOWN, nbBomb);
                 break;
             case 2:
-                createPlayer(
-                    mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
                 break;
             case 3:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
-                    ComponentMovable::DOWN, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
                 break;
             default: break;
         }
     }
+    for (std::size_t i = idControllers.size(); i < 4; i++) {
+        switch (i) {
+            case 0:
+                createIA(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::DOWN);
+                break;
+            case 1:
+                createIA(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::DOWN);
+                break;
+            case 2:
+                createIA(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::UP);
+                break;
+            case 3:
+                createIA(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::UP);
+                break;
+            default: break;
+        }
+    }
+    createVent(mapCreation, raylib::Vector3(-3.0f, 0.0f, -(MAP_SIZE / 2) + 4), raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 6));
+    createVent(mapCreation, raylib::Vector3(-4.0f, 0.0f, (MAP_SIZE / 2) - 7), raylib::Vector3((MAP_SIZE / 2) - 7, 0.0f, -(MAP_SIZE / 2) + 7));
     ecs::IEntity *musicGame = new ecs::IEntity();
     musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
     musicGame->setLabel("MusicGame");

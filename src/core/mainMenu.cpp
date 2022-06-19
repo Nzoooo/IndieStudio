@@ -22,7 +22,7 @@ static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, st
 static ecs::Core initMenu()
 {
     ecs::Core menu;
-    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 450.0), "Select Players");
+    ecs::IEntity *buttonStart = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 450.0), "Start Game");
     buttonStart->get<ComponentButton>()->setState(true);
     ecs::IEntity *buttonReload = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 600.0), "Reload Game");
     ecs::IEntity *buttonParam = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 750.0), "Exit");
@@ -59,11 +59,11 @@ ecs::Scenes mainMenu(ecs::Core &core)
         menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
+        raylib::Window::BeginDrawing();
         menu.get<ecs::SystemEvent>()->update(menu);
         core.setStartMode(menu.getStartMode());
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }
-    menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Stop();
     return (menu.getScene());
 }

@@ -47,7 +47,6 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
 {
     int &nbBomb = Settings[1];
 
-    std::cout << nbBomb << std::endl;
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:

@@ -508,7 +508,6 @@ namespace ecs
             core.setScene(ecs::Scenes::Pause);
             return;
         }
-        // handleControllersWin(core);
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(core, i)) {
                 if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonMiddleRight())) {
@@ -579,7 +578,7 @@ namespace ecs
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
                         int nbBot = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText());
-                        if (nbBot < 3)
+                        if (nbBot < 4 - nbController)
                             nbBot++;
                         core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBot));
                         return;
@@ -643,7 +642,7 @@ namespace ecs
                     if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->get<ComponentButton>()->getState()) {
                         if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 0) {
                             int nbBot = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText());
-                            if (nbBot < 3)
+                            if (nbBot < 4 - nbController)
                                 nbBot++;
                             core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBot));
                             return;

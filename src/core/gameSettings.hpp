@@ -18,4 +18,4 @@
 #include "raylib/include/Vector3.hpp"
 #include "raylib/include/Window.hpp"
 
-ecs::Scenes gameSettings(std::vector<int> &Settings);
+ecs::Scenes gameSettings(std::vector<int> &Settings, std::vector<int> &idControllers);

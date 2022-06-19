@@ -29,7 +29,7 @@ static int mainLoop()
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
             case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, settings, winner)); break;
-            case ecs::Scenes::GameSettings: core.setScene(gameSettings(settings)); break;
+            case ecs::Scenes::GameSettings: core.setScene(gameSettings(settings, idControllers)); break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: core.setScene(winMenu(winner)); break;
             case ecs::Close: break;

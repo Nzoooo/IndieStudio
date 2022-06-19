@@ -64,18 +64,18 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                    ComponentMovable::DOWN);
                 break;
             case 1:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
                     ComponentMovable::DOWN);
                 break;
             case 2:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP);
                 break;
             case 3:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
-                    ComponentMovable::DOWN);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP);
                 break;
             default: break;
         }
@@ -83,18 +83,16 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
     for (std::size_t i = idControllers.size(); i < 4; i++) {
         switch (i) {
             case 0:
-                createIA(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::UP);
+                createIA(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::DOWN);
                 break;
             case 1:
-                createIA(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1),
-                    ComponentMovable::DOWN);
+                createIA(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::DOWN);
                 break;
             case 2:
-                createIA(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::UP);
+                createIA(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), ComponentMovable::UP);
                 break;
             case 3:
-                createIA(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1),
-                    ComponentMovable::DOWN);
+                createIA(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), ComponentMovable::UP);
                 break;
             default: break;
         }
@@ -211,12 +209,12 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     for (int j = 1; j < MAP_SIZE - 1; j++) {
         for (int i = 1; i < MAP_SIZE - 1; i++) {
             initial.x += 1;
-            rand = std::rand() % (boostIcon.size() * 3);
+            rand = std::rand() % (boostIcon.size() * 6);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, true);
+                // cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
-                cube->add<ComponentCollider>();
+                // cube->add<ComponentCollider>();
                 cube->add<ComponentKillable>();
                 if (rand < boostIcon.size()) {
                     ecs::IEntity *boost = new ecs::IEntity();

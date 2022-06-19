@@ -17,8 +17,8 @@ void SystemIA::update(ecs::Core &_core)
 
     for (auto *e : _core.getEntities()) {
         if (e->has<ComponentKills>() && !e->has<ComponentControllable>()) {
-            if (isKillableBlockInRange(e, _core))
-                /* place bomb */;
+            // if (isKillableBlockInRange(e, _core))
+            //     /* place bomb */;
             bomb = getBombInRange(e, _core);
             move(e, _core, bomb);
         }
@@ -199,11 +199,11 @@ bool SystemIA::isKillableBlockInRange(ecs::IEntity *_ia, ecs::Core &_core)
     raylib::BoundingBox bbIaVertical(bbIaVerticalmin, bbIaVerticalmax);
     for (auto *e : _core.getEntities()) {
         if (e->has<ComponentKillable>() && e->has<ComponentCollider>() && e->has<ComponentCube>() &&
-            e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable3D()) {
-            raylib::Vector3 bbBombmin(e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
-            raylib::Vector3 bbBombmax(e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
-            raylib::BoundingBox bbBomb(bbBombmin, bbBombmax);
-            if (ecs::SystemCollision::checkCollisions(bbIaHorizontal, bbBomb) || ecs::SystemCollision::checkCollisions(bbIaVertical, bbBomb))
+            e->has<ComponentDrawable>() && e->get<ComponentDrawable>()->getIsDrawable3D() && e->has<ComponentModel>()) {
+            raylib::Vector3 bbBlockmin(e->get<ComponentModel>()->getPos().x - 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z - 0.5f);
+            raylib::Vector3 bbBlockmax(e->get<ComponentModel>()->getPos().x + 0.5f, e->get<ComponentModel>()->getPos().y, e->get<ComponentModel>()->getPos().z + 0.5f);
+            raylib::BoundingBox bbBlock(bbBlockmin, bbBlockmax);
+            if (ecs::SystemCollision::checkCollisions(bbIaHorizontal, bbBlock) || ecs::SystemCollision::checkCollisions(bbIaVertical, bbBlock))
                 return (true);
         }
     }

@@ -222,9 +222,13 @@ ecs::Core mapCreation(std::vector<int> &idControllers, ecs::GameStartMode start_
             initial.z += 1.0f;
         }
     } else if (start_mode == ecs::GameStartMode::Load) {
-        std::cout << "Load mode" << std::endl;
         Load loader;
-        ecs::Core loaded_core = loader.loadFile();
+        ecs::Core loaded_core;
+        try {
+            loaded_core = loader.loadFile();
+        } catch (...) {
+            throw std::exception();
+        }
         int i = 0;
         for (auto entity : loaded_core.getEntities()) {
             mapCreation.addEntity(entity);

@@ -21,7 +21,12 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
     std::cout << "Core received " << start_mode << std::endl;
-    ecs::Core core = mapCreation(idControllers, start_mode);
+    ecs::Core core;
+    try {
+        core = mapCreation(idControllers, start_mode);
+    } catch (...) {
+        throw std::exception();
+    }
     int fps = 0;
     int avg_fps = FPS_CAP;
     raylib::Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
@@ -69,7 +74,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
                 step = true;
             }
             if (core.getScene() == ecs::Scenes::Pause)
-                core.setScene(pauseMenu());
+                core.setScene(pauseMenu(core));
             if (core.getScene() != ecs::Scenes::Game && core.getScene() != ecs::Scenes::Pause)
                 break;
             core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();

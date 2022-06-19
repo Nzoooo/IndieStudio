@@ -8,7 +8,9 @@
 #include "SystemEvent.hpp"
 #include <chrono>
 #include <cmath>
+#include <string>
 #include "core/information/info.hpp"
+#include "core/winMenu.hpp"
 #include "raylib/include/Gamepad.hpp"
 
 namespace ecs
@@ -449,15 +451,32 @@ namespace ecs
     void SystemEvent::handleControllersGame(ecs::Core &core)
     {
         raylib::Mouse mouseIndex;
+        int j = 0;
+        int k = 0;
 
         if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
             core.setScene(ecs::Scenes::Pause);
             return;
         }
+        // handleControllersWin(core);
         for (int i = 0; i <= raylib::Gamepad::gamepadNumber; i++) {
             if (raylib::Gamepad::IsAvailable(i) && _isControllerAssign(core, i)) {
                 if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonMiddleRight())) {
                     core.setScene(ecs::Scenes::Pause);
+                    return;
+                }
+                for (auto *e : core.getEntities()) {
+                    if (e->has<ComponentKills>()) {
+                        if (e->get<ComponentDrawable>()->getIsDrawable3D() == true)
+                            j++;
+                        k++;
+                    }
+                }
+                if (j == 0 && k != 0) {
+                    core.setScene(ecs::Scenes::Win);
+                    return;
+                } else if (j == 1) {
+                    core.setScene(ecs::Scenes::Win);
                     return;
                 }
                 for (auto *it : core.getEntities()) {
@@ -534,7 +553,6 @@ namespace ecs
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
                 for (auto *it : core.getEntities()) {
                     if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
-                        std::cout << "i'm here" << std::endl;
                         core.setScene(ecs::Scenes::Menu);
                         return;
                     }

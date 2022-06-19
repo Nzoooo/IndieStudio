@@ -32,12 +32,13 @@ static int mainLoop()
             case ecs::Scenes::GameSettings: core.setScene(gameSettings(settings, idControllers)); break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: core.setScene(winMenu(winner)); break;
-            case ecs::Close: break;
+            case ecs::Close:
+                raylib::Window::StopSounds();
+                raylib::Window::CloseAudioDevice();
+                raylib::Window::Close();
+                return (0);
         }
     }
-    raylib::Window::StopSounds();
-    raylib::Window::CloseAudioDevice();
-    raylib::Window::Close();
     return (0);
 }
 

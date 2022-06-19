@@ -39,6 +39,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
 
     initInformations(core);
     camera.SetMode(CAMERA_ORBITAL);
+    core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Play();
     while (1) {
         if (clockToMilliseconds(clock() - fps_clock) >= FPS_CAP_REAL) {
             fps_clock = clock();
@@ -70,12 +71,15 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
                 core.setScene(pauseMenu());
             if (core.getScene() != ecs::Scenes::Game && core.getScene() != ecs::Scenes::Pause)
                 break;
+            core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
-            if (step == true && camera.position.y >= 12.5f)
-                core.get<ecs::SystemEvent>()->update(core);
             updateInformations(core);
             camera.BeginMode();
+            if (step == true && camera.position.y >= 12.5f) {
+                core.get<ecs::SystemEvent>()->update(core);
+                SystemIA::update(core);
+            }
             core.get<ecs::SystemRender3D>()->update(core);
             camera.EndMode();
             core.get<ecs::SystemRender2D>()->update(core);
@@ -86,9 +90,10 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             sec_clock = clock();
             avg_fps = (avg_fps + fps) / 2;
             // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
-            printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
+            // printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             fps = 0;
         }
     }
+    core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Stop();
     return (core.getScene());
 }

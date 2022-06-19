@@ -14,30 +14,24 @@
 static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
+    raylib::Window::InitAudioDevice();
+    raylib::Window::SetFullScreen();
     ecs::Core core;
     std::vector<int> idControllers;
     core.setScene(ecs::Scenes::Menu);
 
-<<<<<<< HEAD
-    while (res != -1) {
-        switch (index.getScene()) {
-            case ecs::Scenes::Menu: index.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: res = coreLoop(index); break;
-            case ecs::Scenes::GameSettings: break;
-            case ecs::Scenes::ConnectPlayers: break;
-=======
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
             case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
             case ecs::Scenes::GameSettings: break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
->>>>>>> origin
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }
     }
-    CloseWindow();
+    raylib::Window::CloseAudioDevice();
+    raylib::Window::Close();
     return (0);
 }
 

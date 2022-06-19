@@ -30,7 +30,7 @@ static ecs::Core initMenu()
     ecs::IEntity *buttonExit = createButton(menu, raylib::Vector2(1920 / 2.0f - 358 / 2.0f, 900.0), "Exit");
     ecs::IEntity *background = new ecs::IEntity();
     background->add<ComponentDrawable>(true, false);
-    background->add<ComponentTexture>("assets/background.png", raylib::Vector2(0, 0));
+    background->add<ComponentTexture>("assets/bgPause.png", raylib::Vector2(0, 0));
     menu.setScene(ecs::Scenes::Pause);
 
     menu.add<ecs::SystemRender2D>();
@@ -47,7 +47,6 @@ ecs::Scenes pauseMenu()
 {
     ecs::Core menu = initMenu();
 
-    raylib::Window::SetFullScreen();
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Pause) {
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());

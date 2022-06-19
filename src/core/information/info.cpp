@@ -203,16 +203,19 @@ void updateInformations(ecs::Core &core)
             for (auto *info : core.getEntities()) {
                 if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_speed.png") {
                     // It's entity of speed info
-                    info->get<ComponentText>()->setText(std::to_string(static_cast<int>(player->get<ComponentMovable>()->getSpeed() / 0.03f)));
+                    if (info->has<ComponentText>())
+                        info->get<ComponentText>()->setText(std::to_string(static_cast<int>(player->get<ComponentMovable>()->getSpeed() / BASE_SPEED_PLAYERS)));
                 }
                 if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
                     // It's entity of radius info
-                    info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
+                    if (info->has<ComponentText>())
+                        info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
                 }
                 if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_nb_bombs.png") {
                     // It's entity of radius info
-                    info->get<ComponentText>()->setText(
-                        std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));
+                    if (info->has<ComponentText>())
+                        info->get<ComponentText>()->setText(std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/"
+                            + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));
                 }
             }
         }

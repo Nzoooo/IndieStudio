@@ -11,3 +11,8 @@ void ComponentText::Draw()
 {
     this->_font.DrawText(this->_text, this->_pos, this->_size, 3.0, this->_color);
 }
+
+void ComponentText::setText(std::string text)
+{
+    this->_text = text;
+}

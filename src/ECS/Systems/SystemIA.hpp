@@ -9,10 +9,11 @@
 
 #include "ecs.hpp"
 #include <chrono>
+#include <map>
 
 class SystemIA : public ecs::ISystem {
     public:
-        SystemIA(ecs::Core &core, std::string modelPath, raylib::Vector3 pos);
+        SystemIA(ecs::Core &core, std::string modelPath, raylib::Vector3 pos, ComponentMovable::Direction dir);
         SystemIA(const SystemIA &other) = delete;
         ~SystemIA();
         SystemIA &operator=(const SystemIA &other) = delete;
@@ -23,7 +24,6 @@ class SystemIA : public ecs::ISystem {
     private:
         ecs::Core &_core;
         ecs::IEntity *_ia;
-        int _blastRange;
         std::chrono::time_point<std::chrono::system_clock> _timeInBombRange;
 
         ecs::IEntity *getBombInRange();
@@ -33,5 +33,6 @@ class SystemIA : public ecs::ISystem {
 
         void move();
         void move(ecs::IEntity *bomb);
+        std::map<std::string, float> getMovement();
         bool checkCollisionAt(int posX, int posY) const;
 };

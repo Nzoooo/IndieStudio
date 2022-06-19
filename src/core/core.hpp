@@ -30,6 +30,6 @@ enum map_object {
 };
 
 ecs::Scenes coreLoop(std::vector<int> &idControllers);
-void mapCreation(Map *map);
+ecs::Core mapCreation(std::vector<int> &idControllers);
 
 #endif

@@ -18,7 +18,48 @@ static ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3
     return (mesh);
 }
 
-ecs::Core mapCreation()
+void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir)
+{
+    ecs::IEntity *playerEntity = new ecs::IEntity();
+
+    playerEntity->add<ComponentDrawable>(false, true);
+    playerEntity->add<ComponentModel>(modelPath, pos, raylib::Vector3(0.3f, 0.3f, 0.3f));
+    playerEntity->get<ComponentModel>()->setRotateAngle(dir);
+    playerEntity->add<ComponentControllable>();
+    playerEntity->get<ComponentControllable>()->setGamepadId(id);
+    playerEntity->add<ComponentCollider>();
+    playerEntity->add<ComponentKills>();
+    playerEntity->add<ComponentBombs>(2);
+    playerEntity->add<ComponentKillable>();
+    playerEntity->add<ComponentMovable>(dir, 0.03f);
+    playerEntity->add<ComponentExplodable>();
+    mapCreation.addEntity(playerEntity);
+}
+
+void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
+{
+    for (std::size_t i = 0; i < idControllers.size(); i++) {
+        switch (i) {
+            case 0:
+                createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP);
+                break;
+            case 1:
+                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                    ComponentMovable::DOWN);
+                break;
+            case 2:
+                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP);
+                break;
+            case 3:
+                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
+                    ComponentMovable::DOWN);
+                break;
+            default: break;
+        }
+    }
+}
+
+ecs::Core mapCreation(std::vector<int> &idControllers)
 {
     raylib::Texture floorTex;
     raylib::Texture wallTex;
@@ -35,6 +76,8 @@ ecs::Core mapCreation()
     Map *map = new Map;
     map->generateMap();
     ecs::Core mapCreation;
+    mapCreation.setScene(ecs::Scenes::Game);
+    initGame(mapCreation, idControllers);
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
@@ -101,6 +144,7 @@ ecs::Core mapCreation()
 
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.add<ecs::SystemRender2D>();
+    mapCreation.add<ecs::SystemEvent>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);

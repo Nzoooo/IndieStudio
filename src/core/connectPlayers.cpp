@@ -12,7 +12,7 @@ static ecs::IEntity *createButton(ecs::Core &connect, raylib::Vector2 posButton,
     ecs::IEntity *buttonEntity = new ecs::IEntity();
 
     buttonEntity->add<ComponentDrawable>(true, false);
-    buttonEntity->add<ComponentButton>(posButton, textButton, posText, 55.0f);
+    buttonEntity->add<ComponentButton>(posButton, textButton, posText, 50.0f);
     buttonEntity->add<ComponentClickable>();
     buttonEntity->get<ComponentButton>()->setIdButton(connect.getNbButtons());
     connect.increaseNbButtons(1);
@@ -63,12 +63,12 @@ ecs::Core initConnectPlayers()
     ecs::IEntity *logoXButton = new ecs::IEntity();
     logoXButton->add<ComponentDrawable>(true, false);
     logoXButton->add<ComponentTexture>("assets/XButton.png", raylib::Vector2(725.0f, 945.0f));
-    ecs::IEntity *goHomeButton = createButton(connect, raylib::Vector2(10.0f, 10.0f), "Home", raylib::Vector2(135.0f, 40.0f));
+    ecs::IEntity *goHomeButton = createButton(connect, raylib::Vector2(10.0f, 10.0f), "Home", raylib::Vector2(135.0f, 45.0f));
     ecs::IEntity *nothingToSelectButton = createButton(connect, raylib::Vector2(0.0f, 0.0f), "", raylib::Vector2(0.0f, 0.0f));
     std::string trspTexturePath = "assets/connectPlayers/trspTexture.png";
     nothingToSelectButton->get<ComponentButton>()->setTexture(trspTexturePath);
     nothingToSelectButton->get<ComponentButton>()->setState(true);
-    ecs::IEntity *startGameButton = createButton(connect, raylib::Vector2(1480.0f, 940.0f), "Start Game", raylib::Vector2(1535.0f, 970.0f));
+    ecs::IEntity *startGameButton = createButton(connect, raylib::Vector2(1480.0f, 940.0f), "Start Game", raylib::Vector2(1540.0f, 975.0f));
     startGameButton->get<ComponentButton>()->setIdButton(-connect.getNbButtons() + 1);
     connect.setScene(ecs::Scenes::ConnectPlayers);
 

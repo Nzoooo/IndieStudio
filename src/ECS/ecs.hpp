@@ -23,7 +23,7 @@
 
 namespace ecs
 {
-    enum Scenes { Menu, ConnectPlayers, Pause, GameSettings, Game, Win, Close };
+    enum Scenes { Menu, ConnectPlayers, Pause, GameSettings, Game, Win, Close, GameSave };
     enum GameStartMode { NONE, Restart, Load };
 
     class Core {

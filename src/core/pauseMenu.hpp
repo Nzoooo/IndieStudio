@@ -18,4 +18,4 @@
 #include "raylib/include/Vector3.hpp"
 #include "raylib/include/Window.hpp"
 
-ecs::Scenes pauseMenu();
+ecs::Scenes pauseMenu(ecs::Core &core_game);

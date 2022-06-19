@@ -360,7 +360,7 @@ namespace ecs
                 } else if (isClicking(*buttonTmp) == true && i == 1) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
+                        core.setScene(ecs::Scenes::GameSave);
                 } else if (isClicking(*buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
@@ -392,7 +392,7 @@ namespace ecs
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
                             if (core.getEntity("SoundClick") != nullptr)
                                 core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
-                            core.setScene(ecs::Scenes::Close);
+                            core.setScene(ecs::Scenes::GameSave);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {

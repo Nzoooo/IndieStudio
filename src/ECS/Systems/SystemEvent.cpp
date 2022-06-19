@@ -516,6 +516,7 @@ namespace ecs
                     if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i
                         && it->get<ComponentDrawable>()->getIsDrawable3D()) {
                         _handleMovementPlayers(it, i);
+                        _handleCollisions(core, it, i);
                         if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown()) && it->has<ComponentBombs>()
                             && it->get<ComponentBombs>()->getNbMaxBombs() > it->get<ComponentBombs>()->getNbCurrBombs()) {
                             ecs::IEntity *bomb1 = new ecs::IEntity;
@@ -529,7 +530,6 @@ namespace ecs
                         }
                     }
                     if (it->has<ComponentKills>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
-                        _handleCollisions(core, it, i);
                         _handlePickBoosts(core, it);
                         _handleBombPlayer(core, it);
                     }

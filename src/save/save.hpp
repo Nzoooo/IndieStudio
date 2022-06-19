@@ -13,7 +13,7 @@
 
 #include <fstream>
 
-#define FILEPATH "save.txt"
+#define FILEPATH_SAVE "save.txt"
 
 class Save {
   public:
@@ -25,7 +25,7 @@ class Save {
 
     /// @brief Save Components from the entity into the file.
     /// @param ecs::IEntity The entity to save.
-    void saveEntity(ecs::IEntity &entity);
+    bool saveEntity(ecs::IEntity &entity, std::size_t i);
 
     /// @brief Empty the file.
     void eraseSave(void);

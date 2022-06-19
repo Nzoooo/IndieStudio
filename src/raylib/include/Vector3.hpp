@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <ostream>
 #include "raylib.hpp"
 
 namespace raylib
@@ -30,3 +31,5 @@ namespace raylib
         void _setVector3(::Vector3 &vec);
     };
 } // namespace raylib
+
+std::ostream &operator<<(std::ostream &os, const raylib::Vector3 &v);

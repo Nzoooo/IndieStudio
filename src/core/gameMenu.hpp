@@ -1,12 +1,11 @@
 /*
 ** EPITECH PROJECT, 2022
-** B-YEP-400-NAN-4-1-indiestudio-matthis.lesur
+** Project
 ** File description:
 ** gameMenu
 */
 
-#ifndef GAMEMENU_HPP_
-#define GAMEMENU_HPP_
+#pragma once
 
 #include "ECS/ecs.hpp"
 #include "raylib/include/Color.hpp"
@@ -18,5 +17,3 @@
 #include "raylib/include/Window.hpp"
 
 ecs::Scenes gameMenu();
-
-#endif /* !GAMEMENU_HPP_ */

@@ -10,9 +10,9 @@
 Map::Map()
 {
     this->_map = new int *[MAP_SIZE];
-    for (size_t i = 0; i < MAP_SIZE; i++) {
+    for (std::size_t i = 0; i < MAP_SIZE; i++) {
         this->_map[i] = new int[MAP_SIZE];
-        for (size_t j = 0; j < MAP_SIZE; j++) {
+        for (std::size_t j = 0; j < MAP_SIZE; j++) {
             if (j == 0 || j == MAP_SIZE - 1 || i == 0 || i == MAP_SIZE - 1 || (i % 2 == 0 && j % 2 == 0))
                 this->_map[i][j] = WALL;
             else
@@ -32,8 +32,8 @@ int **Map::getMap()
 
 void Map::readMap()
 {
-    for (size_t i = 0; i < MAP_SIZE; i++) {
-        for (size_t j = 0; j < MAP_SIZE; j++) {
+    for (std::size_t i = 0; i < MAP_SIZE; i++) {
+        for (std::size_t j = 0; j < MAP_SIZE; j++) {
             std::cout << this->_map[i][j];
         }
         std::cout << std::endl;
@@ -74,16 +74,16 @@ void Map::generateMap()
 {
     std::srand(std::time(nullptr));
     int maxTunnels = MAXTUNNELS;
-    size_t currentRow = std::floor(std::rand() % MAP_SIZE);
-    size_t currentColumn = std::floor(std::rand() % MAP_SIZE);
+    std::size_t currentRow = std::floor(std::rand() % MAP_SIZE);
+    std::size_t currentColumn = std::floor(std::rand() % MAP_SIZE);
     while (currentRow < 1 && currentColumn < 1) {
         currentRow = std::floor(std::rand() % MAP_SIZE);
         currentColumn = std::floor(std::rand() % MAP_SIZE);
     }
     std::pair<int, int> lastdirection = {0, 0};
     lastdirection = randomDirection(lastdirection);
-    size_t randomLength = std::ceil(std::rand() % MAXLENGHT);
-    size_t tunnelLength = 0;
+    std::size_t randomLength = std::ceil(std::rand() % MAXLENGHT);
+    std::size_t tunnelLength = 0;
     while (1) {
         if (((currentRow == 0) && (lastdirection.first == -1)) || ((currentColumn == 0) && (lastdirection.second == -1))
             || ((currentRow == MAP_SIZE - 1) && (lastdirection.first == 1)) || ((currentColumn == MAP_SIZE - 1) && (lastdirection.second == 1))

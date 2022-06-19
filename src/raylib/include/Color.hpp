@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <ostream>
 #include "raylib.hpp"
 
 namespace raylib
@@ -48,3 +49,5 @@ namespace raylib
       private:
     };
 } // namespace raylib
+
+std::ostream &operator<<(std::ostream &os, const raylib::Color &v);

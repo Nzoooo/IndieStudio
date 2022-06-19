@@ -7,6 +7,7 @@
 
 #include "initMap.hpp"
 #include "ECS/ecs.hpp"
+#include "load/load.hpp"
 #include "raylib/include/Texture.hpp"
 #include "raylib/include/Window.hpp"
 
@@ -82,7 +83,6 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
 {
     int &nbBomb = Settings[1];
 
-    std::cout << nbBomb << std::endl;
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
@@ -138,7 +138,7 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
     mapCreation.addEntity(soundDeath);
 }
 
-ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings)
+ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings, ecs::GameStartMode start_mode)
 {
     raylib::Texture floorTex;
     raylib::Texture wallTex;
@@ -153,7 +153,8 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
     wallupTex.Load("assets/mapTextures/wall_up.png");
     blockTex.Load("assets/mapTextures/block_texture.png");
     Map *map = new Map;
-    map->generateMap();
+    if (start_mode == ecs::GameStartMode::Restart)
+        map->generateMap();
     ecs::Core mapCreation;
     mapCreation.setScene(ecs::Scenes::Game);
     initGame(mapCreation, idControllers, Settings);
@@ -241,37 +242,53 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
 
     raylib::Vector3 sizeCube = {1.0f, 1.0f, 1.0f};
     Vector3 initial = {-8.0f, 0.5f, -1.0f * (MAP_SIZE / 2) + 1};
-    int rand;
-    for (int j = 1; j < MAP_SIZE - 1; j++) {
-        for (int i = 1; i < MAP_SIZE - 1; i++) {
-            initial.x += 1;
-            rand = std::rand() % (boostIcon.size() * 6);
-            if (map->getMap()[i][j] == 2) {
-                ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
-                cube->add<ComponentCollider>();
-                cube->add<ComponentKillable>();
-                if (rand < boostIcon.size()) {
-                    ecs::IEntity *boost = new ecs::IEntity();
-                    raylib::Texture boostTex;
-                    boostTex.Load(boostIcon.at(rand));
-                    boost->add<ComponentDrawable>(false, true);
-                    boost->add<ComponentCube>(initial, raylib::Vector3(sizeCube.x / 3, sizeCube.y / 3, sizeCube.z / 3), raylib::Color::White(), boostTex);
-                    boost->add<ComponentPickable>();
-                    mapCreation.addEntity(boost);
+    std::size_t rand;
+    if (start_mode == ecs::GameStartMode::Restart) {
+        std::cout << "Restart mode" << std::endl;
+        for (int j = 1; j < MAP_SIZE - 1; j++) {
+            for (int i = 1; i < MAP_SIZE - 1; i++) {
+                initial.x += 1;
+                if (map->getMap()[i][j] == 2) {
+                    ecs::IEntity *cube = new ecs::IEntity();
+                    cube->add<ComponentDrawable>(false, true);
+                    cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
+                    cube->add<ComponentCollider>();
+                    cube->add<ComponentKillable>();
+                    rand = std::rand() % (boostIcon.size() * 3);
+                    if (rand < boostIcon.size()) {
+                        ecs::IEntity *boost = new ecs::IEntity();
+                        raylib::Texture boostTex;
+                        boostTex.Load(boostIcon.at(rand));
+                        boost->add<ComponentDrawable>(false, true);
+                        boost->add<ComponentCube>(initial, raylib::Vector3(sizeCube.x / 3, sizeCube.y / 3, sizeCube.z / 3), raylib::Color::White(), boostTex);
+                        boost->add<ComponentPickable>();
+                        mapCreation.addEntity(boost);
+                    }
+                    mapCreation.addEntity(cube);
+                } else if (map->getMap()[i][j] == 1) {
+                    ecs::IEntity *cube = new ecs::IEntity();
+                    cube->add<ComponentDrawable>(false, true);
+                    cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), blockTex);
+                    cube->add<ComponentCollider>();
+                    mapCreation.addEntity(cube);
                 }
-                mapCreation.addEntity(cube);
-            } else if (map->getMap()[i][j] == 1) {
-                ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, true);
-                cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), blockTex);
-                cube->add<ComponentCollider>();
-                mapCreation.addEntity(cube);
             }
+            initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
+            initial.z += 1.0f;
         }
-        initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
-        initial.z += 1.0f;
+    } else if (start_mode == ecs::GameStartMode::Load) {
+        Load loader;
+        ecs::Core loaded_core;
+        try {
+            loaded_core = loader.loadFile();
+        } catch (...) {
+            throw std::exception();
+        }
+        int i = 0;
+        for (auto entity : loaded_core.getEntities()) {
+            mapCreation.addEntity(entity);
+            std::cout << i++ << std::endl;
+        }
     }
     return (mapCreation);
 }

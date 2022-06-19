@@ -97,7 +97,7 @@ ecs::Core initConnectPlayers()
     return (connect);
 }
 
-ecs::Scenes connectPlayers(std::vector<int> &idControllers)
+ecs::Scenes connectPlayers(ecs::Core &core, std::vector<int> &idControllers)
 {
     idControllers.clear();
     ecs::Core connect = initConnectPlayers();
@@ -108,6 +108,7 @@ ecs::Scenes connectPlayers(std::vector<int> &idControllers)
         raylib::Window::Clear(raylib::Color::White());
         connect.get<ecs::SystemEvent>()->update(connect);
         connect.get<ecs::SystemRender2D>()->update(connect);
+        core.setStartMode(connect.getStartMode());
         camera.BeginMode();
         connect.get<ecs::SystemRender3D>()->update(connect);
         camera.EndMode();

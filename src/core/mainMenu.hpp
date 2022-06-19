@@ -19,6 +19,6 @@
 #include "raylib/include/Vector3.hpp"
 #include "raylib/include/Window.hpp"
 
-ecs::Scenes mainMenu();
+ecs::Scenes mainMenu(ecs::Core &core);
 
 #endif /* !MAINMENU_HPP_ */

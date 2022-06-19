@@ -12,7 +12,7 @@
 
 class ComponentBombs : public ecs::IComponent {
   public:
-    ComponentBombs(std::size_t max_bombs) : _max_bombs(max_bombs), _curr_bombs(0){};
+    ComponentBombs(std::size_t max_bombs, std::size_t curr_bombs = 0) : _max_bombs(max_bombs), _curr_bombs(curr_bombs){};
     ~ComponentBombs() = default;
 
     std::size_t getNbMaxBombs() const;

@@ -77,11 +77,13 @@ static ecs::Core initSettings()
     return (menu);
 }
 
-ecs::Scenes gameSettings(std::vector<int> &Settings)
+ecs::Scenes gameSettings(std::vector<int> &Settings, std::vector<int> &idControllers)
 {
     ecs::Core menu = initSettings();
 
     menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Play();
+    menu.get<ecs::SystemEvent>()->nbController = idControllers.size();
+    printf("nb controler = %d\n", menu.get<ecs::SystemEvent>()->nbController);
     while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::GameSettings) {
         menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();

@@ -11,18 +11,22 @@
 #include "information/info.hpp"
 #include "initMap.hpp"
 
-double clockToMilliseconds(clock_t ticks)
+static double clockToMilliseconds(clock_t ticks)
 {
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings, std::string &winner)
+ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings, std::string &winner, ecs::GameStartMode start_mode)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
-    ecs::Core core = mapCreation(idControllers, settings);
+    ecs::Core core;
+    try {
+        core = mapCreation(idControllers, settings, start_mode);
+    } catch (...) {
+        throw std::exception();
+    }
     int fps = 0;
-    int avg_fps = FPS_CAP;
     raylib::Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
     core._camera.position = initialCamPos;
     raylib::Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};
@@ -68,7 +72,7 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings
                 step = true;
             }
             if (core.getScene() == ecs::Scenes::Pause)
-                core.setScene(pauseMenu());
+                core.setScene(pauseMenu(core));
             if (core.getScene() != ecs::Scenes::Game && core.getScene() != ecs::Scenes::Pause)
                 break;
             core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();
@@ -87,10 +91,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings
 
         if (clockToMilliseconds(clock() - sec_clock) >= ML_BASE) {
             sec_clock = clock();
-            avg_fps = (avg_fps + fps) / 2;
-            // do game logic and stuff like that here, eg: this action happens every X seconds, not X fps...;
-            // printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
-            core.get<ecs::SystemExplosion>()->update(core);
             fps = 0;
         }
     }

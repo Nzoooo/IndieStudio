@@ -31,3 +31,12 @@ void ComponentRectangle::Draw()
 {
     this->_rectangle->Draw(this->_color);
 }
+raylib::Vector2 ComponentRectangle::getPos() const
+{
+    return _pos;
+}
+
+raylib::Vector2 ComponentRectangle::getSize() const
+{
+    return _size;
+}

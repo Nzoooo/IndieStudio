@@ -29,6 +29,8 @@ namespace ecs
         void handleControllersGameSettings(ecs::Core &core);
         void handleControllersWin(ecs::Core &core);
 
+        int nbController;
+
       private:
         void _detectNbControllers();
         bool _isControllerAssign(ecs::Core &core, int gamepadNumber);

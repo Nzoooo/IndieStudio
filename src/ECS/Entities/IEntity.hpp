@@ -20,6 +20,10 @@ namespace ecs
         std::string _label = "";
 
       public:
+        IEntity()
+        {
+            _components = {0};
+        }
         ~IEntity();
         std::vector<ecs::IComponent *> &getAllComponents();
         void setLabel(std::string label);
@@ -40,6 +44,8 @@ template <typename T> T *ecs::IEntity::get()
 
 template <typename T> bool ecs::IEntity::has() const
 {
+    if (_components.empty())
+        return (false);
     unsigned int id = ecs::TemplateComponent<T>::getId();
     if (id < _components.size() && _components[id])
         return (true);
@@ -52,7 +58,6 @@ template <typename T> void ecs::IEntity::remove()
     if (has<T>() == false)
         std::cout << "Component not found" << std::endl;
     delete _components[ecs::TemplateComponent<T>::getId()];
-    _components[ecs::TemplateComponent<T>::getId()] = 0;
 }
 
 template <typename T, typename... U> void ecs::IEntity::add(U &&...args)

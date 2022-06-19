@@ -179,9 +179,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
             rand = std::rand() % (boostIcon.size() * 3);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, false);
+                cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
-                // cube->add<ComponentCollider>();
+                cube->add<ComponentCollider>();
                 cube->add<ComponentKillable>();
                 if (rand < boostIcon.size()) {
                     ecs::IEntity *boost = new ecs::IEntity();

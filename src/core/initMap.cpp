@@ -25,7 +25,7 @@ static ecs::IEntity *meshEntityCreation(
     return (mesh);
 }
 
-void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir)
+static void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb)
 {
     ecs::IEntity *playerEntity = new ecs::IEntity();
 
@@ -36,30 +36,34 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->get<ComponentControllable>()->setGamepadId(id);
     playerEntity->add<ComponentCollider>();
     playerEntity->add<ComponentKills>();
-    playerEntity->add<ComponentBombs>(2);
+    playerEntity->add<ComponentBombs>(nbBomb);
     playerEntity->add<ComponentKillable>();
     playerEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     playerEntity->add<ComponentExplodable>();
     mapCreation.addEntity(playerEntity);
 }
 
-void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
+static void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
 {
+    int &nbBomb = Settings[0];
+
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP);
+                createPlayer(
+                    mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
                 break;
             case 1:
                 createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
-                    ComponentMovable::DOWN);
+                    ComponentMovable::DOWN, nbBomb);
                 break;
             case 2:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP);
+                createPlayer(
+                    mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
                 break;
             case 3:
                 createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
-                    ComponentMovable::DOWN);
+                    ComponentMovable::DOWN, nbBomb);
                 break;
             default: break;
         }
@@ -71,7 +75,7 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
     mapCreation.addEntity(musicGame);
 }
 
-ecs::Core mapCreation(std::vector<int> &idControllers)
+ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings)
 {
     raylib::Texture floorTex;
     raylib::Texture wallTex;
@@ -89,7 +93,7 @@ ecs::Core mapCreation(std::vector<int> &idControllers)
     map->generateMap();
     ecs::Core mapCreation;
     mapCreation.setScene(ecs::Scenes::Game);
-    initGame(mapCreation, idControllers);
+    initGame(mapCreation, idControllers, Settings);
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};

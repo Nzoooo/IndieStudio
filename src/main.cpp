@@ -19,13 +19,15 @@ static int mainLoop()
     raylib::Window::SetFullScreen();
     ecs::Core core;
     std::vector<int> idControllers;
+    std::vector<int> settings;
+    settings.reserve(2);
     core.setScene(ecs::Scenes::Menu);
 
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
-            case ecs::Scenes::GameSettings: core.setScene(gameSettings(idControllers)); break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, settings)); break;
+            case ecs::Scenes::GameSettings: core.setScene(gameSettings(settings)); break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);

@@ -11,19 +11,18 @@
 #include "information/info.hpp"
 #include "initMap.hpp"
 
-double clockToMilliseconds(clock_t ticks)
+static double clockToMilliseconds(clock_t ticks)
 {
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_mode)
+ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings, std::string &winner, ecs::GameStartMode start_mode)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
-    std::cout << "Core received " << start_mode << std::endl;
     ecs::Core core;
     try {
-        core = mapCreation(idControllers, start_mode);
+        core = mapCreation(idControllers, settings, start_mode);
     } catch (...) {
         throw std::exception();
     }
@@ -80,7 +79,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
             core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
-            updateInformations(core);
             core._camera.BeginMode();
             if (step == true && core._camera.position.y >= 12.5f)
                 core.get<ecs::SystemEvent>()->update(core);
@@ -93,6 +91,13 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_m
         if (clockToMilliseconds(clock() - sec_clock) >= ML_BASE) {
             sec_clock = clock();
             fps = 0;
+        }
+    }
+    for (auto *e : core.getEntities()) {
+        if (e->has<ComponentKills>()) {
+            if (e->has<ComponentMovable>() && e->get<ComponentDrawable>()->getIsDrawable3D() == true) {
+                winner = e->getLabel();
+            }
         }
     }
     core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Stop();

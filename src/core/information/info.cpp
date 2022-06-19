@@ -111,7 +111,7 @@ static ecs::IEntity *displayBotIcon(bool topBottom, bool leftRight)
 /// @param bool Boolean if it has to be at the bottom or not.
 /// @param bool Boolean if it has to be at the right or not.
 /// @return ecs::IEntity* Pointer to the filled entity.
-static ecs::IEntity *displayBombs(bool topBottom, bool leftRight)
+static ecs::IEntity *displayBombs(bool topBottom, bool leftRight, std::string label)
 {
     ecs::IEntity *bomb = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -131,7 +131,7 @@ static ecs::IEntity *displayBombs(bool topBottom, bool leftRight)
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     bomb->add<ComponentTexture>("assets/16/boost_nb_bombs.png", iconPosition);
-    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0/0", textPosition, DETAILS_SIZE, raylib::Color::White());
+    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0/0", textPosition, DETAILS_SIZE, raylib::Color::White(), label);
     bomb->add<ComponentDrawable>(true, false);
     return (bomb);
 }
@@ -140,7 +140,7 @@ static ecs::IEntity *displayBombs(bool topBottom, bool leftRight)
 /// @param bool Boolean if it has to be at the bottom or not.
 /// @param bool Boolean if it has to be at the right or not.
 /// @return ecs::IEntity* Pointer to the filled entity.
-static ecs::IEntity *displayRadius(bool topBottom, bool leftRight)
+static ecs::IEntity *displayRadius(bool topBottom, bool leftRight, std::string label)
 {
     ecs::IEntity *radius = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -160,7 +160,7 @@ static ecs::IEntity *displayRadius(bool topBottom, bool leftRight)
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     radius->add<ComponentTexture>("assets/16/boost_radius_bombs.png", iconPosition);
-    radius->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
+    radius->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White(), label);
     radius->add<ComponentDrawable>(true, false);
     return (radius);
 }
@@ -170,7 +170,7 @@ static ecs::IEntity *displayRadius(bool topBottom, bool leftRight)
 /// @param bool Boolean if it has to be at the bottom or not.
 /// @param bool Boolean if it has to be at the right or not.
 /// @return ecs::IEntity* Pointer to the filled entity.
-static ecs::IEntity *displaySpeed(bool topBottom, bool leftRight)
+static ecs::IEntity *displaySpeed(bool topBottom, bool leftRight, std::string label)
 {
     ecs::IEntity *speed = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -190,34 +190,26 @@ static ecs::IEntity *displaySpeed(bool topBottom, bool leftRight)
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     speed->add<ComponentTexture>("assets/16/boost_speed.png", iconPosition);
-    speed->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
+    speed->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White(), label);
     speed->add<ComponentDrawable>(true, false);
     return (speed);
 }
 
-void updateInformations(ecs::Core &core)
+void updateInformations(ecs::Core &core, ecs::IEntity *player)
 {
-    for (auto *player : core.getEntities()) {
-        if (player->has<ComponentKills>()) {
-            // It's a player/bot
-            for (auto *info : core.getEntities()) {
-                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_speed.png") {
-                    // It's entity of speed info
-                    if (info->has<ComponentText>())
-                        info->get<ComponentText>()->setText(std::to_string(static_cast<int>(player->get<ComponentMovable>()->getSpeed() / BASE_SPEED_PLAYERS)));
-                }
-                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
-                    // It's entity of radius info
-                    if (info->has<ComponentText>())
-                        info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
-                }
-                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_nb_bombs.png") {
-                    // It's entity of radius info
-                    if (info->has<ComponentText>())
-                        info->get<ComponentText>()->setText(std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/"
-                            + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));
-                }
-            }
+    for (auto *info : core.getEntities()) {
+        if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_speed.png" && info->has<ComponentText>()
+            && info->get<ComponentText>()->getLabel() == player->getLabel()) {
+            info->get<ComponentText>()->setText(std::to_string(static_cast<int>(player->get<ComponentMovable>()->getSpeed() / BASE_SPEED_PLAYERS)));
+        }
+        if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png"
+            && info->has<ComponentText>() && info->get<ComponentText>()->getLabel() == player->getLabel()) {
+            info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
+        }
+        if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_nb_bombs.png" && info->has<ComponentText>()
+            && info->get<ComponentText>()->getLabel() == player->getLabel()) {
+            info->get<ComponentText>()->setText(
+                std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));
         }
     }
 }
@@ -243,9 +235,9 @@ void initInformations(ecs::Core &core)
                 // It's a bot
                 core.addEntity(displayBotIcon(topBottom, leftRight));
             }
-            core.addEntity(displayBombs(topBottom, leftRight));
-            core.addEntity(displayRadius(topBottom, leftRight));
-            core.addEntity(displaySpeed(topBottom, leftRight));
+            core.addEntity(displayBombs(topBottom, leftRight, entity->getLabel()));
+            core.addEntity(displayRadius(topBottom, leftRight, entity->getLabel()));
+            core.addEntity(displaySpeed(topBottom, leftRight, entity->getLabel()));
             count++;
         }
     }

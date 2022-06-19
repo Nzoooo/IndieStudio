@@ -11,4 +11,4 @@
 #include "ECS/ecs.hpp"
 
 void initInformations(ecs::Core &core);
-void updateInformations(ecs::Core &core);
+void updateInformations(ecs::Core &core, ecs::IEntity *player);

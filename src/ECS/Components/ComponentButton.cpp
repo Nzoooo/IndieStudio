@@ -71,3 +71,13 @@ raylib::Rectangle *ComponentButton::getRectangleUnactive() const
 {
     return (this->_rectangleUnactive);
 }
+
+void ComponentButton::setText(std::string text)
+{
+    this->_text = text;
+}
+
+std::string ComponentButton::getText() const
+{
+    return (this->_text);
+}

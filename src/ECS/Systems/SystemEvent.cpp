@@ -442,7 +442,7 @@ namespace ecs
             it->get<ComponentMovable>()->setDirection(ComponentMovable::Direction::UP);
         }
         if (it->has<ComponentCollider>() && !it->get<ComponentCollider>()->getIsAbleToCollide()) {
-            if (std::chrono::system_clock::now() - it->get<ComponentCollider>()->getTimeNonCollide() >= std::chrono::seconds(7)) {
+            if (std::chrono::system_clock::now() - it->get<ComponentCollider>()->getTimeNonCollide() >= std::chrono::seconds(4)) {
                 it->get<ComponentModel>()->setPos(raylib::Vector3(
                     it->get<ComponentModel>()->getInitialPos().x, it->get<ComponentModel>()->getInitialPos().y, it->get<ComponentModel>()->getInitialPos().z));
                 it->get<ComponentCollider>()->setIsAbleToCollide(true);
@@ -516,6 +516,7 @@ namespace ecs
                         _handleCollisions(core, it, i);
                         _handlePickBoosts(core, it);
                         _handleBombPlayer(core, it);
+                        updateInformations(core, it);
                         if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown()) && it->has<ComponentBombs>()
                             && it->get<ComponentBombs>()->getNbMaxBombs() > it->get<ComponentBombs>()->getNbCurrBombs()) {
                             ecs::IEntity *bomb1 = new ecs::IEntity;
@@ -538,6 +539,7 @@ namespace ecs
             if (it->has<ComponentKills>() && !it->has<ComponentControllable>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
                 _handlePickBoosts(core, it);
                 _handleBombPlayer(core, it);
+                updateInformations(core, it);
             }
         }
     }

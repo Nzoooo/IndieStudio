@@ -74,7 +74,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Update();
             raylib::Window::BeginDrawing();
             raylib::Window::Clear(raylib::Color::White());
-            updateInformations(core);
             core._camera.BeginMode();
             if (step == true && core._camera.position.y >= 12.5f)
                 core.get<ecs::SystemEvent>()->update(core);

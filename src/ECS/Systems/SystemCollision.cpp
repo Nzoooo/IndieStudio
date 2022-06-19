@@ -69,9 +69,8 @@ namespace ecs
                         it->get<ComponentBombs>()->setNbMaxBombs(it->get<ComponentBombs>()->getNbMaxBombs() + 1);
                     if (e->get<ComponentCube>()->getTexturePath() == "assets/16/boost_radius_bombs.png")
                         it->get<ComponentExplodable>()->setBlastRange(it->get<ComponentExplodable>()->getBlastRange() + 1);
-                    if (e->get<ComponentCube>()->getTexturePath() == "assets/16/boost_speed.png") {
+                    if (e->get<ComponentCube>()->getTexturePath() == "assets/16/boost_speed.png")
                         it->get<ComponentMovable>()->setSpeed(it->get<ComponentMovable>()->getSpeed() + BASE_SPEED_PLAYERS);
-                    }
                 }
                 return;
             }

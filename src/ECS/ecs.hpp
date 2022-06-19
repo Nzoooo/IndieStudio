@@ -16,6 +16,8 @@
 #include "Components/ComponentCube.hpp"
 #include "Components/ComponentDrawable.hpp"
 #include "Components/ComponentExplodable.hpp"
+#include "Components/ComponentExplosion.hpp"
+#include "Components/ComponentFireBlast.hpp"
 #include "Components/ComponentKillable.hpp"
 #include "Components/ComponentKills.hpp"
 #include "Components/ComponentMesh.hpp"
@@ -34,8 +36,10 @@
 #include "Systems/SystemCollision.hpp"
 #include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
+#include "Systems/SystemExplosion.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
+#include "raylib/include/Camera3D.hpp"
 
 #define BASE_SPEED_PLAYERS (0.03f)
 
@@ -73,6 +77,8 @@ namespace ecs
         void setScene(ecs::Scenes scene);
         void increaseNbButtons(int increment);
         int getNbButtons() const;
+
+        raylib::Camera3D _camera;
     };
 
     template <typename T> T *ecs::Core::get()
@@ -110,7 +116,5 @@ namespace ecs
         _systems[ecs::TemplateSystem<T>::getId()] = 0;
     }
 } // namespace ecs
-
-ecs::Core initEntities();
 
 #endif /* !ECS_HPP_ */

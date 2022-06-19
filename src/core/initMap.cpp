@@ -39,6 +39,7 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->add<ComponentKillable>();
     playerEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     playerEntity->add<ComponentExplodable>();
+    playerEntity->setLabel("Player " + std::to_string(id));
     mapCreation.addEntity(playerEntity);
 }
 
@@ -71,7 +72,17 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
     musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
     musicGame->setLabel("MusicGame");
     musicGame->get<ComponentMusic>()->getMusic().SetVolume(0.05f);
+    ecs::IEntity *soundBomb = new ecs::IEntity();
+    soundBomb->add<ComponentSound>("assets/audios/SoundBomb.mp3");
+    soundBomb->setLabel("SoundBomb");
+    soundBomb->get<ComponentSound>()->getSound().SetVolume(0.5f);
+    ecs::IEntity *soundDeath = new ecs::IEntity();
+    soundDeath->add<ComponentSound>("assets/audios/SoundDeath.mp3");
+    soundDeath->setLabel("SoundDeath");
+    soundDeath->get<ComponentSound>()->getSound().SetVolume(0.3f);
     mapCreation.addEntity(musicGame);
+    mapCreation.addEntity(soundBomb);
+    mapCreation.addEntity(soundDeath);
 }
 
 ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings)
@@ -93,6 +104,8 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
     ecs::Core mapCreation;
     mapCreation.setScene(ecs::Scenes::Game);
     initGame(mapCreation, idControllers, Settings);
+
+    mapCreation.add<ecs::SystemExplosion>();
 
     raylib::Vector3 pos = {0.0f, 0.0f, 0.0f};
     raylib::Vector3 size = {1.0f, 1.0f, 1.0f};
@@ -157,9 +170,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
     raylib::Vector3 sizeMesh4 = {MAP_SIZE - 2, 1.0f, 1.0f};
     mesh4 = meshEntityCreation(posMesh4, sizeMesh4, raylib::Color::White(), wallTex);
 
+    mapCreation.add<ecs::SystemEvent>();
     mapCreation.add<ecs::SystemRender3D>();
     mapCreation.add<ecs::SystemRender2D>();
-    mapCreation.add<ecs::SystemEvent>();
     mapCreation.addEntity(mesh1);
     mapCreation.addEntity(bis);
     mapCreation.addEntity(bis2);
@@ -182,9 +195,9 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
             rand = std::rand() % (boostIcon.size() * 3);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
-                cube->add<ComponentDrawable>(false, false);
+                cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
-                // cube->add<ComponentCollider>();
+                cube->add<ComponentCollider>();
                 cube->add<ComponentKillable>();
                 if (rand < boostIcon.size()) {
                     ecs::IEntity *boost = new ecs::IEntity();

@@ -22,6 +22,7 @@ namespace raylib
         void Load(const std::string &fileName);
         void Unload();
         void Play();
+        void PlayMulti();
         void Resume();
         void Pause();
         void Stop();

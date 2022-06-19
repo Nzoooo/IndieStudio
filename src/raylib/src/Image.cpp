@@ -66,4 +66,9 @@ namespace raylib
     {
         ::UnloadImage(*this);
     }
+
+    void Image::ImageRotateCW()
+    {
+        ::ImageRotateCW(this);
+    }
 } // namespace raylib

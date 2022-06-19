@@ -26,6 +26,8 @@ namespace raylib
         void Load(::Texture2D &texture);
         void Unload();
 
+        void ImageRotateCW(); // Rotate image clockwise 90deg
+
       protected:
       private:
     };

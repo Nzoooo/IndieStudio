@@ -11,6 +11,7 @@ set(SRC
     ${SRCROOT}/pauseMenu.cpp
     ${SRCROOT}/connectPlayers
     ${SRCROOT}/gameSettings
+    ${SRCROOT}/winMenu.cpp
     PARENT_SCOPE)
 
 set(INCDIRS

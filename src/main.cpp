@@ -7,6 +7,7 @@
 
 #include "core/connectPlayers.hpp"
 #include "core/core.hpp"
+#include "core/gameSettings.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
 #include "core/winMenu.hpp"
@@ -19,14 +20,16 @@ static int mainLoop()
     raylib::Window::SetFullScreen();
     ecs::Core core;
     std::vector<int> idControllers;
+    std::vector<int> settings;
+    settings.reserve(3);
     core.setScene(ecs::Scenes::Menu);
     std::string winner;
 
     while (1) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, winner)); break;
-            case ecs::Scenes::GameSettings: break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, settings, winner)); break;
+            case ecs::Scenes::GameSettings: core.setScene(gameSettings(settings)); break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: core.setScene(winMenu(winner)); break;
             case ecs::Close: break;

@@ -16,3 +16,8 @@ void ComponentText::setText(std::string text)
 {
     this->_text = text;
 }
+
+std::string ComponentText::getText() const
+{
+    return (this->_text);
+}

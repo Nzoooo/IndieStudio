@@ -548,6 +548,13 @@ namespace ecs
                             core.addEntity(bomb1);
                             it->get<ComponentBombs>()->setNbCurrBombs(it->get<ComponentBombs>()->getNbCurrBombs() + 1);
                         }
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceLeft())) {
+                            raylib::BoundingBox box(
+                                raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.27),
+                                raylib::Vector3(
+                                    it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+                            SystemCollision::checkPosVent(box, it, core.getEntities());
+                        }
                     }
                 }
             }

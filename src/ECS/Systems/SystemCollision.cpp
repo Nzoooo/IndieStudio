@@ -82,14 +82,14 @@ namespace ecs
         raylib::BoundingBox other;
 
         for (auto &vent : entities) {
-            if (vent->has<ComponentVent>()) {
+            if (vent->has<ComponentVent>() && vent->has<ComponentCube>()) {
                 raylib::BoundingBox tmpBox(raylib::Vector3(vent->get<ComponentCube>()->getPos().x - 0.2, vent->get<ComponentCube>()->getPos().y - 0.2,
                                                vent->get<ComponentCube>()->getPos().z - 0.2),
                     raylib::Vector3(
                         vent->get<ComponentCube>()->getPos().x + 0.2, vent->get<ComponentCube>()->getPos().y + 0.2, vent->get<ComponentCube>()->getPos().z + 0.2));
                 other = tmpBox;
             }
-            if (other.checkCollision(box)) {
+            if (other.checkCollision(box) && vent->has<ComponentVent>() && vent->has<ComponentCube>()) {
                 raylib::BoundingBox pairedBound(raylib::Vector3(vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().x - 0.2, vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().y - 0.2,
                                                vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().z - 0.2),
                     raylib::Vector3(

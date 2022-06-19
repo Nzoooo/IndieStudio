@@ -71,7 +71,7 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vect
     ecs::IEntity *musicGame = new ecs::IEntity();
     musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
     musicGame->setLabel("MusicGame");
-    musicGame->get<ComponentMusic>()->getMusic().SetVolume(0.05f);
+    musicGame->get<ComponentMusic>()->getMusic().SetVolume(0.5f);
     ecs::IEntity *soundBomb = new ecs::IEntity();
     soundBomb->add<ComponentSound>("assets/audios/SoundBomb.mp3");
     soundBomb->setLabel("SoundBomb");

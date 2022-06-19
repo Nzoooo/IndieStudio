@@ -16,7 +16,7 @@ double clockToMilliseconds(clock_t ticks)
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-ecs::Scenes coreLoop(std::vector<int> &idControllers)
+ecs::Scenes coreLoop(std::vector<int> &idControllers, std::string &winner)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
@@ -90,6 +90,13 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers)
             // printf("second tick, delta fps: %d, avg fps: %d fps is capped around: %d\n", fps, avg_fps, FPS_CAP);
             core.get<ecs::SystemExplosion>()->update(core);
             fps = 0;
+        }
+    }
+    for (auto *e : core.getEntities()) {
+        if (e->has<ComponentKills>()) {
+            if (e->has<ComponentMovable>() && e->get<ComponentDrawable>()->getIsDrawable3D() == true) {
+                winner = e->getLabel();
+            }
         }
     }
     core.getEntity("MusicGame")->get<ComponentMusic>()->getMusic().Stop();

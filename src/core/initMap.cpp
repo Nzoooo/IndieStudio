@@ -85,7 +85,6 @@ void createVent(ecs::Core &mapCreation, raylib::Vector3 pos1, raylib::Vector3 po
 void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
 {
     int &nbBomb = Settings[1];
-    idControllers.push_back(1);
 
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {

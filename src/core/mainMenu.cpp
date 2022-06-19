@@ -33,6 +33,10 @@ static ecs::Core initMenu()
     musicMenu->add<ComponentMusic>("assets/audios/MusicMenu.mp3");
     musicMenu->setLabel("MusicMenu");
     musicMenu->get<ComponentMusic>()->getMusic().SetVolume(0.2f);
+    ecs::IEntity *soundClick = new ecs::IEntity();
+    soundClick->add<ComponentSound>("assets/audios/SoundClick.mp3");
+    soundClick->setLabel("SoundClick");
+    soundClick->get<ComponentSound>()->getSound().SetVolume(0.5f);
     menu.setScene(ecs::Scenes::Menu);
 
     menu.add<ecs::SystemRender2D>();
@@ -42,6 +46,7 @@ static ecs::Core initMenu()
     menu.addEntity(buttonReload);
     menu.addEntity(buttonParam);
     menu.addEntity(musicMenu);
+    menu.addEntity(soundClick);
     return (menu);
 }
 
@@ -50,7 +55,7 @@ ecs::Scenes mainMenu(ecs::Core &core)
     ecs::Core menu = initMenu();
 
     menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Play();
-    while (!raylib::Window::ShouldClose() && menu.getScene() == ecs::Scenes::Menu) {
+    while (menu.getScene() == ecs::Scenes::Menu) {
         menu.getEntity("MusicMenu")->get<ComponentMusic>()->getMusic().Update();
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());

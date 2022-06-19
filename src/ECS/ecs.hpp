@@ -14,8 +14,10 @@
 #include "Systems/SystemCollision.hpp"
 #include "Systems/SystemEvent.hpp"
 #include "Systems/SystemExemple.hpp"
+#include "Systems/SystemExplosion.hpp"
 #include "Systems/SystemRender2D.hpp"
 #include "Systems/SystemRender3D.hpp"
+#include "raylib/include/Camera3D.hpp"
 
 #define BASE_SPEED_PLAYERS (0.03f)
 
@@ -57,6 +59,8 @@ namespace ecs
         int getNbButtons() const;
         ecs::GameStartMode getStartMode() const;
         void setStartMode(ecs::GameStartMode start_mode);
+
+        raylib::Camera3D _camera;
     };
 
     template <typename T> T *ecs::Core::get()

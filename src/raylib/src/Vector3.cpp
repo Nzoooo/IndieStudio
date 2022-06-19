@@ -63,7 +63,7 @@ void raylib::Vector3::DrawCubeWires(const ::Vector3 &size, ::Color color)
     ::DrawCubeWiresV(*this, size, color);
 }
 
-void raylib::Vector3::DrawCubeTexture(const ::Texture2D &texture, float width, float height, float length, ::Color color)
+void raylib::Vector3::DrawCubeTexture(const ::Texture &texture, float width, float height, float length, ::Color color)
 {
     ::DrawCubeTexture(texture, *this, width, height, length, color);
 }

@@ -127,10 +127,9 @@ void addComponentDroppable(std::ifstream &file, ecs::IEntity *entity)
 void addComponentExplodable(std::ifstream &file, ecs::IEntity *entity)
 {
     std::size_t blastRange = std::stoi(getMember(file, "blastRange"));
-    bool ableToExplode = std::stoi(getMember(file, "ableToExplode"));
 
     try {
-        entity->add<ComponentExplodable>(blastRange, ableToExplode);
+        entity->add<ComponentExplodable>(blastRange);
     } catch (std::exception &e) {
         std::cout << "ComponentExplodable not found" << std::endl;
     }

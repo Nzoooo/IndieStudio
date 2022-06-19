@@ -31,6 +31,7 @@ static int mainLoop()
             case ecs::Close: return (-1);
         }
     }
+    raylib::Window::StopSounds();
     raylib::Window::CloseAudioDevice();
     raylib::Window::Close();
     return (0);

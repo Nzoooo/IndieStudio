@@ -70,6 +70,10 @@ ecs::Core initConnectPlayers()
     nothingToSelectButton->get<ComponentButton>()->setState(true);
     ecs::IEntity *startGameButton = createButton(connect, raylib::Vector2(1480.0f, 940.0f), "Start Game", raylib::Vector2(1540.0f, 975.0f));
     startGameButton->get<ComponentButton>()->setIdButton(-connect.getNbButtons() + 1);
+    ecs::IEntity *soundClick = new ecs::IEntity();
+    soundClick->add<ComponentSound>("assets/audios/SoundClick.mp3");
+    soundClick->setLabel("SoundClick");
+    soundClick->get<ComponentSound>()->getSound().SetVolume(0.5f);
     connect.setScene(ecs::Scenes::ConnectPlayers);
 
     connect.add<ecs::SystemRender2D>();
@@ -89,6 +93,7 @@ ecs::Core initConnectPlayers()
     connect.addEntity(player2);
     connect.addEntity(player3);
     connect.addEntity(player4);
+    connect.addEntity(soundClick);
     return (connect);
 }
 
@@ -98,7 +103,7 @@ ecs::Scenes connectPlayers(ecs::Core &core, std::vector<int> &idControllers)
     ecs::Core connect = initConnectPlayers();
     raylib::Camera3D camera(raylib::Vector3(0.0f, 3.0f, 10.0f), raylib::Vector3(0.0f, 0.0f, 0.0f), raylib::Vector3(0.0f, 1.0f, 0.0f), 45.0f);
 
-    while (!raylib::Window::ShouldClose() && connect.getScene() == ecs::Scenes::ConnectPlayers) {
+    while (connect.getScene() == ecs::Scenes::ConnectPlayers) {
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
         connect.get<ecs::SystemEvent>()->update(connect);

@@ -19,6 +19,8 @@ namespace ecs
                     it->get<ComponentMesh>()->Draw();
                 if (it->has<ComponentModel>())
                     it->get<ComponentModel>()->Draw();
+                if (it->has<ComponentFireBlast>())
+                    it->get<ComponentFireBlast>()->Draw();
             }
         }
     }

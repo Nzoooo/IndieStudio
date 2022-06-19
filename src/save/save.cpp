@@ -107,7 +107,6 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
             _file << "\tEntity[" << i << "] {" << std::endl;
         _file << "\t\tComponentExplodable {" << std::endl;
         _file << "\t\t\tblastRange: " << component_data->getBlastRange() << "," << std::endl;
-        _file << "\t\t\tableToExplode: " << component_data->getAbleToExplode() << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;
     }

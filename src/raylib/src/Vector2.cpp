@@ -39,3 +39,8 @@ void raylib::Vector2::_setVector2(::Vector2 &vec)
     x = vec.x;
     y = vec.y;
 }
+
+std::ostream &operator<<(std::ostream &os, const raylib::Vector2 &v)
+{
+    return os << "(" << v.x << "; " << v.y << ")";
+}

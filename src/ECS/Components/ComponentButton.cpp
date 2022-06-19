@@ -9,7 +9,8 @@
 
 ComponentButton::ComponentButton(raylib::Vector2 pos, std::string buttonText, raylib::Vector2 posText, float fontSize)
 {
-    this->_pos = pos;
+    this->_pos.x = pos.x;
+    this->_pos.y = pos.y;
     this->_rectangleUnactive = new raylib::Rectangle(1611, 242, 358, 117);
     this->_rectangleActive = new raylib::Rectangle(1611, 395, 358, 117);
     this->_texture.Load("assets/menuAsset.png");

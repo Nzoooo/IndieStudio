@@ -37,8 +37,8 @@ static std::string playersIcon[4] = {
 static ecs::IEntity *createBackground(bool topBottom, bool leftRight, raylib::Color color)
 {
     ecs::IEntity *background = new ecs::IEntity();
-    size_t marginTop = 0;
-    size_t marginLeft = 0;
+    std::size_t marginTop = 0;
+    std::size_t marginLeft = 0;
 
     if (!topBottom)
         marginTop = MARGIN_BORDER;

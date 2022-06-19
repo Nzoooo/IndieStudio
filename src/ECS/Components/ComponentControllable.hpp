@@ -11,10 +11,10 @@
 
 class ComponentControllable : public ecs::IComponent {
   public:
-    ComponentControllable() = default;
+    ComponentControllable(int gamepadId = -1) : _gamepadId(gamepadId){};
     ~ComponentControllable() = default;
 
-    void setGamepadId(int gamepadNumber);
+    void setGamepadId(int gamepadId);
     int getGamepadId();
 
   protected:

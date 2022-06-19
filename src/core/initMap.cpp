@@ -193,13 +193,13 @@ ecs::Core mapCreation(std::vector<int> &idControllers, ecs::GameStartMode start_
         for (int j = 1; j < MAP_SIZE - 1; j++) {
             for (int i = 1; i < MAP_SIZE - 1; i++) {
                 initial.x += 1;
-                rand = std::rand() % (boostIcon.size() * 3);
                 if (map->getMap()[i][j] == 2) {
                     ecs::IEntity *cube = new ecs::IEntity();
                     cube->add<ComponentDrawable>(false, true);
                     cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
                     cube->add<ComponentCollider>();
                     cube->add<ComponentKillable>();
+                    rand = std::rand() % (boostIcon.size() * 3);
                     if (rand < boostIcon.size()) {
                         ecs::IEntity *boost = new ecs::IEntity();
                         raylib::Texture boostTex;
@@ -218,6 +218,8 @@ ecs::Core mapCreation(std::vector<int> &idControllers, ecs::GameStartMode start_
                     mapCreation.addEntity(cube);
                 }
             }
+            initial.x = (-1.0f * (MAP_SIZE - MAP_SIZE % 2)) / 2;
+            initial.z += 1.0f;
         }
     } else if (start_mode == ecs::GameStartMode::Load) {
         std::cout << "Load mode" << std::endl;

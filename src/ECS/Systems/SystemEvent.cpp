@@ -146,7 +146,7 @@ namespace ecs
         int i = 0;
         raylib::Mouse mouseIndex;
 
-        for (size_t j = 0; i < core.getNbButtons(); j++) {
+        for (std::size_t j = 0; i < core.getNbButtons(); j++) {
             if (core.getEntity(j)->has<ComponentButton>()) {
                 core.getEntity(j)->get<ComponentButton>()->setState(false);
                 raylib::Rectangle buttonTmp = raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
@@ -235,7 +235,7 @@ namespace ecs
         int i = 0;
         raylib::Mouse mouseIndex;
 
-        for (size_t j = 0; i < core.getNbButtons(); j++) {
+        for (std::size_t j = 0; i < core.getNbButtons(); j++) {
             if (core.getEntity(j)->has<ComponentButton>()) {
                 core.getEntity(j)->get<ComponentButton>()->setState(false);
                 raylib::Rectangle buttonTmp = raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
@@ -350,7 +350,7 @@ namespace ecs
         int i = 0;
         raylib::Mouse mouseIndex;
 
-        for (size_t j = 0; i < core.getNbButtons(); j++) {
+        for (std::size_t j = 0; i < core.getNbButtons(); j++) {
             if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->get<ComponentButton>()->getState()) {
                 core.getEntity(j)->get<ComponentButton>()->setState(false);
                 raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
@@ -572,7 +572,7 @@ namespace ecs
         int i = 0;
         raylib::Mouse mouseIndex;
 
-        for (size_t j = 0; i < core.getNbButtons(); j++) {
+        for (std::size_t j = 0; i < core.getNbButtons(); j++) {
             if (core.getEntity(j)->has<ComponentButton>()) {
                 core.getEntity(j)->get<ComponentButton>()->setState(false);
                 raylib::Rectangle buttonTmp = raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
@@ -637,12 +637,12 @@ namespace ecs
 
     void SystemEvent::handleControllersGameSettings(ecs::Core &core)
     {
-        size_t i = 0;
+        std::size_t i = 0;
         static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
 
         if (raylib::Gamepad::IsAvailable(0)) {
             if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
-                for (size_t j = 0; i < core.getNbButtons(); j++) {
+                for (std::size_t j = 0; i < core.getNbButtons(); j++) {
                     if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->get<ComponentButton>()->getState()) {
                         if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 0) {
                             int nbBot = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText());

@@ -192,8 +192,8 @@ void addComponentTexture(std::ifstream &file, ecs::IEntity *entity)
 
 void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
 {
-    size_t height = std::stoi(getMember(file, "height"));
-    size_t width = std::stoi(getMember(file, "width"));
+    std::size_t height = std::stoi(getMember(file, "height"));
+    std::size_t width = std::stoi(getMember(file, "width"));
     int posX = std::stoi(getMember(file, "posX"));
     int posY = std::stoi(getMember(file, "posY"));
 
@@ -206,7 +206,7 @@ void addComponentTransform(std::ifstream &file, ecs::IEntity *entity)
 
 void addComponentTransparency(std::ifstream &file, ecs::IEntity *entity)
 {
-    size_t transparency = std::stoi(getMember(file, "transparency"));
+    std::size_t transparency = std::stoi(getMember(file, "transparency"));
 
     try {
         entity->add<ComponentTransparency>(transparency);

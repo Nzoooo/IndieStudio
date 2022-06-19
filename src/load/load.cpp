@@ -57,7 +57,7 @@ ecs::Core Load::loadFile(void)
     ecs::Core core;
     struct stat st;
     std::string line;
-    size_t num_entity = 0;
+    std::size_t num_entity = 0;
     int checked_file = 0;
 
     if (stat(FILEPATH_LOAD, &st) != 0)

@@ -26,7 +26,7 @@ Save::~Save()
 
 void Save::saveCore(ecs::Core &core)
 {
-    size_t i = 0;
+    std::size_t i = 0;
 
     eraseSave();
     _file << std::time(nullptr) << std::endl;

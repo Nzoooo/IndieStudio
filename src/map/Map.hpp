@@ -31,7 +31,7 @@ class Map {
 
     void generateMap();
     void putSpawn();
-    void randomBonus(size_t currentRow, size_t currentColumn);
+    void randomBonus(std::size_t currentRow, std::size_t currentColumn);
     std::pair<int, int> randomDirection(std::pair<int, int> lastDirection);
 
     enum map_object {

@@ -27,7 +27,6 @@ ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings
         throw std::exception();
     }
     int fps = 0;
-    int avg_fps = FPS_CAP;
     raylib::Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};
     core._camera.position = initialCamPos;
     raylib::Vector3 initialCamTarget = {0.0f, 0.0f, 0.0f};

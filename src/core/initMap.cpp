@@ -41,7 +41,6 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     playerEntity->add<ComponentExplodable>();
     playerEntity->setLabel("player" + std::to_string(id));
-    std::cout << playerEntity->getLabel() << std::endl;
     mapCreation.addEntity(playerEntity);
 }
 
@@ -50,12 +49,10 @@ void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers)
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
-                std::cout << "id controleur = " << idControllers[i] << std::endl;
                 createPlayer(
                     mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), idControllers[i], ComponentMovable::UP);
                 break;
             case 1:
-                std::cout << "id controleur = " << idControllers[i] << std::endl;
                 createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), idControllers[i],
                     ComponentMovable::DOWN);
                 break;

@@ -510,13 +510,12 @@ namespace ecs
                     return;
                 }
                 for (auto *it : core.getEntities()) {
-                    if (it->has<ComponentKillable>() && it->has<ComponentCube>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
-                        _handleBombBox(core, it);
-                    }
                     if (it->has<ComponentControllable>() && it->get<ComponentControllable>()->getGamepadId() == i
                         && it->get<ComponentDrawable>()->getIsDrawable3D()) {
                         _handleMovementPlayers(it, i);
                         _handleCollisions(core, it, i);
+                        _handlePickBoosts(core, it);
+                        _handleBombPlayer(core, it);
                         if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceDown()) && it->has<ComponentBombs>()
                             && it->get<ComponentBombs>()->getNbMaxBombs() > it->get<ComponentBombs>()->getNbCurrBombs()) {
                             ecs::IEntity *bomb1 = new ecs::IEntity;
@@ -529,55 +528,16 @@ namespace ecs
                             it->get<ComponentBombs>()->setNbCurrBombs(it->get<ComponentBombs>()->getNbCurrBombs() + 1);
                         }
                     }
-                    if (it->has<ComponentKills>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
-                        _handlePickBoosts(core, it);
-                        _handleBombPlayer(core, it);
-                    }
                 }
-
-                // Draw buttons: xbox home
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddle()))
-                //     std::cout << "home" << std::endl;
-
-                // Draw buttons: basic
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonMiddleLeft()))
-                //     std::cout << "select" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceRight()))
-                //     std::cout << "O" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceDown()))
-                //     std::cout << "X" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceLeft()))
-                //     std::cout << "[]" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightFaceUp()))
-                //     std::cout << "/\\" << std::endl;
-
-                // Draw buttons: d-pad
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceUp()))
-                //     std::cout << "up" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceDown()))
-                //     std::cout << "down" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceLeft()))
-                //     std::cout << "left" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftFaceRight()))
-                //     std::cout << "right" << std::endl;
-
-                // Draw buttons: left-right back
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonLeftTrigger1()))
-                //     std::cout << "a" << std::endl;
-                // if (raylib::Gamepad::IsButtonDown(i, raylib::Gamepad::GamepadButtonRightTrigger1()))
-                //     std::cout << "b" << std::endl;
-
-                // Draw axis: left joystick
-                // std::cout << "GAMEPAD_AXIS_LEFT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftX()) << std::endl;
-                // std::cout << "GAMEPAD_AXIS_LEFT_Y: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftY()) << std::endl;
-
-                // Draw axis: right joystick
-                // std::cout << "GAMEPAD_AXIS_RIGHT_X: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightX()) << std::endl;
-                // std::cout << "GAMEPAD_AXIS_RIGHT_Y: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightY()) << std::endl;
-
-                // Draw axis: left-right triggers
-                // std::cout << "GAMEPAD_AXIS_LEFT_TRIGGER: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisLeftTrigger()) << std::endl;
-                // std::cout << "GAMEPAD_AXIS_RIGHT_TRIGGER: " << raylib::Gamepad::GetAxisMovement(i, raylib::Gamepad::GamepadAxisRightTrigger()) << std::endl;
+            }
+        }
+        for (auto *it : core.getEntities()) {
+            if (it->has<ComponentKillable>() && it->has<ComponentCube>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
+                _handleBombBox(core, it);
+            }
+            if (it->has<ComponentKills>() && !it->has<ComponentControllable>() && it->get<ComponentDrawable>()->getIsDrawable3D()) {
+                _handlePickBoosts(core, it);
+                _handleBombPlayer(core, it);
             }
         }
     }

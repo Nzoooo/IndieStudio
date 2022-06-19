@@ -9,6 +9,7 @@
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
+#include "core/winMenu.hpp"
 #include "map/Map.hpp"
 
 static int mainLoop()
@@ -30,6 +31,7 @@ static int mainLoop()
             case ecs::Close: return (-1);
         }
     }
+    core.setScene(winMenu());
     raylib::Window::CloseAudioDevice();
     raylib::Window::Close();
     return (0);

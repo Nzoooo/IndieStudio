@@ -528,8 +528,30 @@ namespace ecs
     void SystemEvent::handleControllersWin(ecs::Core &core)
     {
         (void)core;
+        static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+
         if (raylib::Gamepad::IsAvailable(0)) {
-            return;
+            if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
+                for (auto *it : core.getEntities()) {
+                    if (it->has<ComponentButton>() && it->get<ComponentButton>()->getState()) {
+                        std::cout << "i'm here" << std::endl;
+                        core.setScene(ecs::Scenes::Menu);
+                        return;
+                    }
+                }
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, 1);
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, -1);
+            }
         }
     }
 

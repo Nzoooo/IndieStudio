@@ -31,6 +31,9 @@ class ComponentButton : public ecs::IComponent {
     raylib::Rectangle *getRectangleUnactive() const;
     raylib::Vector2 getPos() const;
 
+    void setText(std::string);
+    std::string getText() const;
+
   private:
     raylib::Font _font;
     float _fontSize;

@@ -22,6 +22,7 @@ class ComponentText : public ecs::IComponent {
     ~ComponentText() = default;
     void setText(std::string text);
     std::string getLabel() const;
+    std::string getText() const;
 
     void Draw();
 

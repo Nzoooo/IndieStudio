@@ -16,11 +16,11 @@ double clockToMilliseconds(clock_t ticks)
     return (ticks / ((double)CLOCKS_PER_SEC)) * ML_BASE;
 }
 
-ecs::Scenes coreLoop(std::vector<int> &idControllers, std::string &winner)
+ecs::Scenes coreLoop(std::vector<int> &idControllers, std::vector<int> &settings, std::string &winner)
 {
     clock_t sec_clock = clock();
     clock_t fps_clock = clock();
-    ecs::Core core = mapCreation(idControllers);
+    ecs::Core core = mapCreation(idControllers, settings);
     int fps = 0;
     int avg_fps = FPS_CAP;
     raylib::Vector3 initialCamPos = {0.0f, 10.0f, 10.0f};

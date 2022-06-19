@@ -21,3 +21,8 @@ std::string ComponentText::getLabel() const
 {
     return (this->_label);
 }
+
+std::string ComponentText::getText() const
+{
+    return (this->_text);
+}

@@ -10,6 +10,7 @@ set(SRC
     ${SRCROOT}/initMap.cpp
     ${SRCROOT}/pauseMenu.cpp
     ${SRCROOT}/connectPlayers
+    ${SRCROOT}/gameSettings
     ${SRCROOT}/winMenu.cpp
     PARENT_SCOPE)
 

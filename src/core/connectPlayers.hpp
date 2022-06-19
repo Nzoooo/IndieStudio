@@ -12,4 +12,4 @@
 #include "raylib/include/Vector3.hpp"
 #include "raylib/include/Window.hpp"
 
-ecs::Scenes connectPlayers(std::vector<int> &idControllers);
+ecs::Scenes connectPlayers(ecs::Core &core, std::vector<int> &idControllers);

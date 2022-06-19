@@ -163,6 +163,7 @@ namespace ecs
                 } else if (isClicking(buttonTmp) == true && i == 1) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        core.setStartMode(ecs::GameStartMode::Load);
                         if (core.getEntity("SoundClick") != nullptr)
                             core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                         core.setScene(ecs::Scenes::Game);
@@ -197,6 +198,7 @@ namespace ecs
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
+                            core.setStartMode(ecs::GameStartMode::Load);
                             if (core.getEntity("SoundClick") != nullptr)
                                 core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
                             core.setScene(ecs::Scenes::Game);
@@ -250,6 +252,7 @@ namespace ecs
                 } else if (isClicking(buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        core.setStartMode(ecs::GameStartMode::Restart);
                         core.setScene(ecs::Scenes::GameSettings);
                         if (core.getEntity("SoundClick") != nullptr)
                             core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
@@ -312,6 +315,7 @@ namespace ecs
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {
+                            core.setStartMode(ecs::GameStartMode::Restart);
                             core.setScene(ecs::Scenes::GameSettings);
                             if (core.getEntity("SoundClick") != nullptr)
                                 core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
@@ -359,7 +363,7 @@ namespace ecs
                 } else if (isClicking(*buttonTmp) == true && i == 1) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
-                        core.setScene(ecs::Scenes::Close);
+                        core.setScene(ecs::Scenes::GameSave);
                 } else if (isClicking(*buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
@@ -391,7 +395,7 @@ namespace ecs
                         if (it->get<ComponentButton>()->getIdButton() == 1) {
                             if (core.getEntity("SoundClick") != nullptr)
                                 core.getEntity("SoundClick")->get<ComponentSound>()->getSound().PlayMulti();
-                            core.setScene(ecs::Scenes::Close);
+                            core.setScene(ecs::Scenes::GameSave);
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {

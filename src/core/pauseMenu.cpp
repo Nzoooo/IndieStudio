@@ -7,6 +7,7 @@
 
 #include "pauseMenu.hpp"
 #include "ECS/ecs.hpp"
+#include "save/save.hpp"
 
 static ecs::IEntity *createButton(ecs::Core &menu, raylib::Vector2 posButton, std::string textButton)
 {
@@ -53,7 +54,7 @@ static ecs::Core initMenu()
     return (menu);
 }
 
-ecs::Scenes pauseMenu()
+ecs::Scenes pauseMenu(ecs::Core &core_game)
 {
     ecs::Core menu = initMenu();
 
@@ -63,6 +64,11 @@ ecs::Scenes pauseMenu()
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
         menu.get<ecs::SystemEvent>()->update(menu);
+        if (menu.getScene() == ecs::Scenes::GameSave) {
+            Save saver;
+            saver.saveCore(core_game);
+            menu.setScene(ecs::Scenes::Pause);
+        }
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }

@@ -50,7 +50,7 @@ static ecs::Core initMenu()
     return (menu);
 }
 
-ecs::Scenes mainMenu()
+ecs::Scenes mainMenu(ecs::Core &core)
 {
     ecs::Core menu = initMenu();
 
@@ -60,6 +60,7 @@ ecs::Scenes mainMenu()
         raylib::Window::BeginDrawing();
         raylib::Window::Clear(raylib::Color::White());
         menu.get<ecs::SystemEvent>()->update(menu);
+        core.setStartMode(menu.getStartMode());
         menu.get<ecs::SystemRender2D>()->update(menu);
         raylib::Window::EndDrawing();
     }

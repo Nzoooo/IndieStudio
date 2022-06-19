@@ -16,7 +16,7 @@ void ComponentMesh::setPos(raylib::Vector3 initialPos)
     _initialPos = initialPos;
 }
 
-raylib::Vector3 ComponentMesh::getPos()
+raylib::Vector3 ComponentMesh::getPos() const
 {
     return (_initialPos);
 }
@@ -26,9 +26,14 @@ void ComponentMesh::setSize(raylib::Vector3 size)
     _size = size;
 }
 
-raylib::Vector3 ComponentMesh::getSize()
+raylib::Vector3 ComponentMesh::getSize() const
 {
     return (_size);
+}
+
+raylib::Color ComponentMesh::getColor() const
+{
+    return (_color);
 }
 
 void ComponentMesh::Draw()

@@ -12,7 +12,7 @@
 
 #include <fstream>
 
-#define FILEPATH "save.txt"
+#define FILEPATH_LOAD "save.txt"
 
 class Load {
   public:
@@ -22,7 +22,7 @@ class Load {
 
     /// @brief Load Components from the entity into the file.
     /// @param ecs::IEntity The entity to load.
-    ecs::IEntity *loadEntity(std::ifstream &file);
+    void loadEntity(std::ifstream &file, ecs::IEntity *entity);
 };
 
 #endif /* !LOAD_HPP_ */

@@ -23,16 +23,22 @@ static int mainLoop()
     std::vector<int> settings;
     settings.reserve(3);
     core.setScene(ecs::Scenes::Menu);
+    core.setStartMode(ecs::GameStartMode::NONE);
     std::string winner;
 
     while (1) {
         switch (core.getScene()) {
-            case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, settings, winner)); break;
+            case ecs::Scenes::Menu: core.setScene(mainMenu(core)); break;
+            case ecs::Scenes::Game: try { core.setScene(coreLoop(idControllers, settings, winner, core.getStartMode()));
+                } catch (...) {
+                    std::cout << "Can't find the saved file." << std::endl;
+                    core.setScene(ecs::Scenes::Menu);
+                }
+                break;
             case ecs::Scenes::GameSettings: core.setScene(gameSettings(settings, idControllers)); break;
-            case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
+            case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(core, idControllers)); break;
             case ecs::Scenes::Win: core.setScene(winMenu(winner)); break;
-            case ecs::Close: break;
+            case ecs::Close: return (-1);
         }
     }
     raylib::Window::StopSounds();

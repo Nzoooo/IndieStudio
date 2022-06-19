@@ -11,6 +11,6 @@
 #include "ECS/ecs.hpp"
 #include "map/Map.hpp"
 
-ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings);
+ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Settings, ecs::GameStartMode start_mode);
 
 #endif /* !INITMAP_HPP_ */

@@ -8,6 +8,8 @@
 #include "SystemEvent.hpp"
 #include <chrono>
 #include <cmath>
+#include <iostream>
+#include <string>
 #include "core/information/info.hpp"
 #include "raylib/include/Gamepad.hpp"
 
@@ -233,7 +235,7 @@ namespace ecs
                 } else if (isClicking(buttonTmp) == true && i == 2) {
                     core.getEntity(j)->get<ComponentButton>()->setState(true);
                     if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
-                        core.setScene(ecs::Scenes::Game);
+                        core.setScene(ecs::Scenes::GameSettings);
                         return;
                     }
                 }
@@ -291,7 +293,7 @@ namespace ecs
                             return;
                         }
                         if (it->get<ComponentButton>()->getIdButton() == 2) {
-                            core.setScene(ecs::Scenes::Game);
+                            core.setScene(ecs::Scenes::GameSettings);
                             return;
                         }
                         break;
@@ -324,7 +326,7 @@ namespace ecs
         raylib::Mouse mouseIndex;
 
         for (size_t j = 0; i < core.getNbButtons(); j++) {
-            if (core.getEntity(j)->has<ComponentButton>()) {
+            if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->get<ComponentButton>()->getState()) {
                 core.getEntity(j)->get<ComponentButton>()->setState(false);
                 raylib::Rectangle *buttonTmp = new raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
                     core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
@@ -517,12 +519,136 @@ namespace ecs
         }
     }
 
+    void SystemEvent::_handleMouseSettings(ecs::Core &core)
+    {
+        int i = 0;
+        raylib::Mouse mouseIndex;
+
+        for (size_t j = 0; i < core.getNbButtons(); j++) {
+            if (core.getEntity(j)->has<ComponentButton>()) {
+                core.getEntity(j)->get<ComponentButton>()->setState(false);
+                raylib::Rectangle buttonTmp = raylib::Rectangle(core.getEntity(j)->get<ComponentButton>()->getPos().x,
+                    core.getEntity(j)->get<ComponentButton>()->getPos().y, core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->width,
+                    core.getEntity(j)->get<ComponentButton>()->getRectangleActive()->height);
+                if (isClicking(buttonTmp) == true && i == 0) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        int nbBot = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText());
+                        if (nbBot < 3)
+                            nbBot++;
+                        core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                        return;
+                    }
+                } else if (isClicking(buttonTmp) == true && i == 1) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        int nbBot = std::stoi(core.getEntity(j - 1)->get<ComponentText>()->getText());
+                        if (nbBot > 0)
+                            nbBot--;
+                        core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                        return;
+                    }
+                } else if (isClicking(buttonTmp) == true && i == 2) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        int nbBomb = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText()) + 1;
+                        core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                        return;
+                    }
+                } else if (isClicking(buttonTmp) == true && i == 3) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        int nbBomb = std::stoi(core.getEntity(j - 1)->get<ComponentText>()->getText());
+                        if (nbBomb > 1)
+                            nbBomb--;
+                        core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                        return;
+                    }
+                } else if (isClicking(buttonTmp) == true && i == 4) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft())) {
+                        if (core.getEntity(j + 1)->get<ComponentText>()->getText().compare("yes") == 0)
+                            core.getEntity(j + 1)->get<ComponentText>()->setText("no");
+                        else
+                            core.getEntity(j + 1)->get<ComponentText>()->setText("yes");
+                        return;
+                    }
+                } else if (isClicking(buttonTmp) == true && i == 5) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::Game);
+                } else if (isClicking(buttonTmp) == true && i == 6) {
+                    core.getEntity(j)->get<ComponentButton>()->setState(true);
+                    if (mouseIndex.IsButtonPressed(mouseIndex.MouseButtonLeft()))
+                        core.setScene(ecs::Scenes::ConnectPlayers);
+                }
+                i++;
+            }
+        }
+    }
+
     void SystemEvent::handleControllersGameSettings(ecs::Core &core)
     {
-        (void)core;
+        size_t i = 0;
+        static std::chrono::time_point<std::chrono::system_clock> elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+
         if (raylib::Gamepad::IsAvailable(0)) {
-            return;
-        }
+            if (raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonRightFaceDown())) {
+                for (size_t j = 0; i < core.getNbButtons(); j++) {
+                    if (core.getEntity(j)->has<ComponentButton>() && core.getEntity(j)->get<ComponentButton>()->getState()) {
+                        if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 0) {
+                            int nbBot = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText());
+                            if (nbBot < 3)
+                                nbBot++;
+                            core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                            return;
+                        } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 1) {
+                            int nbBot = std::stoi(core.getEntity(j - 1)->get<ComponentText>()->getText());
+                            if (nbBot > 0)
+                                nbBot--;
+                            core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBot));
+                            return;
+                        } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 2) {
+                            int nbBomb = std::stoi(core.getEntity(j + 1)->get<ComponentText>()->getText()) + 1;
+                            core.getEntity(j + 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                            return;
+                        } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 3) {
+                            int nbBomb = std::stoi(core.getEntity(j - 1)->get<ComponentText>()->getText());
+                            if (nbBomb > 1)
+                                nbBomb--;
+                            core.getEntity(j - 1)->get<ComponentText>()->setText(std::to_string(nbBomb));
+                            return;
+                        } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 4) {
+                            if (core.getEntity(j + 1)->get<ComponentText>()->getText().compare("yes") == 0)
+                                core.getEntity(j + 1)->get<ComponentText>()->setText("no");
+                            else
+                                core.getEntity(j + 1)->get<ComponentText>()->setText("yes");
+                            return;
+                        } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 5) {
+                            core.setScene(ecs::Scenes::Game);
+                            return;
+                        } else if (core.getEntity(j)->get<ComponentButton>()->getIdButton() == 6) {
+                            core.setScene(ecs::Scenes::ConnectPlayers);
+                            return;
+                        }
+                        i++;
+                    }
+                }
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == 1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, 1);
+            }
+            if (((std::chrono::system_clock::now() - elapsedTimeToMoveButtons >= std::chrono::milliseconds(200))
+                    && raylib::Gamepad::GetAxisMovement(0, raylib::Gamepad::GamepadAxisLeftY()) == -1)
+                || raylib::Gamepad::IsButtonReleased(0, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+                elapsedTimeToMoveButtons = std::chrono::system_clock::now();
+                _handleButtonsMoveUpDown(core, -1);
+            }
+        } else
+            _handleMouseSettings(core);
     }
 
     void SystemEvent::handleControllersWin(ecs::Core &core)

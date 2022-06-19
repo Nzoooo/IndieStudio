@@ -7,6 +7,7 @@
 
 #include "core/connectPlayers.hpp"
 #include "core/core.hpp"
+#include "core/gameSettings.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
 #include "map/Map.hpp"
@@ -24,7 +25,7 @@ static int mainLoop()
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu()); break;
             case ecs::Scenes::Game: core.setScene(coreLoop(idControllers)); break;
-            case ecs::Scenes::GameSettings: break;
+            case ecs::Scenes::GameSettings: core.setScene(gameSettings(idControllers)); break;
             case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(idControllers)); break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);

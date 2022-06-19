@@ -17,9 +17,9 @@ void SystemIA::update(ecs::Core &_core)
 
     for (auto *e : _core.getEntities()) {
         if (e->has<ComponentKills>() && !e->has<ComponentControllable>()) {
-            // if (isKillableBlockInRange(e, _core))
-            //     /* place bomb */;
             bomb = getBombInRange(e, _core);
+            // if (isKillableBlockInRange(e, _core) && !bomb)
+            //     /* place bomb */;
             move(e, _core, bomb);
         }
     }

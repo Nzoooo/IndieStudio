@@ -4,8 +4,8 @@ set(SRCROOT ${PROJECT_SOURCE_DIR}/src/core)
 add_subdirectory(information)
 
 set(SRC
-    ${SRC} ${SRCROOT}/core.cpp ${SRCROOT}/mainMenu.cpp ${SRCROOT}/gameMenu.cpp
-    ${SRCROOT}/initMap.cpp
+    ${SRC} ${SRCROOT}/core.cpp ${SRCROOT}/mainMenu.cpp ${SRCROOT}/initMap.cpp
+    ${SRCROOT}/pauseMenu.cpp ${SRCROOT}/connectPlayers
     PARENT_SCOPE)
 
 set(INCDIRS

@@ -20,15 +20,20 @@
 #define DETAILS_SIZE         26
 
 static raylib::Color playersColor[4] = {
-    raylib::Color::Black(),
-    raylib::Color::White(),
     raylib::Color::Red(),
     raylib::Color::Blue(),
+    raylib::Color::Black(),
+    raylib::Color::White(),
 };
 
 static std::string playersIcon[4] = {
-    "assets/64/black_among_us.png", "assets/64/white_among_us.png", "assets/64/red_among_us.png", "assets/64/blue_among_us.png"};
+    "assets/64/red_among_us.png", "assets/64/blue_among_us.png", "assets/64/black_among_us.png", "assets/64/white_among_us.png"};
 
+/// Add the background of the informations
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @param raylib::Color Color of the background.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *createBackground(bool topBottom, bool leftRight, raylib::Color color)
 {
     ecs::IEntity *background = new ecs::IEntity();
@@ -50,6 +55,10 @@ static ecs::IEntity *createBackground(bool topBottom, bool leftRight, raylib::Co
     return (background);
 }
 
+/// Add the player icon to the informations.
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displayPlayerHeader(std::size_t count, bool topBottom, bool leftRight)
 {
     ecs::IEntity *entity = new ecs::IEntity();
@@ -73,6 +82,10 @@ static ecs::IEntity *displayPlayerHeader(std::size_t count, bool topBottom, bool
     return (entity);
 }
 
+/// Add the bot icon to the informations.
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
 static ecs::IEntity *displayBotIcon(bool topBottom, bool leftRight)
 {
     ecs::IEntity *botIcon = new ecs::IEntity();
@@ -94,7 +107,11 @@ static ecs::IEntity *displayBotIcon(bool topBottom, bool leftRight)
     return (botIcon);
 }
 
-static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool leftRight)
+/// Add the bomb text and icon to the informations.
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
+static ecs::IEntity *displayBombs(bool topBottom, bool leftRight)
 {
     ecs::IEntity *bomb = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
@@ -114,16 +131,18 @@ static ecs::IEntity *displayBombs(ecs::IEntity *entity, bool topBottom, bool lef
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
     bomb->add<ComponentTexture>("assets/16/boost_nb_bombs.png", iconPosition);
-    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf",
-        std::to_string(entity->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(entity->get<ComponentBombs>()->getNbMaxBombs()), textPosition,
-        DETAILS_SIZE, raylib::Color::White());
+    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0/0", textPosition, DETAILS_SIZE, raylib::Color::White());
     bomb->add<ComponentDrawable>(true, false);
     return (bomb);
 }
 
-static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool leftRight)
+/// Add the radius text and icon to the informations.
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
+static ecs::IEntity *displayRadius(bool topBottom, bool leftRight)
 {
-    ecs::IEntity *bomb = new ecs::IEntity();
+    ecs::IEntity *radius = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
     raylib::Vector2 textPosition = {MARGIN_BORDER, MARGIN_BORDER};
 
@@ -140,16 +159,20 @@ static ecs::IEntity *displayRadius(ecs::IEntity *entity, bool topBottom, bool le
     iconPosition.x += MARGIN_BORDER;
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
-    bomb->add<ComponentTexture>("assets/16/boost_radius_bombs.png", iconPosition);
-    bomb->add<ComponentText>("assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentExplodable>()->getBlastRange()), textPosition, DETAILS_SIZE,
-        raylib::Color::White());
-    bomb->add<ComponentDrawable>(true, false);
-    return (bomb);
+    radius->add<ComponentTexture>("assets/16/boost_radius_bombs.png", iconPosition);
+    radius->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
+    radius->add<ComponentDrawable>(true, false);
+    return (radius);
 }
 
-static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool leftRight)
+/// Add the speed text and icon to the informations.
+/// @param ecs::IEntity* Pointer to the player entity
+/// @param bool Boolean if it has to be at the bottom or not.
+/// @param bool Boolean if it has to be at the right or not.
+/// @return ecs::IEntity* Pointer to the filled entity.
+static ecs::IEntity *displaySpeed(bool topBottom, bool leftRight)
 {
-    ecs::IEntity *bomb = new ecs::IEntity();
+    ecs::IEntity *speed = new ecs::IEntity();
     raylib::Vector2 iconPosition = {MARGIN_BORDER, MARGIN_BORDER};
     raylib::Vector2 textPosition = {MARGIN_BORDER, MARGIN_BORDER};
 
@@ -166,35 +189,46 @@ static ecs::IEntity *displaySpeed(ecs::IEntity *entity, bool topBottom, bool lef
     iconPosition.x += MARGIN_BORDER;
     textPosition.x = iconPosition.x + DETAILS_ICON_SIZE * 3;
 
-    bomb->add<ComponentTexture>("assets/16/boost_speed.png", iconPosition);
-    bomb->add<ComponentText>(
-        "assets/CollegiateBlackFLF.ttf", std::to_string(entity->get<ComponentMovable>()->getSpeed()), textPosition, DETAILS_SIZE, raylib::Color::White());
-    bomb->add<ComponentDrawable>(true, false);
-    return (bomb);
+    speed->add<ComponentTexture>("assets/16/boost_speed.png", iconPosition);
+    speed->add<ComponentText>("assets/CollegiateBlackFLF.ttf", "0", textPosition, DETAILS_SIZE, raylib::Color::White());
+    speed->add<ComponentDrawable>(true, false);
+    return (speed);
 }
 
-void displayInformations(ecs::Core &core)
+void updateInformations(ecs::Core &core)
+{
+    for (auto *player : core.getEntities()) {
+        if (player->has<ComponentKills>()) {
+            // It's a player/bot
+            for (auto *info : core.getEntities()) {
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_speed.png") {
+                    // It's entity of speed info
+                    info->get<ComponentText>()->setText(std::to_string(static_cast<int>(player->get<ComponentMovable>()->getSpeed() / 0.03f)));
+                }
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_radius_bombs.png") {
+                    // It's entity of radius info
+                    info->get<ComponentText>()->setText(std::to_string(player->get<ComponentExplodable>()->getBlastRange()));
+                }
+                if (info->has<ComponentTexture>() && info->get<ComponentTexture>()->getPathOldTexture() == "assets/16/boost_nb_bombs.png") {
+                    // It's entity of radius info
+                    info->get<ComponentText>()->setText(
+                        std::to_string(player->get<ComponentBombs>()->getNbCurrBombs()) + "/" + std::to_string(player->get<ComponentBombs>()->getNbMaxBombs()));
+                }
+            }
+        }
+    }
+}
+
+/// Display informations on the player (Nb bombs, radius of bombs, speed ...).
+/// @param &core Reference to the core to add the informations.
+void initInformations(ecs::Core &core)
 {
     std::size_t count = 0;
-    ecs::IEntity *players = new ecs::IEntity();
-    ecs::IEntity *bots = new ecs::IEntity();
     bool topBottom = false;
     bool leftRight = false;
 
-    players->add<ComponentBombs>(4);
-    bots->add<ComponentBombs>(4);
-    players->add<ComponentMovable>(2);
-    bots->add<ComponentMovable>(2);
-    players->add<ComponentExplodable>(1, true);
-    bots->add<ComponentExplodable>(1, true);
-    players->add<ComponentControllable>();
-    core.addEntity(players);
-    core.addEntity(bots);
-    core.addEntity(players);
-    core.addEntity(bots);
-    std::vector<ecs::IEntity *> entities = core.getEntities();
-    for (auto &entity : entities) {
-        if (entity->has<ComponentBombs>()) { //// Change to ComponentHealth
+    for (auto *entity : core.getEntities()) {
+        if (entity->has<ComponentKills>()) {
             // It's a player/bot
             topBottom = count / 2;
             leftRight = count % 2;
@@ -206,9 +240,9 @@ void displayInformations(ecs::Core &core)
                 // It's a bot
                 core.addEntity(displayBotIcon(topBottom, leftRight));
             }
-            core.addEntity(displayBombs(entity, topBottom, leftRight));
-            core.addEntity(displayRadius(entity, topBottom, leftRight));
-            core.addEntity(displaySpeed(entity, topBottom, leftRight));
+            core.addEntity(displayBombs(topBottom, leftRight));
+            core.addEntity(displayRadius(topBottom, leftRight));
+            core.addEntity(displaySpeed(topBottom, leftRight));
             count++;
         }
     }

@@ -8,7 +8,7 @@
 #include "../include/ModelAnimation.hpp"
 #include "../include/RaylibException.hpp"
 
-raylib::ModelAnimation::ModelAnimation()
+raylib::ModelAnimation::ModelAnimation() : _anims(nullptr)
 {
 }
 
@@ -16,17 +16,33 @@ raylib::ModelAnimation::~ModelAnimation()
 {
 }
 
-void raylib::ModelAnimation::Unload()
+void raylib::ModelAnimation::Unload(::ModelAnimation &anim)
 {
-    ::UnloadModelAnimation(*this);
+    ::UnloadModelAnimation(anim);
 }
 
-void raylib::ModelAnimation::UpdateAnimation(::Model &model, int frame)
+void raylib::ModelAnimation::Unload(unsigned int animCount)
 {
-    ::UpdateModelAnimation(model, *this, frame);
+    if (_anims != nullptr)
+        ::UnloadModelAnimations(_anims, animCount);
 }
 
-bool raylib::ModelAnimation::IsModelAnimationValid(::Model &model) const
+void raylib::ModelAnimation::UpdateAnimation(::Model &model, ::ModelAnimation &anim, int frame)
 {
-    return ::IsModelAnimationValid(model, *this);
+    ::UpdateModelAnimation(model, anim, frame);
+}
+
+bool raylib::ModelAnimation::IsModelAnimationValid(::Model &model, ::ModelAnimation &anim) const
+{
+    return ::IsModelAnimationValid(model, anim);
+}
+
+void raylib::ModelAnimation::Load(const std::string &fileName, unsigned int *animCount)
+{
+    _anims = ::LoadModelAnimations(fileName.c_str(), animCount);
+}
+
+::ModelAnimation *raylib::ModelAnimation::getAnims() const
+{
+    return (_anims);
 }

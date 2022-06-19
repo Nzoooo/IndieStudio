@@ -7,22 +7,42 @@
 
 #include "ComponentTexture.hpp"
 
+void ComponentTexture::setTexture(std::string texturePath)
+{
+    _texture.Load(texturePath);
+}
+
 raylib::Texture ComponentTexture::getTexture() const
 {
     return (_texture);
 }
 
-void ComponentTexture::Draw()
+void ComponentTexture::setPos(raylib::Vector2 pos)
 {
-    this->_texture.Draw(this->_pos);
+    _pos = pos;
 }
 
 raylib::Vector2 ComponentTexture::getPos() const
 {
-    return _pos;
+    return (_pos);
 }
 
-std::string ComponentTexture::getTexturePath() const
+raylib::Vector2 ComponentTexture::getPos2() const
 {
-    return _texturePath;
+    return (_pos2);
+}
+
+raylib::Vector2 ComponentTexture::getOldPos() const
+{
+    return (_oldPos);
+}
+
+std::string ComponentTexture::getPathOldTexture() const
+{
+    return (_pathOldTexture);
+}
+
+void ComponentTexture::Draw()
+{
+    this->_texture.Draw(this->_pos);
 }

@@ -5,7 +5,6 @@ set(SRC
     ${SRC}
     ${SRCROOT}/ComponentBombs.cpp
     ${SRCROOT}/ComponentButton.cpp
-    ${SRCROOT}/ComponentControllable.cpp
     ${SRCROOT}/ComponentCube.cpp
     ${SRCROOT}/ComponentDrawable.cpp
     ${SRCROOT}/ComponentExplodable.cpp
@@ -13,9 +12,13 @@ set(SRC
     ${SRCROOT}/ComponentMovable.cpp
     ${SRCROOT}/ComponentRectangle.cpp
     ${SRCROOT}/ComponentText.cpp
+    ${SRCROOT}/ComponentKills.cpp
     ${SRCROOT}/ComponentTexture.cpp
     ${SRCROOT}/ComponentTransform.cpp
     ${SRCROOT}/ComponentTransparency.cpp
+    ${SRCROOT}/ComponentMesh.cpp
+    ${SRCROOT}/ComponentControllable.cpp
+    ${SRCROOT}/ComponentModel.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

@@ -76,6 +76,8 @@ void addComponentCube(std::ifstream &file, ecs::IEntity *entity)
     std::string str_pos = getMember(file, "pos");
     std::string str_size = getMember(file, "size");
     std::string str_color = getMember(file, "color");
+    std::string str_texture = getMember(file, "texture");
+    raylib::Texture texture;
     raylib::Vector3 pos = {};
     pos.x = std::stof(str_pos.substr(1, str_pos.find(';')));
     pos.y = std::stof(str_pos.substr(str_pos.find(';') + 1, str_pos.find(';', str_pos.find(';') + 1)));
@@ -91,7 +93,8 @@ void addComponentCube(std::ifstream &file, ecs::IEntity *entity)
         str_color.substr(str_color.find(';', str_color.find(';', str_color.find(';') + 1) + 1) + 1, str_color.find(')', str_color.find(')') + 1) - 1));
 
     try {
-        entity->add<ComponentCube>(pos, size, color);
+        texture.Load(str_texture);
+        entity->add<ComponentCube>(pos, size, color, texture);
     } catch (std::exception &e) {
         std::cout << "ComponentCube not found" << std::endl;
     }
@@ -147,10 +150,12 @@ void addComponentKillable(std::ifstream &file, ecs::IEntity *entity)
 
 void addComponentMovable(std::ifstream &file, ecs::IEntity *entity)
 {
+    ComponentMovable::Direction dir = static_cast<ComponentMovable::Direction>(stoi(getMember(file, "dir")));
     int speed = std::stoi(getMember(file, "speed"));
+    bool ableToMove = std::stoi(getMember(file, "ableToMove"));
 
     try {
-        entity->add<ComponentMovable>(speed);
+        entity->add<ComponentMovable>(dir, speed, ableToMove);
     } catch (std::exception &e) {
         std::cout << "ComponentMovable not found" << std::endl;
     }

@@ -29,6 +29,7 @@ enum map_object {
     BOX = 2,
 };
 
-ecs::Scenes coreLoop(ecs::Core &main_core);
+ecs::Scenes coreLoop(std::vector<int> &idControllers, ecs::GameStartMode start_mode);
+ecs::Core mapCreation(std::vector<int> &idControllers, ecs::GameStartMode start_mode);
 
 #endif

@@ -13,12 +13,12 @@ namespace ecs
     {
         for (auto *it : core.getEntities()) {
             if (it->has<ComponentDrawable>() && it->get<ComponentDrawable>()->getIsDrawable3D() == true) {
-                if (it->has<ComponentCube>()) {
+                if (it->has<ComponentCube>())
                     it->get<ComponentCube>()->Draw();
-                }
-                if (it->has<ComponentMesh>()) {
+                if (it->has<ComponentMesh>())
                     it->get<ComponentMesh>()->Draw();
-                }
+                if (it->has<ComponentModel>())
+                    it->get<ComponentModel>()->Draw();
             }
         }
     }

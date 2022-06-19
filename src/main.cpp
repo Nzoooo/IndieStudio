@@ -5,24 +5,28 @@
 ** main
 */
 
-#include "ECS/Systems/SystemRender3D.hpp"
+#include "core/connectPlayers.hpp"
 #include "core/core.hpp"
 #include "core/information/info.hpp"
 #include "core/mainMenu.hpp"
+#include "core/pauseMenu.hpp"
 #include "map/Map.hpp"
 
 static int mainLoop()
 {
     raylib::Window::Init(1920, 1080);
     ecs::Core core;
+    std::vector<int> idControllers;
     core.setScene(ecs::Scenes::Menu);
+    core.setStartMode(ecs::GameStartMode::NONE);
 
     while (core.getScene() != ecs::Scenes::Win) {
         switch (core.getScene()) {
             case ecs::Scenes::Menu: core.setScene(mainMenu(core)); break;
-            case ecs::Scenes::Game: core.setScene(coreLoop(core)); break;
+            case ecs::Scenes::Pause: core.setScene(pauseMenu()); break;
+            case ecs::Scenes::Game: core.setScene(coreLoop(idControllers, core.getStartMode())); break;
             case ecs::Scenes::GameSettings: break;
-            case ecs::Scenes::ConnectPlayers: break;
+            case ecs::Scenes::ConnectPlayers: core.setScene(connectPlayers(core, idControllers)); break;
             case ecs::Scenes::Win: break;
             case ecs::Close: return (-1);
         }

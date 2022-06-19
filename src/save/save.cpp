@@ -142,7 +142,7 @@ bool Save::saveEntity(ecs::IEntity &entity, std::size_t i)
             _file << "\tEntity[" << i << "] {" << std::endl;
         _file << "\t\tComponentTexture {" << std::endl;
         _file << "\t\t\tpos: " << component_data->getPos() << "," << std::endl;
-        _file << "\t\t\ttexturePath: " << component_data->getTexturePath() << std::endl;
+        _file << "\t\t\ttexturePath: " << component_data->getPathOldTexture() << std::endl;
         _file << "\t\t}" << std::endl;
         ret = true;
     }

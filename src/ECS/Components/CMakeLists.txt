@@ -21,6 +21,8 @@ set(SRC
     ${SRCROOT}/ComponentModel.cpp
     ${SRCROOT}/ComponentFireBlast.cpp
     ${SRCROOT}/ComponentCollider.cpp
+    ${SRCROOT}/ComponentVent.cpp
+    ${SRCROOT}/ComponentEmote.cpp
     ${SRCROOT}/IComponent.cpp
     PARENT_SCOPE)
 

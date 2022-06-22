@@ -22,6 +22,8 @@ namespace ecs
                 }
                 if (e->has<ComponentButton>())
                     e->get<ComponentButton>()->Draw();
+                if (e->has<ComponentEmote>())
+                    e->get<ComponentEmote>()->Draw();
             }
         }
     }

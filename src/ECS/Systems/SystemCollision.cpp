@@ -101,6 +101,31 @@ namespace ecs
         }
     }
 
+    void SystemCollision::checkPosVent(raylib::BoundingBox &box, ecs::IEntity *player, std::vector<ecs::IEntity *> entities)
+    {
+        raylib::BoundingBox other;
+
+        for (auto &vent : entities) {
+            if (vent->has<ComponentVent>() && vent->has<ComponentCube>()) {
+                raylib::BoundingBox tmpBox(raylib::Vector3(vent->get<ComponentCube>()->getPos().x - 0.2, vent->get<ComponentCube>()->getPos().y - 0.2,
+                                               vent->get<ComponentCube>()->getPos().z - 0.2),
+                    raylib::Vector3(
+                        vent->get<ComponentCube>()->getPos().x + 0.2, vent->get<ComponentCube>()->getPos().y + 0.2, vent->get<ComponentCube>()->getPos().z + 0.2));
+                other = tmpBox;
+            }
+            if (other.checkCollision(box) && vent->has<ComponentVent>() && vent->has<ComponentCube>()) {
+                raylib::BoundingBox pairedBound(raylib::Vector3(vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().x - 0.2, vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().y - 0.2,
+                                               vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().z - 0.2),
+                    raylib::Vector3(
+                        vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().x + 0.2, vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().y + 0.2, vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos().z + 0.2));
+                    vent->get<ComponentVent>()->getPairedVent();
+                    if (!checkCollisions(pairedBound, vent->get<ComponentVent>()->getPairedVent(), entities)) {
+                        player->get<ComponentModel>()->setPos(vent->get<ComponentVent>()->getPairedVent()->get<ComponentCube>()->getPos());
+                    }
+            }
+        }
+    }
+
     bool SystemCollision::checkCollisionsFireBlastBlocks(raylib::BoundingBox &box, std::vector<ecs::IEntity *> entities)
     {
         raylib::BoundingBox box2;

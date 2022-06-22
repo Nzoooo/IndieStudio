@@ -549,6 +549,29 @@ namespace ecs
                             core.addEntity(bomb1);
                             it->get<ComponentBombs>()->setNbCurrBombs(it->get<ComponentBombs>()->getNbCurrBombs() + 1);
                         }
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonRightFaceLeft())) {
+                            raylib::BoundingBox box(
+                                raylib::Vector3(it->get<ComponentModel>()->getPos().x - 0.27, it->get<ComponentModel>()->getPos().y, it->get<ComponentModel>()->getPos().z - 0.27),
+                                raylib::Vector3(
+                                    it->get<ComponentModel>()->getPos().x + 0.27, it->get<ComponentModel>()->getPos().y + 1, it->get<ComponentModel>()->getPos().z + 0.27));
+                            SystemCollision::checkPosVent(box, it, core.getEntities());
+                        }
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonLeftFaceUp())) {
+                            if (it->has<ComponentEmote>())
+                                it->get<ComponentEmote>()->setEmote(0);
+                        }
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonLeftFaceRight())) {
+                            if (it->has<ComponentEmote>())
+                                it->get<ComponentEmote>()->setEmote(1);
+                        }
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonLeftFaceDown())) {
+                            if (it->has<ComponentEmote>())
+                                it->get<ComponentEmote>()->setEmote(2);
+                        }
+                        if (raylib::Gamepad::IsButtonReleased(i, raylib::Gamepad::GamepadButtonLeftFaceLeft())) {
+                            if (it->has<ComponentEmote>())
+                                it->get<ComponentEmote>()->setEmote(3);
+                        }
                     }
                 }
             }

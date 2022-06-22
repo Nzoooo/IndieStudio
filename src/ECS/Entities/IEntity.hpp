@@ -35,7 +35,7 @@ template <typename T> T *ecs::IEntity::get()
 {
     if (has<T>() == false)
         std::cout << "Component not found" << std::endl;
-    return static_cast<T *>(_components[ecs::TemplateComponent<T>::getId()]);
+    return reinterpret_cast<T *>(_components[ecs::TemplateComponent<T>::getId()]);
 }
 
 template <typename T> bool ecs::IEntity::has() const

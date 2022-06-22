@@ -11,7 +11,9 @@
 #include "raylib/include/Window.hpp"
 
 std::vector<std::string> boostIcon = {
-    "assets/16/boost_block_pass.png", "assets/16/boost_nb_bombs.png", "assets/16/boost_radius_bombs.png", "assets/16/boost_speed.png"};
+    "assets/16/boost_nb_bombs.png", "assets/16/boost_nb_bombs.png", "assets/16/boost_nb_bombs.png",
+    "assets/16/boost_radius_bombs.png", "assets/16/boost_block_pass.png", "assets/16/boost_radius_bombs.png",
+    "assets/16/boost_radius_bombs.png", "assets/16/boost_speed.png", "assets/16/boost_speed.png"};
 
 ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMesh, raylib::Color color, raylib::Texture texture, bool hasCollider = true)
 {
@@ -24,11 +26,11 @@ ecs::IEntity *meshEntityCreation(raylib::Vector3 posMesh, raylib::Vector3 sizeMe
     return (mesh);
 }
 
-void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb)
+void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3 pos, int id, ComponentMovable::Direction dir, int nbBomb, raylib::Vector2 emotePos)
 {
     ecs::IEntity *playerEntity = new ecs::IEntity();
 
-    playerEntity->add<ComponentDrawable>(false, true);
+    playerEntity->add<ComponentDrawable>(true, true);
     playerEntity->add<ComponentModel>(modelPath, pos, raylib::Vector3(0.3f, 0.3f, 0.3f));
     playerEntity->get<ComponentModel>()->setRotateAngle(dir);
     playerEntity->add<ComponentControllable>();
@@ -39,35 +41,60 @@ void createPlayer(ecs::Core &mapCreation, std::string modelPath, raylib::Vector3
     playerEntity->add<ComponentKillable>();
     playerEntity->add<ComponentMovable>(dir, BASE_SPEED_PLAYERS);
     playerEntity->add<ComponentExplodable>();
+    playerEntity->add<ComponentEmote>(emotePos);
     playerEntity->setLabel("Player " + std::to_string(id));
     mapCreation.addEntity(playerEntity);
+}
+
+void createVent(ecs::Core &mapCreation, raylib::Vector3 pos1, raylib::Vector3 pos2)
+{
+    ecs::IEntity *ventEntity1 = new ecs::IEntity();
+    ecs::IEntity *ventEntity2 = new ecs::IEntity();
+    raylib::Texture tex;
+
+    ventEntity1->add<ComponentDrawable>(false, true);
+    tex.Load("assets/mapTextures/VENTILATION.png");
+    ventEntity1->add<ComponentCube>(pos1, raylib::Vector3(1.0f, 0.2f, 1.0f), raylib::Color::White(), tex);
+    ventEntity1->add<ComponentVent>();
+    ventEntity2->add<ComponentDrawable>(false, true);
+    ventEntity2->add<ComponentCube>(pos2, raylib::Vector3(1.0f, 0.2f, 1.0f), raylib::Color::White(), tex);
+    ventEntity2->add<ComponentVent>();
+    ventEntity1->get<ComponentVent>()->pairVent(ventEntity2);
+    ventEntity2->get<ComponentVent>()->pairVent(ventEntity1);
+    mapCreation.addEntity(ventEntity1);
+    mapCreation.addEntity(ventEntity2);
 }
 
 void initGame(ecs::Core &mapCreation, std::vector<int> &idControllers, std::vector<int> &Settings)
 {
     int &nbBomb = Settings[1];
+    idControllers.push_back(1);
+    idControllers.push_back(2);
+    idControllers.push_back(3);
 
     for (std::size_t i = 0; i < idControllers.size(); i++) {
         switch (i) {
             case 0:
-                createPlayer(
-                    mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i, ComponentMovable::UP, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_red.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                    ComponentMovable::DOWN, nbBomb, raylib::Vector2(250, 250));
                 break;
             case 1:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, -(MAP_SIZE / 2) + 1), i,
-                    ComponentMovable::DOWN, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_blue.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
+                    ComponentMovable::DOWN, nbBomb, raylib::Vector2(1550, 250));
                 break;
             case 2:
-                createPlayer(
-                    mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i, ComponentMovable::UP, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_black.obj", raylib::Vector3(-7.0f, 0.0f, -(MAP_SIZE / 2) + 1), i,
+                    ComponentMovable::UP, nbBomb, raylib::Vector2(250, 710));
                 break;
             case 3:
-                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 1), i,
-                    ComponentMovable::DOWN, nbBomb);
+                createPlayer(mapCreation, "assets/models3D/Among_Us_white.obj", raylib::Vector3(-7.0f, 0.0f, (MAP_SIZE / 2) - 1), i,
+                    ComponentMovable::UP, nbBomb, raylib::Vector2(1550, 710));
                 break;
             default: break;
         }
     }
+    createVent(mapCreation, raylib::Vector3(-3.0f, 0.0f, -(MAP_SIZE / 2) + 4), raylib::Vector3((MAP_SIZE / 2) - 1, 0.0f, (MAP_SIZE / 2) - 6));
+    createVent(mapCreation, raylib::Vector3(-4.0f, 0.0f, (MAP_SIZE / 2) - 7), raylib::Vector3((MAP_SIZE / 2) - 7, 0.0f, -(MAP_SIZE / 2) + 7));
     ecs::IEntity *musicGame = new ecs::IEntity();
     musicGame->add<ComponentMusic>("assets/audios/MusicGame.mp3");
     musicGame->setLabel("MusicGame");
@@ -192,14 +219,14 @@ ecs::Core mapCreation(std::vector<int> &idControllers, std::vector<int> &Setting
     for (int j = 1; j < MAP_SIZE - 1; j++) {
         for (int i = 1; i < MAP_SIZE - 1; i++) {
             initial.x += 1;
-            rand = std::rand() % (boostIcon.size() * 3);
+            rand = std::rand() % (boostIcon.size() * 5);
             if (map->getMap()[i][j] == 2) {
                 ecs::IEntity *cube = new ecs::IEntity();
                 cube->add<ComponentDrawable>(false, true);
                 cube->add<ComponentCube>(initial, sizeCube, raylib::Color::White(), boxTex);
                 cube->add<ComponentCollider>();
                 cube->add<ComponentKillable>();
-                if (rand < boostIcon.size()) {
+                if (rand < boostIcon.size() && Settings[2] == 1) {
                     ecs::IEntity *boost = new ecs::IEntity();
                     raylib::Texture boostTex;
                     boostTex.Load(boostIcon.at(rand));
